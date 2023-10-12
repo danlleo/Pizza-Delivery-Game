@@ -1906,6 +1906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movement: {fileID: 651793135}
+  _useRawInput: 1
 --- !u!114 &651793139
 MonoBehaviour:
   m_ObjectHideFlags: 0
