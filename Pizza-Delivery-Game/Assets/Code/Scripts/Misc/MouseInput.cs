@@ -6,7 +6,7 @@ namespace Misc
     {
         [SerializeField] private Player.MouseRotation _mouseRotation;
         
-        private void Update()
+        private void LateUpdate()
         {
             float mouseX = Input.GetAxis(Axis.MouseX);
             float mouseY = Input.GetAxis(Axis.MouseY);

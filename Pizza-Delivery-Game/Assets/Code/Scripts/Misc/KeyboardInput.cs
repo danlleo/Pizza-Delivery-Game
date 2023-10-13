@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Misc
 {
+    [DisallowMultipleComponent]
     public class KeyboardInput : MonoBehaviour
     {
         [Header("External references")]
@@ -21,11 +22,23 @@ namespace Misc
             var input = new Vector2(_horizontal, _vertical);
             
             _movement.Move(input);
+            
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                _movement.BeginSprint();
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _movement.Sprint();
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                _movement.StopSprint();
+            }
         }
-
-        public static bool IsEKeyPressedDown()
-            => Input.GetKeyDown(KeyCode.E);
-
+        
         private void ReadInput()
         {
             if (_useRawInput)
