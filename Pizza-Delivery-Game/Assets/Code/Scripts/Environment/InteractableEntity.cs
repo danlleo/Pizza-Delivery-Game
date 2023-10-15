@@ -9,5 +9,8 @@ namespace Environment
         {
             print("You're interacting with me :)");
         }
+
+        public string GetActionDescription()
+            => "Pick Up";
     }
 }

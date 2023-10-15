@@ -5,7 +5,8 @@ namespace Player
 {
     public class Interact : MonoBehaviour
     {
-        [Header("External references")] 
+        [Header("External references")]
+        [SerializeField] private Player _player;
         [SerializeField] private Transform _raycastPointTransform;
         [SerializeField] private LayerMask _interactableLayerMask;
         
@@ -16,12 +17,15 @@ namespace Player
         {
             if (!Physics.Raycast(_raycastPointTransform.position, _raycastPointTransform.forward,
                     out RaycastHit hit, _interactDistance, _interactableLayerMask))
-                return;
-
-            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
-                interactable.Interact();
+                _player.HoveringOverInteractableEvent.Call(_player, new HoveringOverInteractableEventArgs(false));
+                return;
             }
+
+            if (!hit.collider.TryGetComponent(out IInteractable interactable)) return;
+            
+            _player.HoveringOverInteractableEvent.Call(_player, new HoveringOverInteractableEventArgs(true, interactable.GetActionDescription()));
+            interactable.Interact();
         }
         
 #if UNITY_EDITOR

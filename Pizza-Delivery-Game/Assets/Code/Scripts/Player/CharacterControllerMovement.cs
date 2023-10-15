@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Utilities;
 
 namespace Player
 {
@@ -42,7 +43,7 @@ namespace Player
             Vector3 moveDirection = transform.right * input.x + transform.forward * input.y;
             moveDirection.Normalize();
 
-            _player.MovementEvent.Call(this,
+            _player.MovementEvent.Call(_player,
                 moveDirection != Vector3.zero ? new MovementEventArgs(true) : new MovementEventArgs(false));
 
             _characterController.Move(moveDirection * (_currentMoveSpeed * Time.deltaTime));
@@ -92,7 +93,7 @@ namespace Player
             if (_gainMomentumRoutine != null)
                 StopCoroutine(_gainMomentumRoutine);
             
-            _player.MovementEvent.Call(this, new MovementEventArgs(true, false));
+            _player.MovementEvent.Call(_player, new MovementEventArgs(true, false));
 
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _moveSpeed));
             _delayStaminaRecoverRoutine = StartCoroutine(DelayStaminaRecoverRoutine());
@@ -112,7 +113,7 @@ namespace Player
             }
 
             _staminaPercent += increaseValue;
-            _player.StaminaEvent.Call(this, new StaminaEventArgs(_staminaPercent));
+            _player.StaminaEvent.Call(_player, new StaminaEventArgs(_staminaPercent));
         }
 
         private IEnumerator SpeedTransitionRoutine(float startSpeed, float targetSpeed)
@@ -122,7 +123,7 @@ namespace Player
             while (elapsedTime <= _transitionBetweenMovementSpeedInSeconds)
             {
                 float t = elapsedTime / _transitionBetweenMovementSpeedInSeconds;
-                _currentMoveSpeed = Mathf.Lerp(startSpeed, targetSpeed, t);
+                _currentMoveSpeed = Mathf.Lerp(startSpeed, targetSpeed, InterpolateUtils.EaseInQuart(t));
                 
                 print(_currentMoveSpeed);
                 
