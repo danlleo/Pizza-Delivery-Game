@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace Player
@@ -16,7 +17,8 @@ namespace Player
         [SerializeField] private float _walkBobAmount = 0.05f;
         [SerializeField] private float _sprintBobSpeed = 18f;
         [SerializeField] private float _sprintBobAmount = 0.1f;
-
+        [SerializeField] private float _stopBobbingTimeInSeconds = .25f;
+        
         private float _defaultYPosition;
         private float _timer;
 
@@ -42,6 +44,9 @@ namespace Player
         {
             _isMoving = e.IsMoving;
             _isSprinting = e.IsSprinting;
+            
+            if (!_isMoving)
+                _playerCamera.transform.DOLocalMoveY(_defaultYPosition, _stopBobbingTimeInSeconds);
         }
 
         private void Update()
