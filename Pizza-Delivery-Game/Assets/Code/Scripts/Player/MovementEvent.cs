@@ -19,6 +19,11 @@ namespace Player
         public readonly bool IsMoving;
         public readonly bool IsSprinting;
 
+        public MovementEventArgs(bool isMoving)
+        {
+            IsMoving = isMoving;
+        }
+        
         public MovementEventArgs(bool isMoving, bool isSprinting)
         {
             IsMoving = isMoving;

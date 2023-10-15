@@ -36,7 +36,11 @@ namespace Player
             // that way we can move him forward or backwards, plus we add player's horizontal direction 
             // by horizontal input, to move him to the right or left
             Vector3 moveDirection = transform.right * input.x + transform.forward * input.y;
-            
+            moveDirection.Normalize();
+
+            _player.MovementEvent.Call(this,
+                moveDirection != Vector3.zero ? new MovementEventArgs(true) : new MovementEventArgs(false));
+
             _characterController.Move(moveDirection * (_moveSpeed * Time.deltaTime));
         }
 
@@ -46,6 +50,7 @@ namespace Player
         {
             _initialMoveSpeed = _moveSpeed;
             _moveSpeed *= _sprintSpeed;
+            _player.MovementEvent.Call(this, new MovementEventArgs(true, true));
         }
 
         public void Sprint()
@@ -72,6 +77,7 @@ namespace Player
                 StopCoroutine(_recoverStaminaRoutine);
             
             _moveSpeed = _initialMoveSpeed;
+            _player.MovementEvent.Call(this, new MovementEventArgs(true, false));
             _delayStaminaRecoverRoutine = StartCoroutine(DelayStaminaRecoverRoutine());
         }
 
