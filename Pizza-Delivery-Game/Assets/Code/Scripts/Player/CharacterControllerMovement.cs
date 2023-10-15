@@ -15,21 +15,23 @@ namespace Player
         [SerializeField] private float _sprintSpeed;
         [SerializeField] private float _maxStaminaPercent;
         [SerializeField] private float _staminaRecoverDelayInSeconds;
+        [SerializeField] private float _transitionBetweenMovementSpeedInSeconds;
         [SerializeField] private bool _sprintEnabled;
         
         private CharacterController _characterController;
-        
+
+        private Coroutine _gainMomentumRoutine;
         private Coroutine _delayStaminaRecoverRoutine;
         private Coroutine _recoverStaminaRoutine;
         
         private float _staminaPercent;
-        private float _initialMoveSpeed;
+        private float _currentMoveSpeed;
         
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
             _staminaPercent = _maxStaminaPercent;
-            _initialMoveSpeed = _moveSpeed;
+            _currentMoveSpeed = _moveSpeed;
         }
 
         public void Move(Vector2 input)
@@ -43,7 +45,7 @@ namespace Player
             _player.MovementEvent.Call(this,
                 moveDirection != Vector3.zero ? new MovementEventArgs(true) : new MovementEventArgs(false));
 
-            _characterController.Move(moveDirection * (_moveSpeed * Time.deltaTime));
+            _characterController.Move(moveDirection * (_currentMoveSpeed * Time.deltaTime));
         }
 
         #region Sprint
@@ -53,7 +55,8 @@ namespace Player
             if (!_sprintEnabled)
                 return;
             
-            _moveSpeed *= _sprintSpeed;
+            _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
+            
             _player.MovementEvent.Call(this, new MovementEventArgs(true, true));
         }
 
@@ -86,8 +89,12 @@ namespace Player
             if (_recoverStaminaRoutine != null)
                 StopCoroutine(_recoverStaminaRoutine);
             
-            _moveSpeed = _initialMoveSpeed;
+            if (_gainMomentumRoutine != null)
+                StopCoroutine(_gainMomentumRoutine);
+            
             _player.MovementEvent.Call(this, new MovementEventArgs(true, false));
+
+            _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _moveSpeed));
             _delayStaminaRecoverRoutine = StartCoroutine(DelayStaminaRecoverRoutine());
         }
 
@@ -108,6 +115,24 @@ namespace Player
             _player.StaminaEvent.Call(this, new StaminaEventArgs(_staminaPercent));
         }
 
+        private IEnumerator SpeedTransitionRoutine(float startSpeed, float targetSpeed)
+        {
+            var elapsedTime = 0f;
+
+            while (elapsedTime <= _transitionBetweenMovementSpeedInSeconds)
+            {
+                float t = elapsedTime / _transitionBetweenMovementSpeedInSeconds;
+                _currentMoveSpeed = Mathf.Lerp(startSpeed, targetSpeed, t);
+                
+                print(_currentMoveSpeed);
+                
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            _currentMoveSpeed = targetSpeed;
+        }
+        
         private IEnumerator RecoverStaminaRoutine()
         {
             while (_staminaPercent < _maxStaminaPercent)

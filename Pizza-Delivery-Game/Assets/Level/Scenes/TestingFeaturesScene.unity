@@ -2081,9 +2081,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 651793140}
   _moveSpeed: 5
-  _sprintSpeed: 2
+  _sprintSpeed: 10
   _maxStaminaPercent: 100
   _staminaRecoverDelayInSeconds: 1.5
+  _transitionBetweenMovementSpeedInSeconds: 0.725
   _sprintEnabled: 1
 --- !u!143 &651793136
 CharacterController:
