@@ -5,16 +5,16 @@ namespace Player
 {
     public class Interact : MonoBehaviour
     {
-        [Header("External references")]
+        [Header("External references")] 
+        [SerializeField] private Transform _raycastPointTransform;
         [SerializeField] private LayerMask _interactableLayerMask;
-        [SerializeField] private Camera _playerCamera;
         
         [Header("Settings")]
         [SerializeField] private float _interactDistance;
 
         private void Update()
         {
-            if (!Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward,
+            if (!Physics.Raycast(_raycastPointTransform.position, _raycastPointTransform.forward,
                     out RaycastHit hit, _interactDistance, _interactableLayerMask))
                 return;
 
@@ -28,7 +28,7 @@ namespace Player
 
         private void OnDrawGizmos()
         {
-            Debug.DrawLine(_playerCamera.transform.position, _playerCamera.transform.forward * _interactDistance, Color.green);
+            Debug.DrawRay(_raycastPointTransform.position, _raycastPointTransform.forward * _interactDistance);
         }
 
 #endif

@@ -15,6 +15,7 @@ namespace Player
         [SerializeField] private float _sprintSpeed;
         [SerializeField] private float _maxStaminaPercent;
         [SerializeField] private float _staminaRecoverDelayInSeconds;
+        [SerializeField] private bool _sprintEnabled;
         
         private CharacterController _characterController;
         
@@ -28,6 +29,7 @@ namespace Player
         {
             _characterController = GetComponent<CharacterController>();
             _staminaPercent = _maxStaminaPercent;
+            _initialMoveSpeed = _moveSpeed;
         }
 
         public void Move(Vector2 input)
@@ -48,13 +50,18 @@ namespace Player
 
         public void BeginSprint()
         {
-            _initialMoveSpeed = _moveSpeed;
+            if (!_sprintEnabled)
+                return;
+            
             _moveSpeed *= _sprintSpeed;
             _player.MovementEvent.Call(this, new MovementEventArgs(true, true));
         }
 
         public void Sprint()
         {
+            if (!_sprintEnabled)
+                return;
+            
             if (_delayStaminaRecoverRoutine != null)
                 StopCoroutine(_delayStaminaRecoverRoutine);
             
@@ -70,6 +77,9 @@ namespace Player
         
         public void StopSprint()
         {
+            if (!_sprintEnabled)
+                return;
+            
             if (_delayStaminaRecoverRoutine != null)
                 StopCoroutine(_delayStaminaRecoverRoutine);
             
