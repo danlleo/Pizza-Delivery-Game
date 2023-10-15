@@ -12,12 +12,12 @@ namespace UI
         
         private void OnEnable()
         {
-            _player._staminaEvent.Event += StaminaEvent;
+            _player.StaminaEvent.Event += StaminaEvent;
         }
 
         private void OnDisable()
         {
-            _player._staminaEvent.Event -= StaminaEvent;
+            _player.StaminaEvent.Event -= StaminaEvent;
         }
 
         private void StaminaEvent(object sender, StaminaEventArgs e)

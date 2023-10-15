@@ -1,16 +1,18 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Player
 {
     [RequireComponent(typeof(StaminaEvent))]
+    [RequireComponent(typeof(MovementEvent))]
     public class Player : MonoBehaviour
     {
-        [FormerlySerializedAs("SprintingEvent")] public StaminaEvent _staminaEvent;
-
+        [HideInInspector] public StaminaEvent StaminaEvent;
+        [HideInInspector] public MovementEvent MovementEvent;
+        
         public void Awake()
         {
-            _staminaEvent = GetComponent<StaminaEvent>();
+            StaminaEvent = GetComponent<StaminaEvent>();
+            MovementEvent = GetComponent<MovementEvent>();
         }
     }
 }

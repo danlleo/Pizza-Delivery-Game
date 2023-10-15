@@ -13,22 +13,21 @@ namespace Player
         [Header("Settings")]
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _sprintSpeed;
+        [SerializeField] private float _maxStaminaPercent;
         [SerializeField] private float _staminaRecoverDelayInSeconds;
         
         private CharacterController _characterController;
         
-        private Coroutine _recoverStaminaRoutine;
         private Coroutine _delayStaminaRecoverRoutine;
+        private Coroutine _recoverStaminaRoutine;
         
-        private bool _canSprint = true;
-        
-        private float _maxStaminaPercent = 100f;
-        private float _staminaPercent = 100f;
+        private float _staminaPercent;
         private float _initialMoveSpeed;
         
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
+            _staminaPercent = _maxStaminaPercent;
         }
 
         public void Move(Vector2 input)
@@ -45,27 +44,12 @@ namespace Player
 
         public void BeginSprint()
         {
-            if (!_canSprint)
-                return;
-            
-            if (_recoverStaminaRoutine != null)
-                StopCoroutine(_recoverStaminaRoutine);
-            
-            if (_delayStaminaRecoverRoutine != null)
-                StopCoroutine(_delayStaminaRecoverRoutine);
-            
             _initialMoveSpeed = _moveSpeed;
             _moveSpeed *= _sprintSpeed;
         }
 
         public void Sprint()
         {
-            if (!_canSprint)
-                return;
-            
-            if (_recoverStaminaRoutine != null)
-                StopCoroutine(_recoverStaminaRoutine);
-            
             if (_delayStaminaRecoverRoutine != null)
                 StopCoroutine(_delayStaminaRecoverRoutine);
             
@@ -76,19 +60,18 @@ namespace Player
             }
             
             DecreaseStaminaOverTimeBy(.20f);
-            _player._staminaEvent.Call(this, new StaminaEventArgs(_staminaPercent));
+            _player.StaminaEvent.Call(this, new StaminaEventArgs(_staminaPercent));
         }
         
         public void StopSprint()
         {
-            _moveSpeed = _initialMoveSpeed;
+            if (_delayStaminaRecoverRoutine != null)
+                StopCoroutine(_delayStaminaRecoverRoutine);
             
             if (_recoverStaminaRoutine != null)
                 StopCoroutine(_recoverStaminaRoutine);
             
-            if (_delayStaminaRecoverRoutine != null)
-                StopCoroutine(_delayStaminaRecoverRoutine);
-            
+            _moveSpeed = _initialMoveSpeed;
             _delayStaminaRecoverRoutine = StartCoroutine(DelayStaminaRecoverRoutine());
         }
 
@@ -106,7 +89,7 @@ namespace Player
             }
 
             _staminaPercent += increaseValue;
-            _player._staminaEvent.Call(this, new StaminaEventArgs(_staminaPercent));
+            _player.StaminaEvent.Call(this, new StaminaEventArgs(_staminaPercent));
         }
 
         private IEnumerator RecoverStaminaRoutine()
@@ -121,7 +104,7 @@ namespace Player
         private IEnumerator DelayStaminaRecoverRoutine()
         {
             yield return new WaitForSeconds(_staminaRecoverDelayInSeconds);
-            StartCoroutine(RecoverStaminaRoutine());
+            _recoverStaminaRoutine = StartCoroutine(RecoverStaminaRoutine());
         }
 
         #endregion
