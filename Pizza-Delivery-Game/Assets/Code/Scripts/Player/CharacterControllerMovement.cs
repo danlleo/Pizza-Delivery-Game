@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
-using System.Numerics;
 using UnityEngine;
 using Utilities;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Player
 {

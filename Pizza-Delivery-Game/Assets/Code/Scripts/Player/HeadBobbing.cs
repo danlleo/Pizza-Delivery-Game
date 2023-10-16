@@ -24,6 +24,7 @@ namespace Player
 
         private bool _isMoving;
         private bool _isSprinting;
+        private bool _cameraAtDefaultPosition;
 
         private void Awake()
         {
@@ -40,28 +41,41 @@ namespace Player
             _player.MovementEvent.Event -= Movement_Event;
         }
 
-        private void Movement_Event(object sender, MovementEventArgs e)
-        {
-            _isMoving = e.IsMoving;
-            _isSprinting = e.IsSprinting;
-            
-            if (!_isMoving)
-                _playerCamera.transform.DOLocalMoveY(_defaultYPosition, _stopBobbingTimeInSeconds);
-        }
-
         private void Update()
         {
             if (!_enabled) return;
             
             HandleHeadBob();   
         }
+        private void Movement_Event(object sender, MovementEventArgs e)
+        {
+            _isMoving = e.IsMoving;
+            _isSprinting = e.IsSprinting;
 
+            if (_isMoving)
+            {
+                _cameraAtDefaultPosition = false;
+                return;
+            }
+
+            if (_cameraAtDefaultPosition) return;
+            
+            ResetCameraPosition();
+        }
+
+        private void ResetCameraPosition()
+        {
+            _playerCamera.transform.DOLocalMoveY(_defaultYPosition, _stopBobbingTimeInSeconds);
+            _cameraAtDefaultPosition = true;
+        }
+        
         private void HandleHeadBob()
         {
             if (!_characterController.isGrounded) return;
             if (!_isMoving) return;
             
             _timer += Time.deltaTime * (_isSprinting ? _sprintBobSpeed : _walkBobSpeed);
+            
             _playerCamera.transform.localPosition = new Vector3(
                 _playerCamera.transform.localPosition.x,
                 _defaultYPosition + Mathf.Sin(_timer) * (_isSprinting ? _sprintBobAmount : _walkBobAmount),
