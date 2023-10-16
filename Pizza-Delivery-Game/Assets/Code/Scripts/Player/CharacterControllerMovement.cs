@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
 using Utilities;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Player
 {
@@ -27,6 +31,8 @@ namespace Player
         
         private float _staminaPercent;
         private float _currentMoveSpeed;
+
+        private bool _canSprint;
         
         private void Awake()
         {
@@ -47,6 +53,7 @@ namespace Player
                 moveDirection != Vector3.zero ? new MovementEventArgs(true) : new MovementEventArgs(false));
 
             _characterController.Move(moveDirection * (_currentMoveSpeed * Time.deltaTime));
+            _canSprint = input != Vector2.zero;
         }
 
         #region Sprint
@@ -54,6 +61,9 @@ namespace Player
         public void BeginSprint()
         {
             if (!_sprintEnabled)
+                return;
+
+            if (!_canSprint)
                 return;
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
@@ -64,6 +74,9 @@ namespace Player
         public void Sprint()
         {
             if (!_sprintEnabled)
+                return;
+
+            if (!_canSprint)
                 return;
             
             if (_delayStaminaRecoverRoutine != null)
@@ -124,9 +137,6 @@ namespace Player
             {
                 float t = elapsedTime / _transitionBetweenMovementSpeedInSeconds;
                 _currentMoveSpeed = Mathf.Lerp(startSpeed, targetSpeed, InterpolateUtils.EaseInQuart(t));
-                
-                print(_currentMoveSpeed);
-                
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }

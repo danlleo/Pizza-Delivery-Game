@@ -8,8 +8,8 @@ namespace Misc
         
         private void LateUpdate()
         {
-            float mouseX = Input.GetAxis(Axis.MouseX);
-            float mouseY = Input.GetAxis(Axis.MouseY);
+            float mouseX = Input.GetAxisRaw(Axis.MouseX);
+            float mouseY = Input.GetAxisRaw(Axis.MouseY);
 
             var rotateDirection = new Vector2(mouseX, mouseY);
             
