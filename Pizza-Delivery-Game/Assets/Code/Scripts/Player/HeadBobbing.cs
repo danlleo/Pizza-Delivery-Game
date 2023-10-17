@@ -7,7 +7,7 @@ namespace Player
     {
         [Header("External references")] 
         [SerializeField] private Player _player;
-        [SerializeField] private CharacterController _characterController;
+        [SerializeField] private CharacterControllerMovement _characterControllerMovement;
         [SerializeField] private Camera _playerCamera;
         
         [Header("Settings")]
@@ -71,8 +71,8 @@ namespace Player
         
         private void HandleHeadBob()
         {
-            if (!_characterController.isGrounded) return;
             if (!_isMoving) return;
+            if (!_characterControllerMovement.IsGrounded()) return;
             
             _timer += Time.deltaTime * (_isSprinting ? _sprintBobSpeed : _walkBobSpeed);
             

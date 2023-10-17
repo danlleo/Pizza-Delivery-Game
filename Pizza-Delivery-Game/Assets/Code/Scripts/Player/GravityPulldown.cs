@@ -6,7 +6,11 @@ namespace Player
 {
     public class GravityPulldown : MonoBehaviour
     {
+        [Header("External References")]
+        [SerializeField] private CharacterControllerMovement _characterControllerMovement;
         [SerializeField] private CharacterController _characterController;
+        
+        [Header("Settings")]
         [SerializeField] private GravityType _gravityType;
         
         private Vector3 _velocity;
@@ -45,7 +49,7 @@ namespace Player
 
         private void Update()
         {
-            if (_characterController.isGrounded)
+            if (_characterControllerMovement.IsGrounded() && _velocity.y < 0)
             {
                 ResetVelocity();
                 return;
@@ -61,7 +65,7 @@ namespace Player
         }
 
         private void ResetVelocity()
-            => _velocity = Vector3.zero;
+            => _velocity.y = -2f;
 
         private void SetGravityValue(float value)
             => _gravityValue = -value;

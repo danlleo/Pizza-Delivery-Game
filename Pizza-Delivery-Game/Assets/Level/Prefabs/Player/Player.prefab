@@ -181,6 +181,7 @@ Transform:
   m_Children:
   - {fileID: 6401409662826238238}
   - {fileID: 3059757119039547287}
+  - {fileID: 3143864467076090259}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &589676692940274148
@@ -251,6 +252,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
+  _groundRaycastTransform: {fileID: 3143864467076090259}
+  _walkableAreaLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _groundDetectRadius: 1
   _moveSpeed: 5
   _sprintSpeed: 10
   _maxStaminaPercent: 100
@@ -298,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e331b6d0eb81445a0de0118d525428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterControllerMovement: {fileID: 8692333199270675001}
   _characterController: {fileID: 589676692940274148}
   _gravityType: 1
 --- !u!114 &8260902047022013800
@@ -313,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
-  _characterController: {fileID: 589676692940274148}
+  _characterControllerMovement: {fileID: 8692333199270675001}
   _playerCamera: {fileID: 8686963950574366201}
   _enabled: 1
   _walkBobSpeed: 14
@@ -375,6 +382,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504e9d7ad79beeb4f8a73ebddaca290e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4572496924224856881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3143864467076090259}
+  m_Layer: 0
+  m_Name: GroundRaycastPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3143864467076090259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572496924224856881}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 755997368146574876}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5655070804146270323
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1989694867141719978}
   m_Layer: 0
-  m_Name: RaycastPoint
+  m_Name: InteractRaycastPoint
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

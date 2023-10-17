@@ -10,8 +10,12 @@ namespace Player
     {
         [Header("External References")]
         [SerializeField] private Player _player;
+        [SerializeField] private Transform _groundRaycastTransform;
+
+        [Header("Settings")] 
+        [SerializeField] private LayerMask _walkableAreaLayerMask;
         
-        [Header("Settings")]
+        [SerializeField, Range(0f, 5f)] private float _groundDetectRadius; 
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _sprintSpeed;
         [SerializeField] private float _maxStaminaPercent;
@@ -52,6 +56,11 @@ namespace Player
             _canSprint = input != Vector2.zero;
         }
 
+        public bool IsGrounded()
+        {
+            return Physics.CheckSphere(_groundRaycastTransform.position, _groundDetectRadius, _walkableAreaLayerMask);
+        }
+        
         #region Sprint
 
         public void BeginSprint()
@@ -107,7 +116,7 @@ namespace Player
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _moveSpeed));
             _delayStaminaRecoverRoutine = StartCoroutine(DelayStaminaRecoverRoutine());
         }
-
+        
         private void DecreaseStaminaOverTimeBy(float decreaseValue)
         {
             _staminaPercent -= decreaseValue;
