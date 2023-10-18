@@ -7,13 +7,5 @@ namespace Sounds.Audio
     {
         [SerializeField] private SoundClipsGroupSO _soundClipsGroup;
         [SerializeField] private AudioSource _audioSource;
-        
-        private void Start()
-        {
-            if (_soundClipsGroup.TryGetSoundGroupByType(SoundGroupType.WoodSurfaceSteps, out SoundClipsGroupStruct? soundClipsGroupStruct))
-            {
-                print("Found group");
-            }
-        }
     }
 }

@@ -8,9 +8,7 @@ namespace Sounds
     public class SoundClipsGroupSO : ScriptableObject
     {
         [SerializeField] private List<SoundClipsGroupStruct> _groupItems;
-
-        public List<SoundClipsGroupStruct> GroupItems => _groupItems;
-
+        
         public bool TryGetSoundGroupByType(SoundGroupType soundGroupType, out SoundClipsGroupStruct? soundClipsGroupStruct)
         {
             foreach (SoundClipsGroupStruct soundClipsGroup in _groupItems)
