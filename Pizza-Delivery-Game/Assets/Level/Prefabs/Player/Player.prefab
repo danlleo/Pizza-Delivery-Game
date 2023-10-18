@@ -76,7 +76,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: d4c671a5b598f7d42869e1590a521ac4, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 8049610283373172068}
   - component: {fileID: 8138282122625772536}
   - component: {fileID: 1828364634665443464}
+  - component: {fileID: 3621443348358591752}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -225,6 +226,7 @@ MonoBehaviour:
   StaminaEvent: {fileID: 0}
   MovementEvent: {fileID: 0}
   HoveringOverInteractableEvent: {fileID: 0}
+  StepEvent: {fileID: 0}
 --- !u!114 &3624578203164401176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +259,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _groundDetectRadius: 1
+  _stepTimeDelayInSeconds: 0.5
   _moveSpeed: 5
   _sprintSpeed: 10
   _maxStaminaPercent: 100
@@ -380,6 +383,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 504e9d7ad79beeb4f8a73ebddaca290e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3621443348358591752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173784742728827568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2263295134944659b5bbfb804001b536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4572496924224856881

@@ -15,7 +15,8 @@ namespace Player
         [Header("Settings")] 
         [SerializeField] private LayerMask _walkableAreaLayerMask;
         
-        [SerializeField, Range(0f, 5f)] private float _groundDetectRadius; 
+        [SerializeField, Range(0f, 5f)] private float _groundDetectRadius;
+        [SerializeField, Range(0f, 2f)] private float _stepTimeDelayInSeconds;
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _sprintSpeed;
         [SerializeField] private float _maxStaminaPercent;
@@ -31,6 +32,7 @@ namespace Player
         
         private float _staminaPercent;
         private float _currentMoveSpeed;
+        private float _stepDelayTimer;
 
         private bool _canSprint;
         
@@ -39,6 +41,16 @@ namespace Player
             _characterController = GetComponent<CharacterController>();
             _staminaPercent = _maxStaminaPercent;
             _currentMoveSpeed = _moveSpeed;
+        }
+
+        private void OnEnable()
+        {
+            _player.MovementEvent.Event += Movement_Event;
+        }
+
+        private void OnDisable()
+        {
+            _player.MovementEvent.Event -= Movement_Event;
         }
 
         public void Move(Vector2 input)
@@ -165,5 +177,31 @@ namespace Player
         }
 
         #endregion
+
+        private void MakeStep(float additive)
+        {
+            _stepDelayTimer += Time.deltaTime + additive;
+
+            if (!(_stepDelayTimer >= _stepTimeDelayInSeconds)) return;
+            
+            _player.StepEvent.Call(this);
+            _stepDelayTimer = 0f;
+        }
+        
+        private void Movement_Event(object sender, MovementEventArgs e)
+        {
+            if (!IsGrounded()) return;
+
+            if (e.IsSprinting)
+            {
+                MakeStep(0.15f);
+                return;
+            }
+            
+            if (e.IsMoving)
+            {
+                MakeStep(0.075f);    
+            }
+        }
     }
 }
