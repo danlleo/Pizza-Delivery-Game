@@ -1,3 +1,4 @@
+using Enums.Sounds;
 using UnityEngine;
 
 namespace Sounds
@@ -5,10 +6,10 @@ namespace Sounds
     [System.Serializable]
     public struct SoundClipsGroupStruct
     {
-        [SerializeField] private string _groupName;
+        [SerializeField] private SoundGroupType _groupType;
         [SerializeField] private SoundClipsSO[] _soundClipsGroup;
 
-        public string GroupName => _groupName;
+        public SoundGroupType SoundGroupType => _groupType;
         public SoundClipsSO[] SoundClipsGroup => _soundClipsGroup;
     }
 }

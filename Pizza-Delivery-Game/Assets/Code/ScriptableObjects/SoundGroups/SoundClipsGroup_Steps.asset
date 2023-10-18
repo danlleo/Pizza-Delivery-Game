@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c75ca3e50881c4a8f96d5a7c4b87fc, type: 3}
   m_Name: SoundClipsGroup_Steps
   m_EditorClassIdentifier: 
-  _soundsClipsGroups:
-  - _groupName: Wood Surface Steps
+  _groupItems:
+  - _groupType: 0
     _soundClipsGroup:
-    - {fileID: 11400000, guid: 9e17077b3faa6ac4cbd297cc1e527972, type: 2}
     - {fileID: 11400000, guid: 293ba500271717b469f4dc0c32e9eb12, type: 2}
-  - _groupName: Grass Surface Steps
+    - {fileID: 11400000, guid: 9e17077b3faa6ac4cbd297cc1e527972, type: 2}
+  - _groupType: 1
     _soundClipsGroup:
-    - {fileID: 11400000, guid: 782309ae633a86840aa0dd2e551add89, type: 2}
     - {fileID: 11400000, guid: 7bd9839316235bd48b0d565af2442405, type: 2}
-  - _groupName: Metal Surface Steps
+    - {fileID: 11400000, guid: 782309ae633a86840aa0dd2e551add89, type: 2}
+  - _groupType: 2
     _soundClipsGroup:
-    - {fileID: 11400000, guid: c73e50071c33bc2419032cecb3815c0a, type: 2}
     - {fileID: 11400000, guid: 4a8e73d649190c9439304e57fc577d5f, type: 2}
-  - _groupName: Tile Surface Steps
+    - {fileID: 11400000, guid: c73e50071c33bc2419032cecb3815c0a, type: 2}
+  - _groupType: 3
     _soundClipsGroup:
-    - {fileID: 11400000, guid: 7454babd368ad864db6eb277830401a7, type: 2}
     - {fileID: 11400000, guid: 3c9d7780652c39545afb20bae8d98c6c, type: 2}
+    - {fileID: 11400000, guid: 7454babd368ad864db6eb277830401a7, type: 2}

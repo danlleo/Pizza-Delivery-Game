@@ -1,3 +1,4 @@
+using Enums.Sounds;
 using UnityEngine;
 
 namespace Sounds.Audio
@@ -9,7 +10,10 @@ namespace Sounds.Audio
         
         private void Start()
         {
-            
+            if (_soundClipsGroup.TryGetSoundGroupByType(SoundGroupType.WoodSurfaceSteps, out SoundClipsGroupStruct? soundClipsGroupStruct))
+            {
+                print("Found group");
+            }
         }
     }
 }
