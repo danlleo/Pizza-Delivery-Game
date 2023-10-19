@@ -508,9 +508,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc559a5ccb33b34ca14d5f93d26e55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 7903500282913295232}
   _player: {fileID: 1418063800019633332}
-  _stepClipsSO: {fileID: 11400000, guid: 7454babd368ad864db6eb277830401a7, type: 2}
+  _audioSource: {fileID: 7903500282913295232}
+  _tileStepClipsSO: {fileID: 11400000, guid: 7454babd368ad864db6eb277830401a7, type: 2}
+  _woodenStepClipsSO: {fileID: 11400000, guid: 9e17077b3faa6ac4cbd297cc1e527972, type: 2}
+  _metalStepClipsSO: {fileID: 11400000, guid: c73e50071c33bc2419032cecb3815c0a, type: 2}
+  _grassStepClipsSO: {fileID: 11400000, guid: 782309ae633a86840aa0dd2e551add89, type: 2}
 --- !u!1 &4572496924224856881
 GameObject:
   m_ObjectHideFlags: 0

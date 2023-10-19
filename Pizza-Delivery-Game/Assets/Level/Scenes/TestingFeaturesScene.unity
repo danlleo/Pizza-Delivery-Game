@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 33915796}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 100309725}
   m_Layer: 7
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 161939502}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 174206279}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -785,7 +785,7 @@ GameObject:
   - component: {fileID: 231014004}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -891,7 +891,7 @@ GameObject:
   - component: {fileID: 239540009}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -997,7 +997,7 @@ GameObject:
   - component: {fileID: 239718900}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1103,7 +1103,7 @@ GameObject:
   - component: {fileID: 335165611}
   m_Layer: 7
   m_Name: Cube (4)
-  m_TagString: Untagged
+  m_TagString: Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1313,7 +1313,7 @@ GameObject:
   - component: {fileID: 360127094}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1421,7 +1421,7 @@ GameObject:
   - component: {fileID: 367977156}
   m_Layer: 7
   m_Name: Stairs (3)
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3316,7 +3316,7 @@ GameObject:
   - component: {fileID: 414159399}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3422,7 +3422,7 @@ GameObject:
   - component: {fileID: 432294543}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3693,7 +3693,7 @@ GameObject:
   - component: {fileID: 617952096}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3976,7 +3976,7 @@ GameObject:
   - component: {fileID: 756467646}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4082,7 +4082,7 @@ GameObject:
   - component: {fileID: 789155665}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4188,7 +4188,7 @@ GameObject:
   - component: {fileID: 789354687}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4537,7 +4537,7 @@ GameObject:
   - component: {fileID: 856539778}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4643,7 +4643,7 @@ GameObject:
   - component: {fileID: 1056832043}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4914,7 +4914,7 @@ GameObject:
   - component: {fileID: 1062296889}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5185,7 +5185,7 @@ GameObject:
   - component: {fileID: 1071515257}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5291,7 +5291,7 @@ GameObject:
   - component: {fileID: 1091101912}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5680,7 +5680,7 @@ GameObject:
   - component: {fileID: 1219740570}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5953,7 +5953,7 @@ GameObject:
   - component: {fileID: 1295779746}
   m_Layer: 7
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6304,7 +6304,7 @@ GameObject:
   - component: {fileID: 1337080589}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6412,7 +6412,7 @@ GameObject:
   - component: {fileID: 1348033785}
   m_Layer: 7
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6765,7 +6765,7 @@ GameObject:
   - component: {fileID: 1401466225}
   m_Layer: 7
   m_Name: Stairs (1)
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8660,7 +8660,7 @@ GameObject:
   - component: {fileID: 1409856057}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8766,7 +8766,7 @@ GameObject:
   - component: {fileID: 1416187277}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8872,7 +8872,7 @@ GameObject:
   - component: {fileID: 1425817419}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8978,7 +8978,7 @@ GameObject:
   - component: {fileID: 1457648639}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9250,7 +9250,7 @@ GameObject:
   - component: {fileID: 1469252536}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9358,7 +9358,7 @@ GameObject:
   - component: {fileID: 1475580065}
   m_Layer: 0
   m_Name: Cube (10)
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10062,7 +10062,7 @@ GameObject:
   - component: {fileID: 1527026965}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10273,7 +10273,7 @@ GameObject:
   - component: {fileID: 1553711300}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10379,7 +10379,7 @@ GameObject:
   - component: {fileID: 1563223283}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10487,7 +10487,7 @@ GameObject:
   - component: {fileID: 1568009667}
   m_Layer: 7
   m_Name: Stairs (2)
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12433,7 +12433,7 @@ GameObject:
   - component: {fileID: 1627534403}
   m_Layer: 7
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12538,7 +12538,7 @@ GameObject:
   - component: {fileID: 1638689021}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12875,7 +12875,7 @@ GameObject:
   - component: {fileID: 1755799467}
   m_Layer: 7
   m_Name: Stairs
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14905,7 +14905,7 @@ GameObject:
   - component: {fileID: 1827596797}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15011,7 +15011,7 @@ GameObject:
   - component: {fileID: 1834458679}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15117,7 +15117,7 @@ GameObject:
   - component: {fileID: 1868011387}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15223,7 +15223,7 @@ GameObject:
   - component: {fileID: 1887018399}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15329,7 +15329,7 @@ GameObject:
   - component: {fileID: 1923042472}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15577,7 +15577,7 @@ GameObject:
   - component: {fileID: 2059364752}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16179,7 +16179,7 @@ GameObject:
   - component: {fileID: 2121539100}
   m_Layer: 7
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

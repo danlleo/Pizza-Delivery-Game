@@ -194,8 +194,13 @@ namespace Player
 
             if (!(_footstepTimer <= 0)) return;
             
-            _player.StepEvent.Call(_player);
+            // Detect surfaces first
+            Collider[] detectedColliders = Physics.OverlapSphere(_groundRaycastTransform.position, _groundDetectRadius,
+                _walkableAreaLayerMask);
 
+            if (detectedColliders.Length > 0)
+                _player.StepEvent.Call(_player, new StepEventArgs(detectedColliders[0].tag));
+            
             _footstepTimer = e.IsSprinting ? _sprintingFootstepTimeInSeconds : _walkingFootstepTimeInSeconds;
         }
 
