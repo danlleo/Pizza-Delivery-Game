@@ -4,7 +4,7 @@ namespace Player
 {
     public class MouseRotation : MonoBehaviour
     {
-        [Header("External References")]
+        [Header("External references")]
         [SerializeField] private Player _player;
         [SerializeField] private Camera _camera;
         

@@ -1,9 +1,9 @@
 using UnityEngine;
-using Misc;
 
 namespace Sounds
 {
-    public abstract class AudioPlayer : Singleton<AudioPlayer>
+    [DisallowMultipleComponent]
+    public class AudioPlayer : MonoBehaviour
     {
         public void PlaySound(AudioSource audioSource, AudioClip audioClip, float volume = 1f)
         {

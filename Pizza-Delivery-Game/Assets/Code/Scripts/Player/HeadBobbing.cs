@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -13,18 +14,20 @@ namespace Player
         [Header("Settings")]
         [SerializeField] private bool _enabled = true;
 
-        [SerializeField] private float _walkBobSpeed = 14f;
-        [SerializeField] private float _walkBobAmount = 0.05f;
-        [SerializeField] private float _sprintBobSpeed = 18f;
-        [SerializeField] private float _sprintBobAmount = 0.1f;
+        [FormerlySerializedAs("_walkBobSpeed")] [SerializeField] private float _walkBobFrequency = 14f;
+        [FormerlySerializedAs("_walkBobAmount")] [SerializeField] private float _walkBobAmplitude = 0.05f;
+        [FormerlySerializedAs("_sprintBobSpeed")] [SerializeField] private float _sprintBobFrequency = 18f;
+        [FormerlySerializedAs("_sprintBobAmount")] [SerializeField] private float _sprintBobAmplitude = 0.1f;
         [SerializeField] private float _stopBobbingTimeInSeconds = .25f;
-        
+
         private float _defaultYPosition;
+        private float _previousCameraYValue;
         private float _timer;
 
         private bool _isMoving;
         private bool _isSprinting;
         private bool _cameraAtDefaultPosition;
+        private bool _reachedPickHeight;
 
         private void Awake()
         {
@@ -74,11 +77,11 @@ namespace Player
             if (!_isMoving) return;
             if (!_characterControllerMovement.IsGrounded()) return;
             
-            _timer += Time.deltaTime * (_isSprinting ? _sprintBobSpeed : _walkBobSpeed);
+            _timer += Time.deltaTime * (_isSprinting ? _sprintBobFrequency : _walkBobFrequency);
             
             _playerCamera.transform.localPosition = new Vector3(
                 _playerCamera.transform.localPosition.x,
-                _defaultYPosition + Mathf.Sin(_timer) * (_isSprinting ? _sprintBobAmount : _walkBobAmount),
+                _defaultYPosition + Mathf.Sin(_timer) * (_isSprinting ? _sprintBobAmplitude : _walkBobAmplitude),
                 _playerCamera.transform.localPosition.z
             );
         }

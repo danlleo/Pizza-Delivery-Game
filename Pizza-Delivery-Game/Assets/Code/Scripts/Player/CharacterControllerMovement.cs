@@ -16,12 +16,13 @@ namespace Player
         [SerializeField] private LayerMask _walkableAreaLayerMask;
         
         [SerializeField, Range(0f, 5f)] private float _groundDetectRadius;
-        [SerializeField, Range(0f, 2f)] private float _stepTimeDelayInSeconds;
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _sprintSpeed;
         [SerializeField] private float _maxStaminaPercent;
         [SerializeField] private float _staminaRecoverDelayInSeconds;
         [SerializeField] private float _transitionBetweenMovementSpeedInSeconds;
+        [SerializeField] private float _walkingFootstepTimeInSeconds;
+        [SerializeField] private float _sprintingFootstepTimeInSeconds;
         [SerializeField] private bool _sprintEnabled;
         
         private CharacterController _characterController;
@@ -33,6 +34,7 @@ namespace Player
         private float _staminaPercent;
         private float _currentMoveSpeed;
         private float _stepDelayTimer;
+        private float _footstepTimer;
 
         private bool _canSprint;
         
@@ -72,7 +74,7 @@ namespace Player
         {
             return Physics.CheckSphere(_groundRaycastTransform.position, _groundDetectRadius, _walkableAreaLayerMask);
         }
-        
+
         #region Sprint
 
         public void BeginSprint()
@@ -177,31 +179,27 @@ namespace Player
         }
 
         #endregion
-
-        private void MakeStep(float additive)
-        {
-            _stepDelayTimer += Time.deltaTime + additive;
-
-            if (!(_stepDelayTimer >= _stepTimeDelayInSeconds)) return;
-            
-            _player.StepEvent.Call(this);
-            _stepDelayTimer = 0f;
-        }
         
         private void Movement_Event(object sender, MovementEventArgs e)
         {
             if (!IsGrounded()) return;
-
-            if (e.IsSprinting)
+            
+            if (!e.IsMoving)
             {
-                MakeStep(0.15f);
+                ResetFootstepTimer();
                 return;
             }
             
-            if (e.IsMoving)
-            {
-                MakeStep(0.075f);    
-            }
+            _footstepTimer -= Time.deltaTime;
+
+            if (!(_footstepTimer <= 0)) return;
+            
+            _player.StepEvent.Call(_player);
+
+            _footstepTimer = e.IsSprinting ? _sprintingFootstepTimeInSeconds : _walkingFootstepTimeInSeconds;
         }
+
+        private void ResetFootstepTimer()
+            => _footstepTimer = 0f;
     }
 }

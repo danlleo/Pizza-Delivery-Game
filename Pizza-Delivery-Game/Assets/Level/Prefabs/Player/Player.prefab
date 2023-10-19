@@ -356,13 +356,14 @@ MonoBehaviour:
   _walkableAreaLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  _groundDetectRadius: 1
-  _stepTimeDelayInSeconds: 0.5
+  _groundDetectRadius: 0.25
   _moveSpeed: 5
   _sprintSpeed: 10
   _maxStaminaPercent: 100
   _staminaRecoverDelayInSeconds: 1.5
   _transitionBetweenMovementSpeedInSeconds: 0.725
+  _walkingFootstepTimeInSeconds: 0.5
+  _sprintingFootstepTimeInSeconds: 0.175
   _sprintEnabled: 1
 --- !u!114 &8790912778867131809
 MonoBehaviour:
@@ -424,10 +425,10 @@ MonoBehaviour:
   _characterControllerMovement: {fileID: 8692333199270675001}
   _playerCamera: {fileID: 8686963950574366201}
   _enabled: 1
-  _walkBobSpeed: 14
-  _walkBobAmount: 0.05
-  _sprintBobSpeed: 18
-  _sprintBobAmount: 0.1
+  _walkBobFrequency: 14
+  _walkBobAmplitude: 0.05
+  _sprintBobFrequency: 18
+  _sprintBobAmplitude: 0.1
   _stopBobbingTimeInSeconds: 0.25
 --- !u!114 &310921378686701003
 MonoBehaviour:
@@ -508,6 +509,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 7903500282913295232}
+  _player: {fileID: 1418063800019633332}
+  _stepClipsSO: {fileID: 11400000, guid: 7454babd368ad864db6eb277830401a7, type: 2}
 --- !u!1 &4572496924224856881
 GameObject:
   m_ObjectHideFlags: 0

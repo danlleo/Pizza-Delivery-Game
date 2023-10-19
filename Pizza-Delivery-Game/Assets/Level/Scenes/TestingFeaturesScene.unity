@@ -4508,6 +4508,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7903500282913295232, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8686963950574366201, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
         type: 3}
       propertyPath: m_TargetTexture
@@ -15542,7 +15547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c5a25956e94b44093ac4dadfbac68b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundClipsGroup: {fileID: 11400000, guid: bb394c2c35d5b7c4d8e6512b72ffdc2f, type: 2}
   _audioSource: {fileID: 2034735488}
 --- !u!4 &2034735490
 Transform:

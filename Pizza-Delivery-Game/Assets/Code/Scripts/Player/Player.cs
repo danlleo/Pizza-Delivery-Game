@@ -6,6 +6,7 @@ namespace Player
     [RequireComponent(typeof(MovementEvent))]
     [RequireComponent(typeof(HoveringOverInteractableEvent))]
     [RequireComponent(typeof(StepEvent))]
+    [DisallowMultipleComponent]
     public class Player : MonoBehaviour
     {
         [HideInInspector] public StaminaEvent StaminaEvent;
