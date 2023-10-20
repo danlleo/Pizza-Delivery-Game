@@ -25,6 +25,7 @@ namespace Player
         
         [Space(10)]
         [SerializeField] private float _stopBobbingTimeInSeconds = .25f;
+        [SerializeField] private float _bobbingSmoothTime = 12.5f;
         
         [Space(10)]
         [SerializeField] private bool _headBobbingEnabled = true;
@@ -32,7 +33,8 @@ namespace Player
         private float _defaultYPosition;
         private float _defaultXPosition;
         private float _previousCameraYValue;
-        private float _timer;
+        private float _timerX;
+        private float _timerY;
 
         private bool _isMoving;
         private bool _isSprinting;
@@ -65,8 +67,6 @@ namespace Player
         {
             _isMoving = e.IsMoving;
             _isSprinting = e.IsSprinting;
-
-            print(_isSprinting);
             
             if (_isMoving)
             {
@@ -90,14 +90,21 @@ namespace Player
         {
             if (!_isMoving) return;
             if (!_characterControllerMovement.IsGrounded()) return;
-            
-            _timer += Time.deltaTime * (_isSprinting ? _sprintBobVerticalFrequency : _walkBobVerticalFrequency);
 
+            _timerX += Time.deltaTime * (_isSprinting ? _sprintBobHorizontalFrequency : _walkBobHorizontalFrequency);
+            _timerY += Time.deltaTime * (_isSprinting ? _sprintBobVerticalFrequency : _walkBobVerticalFrequency);
+
+            Vector3 targetPosition = _playerCamera.transform.localPosition;
+
+            targetPosition.y = Mathf.Lerp(targetPosition.y, Mathf.Sin(_timerY) * (_isSprinting ? _sprintBobVerticalAmplitude : _walkBobVerticalAmplitude),
+                Time.deltaTime * _bobbingSmoothTime);
+            targetPosition.x = Mathf.Lerp(targetPosition.x, Mathf.Cos(_timerX / 2) * (_isSprinting ? _sprintBobHorizontalAmplitude : _walkBobHorizontalAmplitude),
+                Time.deltaTime * _bobbingSmoothTime);
+            
             _playerCamera.transform.localPosition = new Vector3(
-                -(_defaultXPosition + Mathf.Cos(_timer / 2) *
-                    ((_isSprinting ? _sprintBobVerticalAmplitude : _walkBobVerticalAmplitude) * 2)),
-                _defaultYPosition + Mathf.Sin(_timer) * (_isSprinting ? _sprintBobVerticalAmplitude : _walkBobVerticalAmplitude),
-                _playerCamera.transform.localPosition.z
+                targetPosition.x,
+                targetPosition.y,
+                targetPosition.z
             );
         }
     }

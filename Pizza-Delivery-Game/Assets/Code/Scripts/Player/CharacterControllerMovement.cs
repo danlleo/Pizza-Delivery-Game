@@ -19,6 +19,7 @@ namespace Player
         [Space(10)]
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _sprintSpeed;
+        [SerializeField] private float _delayTimeToMakeSprintAvailableInSeconds;
         
         [Space(10)]
         [SerializeField] private float _maxStaminaPercent;
@@ -44,13 +45,16 @@ namespace Player
         private float _footstepTimer;
 
         private bool _canSprint;
+        private bool _isMoving;
         private bool _isSprinting;
+        private bool _stoppedSprinting;
         
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
             _staminaPercent = _maxStaminaPercent;
             _currentMoveSpeed = _moveSpeed;
+            _canSprint = true;
         }
 
         private void OnEnable()
@@ -63,6 +67,13 @@ namespace Player
             _player.MovementEvent.Event -= Movement_Event;
         }
 
+        private void Update()
+        {
+            if (_isMoving) return;
+            
+            _player.MovementEvent.Call(_player, new MovementEventArgs(false));
+        }
+
         public void Move(Vector2 input)
         {
             // We multiple direction in which player is looking by direction on vertical input,
@@ -70,13 +81,13 @@ namespace Player
             // by horizontal input, to move him to the right or left
             Vector3 moveDirection = transform.right * input.x + transform.forward * input.y;
             moveDirection.Normalize();
+            
+            _isMoving = moveDirection != Vector3.zero;
 
             if (!_isSprinting)
-                _player.MovementEvent.Call(_player,
-                    moveDirection != Vector3.zero ? new MovementEventArgs(true) : new MovementEventArgs(false));
+                _player.MovementEvent.Call(_player, new MovementEventArgs(_isMoving));
 
             _characterController.Move(moveDirection * (_currentMoveSpeed * Time.deltaTime));
-            _canSprint = input != Vector2.zero;
         }
 
         public bool IsGrounded()
@@ -88,24 +99,25 @@ namespace Player
 
         public void BeginSprint()
         {
-            if (!_sprintEnabled)
-                return;
-
-            if (!_canSprint)
-                return;
+            if (!_sprintEnabled) return;
+            if (!_isMoving) return;
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
             _footstepTimer = _sprintingFootstepTimeInSeconds;
-            _isSprinting = true;
+            _stoppedSprinting = false;
         }
 
         public void Sprint()
         {
-            if (!_sprintEnabled)
+            if (!_sprintEnabled) return;
+            if (!_canSprint) return;
+            if (_stoppedSprinting) return;
+            
+            if (!_isMoving)
+            {
+                StopSprint();
                 return;
-
-            if (!_canSprint)
-                return;
+            }
             
             if (_delayStaminaRecoverRoutine != null)
                 StopCoroutine(_delayStaminaRecoverRoutine);
@@ -123,8 +135,9 @@ namespace Player
         
         public void StopSprint()
         {
-            if (!_sprintEnabled)
-                return;
+            if (!_sprintEnabled) return;
+            if (!_canSprint) return;
+            if (_stoppedSprinting) return;
             
             if (_delayStaminaRecoverRoutine != null)
                 StopCoroutine(_delayStaminaRecoverRoutine);
@@ -135,14 +148,21 @@ namespace Player
             if (_gainMomentumRoutine != null)
                 StopCoroutine(_gainMomentumRoutine);
             
-            _player.MovementEvent.Call(_player, new MovementEventArgs(false, false));
+            _player.MovementEvent.Call(_player, new MovementEventArgs(_isMoving, false));
 
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _moveSpeed));
             _delayStaminaRecoverRoutine = StartCoroutine(DelayStaminaRecoverRoutine());
             _footstepTimer = _walkingFootstepTimeInSeconds; 
             _isSprinting = false;
+            _stoppedSprinting = true;
+
+            StartCoroutine(DelaySprintUsageRoutine());
         }
         
+        #endregion
+
+        #region Stamina
+
         private void DecreaseStaminaOverTimeBy(float decreaseValue)
         {
             _staminaPercent -= decreaseValue;
@@ -188,6 +208,13 @@ namespace Player
         {
             yield return new WaitForSeconds(_staminaRecoverDelayInSeconds);
             _recoverStaminaRoutine = StartCoroutine(RecoverStaminaRoutine());
+        }
+
+        private IEnumerator DelaySprintUsageRoutine()
+        {
+            _canSprint = false;
+            yield return new WaitForSeconds(_delayTimeToMakeSprintAvailableInSeconds);
+            _canSprint = true;
         }
 
         #endregion
