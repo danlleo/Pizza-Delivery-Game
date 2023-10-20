@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using Utilities;
 
 namespace Player
 {
@@ -16,13 +15,21 @@ namespace Player
         [SerializeField] private LayerMask _walkableAreaLayerMask;
         
         [SerializeField, Range(0f, 5f)] private float _groundDetectRadius;
+        
+        [Space(10)]
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _sprintSpeed;
+        
+        [Space(10)]
         [SerializeField] private float _maxStaminaPercent;
         [SerializeField] private float _staminaRecoverDelayInSeconds;
         [SerializeField] private float _transitionBetweenMovementSpeedInSeconds;
+        
+        [Space(10)]
         [SerializeField] private float _walkingFootstepTimeInSeconds;
         [SerializeField] private float _sprintingFootstepTimeInSeconds;
+        
+        [Space(10)]
         [SerializeField] private bool _sprintEnabled;
         
         private CharacterController _characterController;
@@ -37,6 +44,7 @@ namespace Player
         private float _footstepTimer;
 
         private bool _canSprint;
+        private bool _isSprinting;
         
         private void Awake()
         {
@@ -63,8 +71,9 @@ namespace Player
             Vector3 moveDirection = transform.right * input.x + transform.forward * input.y;
             moveDirection.Normalize();
 
-            _player.MovementEvent.Call(_player,
-                moveDirection != Vector3.zero ? new MovementEventArgs(true) : new MovementEventArgs(false));
+            if (!_isSprinting)
+                _player.MovementEvent.Call(_player,
+                    moveDirection != Vector3.zero ? new MovementEventArgs(true) : new MovementEventArgs(false));
 
             _characterController.Move(moveDirection * (_currentMoveSpeed * Time.deltaTime));
             _canSprint = input != Vector2.zero;
@@ -86,8 +95,8 @@ namespace Player
                 return;
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
-            
-            _player.MovementEvent.Call(this, new MovementEventArgs(true, true));
+            _footstepTimer = _sprintingFootstepTimeInSeconds;
+            _isSprinting = true;
         }
 
         public void Sprint()
@@ -108,6 +117,7 @@ namespace Player
             }
             
             DecreaseStaminaOverTimeBy(.20f);
+            _player.MovementEvent.Call(this, new MovementEventArgs(true, true));
             _player.StaminaEvent.Call(this, new StaminaEventArgs(_staminaPercent));
         }
         
@@ -125,10 +135,12 @@ namespace Player
             if (_gainMomentumRoutine != null)
                 StopCoroutine(_gainMomentumRoutine);
             
-            _player.MovementEvent.Call(_player, new MovementEventArgs(true, false));
+            _player.MovementEvent.Call(_player, new MovementEventArgs(false, false));
 
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _moveSpeed));
             _delayStaminaRecoverRoutine = StartCoroutine(DelayStaminaRecoverRoutine());
+            _footstepTimer = _walkingFootstepTimeInSeconds; 
+            _isSprinting = false;
         }
         
         private void DecreaseStaminaOverTimeBy(float decreaseValue)
@@ -155,7 +167,7 @@ namespace Player
             while (elapsedTime <= _transitionBetweenMovementSpeedInSeconds)
             {
                 float t = elapsedTime / _transitionBetweenMovementSpeedInSeconds;
-                _currentMoveSpeed = Mathf.Lerp(startSpeed, targetSpeed, InterpolateUtils.EaseInQuart(t));
+                _currentMoveSpeed = Mathf.Lerp(startSpeed, targetSpeed, t);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
@@ -201,7 +213,7 @@ namespace Player
             if (detectedColliders.Length > 0)
                 _player.StepEvent.Call(_player, new StepEventArgs(detectedColliders[0].tag));
             
-            _footstepTimer = e.IsSprinting ? _sprintingFootstepTimeInSeconds : _walkingFootstepTimeInSeconds;
+            _footstepTimer = _isSprinting ? _sprintingFootstepTimeInSeconds : _walkingFootstepTimeInSeconds;
         }
 
         private void ResetFootstepTimer()
