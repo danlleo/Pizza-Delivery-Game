@@ -125,6 +125,7 @@ namespace Player
             if (_staminaPercent <= 0)
             {
                 StopSprint();
+                StartCoroutine(DelaySprintUsageRoutine());
                 return;
             }
             
@@ -155,8 +156,6 @@ namespace Player
             _footstepTimer = _walkingFootstepTimeInSeconds; 
             _isSprinting = false;
             _stoppedSprinting = true;
-
-            StartCoroutine(DelaySprintUsageRoutine());
         }
         
         #endregion
@@ -165,6 +164,12 @@ namespace Player
 
         private void DecreaseStaminaOverTimeBy(float decreaseValue)
         {
+            if (_staminaPercent < 0f)
+            {
+                _staminaPercent = 0f;
+                return;
+            }
+            
             _staminaPercent -= decreaseValue;
         }
 
