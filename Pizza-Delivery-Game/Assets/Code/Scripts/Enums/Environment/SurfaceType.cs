@@ -6,5 +6,6 @@
         Metal,
         Grass,
         Wood,
+        Rock,
     }
 }

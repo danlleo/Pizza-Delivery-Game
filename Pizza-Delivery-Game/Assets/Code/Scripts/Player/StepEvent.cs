@@ -17,10 +17,12 @@ namespace Player
     public class StepEventArgs : EventArgs
     {
         public readonly string Surface;
+        public readonly bool WasSprinting;
 
-        public StepEventArgs(string surface)
+        public StepEventArgs(string surface, bool wasSprinting)
         {
             Surface = surface;
+            WasSprinting = wasSprinting;
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Player
 
         private float _gravityValue;
 
+        private bool _hasLanded;
+
         private void Awake()
         {
             switch (_gravityType)
@@ -52,9 +54,16 @@ namespace Player
             if (_characterControllerMovement.IsGrounded() && _velocity.y < 0)
             {
                 ResetVelocity();
+
+                if (_hasLanded) return;
+                
+                _characterControllerMovement.Land();
+                _hasLanded = true;
+
                 return;
             }
-            
+
+            _hasLanded = false;
             ApplyGravity();
         }
 

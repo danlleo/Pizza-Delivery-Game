@@ -95,6 +95,16 @@ namespace Player
             return Physics.CheckSphere(_groundRaycastTransform.position, _groundDetectRadius, _walkableAreaLayerMask);
         }
 
+        public void Land()
+        {
+            Collider[] detectedColliders = Physics.OverlapSphere(_groundRaycastTransform.position, _groundDetectRadius,
+                _walkableAreaLayerMask);
+            
+            // Call the event to notify that player has landed on the ground
+            if (detectedColliders.Length > 0)
+                _player.LandedEvent.Call(_player, new LandedEventArgs(detectedColliders[0].tag));
+        }
+        
         #region Sprint
 
         public void BeginSprint()
@@ -105,6 +115,7 @@ namespace Player
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
             _footstepTimer = _sprintingFootstepTimeInSeconds;
             _stoppedSprinting = false;
+            _isSprinting = true;
         }
 
         public void Sprint()
@@ -249,7 +260,7 @@ namespace Player
                 _walkableAreaLayerMask);
 
             if (detectedColliders.Length > 0)
-                _player.StepEvent.Call(_player, new StepEventArgs(detectedColliders[0].tag));
+                _player.StepEvent.Call(_player, new StepEventArgs(detectedColliders[0].tag, _isSprinting));
             
             _footstepTimer = _isSprinting ? _sprintingFootstepTimeInSeconds : _walkingFootstepTimeInSeconds;
         }

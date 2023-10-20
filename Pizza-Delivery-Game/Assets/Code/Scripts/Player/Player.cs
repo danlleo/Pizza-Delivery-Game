@@ -6,6 +6,7 @@ namespace Player
     [RequireComponent(typeof(MovementEvent))]
     [RequireComponent(typeof(HoveringOverInteractableEvent))]
     [RequireComponent(typeof(StepEvent))]
+    [RequireComponent(typeof(LandedEvent))]
     [DisallowMultipleComponent]
     public class Player : MonoBehaviour
     {
@@ -13,6 +14,7 @@ namespace Player
         [HideInInspector] public MovementEvent MovementEvent;
         [HideInInspector] public HoveringOverInteractableEvent HoveringOverInteractableEvent;
         [HideInInspector] public StepEvent StepEvent;
+        [HideInInspector] public LandedEvent LandedEvent;
         
         public void Awake()
         {
@@ -20,6 +22,7 @@ namespace Player
             MovementEvent = GetComponent<MovementEvent>();
             HoveringOverInteractableEvent = GetComponent<HoveringOverInteractableEvent>();
             StepEvent = GetComponent<StepEvent>();
+            LandedEvent = GetComponent<LandedEvent>();
         }
     }
 }

@@ -157,11 +157,12 @@ GameObject:
   - component: {fileID: 2831878868546191318}
   - component: {fileID: 8260902047022013800}
   - component: {fileID: 310921378686701003}
+  - component: {fileID: 6591719902434433139}
   - component: {fileID: 8049610283373172068}
   - component: {fileID: 8138282122625772536}
   - component: {fileID: 1828364634665443464}
   - component: {fileID: 3621443348358591752}
-  - component: {fileID: 6591719902434433139}
+  - component: {fileID: 9128654171138205598}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -325,6 +326,7 @@ MonoBehaviour:
   MovementEvent: {fileID: 0}
   HoveringOverInteractableEvent: {fileID: 0}
   StepEvent: {fileID: 0}
+  LandedEvent: {fileID: 0}
 --- !u!114 &3624578203164401176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,7 +361,7 @@ MonoBehaviour:
   _groundDetectRadius: 0.25
   _moveSpeed: 5
   _sprintSpeed: 10
-  _delayTimeToMakeSprintAvailableInSeconds: 1
+  _delayTimeToMakeSprintAvailableInSeconds: 3.15
   _maxStaminaPercent: 100
   _staminaRecoverDelayInSeconds: 1.5
   _transitionBetweenMovementSpeedInSeconds: 0.725
@@ -454,6 +456,45 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _interactDistance: 2.5
+--- !u!114 &6591719902434433139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173784742728827568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc559a5ccb33b34ca14d5f93d26e55b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1418063800019633332}
+  _audioSource: {fileID: 7903500282913295232}
+  _tileStepClipsSO: {fileID: 11400000, guid: 7454babd368ad864db6eb277830401a7, type: 2}
+  _woodenStepClipsSO: {fileID: 11400000, guid: 9e17077b3faa6ac4cbd297cc1e527972, type: 2}
+  _metalStepClipsSO: {fileID: 11400000, guid: c73e50071c33bc2419032cecb3815c0a, type: 2}
+  _grassStepClipsSO: {fileID: 11400000, guid: 782309ae633a86840aa0dd2e551add89, type: 2}
+  _rockStepClipsSO: {fileID: 11400000, guid: b2462b3b88d529944a3c39a756322bab, type: 2}
+  _tileStepRunningClipsSO: {fileID: 11400000, guid: 3c9d7780652c39545afb20bae8d98c6c,
+    type: 2}
+  _woodenStepRunningClipsSO: {fileID: 11400000, guid: 293ba500271717b469f4dc0c32e9eb12,
+    type: 2}
+  _metalStepRunningClipsSO: {fileID: 11400000, guid: 4a8e73d649190c9439304e57fc577d5f,
+    type: 2}
+  _grassStepRunningClipsSO: {fileID: 11400000, guid: 7bd9839316235bd48b0d565af2442405,
+    type: 2}
+  _rockStepRunningClipsSO: {fileID: 11400000, guid: bf4923ed26c58bf49aa14855b1bb353d,
+    type: 2}
+  _tileStepLandedClipsSO: {fileID: 11400000, guid: f3b11ef736aa4384fbf50320c9170620,
+    type: 2}
+  _woodenStepLandedClipsSO: {fileID: 11400000, guid: 75e6e6dba311a9d46b72935cb3f36939,
+    type: 2}
+  _metalStepLandedClipsSO: {fileID: 11400000, guid: dc24d722dfefdb64690248b09a04bb14,
+    type: 2}
+  _grassStepLandedClipsSO: {fileID: 11400000, guid: 51099d3f5fb8e8745b9d6d2da4cf3b45,
+    type: 2}
+  _rockStepLandedClipsSO: {fileID: 11400000, guid: dc24d722dfefdb64690248b09a04bb14,
+    type: 2}
 --- !u!114 &8049610283373172068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2263295134944659b5bbfb804001b536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6591719902434433139
+--- !u!114 &9128654171138205598
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -511,15 +552,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4173784742728827568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cc559a5ccb33b34ca14d5f93d26e55b, type: 3}
+  m_Script: {fileID: 11500000, guid: 55d438b6805b4cb9884231a55251876e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1418063800019633332}
-  _audioSource: {fileID: 7903500282913295232}
-  _tileStepClipsSO: {fileID: 11400000, guid: 7454babd368ad864db6eb277830401a7, type: 2}
-  _woodenStepClipsSO: {fileID: 11400000, guid: 9e17077b3faa6ac4cbd297cc1e527972, type: 2}
-  _metalStepClipsSO: {fileID: 11400000, guid: c73e50071c33bc2419032cecb3815c0a, type: 2}
-  _grassStepClipsSO: {fileID: 11400000, guid: 782309ae633a86840aa0dd2e551add89, type: 2}
 --- !u!1 &4572496924224856881
 GameObject:
   m_ObjectHideFlags: 0
