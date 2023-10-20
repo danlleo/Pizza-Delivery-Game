@@ -30,11 +30,17 @@ namespace UI
         {
             if (e.IsInteracting)
             {
-                _interactText.text = $"[E] {e.ActionDescription}";
+                SetInteractText(e.ActionDescription);
                 return;
             }
 
-            _interactText.text = "";
+            ResetInteractText();
         }
+        
+        private void SetInteractText(string targetText)
+            => _interactText.text = $"[E] {targetText}";
+        
+        private void ResetInteractText()
+            => _interactText.text = "";
     }
 }

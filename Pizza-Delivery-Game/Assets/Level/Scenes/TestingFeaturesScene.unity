@@ -18451,16 +18451,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3837689530654671978, guid: ddd24bdb5e200284ab06417b980055e2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226185832568618162, guid: ddd24bdb5e200284ab06417b980055e2,
-        type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8313246923522762039, guid: ddd24bdb5e200284ab06417b980055e2,
         type: 3}
       propertyPath: _player

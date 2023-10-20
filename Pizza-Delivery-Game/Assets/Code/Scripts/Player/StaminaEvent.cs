@@ -18,10 +18,12 @@ namespace Player
     public class StaminaEventArgs : EventArgs
     {
         public readonly float StaminaPercent;
-
-        public StaminaEventArgs(float staminaPercent)
+        public readonly bool IsStaminaFull;
+        
+        public StaminaEventArgs(float staminaPercent, bool isStaminaFull)
         {
             StaminaPercent = staminaPercent;
+            IsStaminaFull = isStaminaFull;
         }
     }
 }

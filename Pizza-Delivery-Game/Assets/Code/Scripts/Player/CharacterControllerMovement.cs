@@ -130,8 +130,9 @@ namespace Player
             }
             
             DecreaseStaminaOverTimeBy(.20f);
+            
             _player.MovementEvent.Call(this, new MovementEventArgs(true, true));
-            _player.StaminaEvent.Call(this, new StaminaEventArgs(_staminaPercent));
+            _player.StaminaEvent.Call(this, new StaminaEventArgs(_staminaPercent, IsStaminaFull(_staminaPercent)));
         }
         
         public void StopSprint()
@@ -182,9 +183,14 @@ namespace Player
             }
 
             _staminaPercent += increaseValue;
-            _player.StaminaEvent.Call(_player, new StaminaEventArgs(_staminaPercent));
+            _player.StaminaEvent.Call(_player, new StaminaEventArgs(_staminaPercent, IsStaminaFull(_staminaPercent)));
         }
 
+        private bool IsStaminaFull(float percent)
+        {
+            return percent >= _maxStaminaPercent;
+        }
+        
         private IEnumerator SpeedTransitionRoutine(float startSpeed, float targetSpeed)
         {
             var elapsedTime = 0f;
