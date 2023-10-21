@@ -1,12 +1,19 @@
 using System;
 using UnityEngine;
 using Ink.Runtime;
+using TMPro;
 
 namespace Dialogue
 {
     public class Reader : MonoBehaviour
     {
-        
+        [Header("External references")]
+        [SerializeField] private GameObject _dialogueContainer;
+        [SerializeField] private TextMeshProUGUI _dialogueText;
+
+        [Header("Settings")] 
+        [SerializeField] private float _characterTimeToPrintInSeconds;
+        [SerializeField] private float _waitTimeToMoveToNextLineInSeconds;
         
         private bool _isReading;
         
@@ -28,10 +35,10 @@ namespace Dialogue
         private void ReadDialogue(DialogueSO dialogue)
         {
             if (_isReading) return;
-
+                              
             _isReading = true;
+            
+            
         }
-        
-        
     }
 }
