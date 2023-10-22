@@ -355,6 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
   _groundRaycastTransform: {fileID: 3143864467076090259}
+  _camera: {fileID: 8686963950574366201}
   _walkableAreaLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -367,6 +368,8 @@ MonoBehaviour:
   _transitionBetweenMovementSpeedInSeconds: 0.725
   _walkingFootstepTimeInSeconds: 0.625
   _sprintingFootstepTimeInSeconds: 0.3325
+  _targetFOV: 65
+  _timeToTransitionToTargetFOVInSeconds: 0.15
   _sprintEnabled: 1
 --- !u!114 &8790912778867131809
 MonoBehaviour:
