@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +17,11 @@ namespace UI
         [Header("Settings")] 
         [SerializeField] private float _fadeInTimeInSeconds = .2f;
         [SerializeField] private float _fadeOutTimeInSeconds = .2f;
+        [SerializeField] private float _delayFadeInTimeInSeconds = .2f;
 
         private bool _isFadedIn;
+
+        private Coroutine _delayFadeInRoutine;
 
         private void Awake()
         {
@@ -38,13 +42,15 @@ namespace UI
         {
             if (e.IsStaminaFull && !_isFadedIn)
             {
-                _staminaBarCanvasGroup.DOFade(0f, _fadeInTimeInSeconds);
-                _isFadedIn = true;
+                _delayFadeInRoutine = StartCoroutine(DelayFadeInRoutine());
                 return;
             }
 
             if (!e.IsStaminaFull && _isFadedIn)
             {
+                if (_delayFadeInRoutine != null)
+                    StopCoroutine(_delayFadeInRoutine);
+                
                 _staminaBarCanvasGroup.DOFade(1f, _fadeOutTimeInSeconds);
                 _isFadedIn = false;
             }
@@ -55,6 +61,13 @@ namespace UI
         private void SetForegroundFillAmount(float normalizedPercent)
         {
             _foreground.fillAmount = normalizedPercent;
+        }
+
+        private IEnumerator DelayFadeInRoutine()
+        {
+            yield return new WaitForSeconds(_delayFadeInTimeInSeconds);
+            _staminaBarCanvasGroup.DOFade(0f, _fadeInTimeInSeconds);
+            _isFadedIn = true;
         }
     }
 }
