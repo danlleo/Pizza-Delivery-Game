@@ -52,7 +52,7 @@ MonoBehaviour:
   _staminaBarCanvasGroup: {fileID: 6175180566403976552}
   _foreground: {fileID: 449721479993506701}
   _player: {fileID: 0}
-  _emptyStaminaColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  _emptyStaminaColor: {r: 1, g: 0.0990566, b: 0.0990566, a: 1}
   _fullStaminaColor: {r: 0, g: 0, b: 0, a: 1}
   _fadeInTimeInSeconds: 0.415
   _fadeOutTimeInSeconds: 0.415
@@ -780,7 +780,6 @@ GameObject:
   - component: {fileID: 2714046068790385682}
   - component: {fileID: 1415960319273199549}
   - component: {fileID: 8239788382691418869}
-  - component: {fileID: 1275663883297845775}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -845,21 +844,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1275663883297845775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691157539480220980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &8741759188558971008
 GameObject:
   m_ObjectHideFlags: 0

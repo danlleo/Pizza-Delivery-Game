@@ -55,7 +55,7 @@ namespace UI
                 if (_delayFadeInRoutine != null)
                     StopCoroutine(_delayFadeInRoutine);
                 
-                _staminaBarCanvasGroup.DOFade(1f, _fadeOutTimeInSeconds);
+                _staminaBarCanvasGroup.DOFade(0.355f, _fadeOutTimeInSeconds);
                 _isFadedIn = false;
             }
 

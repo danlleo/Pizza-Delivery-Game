@@ -369,7 +369,7 @@ MonoBehaviour:
   _walkingFootstepTimeInSeconds: 0.625
   _sprintingFootstepTimeInSeconds: 0.3325
   _targetFOV: 62.5
-  _timeToTransitionToTargetFOVInSeconds: 0.15
+  _timeToTransitionToTargetFOVInSeconds: 0.5
   _sprintEnabled: 1
 --- !u!114 &8790912778867131809
 MonoBehaviour:
