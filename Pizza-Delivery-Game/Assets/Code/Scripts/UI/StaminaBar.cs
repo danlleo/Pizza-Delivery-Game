@@ -3,6 +3,7 @@ using DG.Tweening;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
@@ -15,6 +16,9 @@ namespace UI
         [SerializeField] private Player.Player _player;
 
         [Header("Settings")] 
+        [SerializeField] private Color _emptyStaminaColor; 
+        [SerializeField] private Color _fullStaminaColor; 
+            
         [SerializeField] private float _fadeInTimeInSeconds = .2f;
         [SerializeField] private float _fadeOutTimeInSeconds = .2f;
         [SerializeField] private float _delayFadeInTimeInSeconds = .2f;
@@ -54,13 +58,22 @@ namespace UI
                 _staminaBarCanvasGroup.DOFade(1f, _fadeOutTimeInSeconds);
                 _isFadedIn = false;
             }
+
+            float normalizedStaminaPercent = e.StaminaPercent / 100;
             
-            SetForegroundFillAmount(e.StaminaPercent / 100);
+            SetForegroundFillAmount(normalizedStaminaPercent);
+            SetForegroundColor(normalizedStaminaPercent);
         }
 
-        private void SetForegroundFillAmount(float normalizedPercent)
+        private void SetForegroundFillAmount(float normalizedStaminaPercent)
         {
-            _foreground.fillAmount = normalizedPercent;
+            _foreground.fillAmount = normalizedStaminaPercent;
+        }
+
+        private void SetForegroundColor(float normalizedStaminaPercent)
+        {
+            _foreground.color =
+                Math.RemapColor(0f, .35f, _emptyStaminaColor, _fullStaminaColor, normalizedStaminaPercent);
         }
 
         private IEnumerator DelayFadeInRoutine()

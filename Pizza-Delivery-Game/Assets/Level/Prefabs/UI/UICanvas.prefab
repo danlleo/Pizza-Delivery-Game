@@ -52,6 +52,8 @@ MonoBehaviour:
   _staminaBarCanvasGroup: {fileID: 6175180566403976552}
   _foreground: {fileID: 449721479993506701}
   _player: {fileID: 0}
+  _emptyStaminaColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  _fullStaminaColor: {r: 0, g: 0, b: 0, a: 1}
   _fadeInTimeInSeconds: 0.415
   _fadeOutTimeInSeconds: 0.415
   _delayFadeInTimeInSeconds: 0.375

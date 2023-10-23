@@ -362,13 +362,13 @@ MonoBehaviour:
   _groundDetectRadius: 0.25
   _moveSpeed: 5
   _sprintSpeed: 10
-  _delayTimeToMakeSprintAvailableInSeconds: 3.15
+  _delayTimeToMakeSprintAvailableInSeconds: 2
   _maxStaminaPercent: 100
   _staminaRecoverDelayInSeconds: 1.5
   _transitionBetweenMovementSpeedInSeconds: 0.725
   _walkingFootstepTimeInSeconds: 0.625
   _sprintingFootstepTimeInSeconds: 0.3325
-  _targetFOV: 65
+  _targetFOV: 62.5
   _timeToTransitionToTargetFOVInSeconds: 0.15
   _sprintEnabled: 1
 --- !u!114 &8790912778867131809
@@ -430,9 +430,9 @@ MonoBehaviour:
   _player: {fileID: 1418063800019633332}
   _characterControllerMovement: {fileID: 8692333199270675001}
   _playerCamera: {fileID: 8686963950574366201}
-  _walkBobVerticalFrequency: 10
-  _walkBobVerticalAmplitude: 0.11
-  _walkBobHorizontalFrequency: 10
+  _walkBobVerticalFrequency: 11
+  _walkBobVerticalAmplitude: 0.06
+  _walkBobHorizontalFrequency: 9.35
   _walkBobHorizontalAmplitude: 0.05
   _sprintBobVerticalFrequency: 18
   _sprintBobVerticalAmplitude: 0.1

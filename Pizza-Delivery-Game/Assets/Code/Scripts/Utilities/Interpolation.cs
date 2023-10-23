@@ -7,7 +7,7 @@ namespace Utilities
     ///     T should be normalized time
     /// </summary>
 
-    public static class InterpolateUtils
+    public static class Interpolation
     {
         /// <summary>
         /// This formula produces an interpolation that starts and ends slowly, with a faster motion in the middle.

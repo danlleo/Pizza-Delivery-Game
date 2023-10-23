@@ -63,8 +63,6 @@ namespace Player
             _currentMoveSpeed = _moveSpeed;
             _initialFOV = _camera.fieldOfView;
             _canSprint = true;
-            
-            print(_initialFOV);
         }
 
         private void OnEnable()
@@ -120,6 +118,7 @@ namespace Player
         public void BeginSprint()
         {
             if (!_sprintEnabled) return;
+            if (!_canSprint) return;
             if (!_isMoving) return;
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));

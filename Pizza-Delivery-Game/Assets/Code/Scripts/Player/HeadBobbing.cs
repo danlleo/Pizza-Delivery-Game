@@ -96,6 +96,9 @@ namespace Player
 
             Vector3 targetPosition = _playerCamera.transform.localPosition;
 
+            // The amplitude controls the size of it,
+            // frequency controls the speed
+            
             targetPosition.y = Mathf.Lerp(targetPosition.y, Mathf.Sin(_timerY) * (_isSprinting ? _sprintBobVerticalAmplitude : _walkBobVerticalAmplitude),
                 Time.deltaTime * _bobbingSmoothTime);
             targetPosition.x = Mathf.Lerp(targetPosition.x, Mathf.Cos(_timerX / 2) * (_isSprinting ? _sprintBobHorizontalAmplitude : _walkBobHorizontalAmplitude),
