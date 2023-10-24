@@ -49,24 +49,27 @@ namespace Sounds.Audio
             switch (e.Surface)
             {
                 case nameof(SurfaceType.Wood):
-                    PlaySound(_audioSource,
-                        e.WasSprinting ? _woodenStepRunningClipsSO.AudioClips : _woodenStepClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource,
+                        e.WasSprinting ? _woodenStepRunningClipsSO.AudioClips : _woodenStepClipsSO.AudioClips, 0.8f,
+                        1.5f);
                     break;
                 case nameof(SurfaceType.Tile):
-                    PlaySound(_audioSource,
-                        e.WasSprinting ? _tileStepRunningClipsSO.AudioClips : _tileStepClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource,
+                        e.WasSprinting ? _tileStepRunningClipsSO.AudioClips : _tileStepClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
                 case nameof(SurfaceType.Metal):
-                    PlaySound(_audioSource,
-                        e.WasSprinting ? _metalStepRunningClipsSO.AudioClips : _metalStepClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource,
+                        e.WasSprinting ? _metalStepRunningClipsSO.AudioClips : _metalStepClipsSO.AudioClips, 0.8f,
+                        1.5f);
                     break;
                 case nameof(SurfaceType.Grass):
-                    PlaySound(_audioSource,
-                        e.WasSprinting ? _grassStepRunningClipsSO.AudioClips : _grassStepClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource,
+                        e.WasSprinting ? _grassStepRunningClipsSO.AudioClips : _grassStepClipsSO.AudioClips, 0.8f,
+                        1.5f);
                     break;
                 case nameof(SurfaceType.Rock):
-                    PlaySound(_audioSource,
-                        e.WasSprinting ? _rockStepRunningClipsSO.AudioClips : _rockStepClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource,
+                        e.WasSprinting ? _rockStepRunningClipsSO.AudioClips : _rockStepClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
             }
         }
@@ -76,19 +79,19 @@ namespace Sounds.Audio
             switch (e.Surface)
             {
                 case nameof(SurfaceType.Wood):
-                    PlaySound(_audioSource, _woodenStepLandedClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource, _woodenStepLandedClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
                 case nameof(SurfaceType.Tile):
-                    PlaySound(_audioSource, _tileStepLandedClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource, _tileStepLandedClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
                 case nameof(SurfaceType.Metal):
-                    PlaySound(_audioSource, _metalStepLandedClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource, _metalStepLandedClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
                 case nameof(SurfaceType.Grass):
-                    PlaySound(_audioSource, _grassStepLandedClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource, _grassStepLandedClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
                 case nameof(SurfaceType.Rock):
-                    PlaySound(_audioSource, _rockStepLandedClipsSO.AudioClips);
+                    PlaySoundWithRandomPitch(_audioSource, _rockStepLandedClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
             }
         }
