@@ -18,6 +18,8 @@ namespace Misc
         
         private void Update()
         {
+            if (!InputAllowance.InputEnabled) return;
+            
             ReadInput();
             
             var input = new Vector2(_horizontal, _vertical);

@@ -8,6 +8,8 @@ namespace Misc
         
         private void LateUpdate()
         {
+            if (!InputAllowance.InputEnabled) return;
+            
             float mouseX = Input.GetAxisRaw(Axis.MouseX);
             float mouseY = Input.GetAxisRaw(Axis.MouseY);
 
