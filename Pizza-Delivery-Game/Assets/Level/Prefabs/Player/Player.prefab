@@ -340,6 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movement: {fileID: 8692333199270675001}
+  _interact: {fileID: 310921378686701003}
   _useRawInput: 1
 --- !u!114 &8692333199270675001
 MonoBehaviour:

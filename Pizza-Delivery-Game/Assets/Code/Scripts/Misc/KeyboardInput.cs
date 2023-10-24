@@ -8,6 +8,7 @@ namespace Misc
     {
         [Header("External references")]
         [SerializeField] private CharacterControllerMovement _movement;
+        [SerializeField] private Interact _interact;
 
         [Header("Settings")] 
         [SerializeField] private bool _useRawInput;
@@ -36,6 +37,11 @@ namespace Misc
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 _movement.StopSprint();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                _interact.TryInteract();
             }
         }
         

@@ -13,18 +13,27 @@ namespace Player
         [Header("Settings")]
         [SerializeField] private float _interactDistance;
 
+        private RaycastHit _hit;
+        
         private void Update()
         {
             if (!Physics.Raycast(_raycastPointTransform.position, _raycastPointTransform.forward,
-                    out RaycastHit hit, _interactDistance, _interactableLayerMask))
+                    out _hit, _interactDistance, _interactableLayerMask))
             {
                 _player.HoveringOverInteractableEvent.Call(_player, new HoveringOverInteractableEventArgs(false));
                 return;
             }
 
-            if (!hit.collider.TryGetComponent(out IInteractable interactable)) return;
+            if (!_hit.collider.TryGetComponent(out IInteractable interactable)) return;
             
             _player.HoveringOverInteractableEvent.Call(_player, new HoveringOverInteractableEventArgs(true, interactable.GetActionDescription()));
+        }
+
+        public void TryInteract()
+        {
+            if (_hit.collider == null) return;
+            if (!_hit.collider.TryGetComponent(out IInteractable interactable)) return;
+            
             interactable.Interact();
         }
         
