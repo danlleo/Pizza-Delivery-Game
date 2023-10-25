@@ -36,14 +36,5 @@ namespace Player
             
             interactable.Interact();
         }
-        
-#if UNITY_EDITOR
-
-        private void OnDrawGizmos()
-        {
-            Debug.DrawRay(_raycastPointTransform.position, _raycastPointTransform.forward * _interactDistance);
-        }
-
-#endif
     }
 }
