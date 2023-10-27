@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df0fade9d8b31c43b68f99814502de0, type: 3}
   m_Name: Dialogue_Test
   m_EditorClassIdentifier: 
+  _configurationSO: {fileID: 11400000, guid: 81983b4abbf888a4597acf0ef20bed5e, type: 2}
   _dialogueText: {fileID: 4900000, guid: 8b7a29548e6fff84faca8e6c027f4d13, type: 3}
-  _onDialogueFinished: {fileID: 0}

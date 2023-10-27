@@ -17,6 +17,7 @@ namespace Environment.Bedroom
         {
             _crossfade.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.TestingFeaturesScene));
             _roomAudio.PlayDoorOpenSound();
+            Destroy(this);
         }
 
         public string GetActionDescription()

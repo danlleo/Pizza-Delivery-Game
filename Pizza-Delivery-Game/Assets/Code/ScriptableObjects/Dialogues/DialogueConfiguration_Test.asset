@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92eca56eedf55ca4598c049bb9b9e2aa, type: 3}
+  m_Name: DialogueConfiguration_Test
+  m_EditorClassIdentifier: 
+  _audioClips:
+  - {fileID: 8300000, guid: 253b9a935d4c37f40a5e452a252268a5, type: 3}
+  - {fileID: 8300000, guid: f80212d440637564786b8dc6ccd6c3d2, type: 3}
+  - {fileID: 8300000, guid: 18656dddde5255145ac55a47389c1fb8, type: 3}
+  - {fileID: 8300000, guid: 76ca46b4b7f00564d9a13af3605fc08a, type: 3}
+  - {fileID: 8300000, guid: d4c20a0a8548b9848a954a9036d1cdfe, type: 3}
+  - {fileID: 8300000, guid: 0e85913378cb07146aabaf7b84340745, type: 3}
+  - {fileID: 8300000, guid: cf58c53f360506040bee0810073f1bf0, type: 3}
+  - {fileID: 8300000, guid: aa69ec9db250f65498671f2e0314d094, type: 3}
+  - {fileID: 8300000, guid: 7666202b987feae4ba3bb8ba3f883f41, type: 3}
+  - {fileID: 8300000, guid: c3322b53935bd8e45b8ca74264557a6b, type: 3}
+  - {fileID: 8300000, guid: 171b7fedb417bd44992d0b88b70ebf28, type: 3}
+  _characterPlaySoundFrequency: 3
+  _minimumPitch: 1
+  _maximumPitch: 1.5
+  _stopCharacterTypeSound: 0
+  _makePredictable: 0
