@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Misc;
 using UnityEngine;
 
 namespace Player
@@ -60,6 +61,7 @@ namespace Player
         private void Update()
         {
             if (!_headBobbingEnabled) return;
+            if (!InputAllowance.InputEnabled) return;
             
             HandleHeadBob();   
         }
@@ -103,12 +105,8 @@ namespace Player
                 Time.deltaTime * _bobbingSmoothTime);
             targetPosition.x = Mathf.Lerp(targetPosition.x, Mathf.Cos(_timerX / 2) * (_isSprinting ? _sprintBobHorizontalAmplitude : _walkBobHorizontalAmplitude),
                 Time.deltaTime * _bobbingSmoothTime);
-            
-            _playerCamera.transform.localPosition = new Vector3(
-                targetPosition.x,
-                targetPosition.y,
-                targetPosition.z
-            );
+
+            _playerCamera.transform.localPosition = targetPosition;
         }
     }
 }

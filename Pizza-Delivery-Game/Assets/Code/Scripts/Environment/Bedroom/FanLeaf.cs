@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Environment
+namespace Environment.Bedroom
 {
     public class FanLeaf : MonoBehaviour
     {

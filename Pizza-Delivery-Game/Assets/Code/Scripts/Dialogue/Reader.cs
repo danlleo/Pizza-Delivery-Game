@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Ink.Runtime;
 using TMPro;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Dialogue
@@ -54,10 +55,10 @@ namespace Dialogue
             _story = new Story(dialogue.DialogueText.text);
             
             ShowDialogueContainer();
-            StartCoroutine(DisplayTextRoutine(dialogue.Configuration));
+            StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd, dialogue.Configuration));
         }
         
-        private IEnumerator DisplayTextRoutine(ConfigurationSO configuration)
+        private IEnumerator DisplayTextRoutine(UnityEvent onFinishedReading, ConfigurationSO configuration)
         {
             ClearDialogueText();
             
@@ -82,13 +83,14 @@ namespace Dialogue
             if (_story.canContinue)
             {
                 yield return new WaitForSeconds(_waitTimeToMoveToNextLineInSeconds);
-                StartCoroutine(DisplayTextRoutine(configuration));
+                StartCoroutine(DisplayTextRoutine(onFinishedReading, configuration));
             }
             else
             {
                 _isReading = false;
                 yield return new WaitForSeconds(_waitTimeToMoveToNextLineInSeconds);
                 HideDialogueContainer();
+                onFinishedReading?.Invoke();
             }
         }
         

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Dialogue
 {
@@ -10,5 +11,6 @@ namespace Dialogue
 
         public ConfigurationSO Configuration => _configurationSO;
         public TextAsset DialogueText => _dialogueText;
+        public UnityEvent OnDialogueEnd;
     }
 }
