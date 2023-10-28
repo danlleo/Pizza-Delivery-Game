@@ -13,7 +13,7 @@ namespace Sounds.Audio
             PlaySound(_audioSource, _doorOpen);
         }
 
-        public void PlaySwitchOnSound()
+        public void PlayLightSwitchSound()
         {
             PlaySound(_audioSource, _switchOnSound);
         }
