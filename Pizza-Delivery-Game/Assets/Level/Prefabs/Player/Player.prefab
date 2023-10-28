@@ -401,6 +401,8 @@ MonoBehaviour:
   _camera: {fileID: 8686963950574366201}
   _mouseSensitivity: 400
   _verticalClampValueInDegrees: 90
+  _smoothingTime: 0.1
+  _useSmoothing: 1
 --- !u!114 &2831878868546191318
 MonoBehaviour:
   m_ObjectHideFlags: 0
