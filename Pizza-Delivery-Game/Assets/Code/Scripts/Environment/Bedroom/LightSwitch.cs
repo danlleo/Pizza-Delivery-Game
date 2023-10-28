@@ -9,6 +9,7 @@ namespace Environment.Bedroom
     {
         [SerializeField] private GameObject _lightSwitch;
         [SerializeField] private RoomAudio _roomAudio;
+        [SerializeField] private Light[] _lightSources;
 
         [Header("Lightmaps")]
         [Space(10)]
@@ -23,11 +24,12 @@ namespace Environment.Bedroom
         private LightmapData[] _brightLightmapData;
         
         private bool _isTurnedOn;
-
+        
         private void Start()
         {
             InitializeDarkLightmap();
             InitializeBrightLightmap();
+            ToggleLightSources(_isTurnedOn);
         }
 
         private void InitializeDarkLightmap()
@@ -66,13 +68,19 @@ namespace Environment.Bedroom
 
         private void SwitchLightmap(bool isTurnedOn)
         {
-            if (_isTurnedOn)
+            if (isTurnedOn)
             {
                 LightmapSettings.lightmaps = _darkLightmapData;
                 return;
             }
             
             LightmapSettings.lightmaps = _brightLightmapData;
+        }
+
+        private void ToggleLightSources(bool isTurnedOn)
+        {
+            for (int i = 0; i < _lightSources.Length; i++)
+                _lightSources[i].enabled = isTurnedOn;
         }
         
         public void Interact()
@@ -81,6 +89,7 @@ namespace Environment.Bedroom
             _isTurnedOn = !_isTurnedOn;
             
             SwitchLightmap(_isTurnedOn);
+            ToggleLightSources(_isTurnedOn);
             _roomAudio.PlayLightSwitchSound();
         }
 
