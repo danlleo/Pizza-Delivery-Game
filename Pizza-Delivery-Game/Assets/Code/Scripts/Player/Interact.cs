@@ -12,7 +12,7 @@ namespace Player
         
         [Header("Settings")]
         [SerializeField] private float _interactDistance;
-
+        
         private RaycastHit _hit;
         
         private void Update()

@@ -146,17 +146,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogueContainer: {fileID: 2047519285103208733}
   _dialogueText: {fileID: 4958407986450922038}
-  _audioClips:
-  - {fileID: 8300000, guid: 16a0790f96918e242948a66145c53b9e, type: 3}
-  - {fileID: 8300000, guid: d46068c57630d3f469d7635e72609dad, type: 3}
-  - {fileID: 8300000, guid: 27b7850528cc4c94a97739f62bdbc70a, type: 3}
   _waitTimeToMoveToNextLineInSeconds: 1.5
-  _characterPlaySoundFrequency: 3
   _characterTimeToPrintInSeconds: 0.03
-  _minimumPitch: 0.5
-  _maximumPitch: 3
-  _stopCharacterTypeSound: 1
-  _makePredictable: 1
 --- !u!82 &6526671615337089575
 AudioSource:
   m_ObjectHideFlags: 0
@@ -309,6 +300,7 @@ GameObject:
   - component: {fileID: 468116782739545719}
   - component: {fileID: 7387952789573393163}
   - component: {fileID: 4164928613521283241}
+  - component: {fileID: 2888687576896866003}
   m_Layer: 5
   m_Name: Crosshair
   m_TagString: Untagged
@@ -373,6 +365,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2888687576896866003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315501319847274214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4f8141b044343f478827d6513a45678, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  _crosshairImage: {fileID: 4164928613521283241}
+  _defaultCrosshairSprite: {fileID: 21300000, guid: 01daba06fd1c3104b89889dbdcdcdb92,
+    type: 3}
+  _defaultCrosshairSize: {x: 10, y: 10}
+  _interactCrosshairSprite: {fileID: 21300000, guid: 46121c9ee4fcfd342aadd1bed22536a0,
+    type: 3}
+  _interactCrosshairSize: {x: 50, y: 50}
 --- !u!1 &2507481188860201982
 GameObject:
   m_ObjectHideFlags: 0
