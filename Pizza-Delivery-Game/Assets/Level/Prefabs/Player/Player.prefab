@@ -361,11 +361,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _groundDetectRadius: 0.25
-  _moveSpeed: 5
-  _sprintSpeed: 10
+  _moveSpeed: 3.5
+  _sprintSpeed: 7
   _delayTimeToMakeSprintAvailableInSeconds: 2
   _maxStaminaPercent: 100
   _staminaRecoverDelayInSeconds: 1.5
+  _staminaRecoverRate: 0.25
   _transitionBetweenMovementSpeedInSeconds: 0.725
   _walkingFootstepTimeInSeconds: 0.625
   _sprintingFootstepTimeInSeconds: 0.3325
@@ -401,7 +402,7 @@ MonoBehaviour:
   _camera: {fileID: 8686963950574366201}
   _mouseSensitivity: 450
   _verticalClampValueInDegrees: 90
-  _smoothingTime: 0.08
+  _smoothingTime: 0.075
   _useSmoothing: 1
 --- !u!114 &2831878868546191318
 MonoBehaviour:

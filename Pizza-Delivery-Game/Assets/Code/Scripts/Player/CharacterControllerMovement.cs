@@ -15,7 +15,6 @@ namespace Player
         
         [Header("Settings")] 
         [SerializeField] private LayerMask _walkableAreaLayerMask;
-        
         [SerializeField, Range(0f, 5f)] private float _groundDetectRadius;
         
         [Space(10)]
@@ -26,6 +25,7 @@ namespace Player
         [Space(10)]
         [SerializeField] private float _maxStaminaPercent;
         [SerializeField] private float _staminaRecoverDelayInSeconds;
+        [SerializeField, Range(0.01f, 1f)] private float _staminaRecoverRate;
         [SerializeField] private float _transitionBetweenMovementSpeedInSeconds;
         
         [Space(10)]
@@ -233,7 +233,7 @@ namespace Player
         {
             while (_staminaPercent < _maxStaminaPercent)
             {
-                RecoverStaminaOverTimeBy(.10f);
+                RecoverStaminaOverTimeBy(_staminaRecoverRate);
                 yield return null;
             }
         }
