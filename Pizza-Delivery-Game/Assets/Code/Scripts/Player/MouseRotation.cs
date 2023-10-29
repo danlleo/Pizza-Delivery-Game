@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Enums.Player;
 using UnityEngine;
 
 namespace Player
@@ -20,6 +21,9 @@ namespace Player
         
         public void RotateTowards(Vector2 input)
         {
+            if (_player.GetCurrentState() != PlayerState.Exploring)
+                return;
+            
             input *= _mouseSensitivity * Time.deltaTime;
 
             _horizontalRotation += input.x;

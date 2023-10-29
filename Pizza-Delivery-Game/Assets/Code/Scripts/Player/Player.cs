@@ -1,3 +1,4 @@
+using Enums.Player;
 using UnityEngine;
 
 namespace Player
@@ -15,6 +16,8 @@ namespace Player
         [HideInInspector] public HoveringOverInteractableEvent HoveringOverInteractableEvent;
         [HideInInspector] public StepEvent StepEvent;
         [HideInInspector] public LandedEvent LandedEvent;
+
+        private PlayerState _state;
         
         public void Awake()
         {
@@ -23,6 +26,17 @@ namespace Player
             HoveringOverInteractableEvent = GetComponent<HoveringOverInteractableEvent>();
             StepEvent = GetComponent<StepEvent>();
             LandedEvent = GetComponent<LandedEvent>();
+            
+            SetExploringState();
         }
+
+        public void SetExploringState()
+            => _state = PlayerState.Exploring;
+
+        public void SetInspectingState()
+            => _state = PlayerState.Inspecting;
+        
+        public PlayerState GetCurrentState()
+            => _state;
     }
 }

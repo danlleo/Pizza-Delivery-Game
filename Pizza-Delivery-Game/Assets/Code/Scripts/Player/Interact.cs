@@ -1,4 +1,5 @@
 using Interfaces;
+using Enums.Player;
 using UnityEngine;
 
 namespace Player
@@ -17,6 +18,9 @@ namespace Player
         
         private void Update()
         {
+            if (_player.GetCurrentState() != PlayerState.Exploring)
+                return;
+            
             if (!Physics.Raycast(_raycastPointTransform.position, _raycastPointTransform.forward,
                     out _hit, _interactDistance, _interactableLayerMask))
             {

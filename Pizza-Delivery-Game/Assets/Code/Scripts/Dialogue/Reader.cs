@@ -51,7 +51,6 @@ namespace Dialogue
             if (_isReading) return;
             
             _isReading = true;
-                              
             _story = new Story(dialogue.DialogueText.text);
             
             ShowDialogueContainer();
@@ -141,9 +140,7 @@ namespace Dialogue
             => _dialogueText.text = "";
 
         private void PrintTextCharacter(char character)
-        {
-            _dialogueText.text += character;
-        }
+            => _dialogueText.text += character;
         
         private void ShowDialogueContainer()
             => _dialogueContainer.SetActive(true);
