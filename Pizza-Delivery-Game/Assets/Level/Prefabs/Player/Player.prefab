@@ -399,9 +399,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
   _camera: {fileID: 8686963950574366201}
-  _mouseSensitivity: 400
+  _mouseSensitivity: 450
   _verticalClampValueInDegrees: 90
-  _smoothingTime: 0.1
+  _smoothingTime: 0.08
   _useSmoothing: 1
 --- !u!114 &2831878868546191318
 MonoBehaviour:

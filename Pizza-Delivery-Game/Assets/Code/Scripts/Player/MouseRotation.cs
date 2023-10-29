@@ -35,7 +35,7 @@ namespace Player
                 if (input == Vector2.zero) return;
                 
                 _camera.transform.DOLocalRotate(new Vector3(_verticalRotation, 0f, 0f), _smoothingTime);
-                _player.transform.DORotate(new Vector3(0f, _horizontalRotation, 0f), _smoothingTime);
+                _player.transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0f, _horizontalRotation, 0f)), _smoothingTime);
                 return;
             }
             

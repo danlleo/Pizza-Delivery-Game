@@ -24,7 +24,11 @@ namespace Player
                 return;
             }
 
-            if (!_hit.collider.TryGetComponent(out IInteractable interactable)) return;
+            if (!_hit.collider.TryGetComponent(out IInteractable interactable))
+            {
+                _player.HoveringOverInteractableEvent.Call(_player, new HoveringOverInteractableEventArgs(false));
+                return;
+            }
             
             _player.HoveringOverInteractableEvent.Call(_player, new HoveringOverInteractableEventArgs(true, interactable.GetActionDescription()));
         }
