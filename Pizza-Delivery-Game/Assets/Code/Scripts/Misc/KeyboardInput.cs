@@ -9,6 +9,7 @@ namespace Misc
         [Header("External references")]
         [SerializeField] private CharacterControllerMovement _movement;
         [SerializeField] private Interact _interact;
+        [SerializeField] private Flashlight _flashlight;
 
         [Header("Settings")] 
         [SerializeField] private bool _useRawInput;
@@ -44,6 +45,11 @@ namespace Misc
             if (Input.GetKeyDown(KeyCode.E))
             {
                 _interact.TryInteract();
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                _flashlight.ToggleLight();
             }
         }
         

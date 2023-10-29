@@ -90,7 +90,7 @@ namespace Environment.Bedroom
             
             SwitchLightmap(_isTurnedOn);
             ToggleLightSources(_isTurnedOn);
-            _roomAudio.PlayLightSwitchSound();
+            _roomAudio.PlayRoomLightSwitchSound();
         }
 
         public string GetActionDescription()

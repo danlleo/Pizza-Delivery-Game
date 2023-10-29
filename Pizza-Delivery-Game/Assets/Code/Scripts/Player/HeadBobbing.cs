@@ -12,7 +12,6 @@ namespace Player
         [SerializeField] private Camera _playerCamera;
         
         [Header("Settings")]
-        [Space(10)]
         [SerializeField] private float _walkBobVerticalFrequency = 14f;
         [SerializeField] private float _walkBobVerticalAmplitude = 0.05f;
         [SerializeField] private float _walkBobHorizontalFrequency;

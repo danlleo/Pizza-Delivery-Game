@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Sounds
 {
     [DisallowMultipleComponent]
-    public class AudioPlayer : MonoBehaviour
+    public abstract class AudioPlayer : MonoBehaviour
     {
         private const float DEFAULT_PITCH_VALUE = 1f;
 

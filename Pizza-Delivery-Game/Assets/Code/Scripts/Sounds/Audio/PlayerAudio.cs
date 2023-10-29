@@ -31,6 +31,10 @@ namespace Sounds.Audio
         [SerializeField] private SoundClipsSO _metalStepLandedClipsSO;
         [SerializeField] private SoundClipsSO _grassStepLandedClipsSO;
         [SerializeField] private SoundClipsSO _rockStepLandedClipsSO;
+
+        [Space(10)] 
+        [SerializeField] private AudioClip _flashLightOnClip;
+        [SerializeField] private AudioClip _flashLightOffClip;
         
         private void OnEnable()
         {
@@ -42,6 +46,11 @@ namespace Sounds.Audio
         {
             _player.StepEvent.Event -= Step_Event;
             _player.LandedEvent.Event -= Landed_Event;
+        }
+
+        public void PlayFlashLightSwitchSound(bool isOn)
+        {
+            PlaySound(_audioSource, isOn ? _flashLightOnClip : _flashLightOffClip, 10f);
         }
         
         private void Step_Event(object sender, StepEventArgs e)
