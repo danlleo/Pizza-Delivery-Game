@@ -4,12 +4,14 @@ using UnityEngine;
 
 namespace UI.InspectableObject
 {
+    [DisallowMultipleComponent]
     public class InspectableObjectUI : MonoBehaviour
     {
         [Header("External references")]
         [SerializeField] private GameObject _inspectableObjectUI;
         [SerializeField] private Player.Player _player;
         [SerializeField] private TextMeshProUGUI _continueText;
+        [SerializeField] private Reader _reader;
 
         [Header("Settings")] 
         [SerializeField] private float _continueTextBlinkTimeInSeconds;
@@ -23,27 +25,38 @@ namespace UI.InspectableObject
 
         private void OnEnable()
         {
-            _player.InspectableObjectFinishedReadingEvent.Event += InspectableObjectFinishedReading_Event;
+            _player._inspectableObjectOpeningEvent.Event += InspectableObjectOpeningEvent;
             _player.InspectableObjectClosingEvent.Event += InspectableObjectClosing_Event;
+            _player.InspectableObjectFinishedReadingEvent.Event += InspectableObjectFinishedReading_Event;
         }
 
         private void OnDisable()
         {
-            _player.InspectableObjectFinishedReadingEvent.Event -= InspectableObjectFinishedReading_Event;
+            _player._inspectableObjectOpeningEvent.Event -= InspectableObjectOpeningEvent;
             _player.InspectableObjectClosingEvent.Event -= InspectableObjectClosing_Event;
+            _player.InspectableObjectFinishedReadingEvent.Event -= InspectableObjectFinishedReading_Event;
         }
         
-        private void InspectableObjectFinishedReading_Event(object sender, InspectableObjectFinishedReadingEventArgs e)
+        private void InspectableObjectOpeningEvent(object sender, InspectableObjectOpeningEventArgs e)
         {
-            ShowContinueText();
-            _canClose = e.CanClose;
+            ShowUI();
+            ShowReader();
+            
+            _reader.BeginDisplay(e.InspectableObject);
         }
-
+        
         private void InspectableObjectClosing_Event(object sender, EventArgs e)
         {
             if (!_canClose) return;
 
             HideUI();
+            HideReader();
+        }
+                
+        private void InspectableObjectFinishedReading_Event(object sender, InspectableObjectFinishedReadingEventArgs e)
+        {
+            ShowContinueText();
+            _canClose = e.CanClose;
         }
         
         private void Update()
@@ -51,6 +64,12 @@ namespace UI.InspectableObject
             if (_canClose)
                 _continueText.alpha = Mathf.PingPong(Time.time * _continueTextBlinkTimeInSeconds, 1f);
         }
+
+        private void ShowReader()
+            => _reader.gameObject.SetActive(true);
+
+        private void HideReader()
+            => _reader.gameObject.SetActive(false);
         
         private void ShowUI()
             => _inspectableObjectUI.SetActive(true);

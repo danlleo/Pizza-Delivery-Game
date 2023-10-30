@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Dialogue
 {
+    [DisallowMultipleComponent]
     public class Trigger : Singleton<Trigger>
     {
         [SerializeField] private DialogueSO _dialogue;

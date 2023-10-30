@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using InspectableObject;
 using TMPro;
 using UnityEngine;
 
@@ -24,19 +25,15 @@ namespace UI.InspectableObject
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
-            
-            ClearTexts();
         }
 
-        private IEnumerator Start()
+        public void BeginDisplay(InspectableObjectSO inspectableObject)
         {
-            yield return new WaitForSeconds(1f);
-
-            SetHeaderText("Flashlight");
-            ReadDescription(
-                "Equipped with a durable aluminum alloy body, this flashlight is built to withstand the rigors of game development life. Its ergonomic grip ensures comfortable handling, allowing you to focus on your creativity without any discomfort. The ProGlow 5000 is also water-resistant, making it the ideal tool for rainy outdoor game testing or unexpected studio spills.\n");
+            ClearTexts();
+            SetHeaderText(inspectableObject.HeaderText);
+            ReadDescription(inspectableObject.DescriptionText);
         }
-
+        
         private void ClearTexts()
         {
             _headerText.text = "";
