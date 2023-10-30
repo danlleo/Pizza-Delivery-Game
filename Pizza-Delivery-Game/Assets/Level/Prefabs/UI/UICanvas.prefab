@@ -222,7 +222,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _staminaBarCanvasGroup: {fileID: 6175180566403976552}
   _foreground: {fileID: 449721479993506701}
-  _player: {fileID: 0}
   _emptyStaminaColor: {r: 1, g: 0.2688679, b: 0.2688679, a: 1}
   _fullStaminaColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   _fadeInTimeInSeconds: 0.415
@@ -730,7 +729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f8141b044343f478827d6513a45678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
   _crosshairImage: {fileID: 4164928613521283241}
   _defaultCrosshairSprite: {fileID: 21300000, guid: 01daba06fd1c3104b89889dbdcdcdb92,
     type: 3}
@@ -1106,14 +1104,17 @@ GameObject:
   - component: {fileID: 7362458988655769290}
   - component: {fileID: 3352904647456352051}
   - component: {fileID: 3341909325088844019}
+  - component: {fileID: 7590543129971957562}
   - component: {fileID: 965229083523558271}
   - component: {fileID: 6894446411172980243}
   - component: {fileID: 648338960582354618}
+  - component: {fileID: 4435646814417281189}
   - component: {fileID: 3052869315457094710}
   - component: {fileID: 1276309748421659246}
   - component: {fileID: 2542664292289074305}
   - component: {fileID: 5623668732532399658}
   - component: {fileID: 1532194820815290826}
+  - component: {fileID: 7269266296557149968}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -1209,6 +1210,102 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!82 &7590543129971957562
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837689530654671978}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &965229083523558271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1226,6 +1323,7 @@ MonoBehaviour:
   InspectableObjectFinishedReadingEvent: {fileID: 0}
   InspectableObjectOpeningEvent: {fileID: 0}
   InspectableObjectClosingEvent: {fileID: 0}
+  InspectableObjectCloseEvent: {fileID: 0}
 --- !u!114 &6894446411172980243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,6 +1356,20 @@ MonoBehaviour:
   _dialogueUI: {fileID: 803260812357188294}
   _ui: {fileID: 965229083523558271}
   _reader: {fileID: 8956761385963548498}
+--- !u!114 &4435646814417281189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837689530654671978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4b35d36a8edbd4395a6d521ab764b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ui: {fileID: 965229083523558271}
+  _itemObtained: {fileID: 8300000, guid: dc76eaeab1372564da730ec471df494f, type: 3}
 --- !u!114 &3052869315457094710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1316,6 +1428,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c34a0aa8bc024c38865b9a22991c3524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7269266296557149968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837689530654671978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d89662b63d941539addc90989e76a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3925852911189296028
@@ -1540,7 +1664,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2d78d017617f7468ef2fae1d5e3ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
 --- !u!1 &4971148008171664523
 GameObject:
   m_ObjectHideFlags: 0
