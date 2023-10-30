@@ -10,7 +10,7 @@ namespace UI.InspectableObject
     public class Reader : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private Player.Player _player;
+        [SerializeField] private UI _ui;
         [SerializeField] private TextMeshProUGUI _headerText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
 
@@ -73,7 +73,7 @@ namespace UI.InspectableObject
         private void FinishReading()
         {
             _isReading = false;
-            _player.InspectableObjectFinishedReadingEvent.Call(_player, new InspectableObjectFinishedReadingEventArgs(true));
+            _ui.InspectableObjectFinishedReadingEvent.Call(_ui, new InspectableObjectFinishedReadingEventArgs(true));
         }
         
         private void PrintTextCharacter(char character)

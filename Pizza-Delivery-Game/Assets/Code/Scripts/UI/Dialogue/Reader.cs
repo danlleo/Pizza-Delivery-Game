@@ -1,11 +1,12 @@
 using System.Collections;
+using Dialogue;
 using UnityEngine;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-namespace Dialogue
+namespace UI.Dialogue
 {
     [RequireComponent(typeof(AudioSource))]
     [DisallowMultipleComponent]
@@ -13,6 +14,7 @@ namespace Dialogue
     {
         [Header("External references")]
         [SerializeField] private GameObject _dialogueContainer;
+        [SerializeField] private UI _ui;
         [SerializeField] private TextMeshProUGUI _dialogueText;
         
         [Header("Settings")] 
@@ -30,23 +32,8 @@ namespace Dialogue
         {
             _audioSource = GetComponent<AudioSource>();
         }
-
-        private void OnEnable()
-        {
-            TriggeredStaticEvent.OnDialogueTriggered += TriggeredStatic_Event;
-        }
-
-        private void OnDisable()
-        {
-            TriggeredStaticEvent.OnDialogueTriggered -= TriggeredStatic_Event;
-        }
-
-        private void TriggeredStatic_Event(object sender, DialogueTriggeredEventArgs e)
-        {
-            ReadDialogue(e.Dialogue);
-        }
-
-        private void ReadDialogue(DialogueSO dialogue)
+        
+        public void ReadDialogue(DialogueSO dialogue)
         {
             if (_isReading) return;
             
@@ -57,7 +44,7 @@ namespace Dialogue
             StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd, dialogue.Configuration));
         }
         
-        private IEnumerator DisplayTextRoutine(UnityEvent onFinishedReading, ConfigurationSO configuration)
+        private IEnumerator DisplayTextRoutine(UnityEvent onComplete, ConfigurationSO configuration)
         {
             ClearDialogueText();
             
@@ -82,14 +69,17 @@ namespace Dialogue
             if (_story.canContinue)
             {
                 yield return new WaitForSeconds(_waitTimeToMoveToNextLineInSeconds);
-                StartCoroutine(DisplayTextRoutine(onFinishedReading, configuration));
+                StartCoroutine(DisplayTextRoutine(onComplete, configuration));
             }
             else
             {
                 _isReading = false;
+                
                 yield return new WaitForSeconds(_waitTimeToMoveToNextLineInSeconds);
+                
+                _ui.DialogueClosingEvent.Call(_ui);
+                onComplete?.Invoke();
                 HideDialogueContainer();
-                onFinishedReading?.Invoke();
             }
         }
         

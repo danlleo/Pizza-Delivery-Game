@@ -1,7 +1,5 @@
 using Enums.Player;
-using UI.InspectableObject;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -10,9 +8,6 @@ namespace Player
     [RequireComponent(typeof(HoveringOverInteractableEvent))]
     [RequireComponent(typeof(StepEvent))]
     [RequireComponent(typeof(LandedEvent))]
-    [RequireComponent(typeof(InspectableObjectFinishedReadingEvent))]
-    [RequireComponent(typeof(InspectableObjectClosingEvent))]
-    [RequireComponent(typeof(InspectableObjectOpeningEvent))]
     [DisallowMultipleComponent]
     public class Player : MonoBehaviour
     {
@@ -21,9 +16,6 @@ namespace Player
         [HideInInspector] public HoveringOverInteractableEvent HoveringOverInteractableEvent;
         [HideInInspector] public StepEvent StepEvent;
         [HideInInspector] public LandedEvent LandedEvent;
-        [HideInInspector] public InspectableObjectFinishedReadingEvent InspectableObjectFinishedReadingEvent;
-        [FormerlySerializedAs("InspectableObjcetOpeningEvent")] [HideInInspector] public InspectableObjectOpeningEvent _inspectableObjectOpeningEvent;
-        [HideInInspector] public InspectableObjectClosingEvent InspectableObjectClosingEvent;
         
         private PlayerState _state;
         
@@ -34,9 +26,6 @@ namespace Player
             HoveringOverInteractableEvent = GetComponent<HoveringOverInteractableEvent>();
             StepEvent = GetComponent<StepEvent>();
             LandedEvent = GetComponent<LandedEvent>();
-            InspectableObjectFinishedReadingEvent = GetComponent<InspectableObjectFinishedReadingEvent>();
-            _inspectableObjectOpeningEvent = GetComponent<InspectableObjectOpeningEvent>();
-            InspectableObjectClosingEvent = GetComponent<InspectableObjectClosingEvent>();
             
             SetExploringState();
         }

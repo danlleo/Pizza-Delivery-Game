@@ -7,11 +7,11 @@ namespace InspectableObject
     [DisallowMultipleComponent]
     public class Trigger : Singleton<Trigger>
     {
-        [SerializeField] private Player.Player _player;
+        [SerializeField] private UI.UI _ui;
         
         public void Invoke(InspectableObjectSO inspectableObject)
         {
-            _player._inspectableObjectOpeningEvent.Call(_player,
+            _ui.InspectableObjectOpeningEvent.Call(_ui,
                 new InspectableObjectOpeningEventArgs(inspectableObject));
         }
     }

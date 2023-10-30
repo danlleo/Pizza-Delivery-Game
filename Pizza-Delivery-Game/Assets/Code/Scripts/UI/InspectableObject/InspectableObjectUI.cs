@@ -9,7 +9,7 @@ namespace UI.InspectableObject
     {
         [Header("External references")]
         [SerializeField] private GameObject _inspectableObjectUI;
-        [SerializeField] private Player.Player _player;
+        [SerializeField] private UI _ui;
         [SerializeField] private TextMeshProUGUI _continueText;
         [SerializeField] private Reader _reader;
 
@@ -20,23 +20,25 @@ namespace UI.InspectableObject
         
         private void Awake()
         {
+            HideUI();
             HideContinueText();
         }
-
+        
+       
         private void OnEnable()
         {
-            _player._inspectableObjectOpeningEvent.Event += InspectableObjectOpeningEvent;
-            _player.InspectableObjectClosingEvent.Event += InspectableObjectClosing_Event;
-            _player.InspectableObjectFinishedReadingEvent.Event += InspectableObjectFinishedReading_Event;
+            _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpeningEvent;
+            _ui.InspectableObjectClosingEvent.Event += InspectableObjectClosing_Event;
+            _ui.InspectableObjectFinishedReadingEvent.Event += InspectableObjectFinishedReading_Event;
         }
 
         private void OnDisable()
         {
-            _player._inspectableObjectOpeningEvent.Event -= InspectableObjectOpeningEvent;
-            _player.InspectableObjectClosingEvent.Event -= InspectableObjectClosing_Event;
-            _player.InspectableObjectFinishedReadingEvent.Event -= InspectableObjectFinishedReading_Event;
+            _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpeningEvent;
+            _ui.InspectableObjectClosingEvent.Event -= InspectableObjectClosing_Event;
+            _ui.InspectableObjectFinishedReadingEvent.Event -= InspectableObjectFinishedReading_Event;
         }
-        
+       
         private void InspectableObjectOpeningEvent(object sender, InspectableObjectOpeningEventArgs e)
         {
             ShowUI();

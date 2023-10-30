@@ -7,7 +7,7 @@ namespace Misc
     public class KeyboardInput : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private Player.Player _player;
+        [SerializeField] private UI.UI _ui;
         [SerializeField] private CharacterControllerMovement _movement;
         [SerializeField] private Interact _interact;
         [SerializeField] private Flashlight _flashlight;
@@ -46,7 +46,8 @@ namespace Misc
             if (Input.GetKeyDown(KeyCode.E))
             {
                 _interact.TryInteract();
-                _player.InspectableObjectClosingEvent.Call(_player);
+                
+                _ui.InspectableObjectClosingEvent.Call(_ui);
             }
 
             if (Input.GetKeyDown(KeyCode.F))

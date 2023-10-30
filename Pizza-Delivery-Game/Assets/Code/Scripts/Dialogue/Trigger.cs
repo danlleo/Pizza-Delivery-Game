@@ -1,4 +1,5 @@
 using Misc;
+using UI.Dialogue;
 using UnityEngine;
 
 namespace Dialogue
@@ -6,6 +7,7 @@ namespace Dialogue
     [DisallowMultipleComponent]
     public class Trigger : Singleton<Trigger>
     {
+        [SerializeField] private UI.UI _ui;
         [SerializeField] private DialogueSO _dialogue;
         
         private void Update()
@@ -18,7 +20,7 @@ namespace Dialogue
 
         public void Invoke(DialogueSO dialogue)
         {
-            TriggeredStaticEvent.Call(this, new DialogueTriggeredEventArgs(dialogue));
+            _ui.DialogueOpeningEvent.Call(_ui, new DialogueOpeningEventArgs(dialogue));
         }
     }
 }
