@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 310921378686701003}
   - component: {fileID: 6591719902434433139}
   - component: {fileID: 8470514689133613516}
+  - component: {fileID: 8587969999226990447}
   - component: {fileID: 8049610283373172068}
   - component: {fileID: 8138282122625772536}
   - component: {fileID: 1828364634665443464}
@@ -442,6 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ddec6bc3309d940bd674c1d3f71905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ui: {fileID: 0}
   StaminaEvent: {fileID: 0}
   MovementEvent: {fileID: 0}
   HoveringOverInteractableEvent: {fileID: 0}
@@ -459,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8da954b55e11d044a1cfe666325e5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1418063800019633332}
+  _ui: {fileID: 0}
   _movement: {fileID: 8692333199270675001}
   _interact: {fileID: 310921378686701003}
   _flashlight: {fileID: 8470514689133613516}
@@ -642,6 +644,19 @@ MonoBehaviour:
   _lightSource: {fileID: 8065651062172325421}
   _isEnabled: 1
   _isOn: 1
+--- !u!114 &8587969999226990447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173784742728827568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0203d3af2896c6944b159ee0b222a74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _item: {fileID: 11400000, guid: c7588ff0de97fe44290238bddc3fb1f5, type: 2}
 --- !u!114 &8049610283373172068
 MonoBehaviour:
   m_ObjectHideFlags: 0

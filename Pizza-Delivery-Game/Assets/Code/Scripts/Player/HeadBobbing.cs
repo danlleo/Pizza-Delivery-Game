@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class HeadBobbing : MonoBehaviour
     {
         [Header("External references")] 
