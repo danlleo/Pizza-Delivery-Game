@@ -1,4 +1,5 @@
 using Enums.Player;
+using UI.InspectableObject;
 using UnityEngine;
 
 namespace Player
@@ -8,6 +9,8 @@ namespace Player
     [RequireComponent(typeof(HoveringOverInteractableEvent))]
     [RequireComponent(typeof(StepEvent))]
     [RequireComponent(typeof(LandedEvent))]
+    [RequireComponent(typeof(InspectableObjectFinishedReadingEvent))]
+    [RequireComponent(typeof(InspectableObjectClosingEvent))]
     [DisallowMultipleComponent]
     public class Player : MonoBehaviour
     {
@@ -16,7 +19,9 @@ namespace Player
         [HideInInspector] public HoveringOverInteractableEvent HoveringOverInteractableEvent;
         [HideInInspector] public StepEvent StepEvent;
         [HideInInspector] public LandedEvent LandedEvent;
-
+        [HideInInspector] public InspectableObjectFinishedReadingEvent InspectableObjectFinishedReadingEvent;
+        [HideInInspector] public InspectableObjectClosingEvent InspectableObjectClosingEvent;
+        
         private PlayerState _state;
         
         public void Awake()
@@ -26,6 +31,8 @@ namespace Player
             HoveringOverInteractableEvent = GetComponent<HoveringOverInteractableEvent>();
             StepEvent = GetComponent<StepEvent>();
             LandedEvent = GetComponent<LandedEvent>();
+            InspectableObjectFinishedReadingEvent = GetComponent<InspectableObjectFinishedReadingEvent>();
+            InspectableObjectClosingEvent = GetComponent<InspectableObjectClosingEvent>();
             
             SetExploringState();
         }

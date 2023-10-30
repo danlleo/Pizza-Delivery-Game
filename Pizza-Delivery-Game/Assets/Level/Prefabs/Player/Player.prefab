@@ -277,12 +277,14 @@ GameObject:
   - component: {fileID: 8260902047022013800}
   - component: {fileID: 310921378686701003}
   - component: {fileID: 6591719902434433139}
+  - component: {fileID: 8470514689133613516}
   - component: {fileID: 8049610283373172068}
   - component: {fileID: 8138282122625772536}
   - component: {fileID: 1828364634665443464}
   - component: {fileID: 3621443348358591752}
   - component: {fileID: 9128654171138205598}
-  - component: {fileID: 8470514689133613516}
+  - component: {fileID: 286730965637890606}
+  - component: {fileID: 8507720843097819346}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -447,6 +449,8 @@ MonoBehaviour:
   HoveringOverInteractableEvent: {fileID: 0}
   StepEvent: {fileID: 0}
   LandedEvent: {fileID: 0}
+  InspectableObjectFinishedReadingEvent: {fileID: 0}
+  InspectableObjectClosingEvent: {fileID: 0}
 --- !u!114 &3624578203164401176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8da954b55e11d044a1cfe666325e5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 1418063800019633332}
   _movement: {fileID: 8692333199270675001}
   _interact: {fileID: 310921378686701003}
   _flashlight: {fileID: 8470514689133613516}
@@ -625,6 +630,22 @@ MonoBehaviour:
     type: 2}
   _flashLightOnClip: {fileID: 8300000, guid: 9223a2ec2167eef4698093c547116d58, type: 3}
   _flashLightOffClip: {fileID: 8300000, guid: 607617fdbdf14ff44a0cf22276e9bf4e, type: 3}
+--- !u!114 &8470514689133613516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173784742728827568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f7b8ab44c603e46a402c21dbe128eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAudio: {fileID: 6591719902434433139}
+  _lightSource: {fileID: 8065651062172325421}
+  _isEnabled: 1
+  _isOn: 1
 --- !u!114 &8049610283373172068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,7 +706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55d438b6805b4cb9884231a55251876e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8470514689133613516
+--- !u!114 &286730965637890606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -694,12 +715,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4173784742728827568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56f7b8ab44c603e46a402c21dbe128eb, type: 3}
+  m_Script: {fileID: 11500000, guid: b2b889e7e1324490a53c0a139f67cf27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAudio: {fileID: 6591719902434433139}
-  _lightSource: {fileID: 8065651062172325421}
-  _isOn: 1
+--- !u!114 &8507720843097819346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173784742728827568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d1c8044cea49cbb98370ef6c125cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4572496924224856881
 GameObject:
   m_ObjectHideFlags: 0

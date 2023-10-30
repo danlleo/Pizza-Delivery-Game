@@ -8,12 +8,13 @@ namespace UI.InspectableObject
     [DisallowMultipleComponent]
     public class Reader : MonoBehaviour
     {
-        [Header("External references")]
+        [Header("External references")] 
+        [SerializeField] private Player.Player _player;
         [SerializeField] private TextMeshProUGUI _headerText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
 
         [Header("Settings")]
-        [SerializeField, Range(0f, 0.35f)] private float _characterTimeToPrintInSeconds = 0.03f;
+        [SerializeField, Range(0f, 0.25f)] private float _characterTimeToPrintInSeconds = 0.03f;
         
         private AudioSource _audioSource;
 
@@ -34,7 +35,6 @@ namespace UI.InspectableObject
             SetHeaderText("Flashlight");
             ReadDescription(
                 "Equipped with a durable aluminum alloy body, this flashlight is built to withstand the rigors of game development life. Its ergonomic grip ensures comfortable handling, allowing you to focus on your creativity without any discomfort. The ProGlow 5000 is also water-resistant, making it the ideal tool for rainy outdoor game testing or unexpected studio spills.\n");
-
         }
 
         private void ClearTexts()
@@ -70,7 +70,13 @@ namespace UI.InspectableObject
                 yield return new WaitForSeconds(_characterTimeToPrintInSeconds);
             }
 
+            FinishReading();
+        }
+
+        private void FinishReading()
+        {
             _isReading = false;
+            _player.InspectableObjectFinishedReadingEvent.Call(_player, new InspectableObjectFinishedReadingEventArgs(true));
         }
         
         private void PrintTextCharacter(char character)
