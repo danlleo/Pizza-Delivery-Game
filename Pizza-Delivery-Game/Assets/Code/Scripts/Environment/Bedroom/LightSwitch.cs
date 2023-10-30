@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Environment.Bedroom
 {
+    [DisallowMultipleComponent]
     public class LightSwitch : MonoBehaviour, IInteractable
     {
         [SerializeField] private GameObject _lightSwitch;

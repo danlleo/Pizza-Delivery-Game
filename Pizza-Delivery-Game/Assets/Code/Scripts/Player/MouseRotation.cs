@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class MouseRotation : MonoBehaviour
     {
         [Header("External references")]

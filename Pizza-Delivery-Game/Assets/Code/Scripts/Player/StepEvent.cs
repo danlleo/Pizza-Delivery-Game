@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class StepEvent : MonoBehaviour, IEvent<StepEventArgs>
     {
         public event EventHandler<StepEventArgs> Event;

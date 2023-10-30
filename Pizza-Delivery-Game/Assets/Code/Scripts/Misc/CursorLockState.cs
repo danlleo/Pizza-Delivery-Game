@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Misc
 {
+    [DisallowMultipleComponent]
     public class CursorLockState : MonoBehaviour
     {
         [SerializeField] private bool _isLocked;

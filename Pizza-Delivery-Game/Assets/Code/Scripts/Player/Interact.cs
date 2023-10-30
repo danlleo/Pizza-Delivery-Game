@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class Interact : MonoBehaviour
     {
         [Header("External references")]

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UI.InspectableObject
 {
+    [DisallowMultipleComponent]
     public class InspectableObjectCloseEvent : MonoBehaviour, IEvent
     {
         public event EventHandler Event;

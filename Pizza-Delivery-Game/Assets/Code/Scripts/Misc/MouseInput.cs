@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Misc
 {
+    [DisallowMultipleComponent]
     public class MouseInput : MonoBehaviour
     {
         [SerializeField] private Player.MouseRotation _mouseRotation;

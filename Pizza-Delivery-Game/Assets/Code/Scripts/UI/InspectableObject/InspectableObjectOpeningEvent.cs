@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace UI.InspectableObject
 {
+    [DisallowMultipleComponent]
     public class InspectableObjectOpeningEvent : MonoBehaviour, IEvent<InspectableObjectOpeningEventArgs>
     {
         public event EventHandler<InspectableObjectOpeningEventArgs> Event;
@@ -18,10 +19,12 @@ namespace UI.InspectableObject
     public class InspectableObjectOpeningEventArgs : EventArgs
     {
         public readonly InspectableObjectSO InspectableObject;
+        public Action OnComplete;
 
-        public InspectableObjectOpeningEventArgs(InspectableObjectSO inspectableObject)
+        public InspectableObjectOpeningEventArgs(InspectableObjectSO inspectableObject, Action onComplete)
         {
             InspectableObject = inspectableObject;
+            OnComplete = onComplete;
         }
     }
 }

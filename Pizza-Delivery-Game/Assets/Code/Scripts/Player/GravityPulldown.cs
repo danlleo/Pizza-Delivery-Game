@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class GravityPulldown : MonoBehaviour
     {
         [Header("External References")]

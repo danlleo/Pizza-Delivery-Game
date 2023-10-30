@@ -6,12 +6,48 @@ namespace Player.Inventory
     [DisallowMultipleComponent]
     public class Inventory : MonoBehaviour
     {
+        [SerializeField] private Player _player;
+        
         private HashSet<string> _itemsHashSet = new();
 
-        public bool HasItem(ItemSO item)
+        private void OnEnable()
+        {
+            _player.AddingItemEvent.Event += AddingItemEvent;
+            _player.RemovingItemEvent.Event += RemovingItemEvent;
+        }
+        
+        private void OnDisable()
+        {
+            _player.AddingItemEvent.Event -= AddingItemEvent;
+            _player.RemovingItemEvent.Event -= RemovingItemEvent;
+        }
+
+        private void AddingItemEvent(object sender, AddingItemEventArgs e)
+        {
+            if (TryAddItem(e.Item, out bool itemAdded))
+            {
+                print("Item added");
+                return;
+            }
+
+            print("Contains duplicate or null");
+        }
+        
+        private void RemovingItemEvent(object sender, RemovingItemEventArgs e)
+        {
+            if (TryRemoveItem(e.Item, out bool itemRemoved))
+            {
+                print("Item removed");
+                return;
+            }
+            
+            print("Item null or it wasn't in the inventory");
+        }
+        
+        private bool HasItem(ItemSO item)
             => _itemsHashSet.Contains(item.ID);
 
-        public bool TryAddItem(ItemSO item, out bool itemAdded)
+        private bool TryAddItem(ItemSO item, out bool itemAdded)
         {
             itemAdded = false;
 
@@ -21,10 +57,12 @@ namespace Player.Inventory
             _itemsHashSet.Add(item.ID);
             itemAdded = true;
             
+            print("Added");
+            
             return true;
         }
 
-        public bool TryRemoveItem(ItemSO item, out bool itemRemoved)
+        private bool TryRemoveItem(ItemSO item, out bool itemRemoved)
         {
             itemRemoved = false;
 
@@ -34,6 +72,8 @@ namespace Player.Inventory
             _itemsHashSet.Remove(item.ID);
             itemRemoved = true;
 
+            print("Removed");
+            
             return true;
         }
     }

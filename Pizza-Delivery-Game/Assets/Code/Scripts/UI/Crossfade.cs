@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
+    [DisallowMultipleComponent]
     public class Crossfade : MonoBehaviour
     {
         [Header("External references")] 

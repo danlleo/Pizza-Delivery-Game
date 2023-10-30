@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Misc
 {
+    [DisallowMultipleComponent]
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private UI.Crossfade _crossfade;

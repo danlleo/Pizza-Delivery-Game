@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class MovementEvent : MonoBehaviour, IEvent<MovementEventArgs>
     {
         public event EventHandler<MovementEventArgs> Event;

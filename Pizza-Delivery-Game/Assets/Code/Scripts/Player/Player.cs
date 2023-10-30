@@ -1,5 +1,7 @@
 using System;
 using Enums.Player;
+using Misc;
+using Player.Inventory;
 using UI.InspectableObject;
 using UnityEngine;
 
@@ -10,8 +12,10 @@ namespace Player
     [RequireComponent(typeof(HoveringOverInteractableEvent))]
     [RequireComponent(typeof(StepEvent))]
     [RequireComponent(typeof(LandedEvent))]
+    [RequireComponent(typeof(AddingItemEvent))]
+    [RequireComponent(typeof(RemovingItemEvent))]
     [DisallowMultipleComponent]
-    public class Player : MonoBehaviour
+    public class Player : Singleton<Player>
     {
         [SerializeField] private UI.UI _ui;
         
@@ -20,16 +24,22 @@ namespace Player
         [HideInInspector] public HoveringOverInteractableEvent HoveringOverInteractableEvent;
         [HideInInspector] public StepEvent StepEvent;
         [HideInInspector] public LandedEvent LandedEvent;
+        [HideInInspector] public AddingItemEvent AddingItemEvent;
+        [HideInInspector] public RemovingItemEvent RemovingItemEvent;
         
         public PlayerState State { get; private set; }
-        
-        public void Awake()
+
+        protected override void Awake()
         {
+            base.Awake();
+            
             StaminaEvent = GetComponent<StaminaEvent>();
             MovementEvent = GetComponent<MovementEvent>();
             HoveringOverInteractableEvent = GetComponent<HoveringOverInteractableEvent>();
             StepEvent = GetComponent<StepEvent>();
             LandedEvent = GetComponent<LandedEvent>();
+            AddingItemEvent = GetComponent<AddingItemEvent>();
+            RemovingItemEvent = GetComponent<RemovingItemEvent>();
             
             SetExploringState();
         }

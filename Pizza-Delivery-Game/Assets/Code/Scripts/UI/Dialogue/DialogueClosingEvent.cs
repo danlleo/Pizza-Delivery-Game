@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UI.Dialogue
 {
+    [DisallowMultipleComponent]
     public class DialogueClosingEvent : MonoBehaviour, IEvent
     {
         public event EventHandler Event;

@@ -18,6 +18,8 @@ namespace UI.InspectableObject
 
         private bool _allowedToRead;
         private bool _canClose;
+
+        private Action _onComplete;
         
         private void Awake()
         {
@@ -51,6 +53,8 @@ namespace UI.InspectableObject
             ShowReader();
 
             _allowedToRead = false;
+            _onComplete = e.OnComplete;
+            
             _reader.BeginDisplay(e.InspectableObject);
         }
         
@@ -69,6 +73,8 @@ namespace UI.InspectableObject
         {
             _canClose = false;
             _allowedToRead = true;
+            
+            _onComplete?.Invoke();
         }
         
         private void InspectableObjectFinishedReading_Event(object sender, InspectableObjectFinishedReadingEventArgs e)

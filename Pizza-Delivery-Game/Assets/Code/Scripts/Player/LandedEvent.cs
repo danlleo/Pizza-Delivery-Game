@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class LandedEvent : MonoBehaviour, IEvent<LandedEventArgs>
     {
         public event EventHandler<LandedEventArgs> Event;

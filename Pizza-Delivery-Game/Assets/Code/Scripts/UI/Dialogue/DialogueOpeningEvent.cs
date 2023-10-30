@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace UI.Dialogue
 {
+    [DisallowMultipleComponent]
     public class DialogueOpeningEvent : MonoBehaviour, IEvent<DialogueOpeningEventArgs>
     {
         public event EventHandler<DialogueOpeningEventArgs> Event;

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class Flashlight : MonoBehaviour
     {
         [Header("External references")] 

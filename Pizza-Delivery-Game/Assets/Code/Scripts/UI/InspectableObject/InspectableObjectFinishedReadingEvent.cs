@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UI.InspectableObject
 {
+    [DisallowMultipleComponent]
     public class InspectableObjectFinishedReadingEvent : MonoBehaviour, IEvent<InspectableObjectFinishedReadingEventArgs>
     {
         public event EventHandler<InspectableObjectFinishedReadingEventArgs> Event;

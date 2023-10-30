@@ -5,10 +5,10 @@ using UnityEngine;
 namespace UI
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
+    [DisallowMultipleComponent]
     public class InteractText : MonoBehaviour
     {
-        [SerializeField] private Player.Player _player;
-
+        private Player.Player _player;
         private TextMeshProUGUI _interactText;
 
         private void Awake()
@@ -18,6 +18,7 @@ namespace UI
 
         private void OnEnable()
         {
+            _player = Player.Player.Instance;
             _player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
         }
 

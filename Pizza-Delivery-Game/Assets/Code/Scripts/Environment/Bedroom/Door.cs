@@ -7,7 +7,8 @@ using UnityEngine;
 
 namespace Environment.Bedroom
 {
-    [SelectionBase]   
+    [SelectionBase]
+    [DisallowMultipleComponent]
     public class Door : MonoBehaviour, IInteractable
     {
         [SerializeField] private UI.Crossfade _crossfade;

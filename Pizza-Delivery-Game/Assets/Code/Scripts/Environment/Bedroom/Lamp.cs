@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Environment.Bedroom
 {
+    [DisallowMultipleComponent]
     public class Lamp : MonoBehaviour, IInteractable
     {
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");

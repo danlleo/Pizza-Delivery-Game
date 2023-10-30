@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 namespace UI
 {
+    [DisallowMultipleComponent]
     public class Crosshair : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private Player.Player _player;
         [SerializeField] private Image _crosshairImage;
         
         [Header("Settings")]
@@ -17,9 +17,12 @@ namespace UI
         [Space(5)]
         [SerializeField] private Sprite _interactCrosshairSprite;
         [SerializeField] private Vector2 _interactCrosshairSize;
+        
+        private Player.Player _player;
 
         private void OnEnable()
         {
+            _player = Player.Player.Instance;
             _player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
         }
         
@@ -27,7 +30,7 @@ namespace UI
         {
             _player.HoveringOverInteractableEvent.Event -= HoveringOverInteractable_Event;
         }
-        
+
         private void HoveringOverInteractable_Event(object sender, HoveringOverInteractableEventArgs e)
         {
             if (e.IsInteracting)

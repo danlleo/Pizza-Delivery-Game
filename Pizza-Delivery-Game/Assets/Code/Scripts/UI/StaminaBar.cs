@@ -3,7 +3,7 @@ using DG.Tweening;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
-using Utilities;
+using Math = Utilities.Math;
 
 namespace UI
 {
@@ -13,7 +13,6 @@ namespace UI
         [Header("External references")]
         [SerializeField] private CanvasGroup _staminaBarCanvasGroup;
         [SerializeField] private Image _foreground;
-        [SerializeField] private Player.Player _player;
 
         [Header("Settings")] 
         [SerializeField] private Color _emptyStaminaColor; 
@@ -25,6 +24,7 @@ namespace UI
 
         private bool _isFadedIn;
 
+        private Player.Player _player;
         private Coroutine _delayFadeInRoutine;
 
         private void Awake()
@@ -34,6 +34,7 @@ namespace UI
 
         private void OnEnable()
         {
+            _player = Player.Player.Instance;
             _player.StaminaEvent.Event += StaminaEvent;
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [DisallowMultipleComponent]
     public class HoveringOverInteractableEvent : MonoBehaviour, IEvent<HoveringOverInteractableEventArgs>
     {
         public event EventHandler<HoveringOverInteractableEventArgs> Event;
