@@ -1,4 +1,6 @@
+using System;
 using Enums.Player;
+using UI.InspectableObject;
 using UnityEngine;
 
 namespace Player
@@ -11,13 +13,15 @@ namespace Player
     [DisallowMultipleComponent]
     public class Player : MonoBehaviour
     {
+        [SerializeField] private UI.UI _ui;
+        
         [HideInInspector] public StaminaEvent StaminaEvent;
         [HideInInspector] public MovementEvent MovementEvent;
         [HideInInspector] public HoveringOverInteractableEvent HoveringOverInteractableEvent;
         [HideInInspector] public StepEvent StepEvent;
         [HideInInspector] public LandedEvent LandedEvent;
         
-        private PlayerState _state;
+        public PlayerState State { get; private set; }
         
         public void Awake()
         {
@@ -30,13 +34,32 @@ namespace Player
             SetExploringState();
         }
 
-        public void SetExploringState()
-            => _state = PlayerState.Exploring;
-
-        public void SetInspectingState()
-            => _state = PlayerState.Inspecting;
+        private void OnEnable()
+        {
+            _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
+            _ui.InspectableObjectCloseEvent.Event += InspectableObjectClose_Event;
+        }
         
-        public PlayerState GetCurrentState()
-            => _state;
+        private void OnDisable()
+        {
+            _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
+            _ui.InspectableObjectCloseEvent.Event -= InspectableObjectClose_Event;
+        }
+        
+        private void SetExploringState()
+            => State = PlayerState.Exploring;
+
+        private void SetInspectingState()
+            => State = PlayerState.Inspecting;
+        
+        private void InspectableObjectOpening_Event(object sender, InspectableObjectOpeningEventArgs e)
+        {
+            SetInspectingState();
+        }
+        
+        private void InspectableObjectClose_Event(object sender, EventArgs e)
+        {
+            SetExploringState();
+        }
     }
 }

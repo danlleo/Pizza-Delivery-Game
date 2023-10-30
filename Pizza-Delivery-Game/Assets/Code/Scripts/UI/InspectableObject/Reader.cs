@@ -29,6 +29,8 @@ namespace UI.InspectableObject
 
         public void BeginDisplay(InspectableObjectSO inspectableObject)
         {
+            if (_isReading) return;
+            
             ClearTexts();
             SetHeaderText(inspectableObject.HeaderText);
             ReadDescription(inspectableObject.DescriptionText);

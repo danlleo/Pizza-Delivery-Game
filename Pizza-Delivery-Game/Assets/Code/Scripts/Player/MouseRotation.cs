@@ -21,7 +21,7 @@ namespace Player
         
         public void RotateTowards(Vector2 input)
         {
-            if (_player.GetCurrentState() != PlayerState.Exploring)
+            if (_player.State != PlayerState.Exploring)
                 return;
             
             input *= _mouseSensitivity * Time.deltaTime;

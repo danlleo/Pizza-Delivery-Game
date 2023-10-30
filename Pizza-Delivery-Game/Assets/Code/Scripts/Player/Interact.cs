@@ -18,7 +18,7 @@ namespace Player
         
         private void Update()
         {
-            if (_player.GetCurrentState() != PlayerState.Exploring)
+            if (_player.State != PlayerState.Exploring)
                 return;
             
             if (!Physics.Raycast(_raycastPointTransform.position, _raycastPointTransform.forward,

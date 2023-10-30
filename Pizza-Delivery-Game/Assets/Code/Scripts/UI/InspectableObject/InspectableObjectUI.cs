@@ -16,34 +16,41 @@ namespace UI.InspectableObject
         [Header("Settings")] 
         [SerializeField] private float _continueTextBlinkTimeInSeconds;
 
+        private bool _allowedToRead;
         private bool _canClose;
         
         private void Awake()
         {
             HideUI();
             HideContinueText();
+
+            _allowedToRead = true;
         }
-        
        
         private void OnEnable()
         {
-            _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpeningEvent;
+            _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
             _ui.InspectableObjectClosingEvent.Event += InspectableObjectClosing_Event;
+            _ui.InspectableObjectCloseEvent.Event += InspectableObjectClose_Event;
             _ui.InspectableObjectFinishedReadingEvent.Event += InspectableObjectFinishedReading_Event;
         }
 
         private void OnDisable()
         {
-            _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpeningEvent;
+            _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
             _ui.InspectableObjectClosingEvent.Event -= InspectableObjectClosing_Event;
+            _ui.InspectableObjectCloseEvent.Event -= InspectableObjectClose_Event;
             _ui.InspectableObjectFinishedReadingEvent.Event -= InspectableObjectFinishedReading_Event;
         }
        
-        private void InspectableObjectOpeningEvent(object sender, InspectableObjectOpeningEventArgs e)
+        private void InspectableObjectOpening_Event(object sender, InspectableObjectOpeningEventArgs e)
         {
+            if (!_allowedToRead) return;
+            
             ShowUI();
             ShowReader();
-            
+
+            _allowedToRead = false;
             _reader.BeginDisplay(e.InspectableObject);
         }
         
@@ -53,8 +60,17 @@ namespace UI.InspectableObject
 
             HideUI();
             HideReader();
+            HideContinueText();
+            
+            _ui.InspectableObjectCloseEvent.Call(_ui);
         }
                 
+        private void InspectableObjectClose_Event(object sender, EventArgs e)
+        {
+            _canClose = false;
+            _allowedToRead = true;
+        }
+        
         private void InspectableObjectFinishedReading_Event(object sender, InspectableObjectFinishedReadingEventArgs e)
         {
             ShowContinueText();

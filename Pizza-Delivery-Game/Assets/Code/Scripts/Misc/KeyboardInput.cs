@@ -1,5 +1,6 @@
 using Player;
 using UnityEngine;
+using Flashlight = Player.Flashlight;
 
 namespace Misc
 {
@@ -46,7 +47,6 @@ namespace Misc
             if (Input.GetKeyDown(KeyCode.E))
             {
                 _interact.TryInteract();
-                
                 _ui.InspectableObjectClosingEvent.Call(_ui);
             }
 

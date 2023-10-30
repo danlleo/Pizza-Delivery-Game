@@ -85,7 +85,7 @@ namespace Player
 
         public void Move(Vector2 input)
         {
-            if (_player.GetCurrentState() != PlayerState.Exploring)
+            if (_player.State != PlayerState.Exploring)
                 return;
             
             // We multiple direction in which player is looking by direction on vertical input,

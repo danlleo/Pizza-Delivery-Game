@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Enums.Player;
 using Misc;
 using UnityEngine;
 
@@ -59,6 +60,7 @@ namespace Player
 
         private void Update()
         {
+            if (_player.State != PlayerState.Exploring) return;
             if (!_headBobbingEnabled) return;
             if (!InputAllowance.InputEnabled) return;
             

@@ -50,7 +50,7 @@ namespace Sounds.Audio
 
         public void PlayFlashLightSwitchSound(bool isOn)
         {
-            PlaySound(_audioSource, isOn ? _flashLightOnClip : _flashLightOffClip, 10f);
+            PlaySound(_audioSource, isOn ? _flashLightOnClip : _flashLightOffClip, 8f);
         }
         
         private void Step_Event(object sender, StepEventArgs e)

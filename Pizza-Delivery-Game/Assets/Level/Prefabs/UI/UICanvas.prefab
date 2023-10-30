@@ -1241,7 +1241,7 @@ MonoBehaviour:
   _inspectableObjectUI: {fileID: 1538679317967991313}
   _ui: {fileID: 965229083523558271}
   _continueText: {fileID: 8647786957187636823}
-  _reader: {fileID: 0}
+  _reader: {fileID: 2062953117957088890}
   _continueTextBlinkTimeInSeconds: 1
 --- !u!114 &648338960582354618
 MonoBehaviour:
