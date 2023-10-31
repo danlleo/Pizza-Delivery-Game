@@ -19,8 +19,8 @@ namespace UI.Dialogue
         
         [Header("Settings")] 
         [SerializeField] private float _waitTimeToMoveToNextLineInSeconds;
-        
-        [Space(5)]
+
+        [Space(5)] 
         [SerializeField, Range(0f, 0.35f)] private float _characterTimeToPrintInSeconds;
         
         private Story _story;

@@ -974,6 +974,8 @@ MonoBehaviour:
   _ui: {fileID: 965229083523558271}
   _headerText: {fileID: 9100393571948399352}
   _descriptionText: {fileID: 5584484497099777018}
+  _characterPrintClip: {fileID: 8300000, guid: 2586a0630f671bf42ba5bfcf6fab6019, type: 3}
+  _playCharacterPrintSoundFrequency: 8
   _characterTimeToPrintInSeconds: 0.01
 --- !u!1 &3391951807779842990
 GameObject:

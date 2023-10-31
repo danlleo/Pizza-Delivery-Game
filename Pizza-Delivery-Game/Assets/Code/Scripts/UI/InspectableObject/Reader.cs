@@ -15,6 +15,8 @@ namespace UI.InspectableObject
         [SerializeField] private TextMeshProUGUI _descriptionText;
 
         [Header("Settings")]
+        [SerializeField] private AudioClip _characterPrintClip;
+        [SerializeField] private int _playCharacterPrintSoundFrequency = 2;
         [SerializeField, Range(0f, 0.25f)] private float _characterTimeToPrintInSeconds = 0.03f;
         
         private AudioSource _audioSource;
@@ -59,9 +61,15 @@ namespace UI.InspectableObject
 
         private IEnumerator DisplayTextRoutine()
         {
+            int characterCount = 0;
+            
             while (_textToRead.Length > 1)
             {
                 char textCharacter = _textToRead[0];
+                
+                PlayCharacterTypeSound(characterCount);
+
+                characterCount++;
                 
                 PrintTextCharacter(textCharacter);
 
@@ -80,5 +88,13 @@ namespace UI.InspectableObject
         
         private void PrintTextCharacter(char character)
             => _descriptionText.text += character;
+
+        private void PlayCharacterTypeSound(int currentDisplayCharacterCount)
+        {
+            if (currentDisplayCharacterCount % _playCharacterPrintSoundFrequency != 0) 
+                return;
+            
+            _audioSource.PlayOneShot(_characterPrintClip);
+        }
     }
 }

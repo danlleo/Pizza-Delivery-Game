@@ -19,9 +19,6 @@ namespace Player
         
         private void Update()
         {
-            if (_player.State != PlayerState.Exploring)
-                return;
-            
             if (!Physics.Raycast(_raycastPointTransform.position, _raycastPointTransform.forward,
                     out _hit, _interactDistance, _interactableLayerMask))
             {
@@ -40,6 +37,9 @@ namespace Player
 
         public void TryInteract()
         {
+            if (_player.State != PlayerState.Exploring)
+                return;
+            
             if (_hit.collider == null) return;
             if (!_hit.collider.TryGetComponent(out IInteractable interactable)) return;
             

@@ -13,6 +13,7 @@ namespace Environment.Bedroom
         public void Interact()
         {
             Trigger.Instance.Invoke(_inspectableObject, AddToInventory);
+            Destroy(gameObject);
         }
 
         public string GetActionDescription()
