@@ -1117,6 +1117,7 @@ GameObject:
   - component: {fileID: 5623668732532399658}
   - component: {fileID: 1532194820815290826}
   - component: {fileID: 7269266296557149968}
+  - component: {fileID: 4793986125981619321}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -1326,6 +1327,7 @@ MonoBehaviour:
   InspectableObjectOpeningEvent: {fileID: 0}
   InspectableObjectClosingEvent: {fileID: 0}
   InspectableObjectCloseEvent: {fileID: 0}
+  ConfirmEvent: {fileID: 0}
 --- !u!114 &6894446411172980243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1372,6 +1374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ui: {fileID: 965229083523558271}
   _itemObtained: {fileID: 8300000, guid: dc76eaeab1372564da730ec471df494f, type: 3}
+  _confirm: {fileID: 8300000, guid: ae575344ed94ce54ea9ab0fe138671a0, type: 3}
 --- !u!114 &3052869315457094710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1442,6 +1445,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d89662b63d941539addc90989e76a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4793986125981619321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837689530654671978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28b2973c336f3e44c8e846c3877e9369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3925852911189296028
@@ -1587,8 +1602,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7407db525b334174193ec661f6dcfeeb, type: 2}
+  m_sharedMaterial: {fileID: 3917768332603784131, guid: 7407db525b334174193ec661f6dcfeeb,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1612,7 +1628,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 50
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0

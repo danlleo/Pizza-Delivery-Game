@@ -75,6 +75,7 @@ namespace UI.InspectableObject
             _allowedToRead = true;
             
             _onComplete?.Invoke();
+            _ui.ConfirmEvent.Call(_ui);
         }
         
         private void InspectableObjectFinishedReading_Event(object sender, InspectableObjectFinishedReadingEventArgs e)
