@@ -652,8 +652,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f7b8ab44c603e46a402c21dbe128eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _flashLightHolderTransform: {fileID: 5964120003284314092}
+  _camera: {fileID: 8686963950574366201}
   _playerAudio: {fileID: 6591719902434433139}
-  _lightSource: {fileID: 8065651062172325421}
+  _lightSource: {fileID: 9057668252911292219, guid: c584f7d5680ebef46a9aac9d41d1aed0,
+    type: 3}
   _isEnabled: 1
   _isOn: 0
 --- !u!114 &8587969999226990447
