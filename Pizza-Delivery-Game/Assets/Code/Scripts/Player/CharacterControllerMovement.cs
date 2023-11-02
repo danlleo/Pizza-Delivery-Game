@@ -141,6 +141,7 @@ namespace Player
             if (!_sprintEnabled) return;
             if (!_canSprint) return;
             if (!_isMoving) return;
+            if (!_gravityPulldown.IsGrounded) return;
             if (_isCrouching) return;
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
@@ -157,6 +158,12 @@ namespace Player
             if (!_canSprint) return;
             if (_stoppedSprinting) return;
             if (_isCrouching) return;
+
+            if (!_gravityPulldown.IsGrounded)
+            {
+                StopSprint();
+                return;
+            }
             
             if (!_isMoving)
             {

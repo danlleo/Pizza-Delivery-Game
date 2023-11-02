@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
-  _gravityPulldown: {fileID: 0}
+  _gravityPulldown: {fileID: 2831878868546191318}
   _groundRaycastTransform: {fileID: 3143864467076090259}
   _camera: {fileID: 8686963950574366201}
   _walkableAreaLayerMask:
@@ -508,7 +508,7 @@ MonoBehaviour:
   _targetFOV: 62.5
   _timeToTransitionToTargetFOVInSeconds: 0.5
   _sprintEnabled: 1
-  _crouchEnabled: 0
+  _crouchEnabled: 1
 --- !u!114 &8790912778867131809
 MonoBehaviour:
   m_ObjectHideFlags: 0
