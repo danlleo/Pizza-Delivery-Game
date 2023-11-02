@@ -54,6 +54,21 @@ namespace Misc
             {
                 _flashlight.ToggleLight();
             }
+
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                _movement.BeginCrouch();
+            }
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                _movement.Crouch();
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                _movement.EndCrouch();
+            }
         }
         
         private void ReadInput()

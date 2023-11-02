@@ -20,8 +20,16 @@ namespace Player
         
         [Space(10)]
         [SerializeField] private float _moveSpeed;
+        
+        [Space(10)]
         [SerializeField] private float _sprintSpeed;
         [SerializeField] private float _delayTimeToMakeSprintAvailableInSeconds;
+
+        [Space(10)]
+        [SerializeField] private float _standHeight;
+        [SerializeField] private float _crouchHeight;
+        [SerializeField] private float _crouchSpeed;
+        [SerializeField, Range(0.01f, 2f)] private float _timeToTransitionToCrouchInSeconds;
         
         [Space(10)]
         [SerializeField] private float _maxStaminaPercent;
@@ -39,6 +47,7 @@ namespace Player
         
         [Space(10)]
         [SerializeField] private bool _sprintEnabled;
+        [SerializeField] private bool _crouchEnabled; 
         
         private CharacterController _characterController;
 
@@ -52,10 +61,13 @@ namespace Player
         private float _stepDelayTimer;
         private float _footstepTimer;
 
-        private bool _canSprint;
         private bool _isMoving;
+        
+        private bool _canSprint;
         private bool _isSprinting;
         private bool _stoppedSprinting;
+
+        private bool _isCrouching;
         
         private void Awake()
         {
@@ -124,6 +136,7 @@ namespace Player
             if (!_sprintEnabled) return;
             if (!_canSprint) return;
             if (!_isMoving) return;
+            if (_isCrouching) return;
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
             _footstepTimer = _sprintingFootstepTimeInSeconds;
@@ -138,6 +151,7 @@ namespace Player
             if (!_sprintEnabled) return;
             if (!_canSprint) return;
             if (_stoppedSprinting) return;
+            if (_isCrouching) return;
             
             if (!_isMoving)
             {
@@ -255,6 +269,25 @@ namespace Player
             _canSprint = true;
         }
 
+        #endregion
+
+        #region Crouch
+
+        public void BeginCrouch()
+        {
+            
+        }
+
+        public void Crouch()
+        {
+            
+        }
+
+        public void EndCrouch()
+        {
+            
+        }
+        
         #endregion
         
         private void Movement_Event(object sender, MovementEventArgs e)

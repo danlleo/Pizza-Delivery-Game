@@ -30,15 +30,7 @@ namespace Scientist
             
             if (Vector3.Magnitude(direction) <= _rangeToLookAtInMeters)
             {
-                float horizontalRotationClamped = 
-                    Mathf.Clamp(direction.x, -_verticalLockDegree, _verticalLockDegree);
-                float verticalRotationClamped =
-                    Mathf.Clamp(direction.y, -_horizontalLockDegree, _horizontalLockDegree);
-
-                Quaternion endRotation =
-                    Quaternion.Euler(new Vector3(0f, horizontalRotationClamped, verticalRotationClamped));
-                
-                _neck.DORotateQuaternion(endRotation, _lookAtSpeed);
+                _neck.DOLookAt(_lookAtTarget.position, _lookAtSpeed);
             }
             else
             {

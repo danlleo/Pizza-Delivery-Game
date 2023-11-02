@@ -179,7 +179,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3421540820213965571}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
@@ -528,9 +528,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
   _camera: {fileID: 8686963950574366201}
-  _mouseSensitivity: 450
+  _mouseSensitivity: 500
   _verticalClampValueInDegrees: 90
-  _smoothingTime: 0.075
+  _smoothingTime: 0.045
   _useSmoothing: 1
 --- !u!114 &2831878868546191318
 MonoBehaviour:
@@ -647,7 +647,7 @@ MonoBehaviour:
   _playerAudio: {fileID: 6591719902434433139}
   _lightSource: {fileID: 8065651062172325421}
   _isEnabled: 1
-  _isOn: 1
+  _isOn: 0
 --- !u!114 &8587969999226990447
 MonoBehaviour:
   m_ObjectHideFlags: 0
