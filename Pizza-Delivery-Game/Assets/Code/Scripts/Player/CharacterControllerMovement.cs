@@ -11,7 +11,6 @@ namespace Player
     {
         [Header("External References")]
         [SerializeField] private Player _player;
-        [SerializeField] private GravityPulldown _gravityPulldown;
         [SerializeField] private Transform _groundRaycastTransform;
         [SerializeField] private Camera _camera;
         
@@ -37,6 +36,7 @@ namespace Player
         [Space(10)]
         [SerializeField] private float _maxStaminaPercent;
         [SerializeField] private float _staminaRecoverDelayInSeconds;
+        [SerializeField, Range(0.01f, 1f)] private float _staminaDecreaseRate;
         [SerializeField, Range(0.01f, 1f)] private float _staminaRecoverRate;
         [SerializeField] private float _transitionBetweenMovementSpeedInSeconds;
         
@@ -141,8 +141,11 @@ namespace Player
             if (!_sprintEnabled) return;
             if (!_canSprint) return;
             if (!_isMoving) return;
-            if (!_gravityPulldown.IsGrounded) return;
+            if (!IsGrounded()) return;
             if (_isCrouching) return;
+            
+            if (_recoverStaminaRoutine != null)
+                StopCoroutine(_recoverStaminaRoutine);
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
             _footstepTimer = _sprintingFootstepTimeInSeconds;
@@ -159,7 +162,7 @@ namespace Player
             if (_stoppedSprinting) return;
             if (_isCrouching) return;
 
-            if (!_gravityPulldown.IsGrounded)
+            if (!IsGrounded())
             {
                 StopSprint();
                 return;
@@ -181,7 +184,7 @@ namespace Player
                 return;
             }
             
-            DecreaseStaminaOverTimeBy(.20f);
+            DecreaseStaminaOverTimeBy(_staminaDecreaseRate);
             
             _player.MovementEvent.Call(this, new MovementEventArgs(true, true));
             _player.StaminaEvent.Call(this, new StaminaEventArgs(_staminaPercent, IsStaminaFull(_staminaPercent)));
@@ -288,7 +291,7 @@ namespace Player
         public void BeginCrouch()
         {
             if (!_crouchEnabled) return;
-            if (!_gravityPulldown.IsGrounded) return;
+            if (!IsGrounded()) return;
             if (_isDuringCrouchAnimation) return;
 
             StartCoroutine(StandCrouchRoutine());

@@ -483,7 +483,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
-  _gravityPulldown: {fileID: 2831878868546191318}
   _groundRaycastTransform: {fileID: 3143864467076090259}
   _camera: {fileID: 8686963950574366201}
   _walkableAreaLayerMask:
@@ -501,6 +500,7 @@ MonoBehaviour:
   _timeToTransitionToCrouchInSeconds: 0.165
   _maxStaminaPercent: 100
   _staminaRecoverDelayInSeconds: 1.5
+  _staminaDecreaseRate: 0.1
   _staminaRecoverRate: 0.25
   _transitionBetweenMovementSpeedInSeconds: 0.725
   _walkingFootstepTimeInSeconds: 0.625
