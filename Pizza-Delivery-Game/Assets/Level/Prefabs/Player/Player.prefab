@@ -483,6 +483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
+  _gravityPulldown: {fileID: 0}
   _groundRaycastTransform: {fileID: 3143864467076090259}
   _camera: {fileID: 8686963950574366201}
   _walkableAreaLayerMask:
@@ -492,6 +493,12 @@ MonoBehaviour:
   _moveSpeed: 3.5
   _sprintSpeed: 7
   _delayTimeToMakeSprintAvailableInSeconds: 2
+  _standingHeight: 2
+  _crouchingHeight: 1
+  _crouchSpeed: 0
+  _standingCenterPoint: {x: 0, y: 1, z: 0}
+  _crouchingCenterPoint: {x: 0, y: 0.5, z: 0}
+  _timeToTransitionToCrouchInSeconds: 0.165
   _maxStaminaPercent: 100
   _staminaRecoverDelayInSeconds: 1.5
   _staminaRecoverRate: 0.25
@@ -501,6 +508,7 @@ MonoBehaviour:
   _targetFOV: 62.5
   _timeToTransitionToTargetFOVInSeconds: 0.5
   _sprintEnabled: 1
+  _crouchEnabled: 0
 --- !u!114 &8790912778867131809
 MonoBehaviour:
   m_ObjectHideFlags: 0

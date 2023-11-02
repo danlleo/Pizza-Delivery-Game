@@ -11,6 +11,7 @@ namespace Player
     {
         [Header("External References")]
         [SerializeField] private Player _player;
+        [SerializeField] private GravityPulldown _gravityPulldown;
         [SerializeField] private Transform _groundRaycastTransform;
         [SerializeField] private Camera _camera;
         
@@ -26,10 +27,12 @@ namespace Player
         [SerializeField] private float _delayTimeToMakeSprintAvailableInSeconds;
 
         [Space(10)]
-        [SerializeField] private float _standHeight;
-        [SerializeField] private float _crouchHeight;
+        [SerializeField] private float _standingHeight = 2f;
+        [SerializeField] private float _crouchingHeight = 1f;
         [SerializeField] private float _crouchSpeed;
-        [SerializeField, Range(0.01f, 2f)] private float _timeToTransitionToCrouchInSeconds;
+        [SerializeField] private Vector3 _standingCenterPoint = new Vector3(0f, 1f, 0f);
+        [SerializeField] private Vector3 _crouchingCenterPoint = new Vector3(0f, 0.5f, 0f);
+        [SerializeField, Range(0.01f, 2f)] private float _timeToTransitionToCrouchInSeconds = 0.165f;
         
         [Space(10)]
         [SerializeField] private float _maxStaminaPercent;
@@ -54,7 +57,8 @@ namespace Player
         private Coroutine _gainMomentumRoutine;
         private Coroutine _delayStaminaRecoverRoutine;
         private Coroutine _recoverStaminaRoutine;
-
+        private Coroutine _standCrouchRoutine;
+        
         private float _initialFOV;
         private float _staminaPercent;
         private float _currentMoveSpeed;
@@ -68,6 +72,7 @@ namespace Player
         private bool _stoppedSprinting;
 
         private bool _isCrouching;
+        private bool _isDuringCrouchAnimation;
         
         private void Awake()
         {
@@ -275,7 +280,11 @@ namespace Player
 
         public void BeginCrouch()
         {
-            
+            if (!_crouchEnabled) return;
+            if (!_gravityPulldown.IsGrounded) return;
+            if (_isDuringCrouchAnimation) return;
+
+            StartCoroutine(StandCrouchRoutine());
         }
 
         public void Crouch()
@@ -285,7 +294,42 @@ namespace Player
 
         public void EndCrouch()
         {
+            if (!_crouchEnabled) return;
+            if (_isDuringCrouchAnimation) return;
+
+            StartCoroutine(StandCrouchRoutine());
+        }
+        
+        private IEnumerator StandCrouchRoutine()
+        {
+            _isDuringCrouchAnimation = true;
             
+            float timeElapsed = 0;
+            float targetHeight = _isCrouching ? _standingHeight : _crouchingHeight;
+            float currentHeight = _characterController.height;
+
+            Vector3 targetCenterPoint = _isCrouching ? _standingCenterPoint : _crouchingCenterPoint;
+            Vector3 currentCenterPoint = _characterController.center;
+
+            while (timeElapsed <= _timeToTransitionToCrouchInSeconds)
+            {
+                float t = timeElapsed / _timeToTransitionToCrouchInSeconds;
+                
+                // Here we change the actual height of character controller,
+                // we interpolate smoothly using lerp functionality
+                _characterController.center = Vector3.Lerp(currentCenterPoint, targetCenterPoint, t);
+                _characterController.height = Mathf.Lerp(currentHeight, targetHeight, t);
+                timeElapsed += Time.deltaTime;
+
+                yield return null;
+            }
+
+            // Ensure everything
+            _characterController.height = targetHeight;
+            _characterController.center = targetCenterPoint;
+
+            _isCrouching = !_isCrouching;
+            _isDuringCrouchAnimation = false;
         }
         
         #endregion

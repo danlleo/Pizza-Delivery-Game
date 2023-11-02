@@ -7,6 +7,8 @@ namespace Player
     [DisallowMultipleComponent]
     public class GravityPulldown : MonoBehaviour
     {
+        public bool IsGrounded { get; private set; }
+        
         [Header("External References")]
         [SerializeField] private CharacterControllerMovement _characterControllerMovement;
         [SerializeField] private CharacterController _characterController;
@@ -56,6 +58,8 @@ namespace Player
             {
                 ResetVelocity();
 
+                IsGrounded = true;
+                
                 if (_hasLanded) return;
                 
                 _characterControllerMovement.Land();
@@ -64,7 +68,9 @@ namespace Player
                 return;
             }
 
+            IsGrounded = false;
             _hasLanded = false;
+            
             ApplyGravity();
         }
 
