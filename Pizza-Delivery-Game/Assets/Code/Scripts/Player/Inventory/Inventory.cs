@@ -22,6 +22,9 @@ namespace Player.Inventory
             _player.RemovingItemEvent.Event -= RemovingItemEvent;
         }
 
+        public bool HasItem(ItemSO item)
+            => _itemsHashSet.Contains(item.ID);
+        
         private void AddingItemEvent(object sender, AddingItemEventArgs e)
         {
             if (TryAddItem(e.Item, out bool itemAdded))
@@ -43,9 +46,6 @@ namespace Player.Inventory
             
             print("Item null or it wasn't in the inventory");
         }
-        
-        private bool HasItem(ItemSO item)
-            => _itemsHashSet.Contains(item.ID);
 
         private bool TryAddItem(ItemSO item, out bool itemAdded)
         {

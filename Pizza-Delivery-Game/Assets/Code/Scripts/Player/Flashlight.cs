@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using Sounds.Audio;
 using UnityEngine;
@@ -8,7 +7,9 @@ namespace Player
     [DisallowMultipleComponent]
     public class Flashlight : MonoBehaviour
     {
-        [Header("External references")] 
+        [Header("External references")]
+        [SerializeField] private Inventory.Inventory _inventory;
+        [SerializeField] private Inventory.ItemSO _item;
         [SerializeField] private Transform _flashLightHolderTransform;
         [SerializeField] private Camera _camera;
         [SerializeField] private PlayerAudio _playerAudio;
@@ -46,6 +47,7 @@ namespace Player
         public void ToggleLight()
         {
             if (!_isEnabled) return;
+            if (!_inventory.HasItem(_item)) return;
             
             _isOn = !_isOn;
             _lightSource.enabled = _isOn;

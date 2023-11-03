@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 565962176357790543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23559572, y: 0.721211, z: 0.42287865, w: -0.49550277}
+  m_LocalRotation: {x: -0.23559652, y: -0.72121, z: -0.42287973, w: 0.49550292}
   m_LocalPosition: {x: 5.352414, y: 2.2390509, z: -4.812641}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -57.506, y: -106.358, z: -8.483}
 --- !u!108 &9057668252911292219
 Light:
   m_ObjectHideFlags: 0
@@ -44,14 +44,14 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_Color: {r: 1, g: 0.99147904, b: 0.9009434, a: 1}
+  m_Intensity: 1.5
+  m_Range: 11.5
+  m_SpotAngle: 59.469204
+  m_InnerSpotAngle: 51.27128
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Version: 3
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
+  m_AdditionalLightsShadowResolutionTier: 1
   m_LightLayerMask: 1
   m_RenderingLayers: 1
   m_CustomShadowLayers: 0
