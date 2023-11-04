@@ -7,13 +7,18 @@ namespace DataPersistence
 {
     public class FileDataHandler
     {
+        private const string ENCRYPTION_KEYWORD = "Prototype";
+        
         private string _dataDirectionPath;
         private string _dataFileName;
 
-        public FileDataHandler(string dataDirectionPath, string dataFileName)
+        private bool _useEncryption;
+        
+        public FileDataHandler(string dataDirectionPath, string dataFileName, bool useEncryption)
         {
             _dataDirectionPath = dataDirectionPath;
             _dataFileName = dataFileName;
+            _useEncryption = useEncryption;
         }
 
         public GameData Load()
@@ -34,6 +39,11 @@ namespace DataPersistence
                     {
                         dataToLoad = streamReader.ReadToEnd();
                     }
+                }
+                
+                if (_useEncryption)
+                {
+                    dataToLoad = EncryptDecrypt(dataToLoad);
                 }
 
                 loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
@@ -57,6 +67,11 @@ namespace DataPersistence
 
                 string dataToStore = JsonUtility.ToJson(gameData, true);
 
+                if (_useEncryption)
+                {
+                    dataToStore = EncryptDecrypt(dataToStore);
+                }
+                
                 // Write the serialized data to the file
                 using (var fileStream = new FileStream(fullPath, FileMode.Create))
                 {
@@ -70,6 +85,18 @@ namespace DataPersistence
             {
                 Debug.LogError($"Error occured when trying to save data to file: {e}");
             }
+        }
+
+        private string EncryptDecrypt(string data)
+        {
+            string modifiedData = "";
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                modifiedData += (char)(data[i] ^ ENCRYPTION_KEYWORD[i % ENCRYPTION_KEYWORD.Length]);
+            }
+
+            return modifiedData;
         }
     }
 }

@@ -12,6 +12,7 @@ namespace DataPersistence
     {
         [Header("File Storage Config")] 
         [SerializeField] private string _fileName;
+        [SerializeField] private bool _useEncryption;
         
         private List<IDataPersistence> _dataPersistenceObjects;
         private FileDataHandler _fileDataHandler;
@@ -19,7 +20,7 @@ namespace DataPersistence
         
         private void Start()
         {
-            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName);
+            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, _useEncryption);
             _dataPersistenceObjects = FindAllDataPersistenceObjects();
             
             LoadGame();
