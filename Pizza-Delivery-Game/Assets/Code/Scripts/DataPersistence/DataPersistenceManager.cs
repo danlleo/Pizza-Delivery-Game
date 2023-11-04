@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DataPersistence.Data;
-using Misc;
 using UnityEngine;
 using Interfaces;
 
 namespace DataPersistence
 {
-    public class DataPersistenceManager : Singleton<DataPersistenceManager>
+    public class DataPersistenceManager : MonoBehaviour
     {
         [Header("File Storage Config")] 
         [SerializeField] private string _fileName;
@@ -22,21 +21,29 @@ namespace DataPersistence
         {
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, _useEncryption);
             _dataPersistenceObjects = FindAllDataPersistenceObjects();
-            
-            LoadGame();
         }
 
-        private void OnApplicationQuit()
+        private void OnEnable()
         {
-            SaveGame();
+            NewGameStaticEvent.OnNewGame += NewGameStaticEvent_OnNewGame;
+            LoadStaticEvent.OnLoad += LoadStaticEvent_OnLoad;
+            SaveStaticEvent.OnSave += SaveStaticEvent_OnSave;
         }
 
-        public void NewGame()
+        private void OnDisable()
         {
+            NewGameStaticEvent.OnNewGame -= NewGameStaticEvent_OnNewGame;
+            LoadStaticEvent.OnLoad -= LoadStaticEvent_OnLoad;
+            SaveStaticEvent.OnSave -= SaveStaticEvent_OnSave;
+        }
+        
+        private void NewGame()
+        {
+            _fileDataHandler.DeleteSaveFile();
             _gameData = new GameData();
         }
 
-        public void LoadGame()
+        private void LoadGame()
         {
             _gameData = _fileDataHandler.Load();
             
@@ -53,7 +60,7 @@ namespace DataPersistence
             }
         }
 
-        public void SaveGame()
+        private void SaveGame()
         {
             foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
             {
@@ -71,5 +78,24 @@ namespace DataPersistence
 
             return new List<IDataPersistence>(dataPersistenceObjects);
         }
+        
+        #region Events
+        
+        private void NewGameStaticEvent_OnNewGame(object sender, EventArgs e)
+        {
+            NewGame();
+        }
+
+        private void SaveStaticEvent_OnSave(object sender, EventArgs e)
+        {
+            SaveGame();
+        }
+
+        private void LoadStaticEvent_OnLoad(object sender, EventArgs e)
+        {
+            LoadGame();
+        }
+        
+        #endregion
     }
 }

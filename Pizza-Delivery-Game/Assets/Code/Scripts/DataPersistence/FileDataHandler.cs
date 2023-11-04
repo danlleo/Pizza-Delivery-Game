@@ -27,7 +27,11 @@ namespace DataPersistence
 
             GameData loadedData = null;
 
-            if (!File.Exists(fullPath)) return loadedData;
+            if (!File.Exists(fullPath))
+            {
+                Debug.LogError("Path not found!");
+                return null;
+            }
             
             try
             {
@@ -85,6 +89,19 @@ namespace DataPersistence
             {
                 Debug.LogError($"Error occured when trying to save data to file: {e}");
             }
+        }
+
+        public void DeleteSaveFile()
+        {
+            string fullPath = Path.Combine(_dataDirectionPath, _dataFileName);
+            
+            if (!File.Exists(fullPath))
+            {
+                Debug.Log("Save file doesn't exist!");
+                return;
+            }
+            
+            File.Delete(fullPath);
         }
 
         private string EncryptDecrypt(string data)
