@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
+using DataPersistence.Data;
+using Interfaces;
 using UnityEngine;
 
 namespace Player.Inventory
 {
     [DisallowMultipleComponent]
-    public class Inventory : MonoBehaviour
+    public class Inventory : MonoBehaviour, IDataPersistence
     {
         [SerializeField] private Player _player;
         
@@ -75,6 +78,16 @@ namespace Player.Inventory
             print("Removed");
             
             return true;
+        }
+
+        public void LoadData(GameData gameData)
+        {
+            _itemsHashSet = gameData.SavedInventoryItems.ToHashSet();
+        }
+
+        public void SaveData(GameData gameData)
+        {
+            gameData.SavedInventoryItems = _itemsHashSet.ToList();
         }
     }
 }
