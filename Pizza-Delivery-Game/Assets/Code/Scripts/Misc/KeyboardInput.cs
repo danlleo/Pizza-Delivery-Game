@@ -1,5 +1,6 @@
 using Player;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Flashlight = Player.Flashlight;
 
 namespace Misc
@@ -13,21 +14,109 @@ namespace Misc
         [SerializeField] private Interact _interact;
         [SerializeField] private Flashlight _flashlight;
 
-        [Header("Settings")] 
-        [SerializeField] private bool _useRawInput;
-
         private float _horizontal;
         private float _vertical;
+        
+        private GameInput _gameInput;
+        private Vector2 _moveVector;
+
+        private void Awake()
+        {
+            _gameInput = new GameInput();
+        }
+
+        private void OnEnable()
+        {
+            _gameInput.Enable();
+            
+            _gameInput.Player.Movement.performed += Movement_OnPerformed;
+            _gameInput.Player.Movement.canceled += Movement_OnCanceled;
+            _gameInput.Player.Sprint.started += Sprint_OnStarted;
+            _gameInput.Player.Sprint.performed += Sprint_OnPerformed;
+            _gameInput.Player.Sprint.canceled += Sprint_OnCanceled;
+            _gameInput.Player.Interact.performed += Interact_OnPerformed;
+            _gameInput.Player.Flashlight.performed += Flashlight_OnPerformed;
+            _gameInput.Player.Crouch.started += Crouch_OnStarted;
+            _gameInput.Player.Crouch.performed += Crouch_OnPerformed;
+            _gameInput.Player.Crouch.canceled += Crouch_OnCanceled;
+        }
+
+        private void OnDisable()
+        {
+            _gameInput.Disable();
+            
+            _gameInput.Player.Movement.performed -= Movement_OnPerformed;
+            _gameInput.Player.Movement.canceled -= Movement_OnCanceled;
+            _gameInput.Player.Sprint.started -= Sprint_OnStarted;
+            _gameInput.Player.Sprint.performed -= Sprint_OnPerformed;
+            _gameInput.Player.Sprint.canceled -= Sprint_OnCanceled;
+            _gameInput.Player.Interact.performed -= Interact_OnPerformed;
+            _gameInput.Player.Flashlight.performed -= Flashlight_OnPerformed;
+            _gameInput.Player.Crouch.started -= Crouch_OnStarted;
+            _gameInput.Player.Crouch.performed -= Crouch_OnPerformed;
+            _gameInput.Player.Crouch.canceled -= Crouch_OnCanceled;
+            
+        }
+
+        #region Input Events
+
+        private void Movement_OnPerformed(InputAction.CallbackContext obj)
+        {
+            _moveVector = obj.ReadValue<Vector2>();
+        }
+        
+        private void Movement_OnCanceled(InputAction.CallbackContext obj)
+        {
+            _moveVector = Vector2.zero;
+        }
+        
+        private void Sprint_OnStarted(InputAction.CallbackContext obj)
+        {
+            
+        }
+
+        private void Sprint_OnPerformed(InputAction.CallbackContext obj)
+        {
+            
+        }
+        
+        private void Sprint_OnCanceled(InputAction.CallbackContext obj)
+        {
+            
+        }
+        
+        private void Interact_OnPerformed(InputAction.CallbackContext obj)
+        {
+            
+        }
+        
+        private void Flashlight_OnPerformed(InputAction.CallbackContext obj)
+        {
+            
+        }
+
+        private void Crouch_OnStarted(InputAction.CallbackContext obj)
+        {
+            
+        }
+
+        private void Crouch_OnPerformed(InputAction.CallbackContext obj)
+        {
+            
+        }
+
+        private void Crouch_OnCanceled(InputAction.CallbackContext obj)
+        {
+            
+        }
+        
+        #endregion
         
         private void Update()
         {
             if (!InputAllowance.InputEnabled) return;
             
-            ReadInput();
-            
-            var input = new Vector2(_horizontal, _vertical);
-            
-            _movement.Move(input);
+            _movement.Move(_moveVector);
             
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -70,24 +159,5 @@ namespace Misc
                 _movement.EndCrouch();
             }
         }
-        
-        private void ReadInput()
-        {
-            if (_useRawInput)
-            {
-                _horizontal = Input.GetAxisRaw(Axis.Horizontal);
-                _vertical = Input.GetAxisRaw(Axis.Vertical);
-            }
-            else
-            {
-                _horizontal = Input.GetAxis(Axis.Horizontal);
-                _vertical = Input.GetAxis(Axis.Vertical);
-            }
-        }
-    }
-
-    public class NewInputSystem
-    {
-        
     }
 }
