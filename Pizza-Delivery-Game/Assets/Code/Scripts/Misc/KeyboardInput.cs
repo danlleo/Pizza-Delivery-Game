@@ -85,4 +85,9 @@ namespace Misc
             }
         }
     }
+
+    public class NewInputSystem
+    {
+        
+    }
 }

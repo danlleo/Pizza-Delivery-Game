@@ -1,6 +1,8 @@
 using System;
 using Scientist.StateMachine.ConcreteStates;
 using UnityEngine;
+using IdleState = Player.StateMachine.ConcreteStates.IdleState;
+using WalkingState = Player.StateMachine.ConcreteStates.WalkingState;
 
 namespace Scientist
 {
@@ -15,8 +17,8 @@ namespace Scientist
         {
             StateMachine = new StateMachine.StateMachine();
 
-            IdleState = new IdleState(this, StateMachine);
-            WalkingState = new WalkingState(this, StateMachine);
+            //IdleState = new IdleState(this, StateMachine);
+            //WalkingState = new WalkingState(this, StateMachine);
         }
 
         private void Start()
