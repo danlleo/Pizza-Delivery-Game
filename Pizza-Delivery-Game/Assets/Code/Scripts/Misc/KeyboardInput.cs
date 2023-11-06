@@ -6,7 +6,7 @@ using Flashlight = Player.Flashlight;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class KeyboardInput : MonoBehaviour
+    public class KeyboardInput : MonoBehaviour, GameInput.IPlayerActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
@@ -23,140 +23,99 @@ namespace Misc
         private void Awake()
         {
             _gameInput = new GameInput();
+            _gameInput.Player.SetCallbacks(this);
         }
 
         private void OnEnable()
         {
             _gameInput.Enable();
-            
-            _gameInput.Player.Movement.performed += Movement_OnPerformed;
-            _gameInput.Player.Movement.canceled += Movement_OnCanceled;
-            _gameInput.Player.Sprint.started += Sprint_OnStarted;
-            _gameInput.Player.Sprint.performed += Sprint_OnPerformed;
-            _gameInput.Player.Sprint.canceled += Sprint_OnCanceled;
-            _gameInput.Player.Interact.performed += Interact_OnPerformed;
-            _gameInput.Player.Flashlight.performed += Flashlight_OnPerformed;
-            _gameInput.Player.Crouch.started += Crouch_OnStarted;
-            _gameInput.Player.Crouch.performed += Crouch_OnPerformed;
-            _gameInput.Player.Crouch.canceled += Crouch_OnCanceled;
         }
 
         private void OnDisable()
         {
             _gameInput.Disable();
-            
-            _gameInput.Player.Movement.performed -= Movement_OnPerformed;
-            _gameInput.Player.Movement.canceled -= Movement_OnCanceled;
-            _gameInput.Player.Sprint.started -= Sprint_OnStarted;
-            _gameInput.Player.Sprint.performed -= Sprint_OnPerformed;
-            _gameInput.Player.Sprint.canceled -= Sprint_OnCanceled;
-            _gameInput.Player.Interact.performed -= Interact_OnPerformed;
-            _gameInput.Player.Flashlight.performed -= Flashlight_OnPerformed;
-            _gameInput.Player.Crouch.started -= Crouch_OnStarted;
-            _gameInput.Player.Crouch.performed -= Crouch_OnPerformed;
-            _gameInput.Player.Crouch.canceled -= Crouch_OnCanceled;
-            
         }
-
-        #region Input Events
-
-        private void Movement_OnPerformed(InputAction.CallbackContext obj)
-        {
-            _moveVector = obj.ReadValue<Vector2>();
-        }
-        
-        private void Movement_OnCanceled(InputAction.CallbackContext obj)
-        {
-            _moveVector = Vector2.zero;
-        }
-        
-        private void Sprint_OnStarted(InputAction.CallbackContext obj)
-        {
-            
-        }
-
-        private void Sprint_OnPerformed(InputAction.CallbackContext obj)
-        {
-            
-        }
-        
-        private void Sprint_OnCanceled(InputAction.CallbackContext obj)
-        {
-            
-        }
-        
-        private void Interact_OnPerformed(InputAction.CallbackContext obj)
-        {
-            
-        }
-        
-        private void Flashlight_OnPerformed(InputAction.CallbackContext obj)
-        {
-            
-        }
-
-        private void Crouch_OnStarted(InputAction.CallbackContext obj)
-        {
-            
-        }
-
-        private void Crouch_OnPerformed(InputAction.CallbackContext obj)
-        {
-            
-        }
-
-        private void Crouch_OnCanceled(InputAction.CallbackContext obj)
-        {
-            
-        }
-        
-        #endregion
         
         private void Update()
         {
             if (!InputAllowance.InputEnabled) return;
             
             _movement.Move(_moveVector);
+        }
+
+        public void OnMovement(InputAction.CallbackContext context)
+        {
+            if (!InputAllowance.InputEnabled) return;
             
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            switch (context.phase)
             {
-                _movement.BeginSprint();
+                case InputActionPhase.Performed:
+                    _moveVector = context.ReadValue<Vector2>();
+                    break;
+                case InputActionPhase.Canceled:
+                    _moveVector = Vector2.zero;
+                    break;
             }
+        }
 
-            if (Input.GetKey(KeyCode.LeftShift))
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (!InputAllowance.InputEnabled) return;
+            
+            switch (context.phase)
             {
-                _movement.Sprint();
+                case InputActionPhase.Started:
+                    _interact.TryInteract();
+                    _ui.InspectableObjectClosingEvent.Call(_ui);
+                    break;
             }
+        }
 
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+        public void OnFlashlight(InputAction.CallbackContext context)
+        {
+            if (!InputAllowance.InputEnabled) return;
+
+            switch (context.phase)
             {
-                _movement.StopSprint();
+                case InputActionPhase.Started:
+                    _flashlight.ToggleLight();
+                    break;
             }
+        }
 
-            if (Input.GetKeyDown(KeyCode.E))
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+            if (!InputAllowance.InputEnabled) return;
+
+            switch (context.phase)
             {
-                _interact.TryInteract();
-                _ui.InspectableObjectClosingEvent.Call(_ui);
+                case InputActionPhase.Started:
+                    _movement.BeginSprint();
+                    break;
+                case InputActionPhase.Performed:
+                    _movement.Sprint();
+                    break;
+                case InputActionPhase.Canceled:
+                    _movement.StopSprint();
+                    break;
             }
+        }
 
-            if (Input.GetKeyDown(KeyCode.F))
+        public void OnCrouch(InputAction.CallbackContext context)
+        {
+            if (!InputAllowance.InputEnabled) return;
+            
+            switch (context.phase)
             {
-                _flashlight.ToggleLight();
-            }
-
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                _movement.BeginCrouch();
-            }
-
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                _movement.Crouch();
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftControl))
-            {
-                _movement.EndCrouch();
+                case InputActionPhase.Started:
+                    _movement.BeginCrouch();
+                    break;
+                case InputActionPhase.Performed:
+                    _movement.Crouch();
+                    break;
+                case InputActionPhase.Canceled:
+                    _movement.EndCrouch();
+                    break;
             }
         }
     }
