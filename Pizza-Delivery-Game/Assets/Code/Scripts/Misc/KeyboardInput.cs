@@ -13,12 +13,12 @@ namespace Misc
         [SerializeField] private CharacterControllerMovement _movement;
         [SerializeField] private Interact _interact;
         [SerializeField] private Flashlight _flashlight;
-
-        private float _horizontal;
-        private float _vertical;
         
         private GameInput _gameInput;
         private Vector2 _moveVector;
+        
+        private bool _sprintButtonHeld;
+        private bool _crouchButtonHeld;
 
         private void Awake()
         {
@@ -41,6 +41,12 @@ namespace Misc
             if (!InputAllowance.InputEnabled) return;
             
             _movement.Move(_moveVector);
+            
+            if (_sprintButtonHeld)
+                _movement.Sprint();
+            
+            if (_crouchButtonHeld)
+                _movement.Crouch();
         }
 
         public void OnMovement(InputAction.CallbackContext context)
@@ -86,16 +92,17 @@ namespace Misc
         public void OnSprint(InputAction.CallbackContext context)
         {
             if (!InputAllowance.InputEnabled) return;
-
+            
             switch (context.phase)
             {
                 case InputActionPhase.Started:
                     _movement.BeginSprint();
                     break;
                 case InputActionPhase.Performed:
-                    _movement.Sprint();
+                    _sprintButtonHeld = true;
                     break;
                 case InputActionPhase.Canceled:
+                    _sprintButtonHeld = false;
                     _movement.StopSprint();
                     break;
             }
@@ -111,9 +118,10 @@ namespace Misc
                     _movement.BeginCrouch();
                     break;
                 case InputActionPhase.Performed:
-                    _movement.Crouch();
+                    _crouchButtonHeld = true;
                     break;
                 case InputActionPhase.Canceled:
+                    _crouchButtonHeld = false;
                     _movement.EndCrouch();
                     break;
             }
