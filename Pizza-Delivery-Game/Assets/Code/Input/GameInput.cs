@@ -229,6 +229,34 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UIInput"",
+            ""id"": ""c3952b73-1009-4741-9e82-481fcadb2d94"",
+            ""actions"": [
+                {
+                    ""name"": ""InteractUIElement"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d622a46-be7c-4b93-81b1-a2627a89125e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b1b200f7-bfc3-4b2c-a467-097822464472"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractUIElement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -240,6 +268,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_PlayerInput_Flashlight = m_PlayerInput.FindAction("Flashlight", throwIfNotFound: true);
         m_PlayerInput_Sprint = m_PlayerInput.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerInput_Crouch = m_PlayerInput.FindAction("Crouch", throwIfNotFound: true);
+        // UIInput
+        m_UIInput = asset.FindActionMap("UIInput", throwIfNotFound: true);
+        m_UIInput_InteractUIElement = m_UIInput.FindAction("InteractUIElement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -375,6 +406,52 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public PlayerInputActions @PlayerInput => new PlayerInputActions(this);
+
+    // UIInput
+    private readonly InputActionMap m_UIInput;
+    private List<IUIInputActions> m_UIInputActionsCallbackInterfaces = new List<IUIInputActions>();
+    private readonly InputAction m_UIInput_InteractUIElement;
+    public struct UIInputActions
+    {
+        private @GameInput m_Wrapper;
+        public UIInputActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @InteractUIElement => m_Wrapper.m_UIInput_InteractUIElement;
+        public InputActionMap Get() { return m_Wrapper.m_UIInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIInputActions set) { return set.Get(); }
+        public void AddCallbacks(IUIInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIInputActionsCallbackInterfaces.Add(instance);
+            @InteractUIElement.started += instance.OnInteractUIElement;
+            @InteractUIElement.performed += instance.OnInteractUIElement;
+            @InteractUIElement.canceled += instance.OnInteractUIElement;
+        }
+
+        private void UnregisterCallbacks(IUIInputActions instance)
+        {
+            @InteractUIElement.started -= instance.OnInteractUIElement;
+            @InteractUIElement.performed -= instance.OnInteractUIElement;
+            @InteractUIElement.canceled -= instance.OnInteractUIElement;
+        }
+
+        public void RemoveCallbacks(IUIInputActions instance)
+        {
+            if (m_Wrapper.m_UIInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIInputActions @UIInput => new UIInputActions(this);
     public interface IPlayerInputActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -382,5 +459,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnFlashlight(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+    }
+    public interface IUIInputActions
+    {
+        void OnInteractUIElement(InputAction.CallbackContext context);
     }
 }

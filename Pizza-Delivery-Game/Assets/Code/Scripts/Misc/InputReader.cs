@@ -1,3 +1,4 @@
+using System;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,7 +7,7 @@ using Flashlight = Player.Flashlight;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class InputReader : MonoBehaviour, GameInput.IPlayerInputActions
+    public class InputReader : MonoBehaviour, GameInput.IPlayerInputActions, GameInput.IUIInputActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
@@ -23,20 +24,28 @@ namespace Misc
 
         private Vector3 _rotateDirection;
 
+        private PlayerInput _playerInput;
+
         private void Awake()
         {
             _gameInput = new GameInput();
             _gameInput.PlayerInput.SetCallbacks(this);
         }
-
+        
         private void OnEnable()
         {
             _gameInput.Enable();
+            
+            UI.UIOpenedStaticEvent.OnUIOpen += UIOpenedStaticEvent_OnUIOpen;
+            UI.UIClosedStaticEvent.OnUIClose += UIClosedStaticEvent_OnUIClose;
         }
-
+        
         private void OnDisable()
         {
             _gameInput.Disable();
+            
+            UI.UIOpenedStaticEvent.OnUIOpen -= UIOpenedStaticEvent_OnUIOpen;
+            UI.UIClosedStaticEvent.OnUIClose -= UIClosedStaticEvent_OnUIClose;
         }
         
         private void Update()
@@ -64,6 +73,20 @@ namespace Misc
             _mouseRotation.RotateTowards(_rotateDirection);
         }
 
+        #region UI Events
+
+        private void UIClosedStaticEvent_OnUIClose(object sender, EventArgs e)
+        {
+            _gameInput.PlayerInput.Enable();
+        }
+
+        private void UIOpenedStaticEvent_OnUIOpen(object sender, EventArgs e)
+        {
+            _gameInput.PlayerInput.Disable();
+        }
+
+        #endregion
+
         #region PlayerInputActions
 
         public void OnMovement(InputAction.CallbackContext context)
@@ -89,7 +112,6 @@ namespace Misc
             {
                 case InputActionPhase.Started:
                     _interact.TryInteract();
-                    _ui.InspectableObjectClosingEvent.Call(_ui);
                     break;
             }
         }
@@ -140,6 +162,20 @@ namespace Misc
                 case InputActionPhase.Canceled:
                     _crouchButtonHeld = false;
                     _movement.EndCrouch();
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region IUIInputActions
+
+        public void OnInteractUIElement(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Performed:
+                    _ui.InspectableObjectClosingEvent.Call(_ui);
                     break;
             }
         }

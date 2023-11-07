@@ -60,11 +60,12 @@ namespace UI.InspectableObject
             ShowUI();
             ShowObject(e.InspectableObject);
             ShowReader();
-
+            
             _allowedToRead = false;
             _onComplete = e.OnComplete;
             
             _reader.BeginDisplay(e.InspectableObject);
+            UIOpenedStaticEvent.Call(_ui);
         }
         
         private void InspectableObjectClosing_Event(object sender, EventArgs e)
@@ -85,6 +86,7 @@ namespace UI.InspectableObject
              
             _onComplete?.Invoke();
             _ui.ConfirmEvent.Call(_ui);
+            UIClosedStaticEvent.Call(_ui);
             StopCoroutine(_rotateObjectRoutine);
         }
         

@@ -207,6 +207,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UIInput",
+            "id": "c3952b73-1009-4741-9e82-481fcadb2d94",
+            "actions": [
+                {
+                    "name": "InteractUIElement",
+                    "type": "Button",
+                    "id": "4d622a46-be7c-4b93-81b1-a2627a89125e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b1b200f7-bfc3-4b2c-a467-097822464472",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractUIElement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
