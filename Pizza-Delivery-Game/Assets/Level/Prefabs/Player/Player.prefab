@@ -153,7 +153,6 @@ GameObject:
   - component: {fileID: 1418063800019633332}
   - component: {fileID: 3624578203164401176}
   - component: {fileID: 8692333199270675001}
-  - component: {fileID: 8790912778867131809}
   - component: {fileID: 7599180676435459405}
   - component: {fileID: 2831878868546191318}
   - component: {fileID: 8260902047022013800}
@@ -349,9 +348,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ui: {fileID: 0}
   _movement: {fileID: 8692333199270675001}
+  _mouseRotation: {fileID: 7599180676435459405}
   _interact: {fileID: 310921378686701003}
   _flashlight: {fileID: 8470514689133613516}
-  _useRawInput: 1
 --- !u!114 &8692333199270675001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,19 +390,6 @@ MonoBehaviour:
   _timeToTransitionToTargetFOVInSeconds: 0.5
   _sprintEnabled: 1
   _crouchEnabled: 1
---- !u!114 &8790912778867131809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4173784742728827568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 053003c9ffe89144e848de1f8b203ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mouseRotation: {fileID: 7599180676435459405}
 --- !u!114 &7599180676435459405
 MonoBehaviour:
   m_ObjectHideFlags: 0

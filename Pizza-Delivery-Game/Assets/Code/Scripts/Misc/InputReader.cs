@@ -6,11 +6,12 @@ using Flashlight = Player.Flashlight;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class KeyboardInput : MonoBehaviour, GameInput.IPlayerActions
+    public class InputReader : MonoBehaviour, GameInput.IPlayerInputActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
         [SerializeField] private CharacterControllerMovement _movement;
+        [SerializeField] private MouseRotation _mouseRotation;
         [SerializeField] private Interact _interact;
         [SerializeField] private Flashlight _flashlight;
         
@@ -20,10 +21,12 @@ namespace Misc
         private bool _sprintButtonHeld;
         private bool _crouchButtonHeld;
 
+        private Vector3 _rotateDirection;
+
         private void Awake()
         {
             _gameInput = new GameInput();
-            _gameInput.Player.SetCallbacks(this);
+            _gameInput.PlayerInput.SetCallbacks(this);
         }
 
         private void OnEnable()
@@ -48,6 +51,20 @@ namespace Misc
             if (_crouchButtonHeld)
                 _movement.Crouch();
         }
+
+        private void LateUpdate()
+        {
+            if (!InputAllowance.InputEnabled) return;
+            
+            float mouseX = Input.GetAxisRaw(Axis.MouseX);
+            float mouseY = Input.GetAxisRaw(Axis.MouseY);
+
+            _rotateDirection = new Vector2(mouseX, mouseY);
+            
+            _mouseRotation.RotateTowards(_rotateDirection);
+        }
+
+        #region PlayerInputActions
 
         public void OnMovement(InputAction.CallbackContext context)
         {
@@ -126,5 +143,7 @@ namespace Misc
                     break;
             }
         }
+
+        #endregion
     }
 }
