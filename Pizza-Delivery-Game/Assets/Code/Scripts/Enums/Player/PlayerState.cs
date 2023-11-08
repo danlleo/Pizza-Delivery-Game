@@ -4,5 +4,6 @@ namespace Enums.Player
     {
         Exploring,
         Inspecting,
+        UsingPC,
     }
 }

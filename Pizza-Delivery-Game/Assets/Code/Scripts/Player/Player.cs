@@ -1,5 +1,6 @@
 using System;
 using Enums.Player;
+using Environment.Bedroom.PC;
 using Misc;
 using Player.Inventory;
 using UI.InspectableObject;
@@ -48,12 +49,16 @@ namespace Player
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
             _ui.InspectableObjectCloseEvent.Event += InspectableObjectClose_Event;
+            StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
+            StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEventOn_Ended;
         }
-        
+
         private void OnDisable()
         {
             _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
             _ui.InspectableObjectCloseEvent.Event -= InspectableObjectClose_Event;
+            StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
+            StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEventOn_Ended;
         }
         
         private void SetExploringState()
@@ -61,7 +66,12 @@ namespace Player
 
         private void SetInspectingState()
             => State = PlayerState.Inspecting;
-        
+
+        private void SetUsingPCState()
+            => State = PlayerState.UsingPC;
+
+        #region Events
+
         private void InspectableObjectOpening_Event(object sender, InspectableObjectOpeningEventArgs e)
         {
             SetInspectingState();
@@ -71,5 +81,16 @@ namespace Player
         {
             SetExploringState();
         }
+        private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
+        {
+            SetUsingPCState();
+        }
+
+        private void StoppedUsingPCStaticEventOn_Ended(object sender, EventArgs e)
+        {
+            SetExploringState();
+        }
+        
+        #endregion
     }
 }
