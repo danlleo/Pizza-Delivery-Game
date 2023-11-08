@@ -2,7 +2,7 @@
     "name": "GameInput",
     "maps": [
         {
-            "name": "PlayerInput",
+            "name": "Player",
             "id": "ef3ebdd7-33a9-44ca-a158-abea454b6d53",
             "actions": [
                 {
@@ -209,11 +209,11 @@
             ]
         },
         {
-            "name": "UIInput",
+            "name": "UI",
             "id": "c3952b73-1009-4741-9e82-481fcadb2d94",
             "actions": [
                 {
-                    "name": "InteractUIElement",
+                    "name": "Submit",
                     "type": "Button",
                     "id": "4d622a46-be7c-4b93-81b1-a2627a89125e",
                     "expectedControlType": "Button",
@@ -230,7 +230,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "InteractUIElement",
+                    "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

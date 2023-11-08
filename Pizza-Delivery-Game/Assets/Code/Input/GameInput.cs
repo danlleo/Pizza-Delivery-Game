@@ -24,7 +24,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     ""name"": ""GameInput"",
     ""maps"": [
         {
-            ""name"": ""PlayerInput"",
+            ""name"": ""Player"",
             ""id"": ""ef3ebdd7-33a9-44ca-a158-abea454b6d53"",
             ""actions"": [
                 {
@@ -231,11 +231,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""UIInput"",
+            ""name"": ""UI"",
             ""id"": ""c3952b73-1009-4741-9e82-481fcadb2d94"",
             ""actions"": [
                 {
-                    ""name"": ""InteractUIElement"",
+                    ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""4d622a46-be7c-4b93-81b1-a2627a89125e"",
                     ""expectedControlType"": ""Button"",
@@ -252,7 +252,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""InteractUIElement"",
+                    ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -261,16 +261,16 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // PlayerInput
-        m_PlayerInput = asset.FindActionMap("PlayerInput", throwIfNotFound: true);
-        m_PlayerInput_Movement = m_PlayerInput.FindAction("Movement", throwIfNotFound: true);
-        m_PlayerInput_Interact = m_PlayerInput.FindAction("Interact", throwIfNotFound: true);
-        m_PlayerInput_Flashlight = m_PlayerInput.FindAction("Flashlight", throwIfNotFound: true);
-        m_PlayerInput_Sprint = m_PlayerInput.FindAction("Sprint", throwIfNotFound: true);
-        m_PlayerInput_Crouch = m_PlayerInput.FindAction("Crouch", throwIfNotFound: true);
-        // UIInput
-        m_UIInput = asset.FindActionMap("UIInput", throwIfNotFound: true);
-        m_UIInput_InteractUIElement = m_UIInput.FindAction("InteractUIElement", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Flashlight = m_Player.FindAction("Flashlight", throwIfNotFound: true);
+        m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -329,32 +329,32 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerInput
-    private readonly InputActionMap m_PlayerInput;
-    private List<IPlayerInputActions> m_PlayerInputActionsCallbackInterfaces = new List<IPlayerInputActions>();
-    private readonly InputAction m_PlayerInput_Movement;
-    private readonly InputAction m_PlayerInput_Interact;
-    private readonly InputAction m_PlayerInput_Flashlight;
-    private readonly InputAction m_PlayerInput_Sprint;
-    private readonly InputAction m_PlayerInput_Crouch;
-    public struct PlayerInputActions
+    // Player
+    private readonly InputActionMap m_Player;
+    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
+    private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Flashlight;
+    private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_Crouch;
+    public struct PlayerActions
     {
         private @GameInput m_Wrapper;
-        public PlayerInputActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_PlayerInput_Movement;
-        public InputAction @Interact => m_Wrapper.m_PlayerInput_Interact;
-        public InputAction @Flashlight => m_Wrapper.m_PlayerInput_Flashlight;
-        public InputAction @Sprint => m_Wrapper.m_PlayerInput_Sprint;
-        public InputAction @Crouch => m_Wrapper.m_PlayerInput_Crouch;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
+        public PlayerActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Flashlight => m_Wrapper.m_Player_Flashlight;
+        public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerInputActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerInputActions instance)
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerInputActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerInputActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -372,7 +372,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Crouch.canceled += instance.OnCrouch;
         }
 
-        private void UnregisterCallbacks(IPlayerInputActions instance)
+        private void UnregisterCallbacks(IPlayerActions instance)
         {
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
@@ -391,68 +391,68 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Crouch.canceled -= instance.OnCrouch;
         }
 
-        public void RemoveCallbacks(IPlayerInputActions instance)
+        public void RemoveCallbacks(IPlayerActions instance)
         {
-            if (m_Wrapper.m_PlayerInputActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerInputActions instance)
+        public void SetCallbacks(IPlayerActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerInputActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerInputActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerInputActions @PlayerInput => new PlayerInputActions(this);
+    public PlayerActions @Player => new PlayerActions(this);
 
-    // UIInput
-    private readonly InputActionMap m_UIInput;
-    private List<IUIInputActions> m_UIInputActionsCallbackInterfaces = new List<IUIInputActions>();
-    private readonly InputAction m_UIInput_InteractUIElement;
-    public struct UIInputActions
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_Submit;
+    public struct UIActions
     {
         private @GameInput m_Wrapper;
-        public UIInputActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @InteractUIElement => m_Wrapper.m_UIInput_InteractUIElement;
-        public InputActionMap Get() { return m_Wrapper.m_UIInput; }
+        public UIActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Submit => m_Wrapper.m_UI_Submit;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIInputActions set) { return set.Get(); }
-        public void AddCallbacks(IUIInputActions instance)
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_UIInputActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_UIInputActionsCallbackInterfaces.Add(instance);
-            @InteractUIElement.started += instance.OnInteractUIElement;
-            @InteractUIElement.performed += instance.OnInteractUIElement;
-            @InteractUIElement.canceled += instance.OnInteractUIElement;
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @Submit.started += instance.OnSubmit;
+            @Submit.performed += instance.OnSubmit;
+            @Submit.canceled += instance.OnSubmit;
         }
 
-        private void UnregisterCallbacks(IUIInputActions instance)
+        private void UnregisterCallbacks(IUIActions instance)
         {
-            @InteractUIElement.started -= instance.OnInteractUIElement;
-            @InteractUIElement.performed -= instance.OnInteractUIElement;
-            @InteractUIElement.canceled -= instance.OnInteractUIElement;
+            @Submit.started -= instance.OnSubmit;
+            @Submit.performed -= instance.OnSubmit;
+            @Submit.canceled -= instance.OnSubmit;
         }
 
-        public void RemoveCallbacks(IUIInputActions instance)
+        public void RemoveCallbacks(IUIActions instance)
         {
-            if (m_Wrapper.m_UIInputActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IUIInputActions instance)
+        public void SetCallbacks(IUIActions instance)
         {
-            foreach (var item in m_Wrapper.m_UIInputActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_UIInputActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public UIInputActions @UIInput => new UIInputActions(this);
-    public interface IPlayerInputActions
+    public UIActions @UI => new UIActions(this);
+    public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
@@ -460,8 +460,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
     }
-    public interface IUIInputActions
+    public interface IUIActions
     {
-        void OnInteractUIElement(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
     }
 }

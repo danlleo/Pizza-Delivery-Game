@@ -7,7 +7,7 @@ using Flashlight = Player.Flashlight;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class InputReader : MonoBehaviour, GameInput.IPlayerInputActions, GameInput.IUIInputActions
+    public class InputReader : MonoBehaviour, GameInput.IPlayerActions, GameInput.IUIActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
@@ -24,18 +24,16 @@ namespace Misc
 
         private Vector3 _rotateDirection;
 
-        private PlayerInput _playerInput;
-
         private void Awake()
         {
             _gameInput = new GameInput();
-            _gameInput.PlayerInput.SetCallbacks(this);
+            _gameInput.Player.SetCallbacks(this);
+            _gameInput.UI.SetCallbacks(this);
+            _gameInput.Player.Enable();
         }
         
         private void OnEnable()
         {
-            _gameInput.Enable();
-            
             UI.UIOpenedStaticEvent.OnUIOpen += UIOpenedStaticEvent_OnUIOpen;
             UI.UIClosedStaticEvent.OnUIClose += UIClosedStaticEvent_OnUIClose;
         }
@@ -77,12 +75,14 @@ namespace Misc
 
         private void UIClosedStaticEvent_OnUIClose(object sender, EventArgs e)
         {
-            _gameInput.PlayerInput.Enable();
+            _gameInput.UI.Disable();
+            _gameInput.Player.Enable();
         }
 
         private void UIOpenedStaticEvent_OnUIOpen(object sender, EventArgs e)
         {
-            _gameInput.PlayerInput.Disable();
+            _gameInput.UI.Enable();
+            _gameInput.Player.Disable();
         }
 
         #endregion
@@ -170,16 +170,17 @@ namespace Misc
 
         #region IUIInputActions
 
-        public void OnInteractUIElement(InputAction.CallbackContext context)
+        public void OnSubmit(InputAction.CallbackContext context)
         {
             switch (context.phase)
             {
-                case InputActionPhase.Performed:
+                case InputActionPhase.Started:
                     _ui.InspectableObjectClosingEvent.Call(_ui);
+                    print("Performed");
                     break;
             }
         }
-
+        
         #endregion
     }
 }
