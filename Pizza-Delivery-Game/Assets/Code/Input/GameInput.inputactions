@@ -235,6 +235,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PC",
+            "id": "ed000796-7590-4bdb-a655-e05f8cf7613b",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "2b096f4e-4ad8-44c4-acc2-f27b80fd59b5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e2e96cdf-36fc-4e4d-a7c3-27844db65962",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

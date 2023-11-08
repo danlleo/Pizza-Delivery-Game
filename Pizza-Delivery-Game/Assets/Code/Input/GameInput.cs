@@ -257,6 +257,34 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PC"",
+            ""id"": ""ed000796-7590-4bdb-a655-e05f8cf7613b"",
+            ""actions"": [
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""2b096f4e-4ad8-44c4-acc2-f27b80fd59b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e2e96cdf-36fc-4e4d-a7c3-27844db65962"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -271,6 +299,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
+        // PC
+        m_PC = asset.FindActionMap("PC", throwIfNotFound: true);
+        m_PC_Click = m_PC.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -452,6 +483,52 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // PC
+    private readonly InputActionMap m_PC;
+    private List<IPCActions> m_PCActionsCallbackInterfaces = new List<IPCActions>();
+    private readonly InputAction m_PC_Click;
+    public struct PCActions
+    {
+        private @GameInput m_Wrapper;
+        public PCActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Click => m_Wrapper.m_PC_Click;
+        public InputActionMap Get() { return m_Wrapper.m_PC; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PCActions set) { return set.Get(); }
+        public void AddCallbacks(IPCActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PCActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PCActionsCallbackInterfaces.Add(instance);
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
+        }
+
+        private void UnregisterCallbacks(IPCActions instance)
+        {
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
+        }
+
+        public void RemoveCallbacks(IPCActions instance)
+        {
+            if (m_Wrapper.m_PCActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPCActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PCActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PCActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PCActions @PC => new PCActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -463,5 +540,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnSubmit(InputAction.CallbackContext context);
+    }
+    public interface IPCActions
+    {
+        void OnClick(InputAction.CallbackContext context);
     }
 }

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Enums.Player;
 using Sounds.Audio;
 using UnityEngine;
 
@@ -48,6 +49,7 @@ namespace Player
         {
             if (!_isEnabled) return;
             if (!_inventory.HasItem(_item)) return;
+            if (Player.Instance.State != PlayerState.Exploring) return;
             
             _isOn = !_isOn;
             _lightSource.enabled = _isOn;
