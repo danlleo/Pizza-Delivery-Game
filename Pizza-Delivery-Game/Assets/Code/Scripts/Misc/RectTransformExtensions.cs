@@ -18,5 +18,15 @@ namespace Misc
 
             return new Rect(position, size);
         }
+
+        public static Vector3 GetWorldRectPosition(this RectTransform rectTransform)
+        {
+            var corners = new Vector3[4];
+            rectTransform.GetWorldCorners(corners);
+
+            Vector3 position = corners[0];
+
+            return position;
+        }
     }
 }
