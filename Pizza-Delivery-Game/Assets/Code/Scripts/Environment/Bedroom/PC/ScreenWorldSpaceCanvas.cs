@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Environment.Bedroom.PC
 {
     [RequireComponent(typeof(RectTransform))]
+    [DisallowMultipleComponent]
     public class ScreenWorldSpaceCanvas : MonoBehaviour
     {
         [Header("External references")]
@@ -15,14 +16,14 @@ namespace Environment.Bedroom.PC
         [SerializeField] private float _mouseSpeed = 0.35f;
         [SerializeField] private float _screenBoundariesOffset = .125f;
         
-        private RectTransform _rectTransform;
+        private RectTransform _screenRectTransform;
         private Vector3[] _rectCorners;
 
         private void Awake()
         {
             _rectCorners = new Vector3[4];
-            _rectTransform = GetComponent<RectTransform>();
-            _rectTransform.GetLocalCorners(_rectCorners);
+            _screenRectTransform = GetComponent<RectTransform>();
+            _screenRectTransform.GetLocalCorners(_rectCorners);
 
             ApplyOffset();
         }
@@ -33,8 +34,11 @@ namespace Environment.Bedroom.PC
                 return;
 
             MoveCursor();
-            print(RectOverlap(_cursor.GetComponent<RectTransform>().GetWorldRect(),
-                _targetObject.GetComponent<RectTransform>().GetWorldRect()));
+
+            Rect cursorRect = GetScreenObjectRect(_cursor.GetComponent<RectTransform>());
+            Rect targetRect = GetScreenObjectRect(_targetObject.GetComponent<RectTransform>());
+
+            print(IsOverlappingWithRect(cursorRect, targetRect));
         }
 
         private bool WithingScreenBoundaries(Vector3 direction)
@@ -43,6 +47,19 @@ namespace Environment.Bedroom.PC
                    direction.x <= _rectCorners[2].x && // Top right corner x
                    direction.y >= _rectCorners[0].y && // Bottom left corner Y
                    direction.y <= _rectCorners[1].y;   // Top left corner y
+        }
+
+        private bool IsOverlappingWithRect(Rect anchorRect, Rect overlappingRect)
+            => anchorRect.Overlaps(overlappingRect);
+
+        private Rect GetScreenObjectRect(RectTransform target)
+        {
+            Vector3 position = target.position;
+            
+            var targetPosition = new Vector2(position.z, position.y);
+            var rect = new Rect(targetPosition, target.rect.size);
+
+            return rect;
         }
         
         private void MoveCursor()
@@ -66,27 +83,6 @@ namespace Environment.Bedroom.PC
             _rectCorners[2].x -= _screenBoundariesOffset;
             _rectCorners[0].y += _screenBoundariesOffset;
             _rectCorners[1].y -= _screenBoundariesOffset;
-        }
-
-        private bool RectOverlap(Rect firstRect, Rect secondRect)
-        {
-            if (firstRect.x + firstRect.width*0.5f < secondRect.x - secondRect.width*0.5f)
-            {
-                return false;
-            }
-            if (secondRect.x + secondRect.width * 0.5f < firstRect.x - firstRect.width * 0.5f)
-            {
-                return false;
-            }
-            if (firstRect.y + firstRect.height * 0.5f < secondRect.y - secondRect.height * 0.5f)
-            {
-                return false;
-            }
-            if (secondRect.y + secondRect.height * 0.5f < firstRect.y - firstRect.height * 0.5f)
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

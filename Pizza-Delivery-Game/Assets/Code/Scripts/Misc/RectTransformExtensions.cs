@@ -6,13 +6,17 @@ namespace Misc
     { 
         public static Rect GetWorldRect(this RectTransform rectTransform)
         {
-            Rect localRect = rectTransform.rect;
+            var corners = new Vector3[4];
+            rectTransform.GetWorldCorners(corners);
 
-            return new Rect
-            {
-                min = rectTransform.TransformPoint(localRect.min),
-                max = rectTransform.TransformPoint(localRect.max)
-            };
+            Vector3 position = corners[0];
+
+            var size = new Vector2(
+                rectTransform.lossyScale.x * rectTransform.rect.size.x,
+                rectTransform.lossyScale.y * rectTransform.rect.size.y
+            );
+
+            return new Rect(position, size);
         }
     }
 }

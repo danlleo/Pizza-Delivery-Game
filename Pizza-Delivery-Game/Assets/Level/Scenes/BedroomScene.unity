@@ -6849,7 +6849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cursor: {fileID: 112767919}
-  _targetObject: {fileID: 1363031379}
+  _targetObject: {fileID: 2089486773}
   _mouseSpeed: 1.2
   _screenBoundariesOffset: 0.005
 --- !u!1001 &412908934
@@ -11694,7 +11694,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089486772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00000007252675}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
