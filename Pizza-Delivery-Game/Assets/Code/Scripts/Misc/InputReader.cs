@@ -1,4 +1,5 @@
 using System;
+using Environment.Bedroom.PC;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,10 +8,11 @@ using Flashlight = Player.Flashlight;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class InputReader : MonoBehaviour, GameInput.IPlayerActions, GameInput.IUIActions
+    public class InputReader : MonoBehaviour, GameInput.IPlayerActions, GameInput.IUIActions, GameInput.IPCActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
+        [SerializeField] private Player.Player _player;
         [SerializeField] private CharacterControllerMovement _movement;
         [SerializeField] private MouseRotation _mouseRotation;
         [SerializeField] private Interact _interact;
@@ -30,12 +32,16 @@ namespace Misc
             _gameInput.Player.SetCallbacks(this);
             _gameInput.UI.SetCallbacks(this);
             _gameInput.Player.Enable();
+            
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
         
         private void OnEnable()
         {
             UI.UIOpenedStaticEvent.OnUIOpen += UIOpenedStaticEvent_OnUIOpen;
             UI.UIClosedStaticEvent.OnUIClose += UIClosedStaticEvent_OnUIClose;
+            StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
+            StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEvent_OnEnded;
         }
         
         private void OnDisable()
@@ -44,6 +50,8 @@ namespace Misc
             
             UI.UIOpenedStaticEvent.OnUIOpen -= UIOpenedStaticEvent_OnUIOpen;
             UI.UIClosedStaticEvent.OnUIClose -= UIClosedStaticEvent_OnUIClose;
+            StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
+            StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEvent_OnEnded;
         }
         
         private void Update()
@@ -70,19 +78,31 @@ namespace Misc
             
             _mouseRotation.RotateTowards(_rotateDirection);
         }
-
+        
         #region UI Events
 
         private void UIClosedStaticEvent_OnUIClose(object sender, EventArgs e)
         {
-            _gameInput.UI.Disable();
-            _gameInput.Player.Enable();
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
 
         private void UIOpenedStaticEvent_OnUIOpen(object sender, EventArgs e)
         {
-            _gameInput.UI.Enable();
-            _gameInput.Player.Disable();
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.UI));
+        }
+
+        #endregion
+
+        #region PCEvents
+
+        private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
+        {
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.PC));
+        }
+        
+        private void StoppedUsingPCStaticEvent_OnEnded(object sender, EventArgs e)
+        {
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
 
         #endregion
@@ -181,6 +201,20 @@ namespace Misc
             }
         }
         
+        #endregion
+
+        #region IPCActions
+
+        public void OnClick(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    ClickedStaticEvent.Call(_player);
+                    break;
+            }
+        }
+
         #endregion
     }
 }

@@ -25,10 +25,10 @@ namespace Environment.Bedroom.PC
         [SerializeField] private float _screenBoundariesOffset = .125f;
         
         private RectTransform _screenRectTransform;
-        private Image _cursorImage;
-        private Vector3[] _rectCorners;
-
         private CursorState _currentCursorState;
+        private Image _cursorImage;
+        
+        private Vector3[] _rectCorners;
         
         private void Awake()
         {
@@ -56,6 +56,33 @@ namespace Environment.Bedroom.PC
                 : CursorState.Default);
         }
 
+        private void MoveCursor()
+        {
+            float mouseX = Input.GetAxisRaw(Axis.MouseX);
+            float mouseY = Input.GetAxisRaw(Axis.MouseY);
+
+            var cursorMoveDirection = new Vector2(mouseX, mouseY) * (Time.deltaTime * _mouseSpeed);
+            var targetDirection = new Vector3(_cursor.transform.localPosition.x + cursorMoveDirection.x,
+                _cursor.transform.localPosition.y + cursorMoveDirection.y, _cursor.transform.localPosition.z);
+
+            if (!WithingScreenBoundaries(targetDirection))
+                return;
+            
+            _cursor.transform.localPosition = targetDirection;
+        }
+        
+        private void HandleCursorChange(CursorState targetState)
+        {
+            _currentCursorState = targetState;
+
+            _cursorImage.sprite = _currentCursorState switch
+            {
+                CursorState.Default => _defaultCursorSprite,
+                CursorState.Pointing => _pointingCursorSprite,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+        
         private bool WithingScreenBoundaries(Vector3 direction)
         {
             return direction.x >= _rectCorners[0].x && // Bottom left corner x
@@ -76,21 +103,6 @@ namespace Environment.Bedroom.PC
 
             return rect;
         }
-        
-        private void MoveCursor()
-        {
-            float mouseX = Input.GetAxisRaw(Axis.MouseX);
-            float mouseY = Input.GetAxisRaw(Axis.MouseY);
-
-            var cursorMoveDirection = new Vector2(mouseX, mouseY) * (Time.deltaTime * _mouseSpeed);
-            var targetDirection = new Vector3(_cursor.transform.localPosition.x + cursorMoveDirection.x,
-                _cursor.transform.localPosition.y + cursorMoveDirection.y, _cursor.transform.localPosition.z);
-
-            if (!WithingScreenBoundaries(targetDirection))
-                return;
-            
-            _cursor.transform.localPosition = targetDirection;
-        }
 
         private void ApplyOffset()
         {
@@ -98,18 +110,6 @@ namespace Environment.Bedroom.PC
             _rectCorners[2].x -= _screenBoundariesOffset;
             _rectCorners[0].y += _screenBoundariesOffset;
             _rectCorners[1].y -= _screenBoundariesOffset;
-        }
-
-        private void HandleCursorChange(CursorState targetState)
-        {
-            _currentCursorState = targetState;
-
-            _cursorImage.sprite = _currentCursorState switch
-            {
-                CursorState.Default => _defaultCursorSprite,
-                CursorState.Pointing => _pointingCursorSprite,
-                _ => throw new ArgumentOutOfRangeException()
-            };
         }
     }
 }

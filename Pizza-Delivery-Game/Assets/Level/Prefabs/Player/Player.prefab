@@ -467,6 +467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ui: {fileID: 0}
+  _player: {fileID: 1418063800019633332}
   _movement: {fileID: 8692333199270675001}
   _mouseRotation: {fileID: 7599180676435459405}
   _interact: {fileID: 310921378686701003}
