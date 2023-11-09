@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Interfaces;
 using Sounds.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Environment.Bedroom
 {
@@ -9,7 +10,7 @@ namespace Environment.Bedroom
     public class LightSwitch : MonoBehaviour, IInteractable
     {
         [SerializeField] private GameObject _lightSwitch;
-        [SerializeField] private RoomAudio _roomAudio;
+        [FormerlySerializedAs("_roomAudio")] [SerializeField] private BedroomAudio _bedroomAudio;
         [SerializeField] private Light[] _lightSources;
 
         [Header("Lightmaps")]
@@ -91,7 +92,7 @@ namespace Environment.Bedroom
             
             SwitchLightmap(_isTurnedOn);
             ToggleLightSources(_isTurnedOn);
-            _roomAudio.PlayRoomLightSwitchSound();
+            _bedroomAudio.PlayRoomLightSwitchSound();
         }
 
         public string GetActionDescription()

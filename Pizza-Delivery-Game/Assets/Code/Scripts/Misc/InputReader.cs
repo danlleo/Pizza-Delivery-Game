@@ -31,8 +31,7 @@ namespace Misc
             _gameInput = new GameInput();
             _gameInput.Player.SetCallbacks(this);
             _gameInput.UI.SetCallbacks(this);
-            _gameInput.Player.Enable();
-            
+            _gameInput.PC.SetCallbacks(this);            
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
         
@@ -196,7 +195,6 @@ namespace Misc
             {
                 case InputActionPhase.Started:
                     _ui.InspectableObjectClosingEvent.Call(_ui);
-                    print("Performed");
                     break;
             }
         }

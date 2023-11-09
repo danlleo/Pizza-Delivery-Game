@@ -4,6 +4,7 @@ using Misc;
 using Misc.Loader;
 using Sounds.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Environment.Bedroom
 {
@@ -12,12 +13,12 @@ namespace Environment.Bedroom
     public class Door : MonoBehaviour, IInteractable
     {
         [SerializeField] private UI.Crossfade _crossfade;
-        [SerializeField] private RoomAudio _roomAudio;
+        [FormerlySerializedAs("_roomAudio")] [SerializeField] private BedroomAudio _bedroomAudio;
         
         public void Interact()
         {
             _crossfade.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.TestingFeaturesScene));
-            _roomAudio.PlayDoorOpenSound();
+            _bedroomAudio.PlayDoorOpenSound();
             Destroy(this);
         }
 

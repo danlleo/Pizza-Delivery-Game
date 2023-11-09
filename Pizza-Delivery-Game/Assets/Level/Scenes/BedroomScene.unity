@@ -7654,7 +7654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _crossfade: {fileID: 209730464}
-  _roomAudio: {fileID: 861293762}
+  _bedroomAudio: {fileID: 861293762}
 --- !u!1 &723897759
 GameObject:
   m_ObjectHideFlags: 0
@@ -7839,6 +7839,7 @@ MonoBehaviour:
   _switchOnSound: {fileID: 8300000, guid: 79782fa51216a354d8d53db3a56b1442, type: 3}
   _lampSwitchSound: {fileID: 8300000, guid: 25fc5bcdc0c876e43af06c531177f5b0, type: 3}
   _chairPullClip: {fileID: 8300000, guid: abaf71a858e2a154aabe7f8cc4ea86e3, type: 3}
+  _clickClip: {fileID: 8300000, guid: 25ebe04625dc50e4898ca0e3ec8f5b98, type: 3}
 --- !u!82 &861293763
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9084,7 +9085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lightSource: {fileID: 1820758112}
   LampGameObject: {fileID: 1258335941}
-  _roomAudio: {fileID: 861293762}
+  _bedroomAudio: {fileID: 861293762}
   _isOn: 1
   _lampOnMaterial: {fileID: 2100000, guid: d1551695587ca9f4098d2c330b6f1d07, type: 2}
   _lampOffMaterial: {fileID: 2100000, guid: 1e3691e6a9006fb499a5b3add5fb387e, type: 2}
@@ -9339,7 +9340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lightSource: {fileID: 622566332}
   LampGameObject: {fileID: 1262577889}
-  _roomAudio: {fileID: 861293762}
+  _bedroomAudio: {fileID: 861293762}
   _isOn: 1
   _lampOnMaterial: {fileID: 2100000, guid: d1551695587ca9f4098d2c330b6f1d07, type: 2}
   _lampOffMaterial: {fileID: 2100000, guid: 1e3691e6a9006fb499a5b3add5fb387e, type: 2}
@@ -9595,6 +9596,7 @@ GameObject:
   - component: {fileID: 1363031379}
   - component: {fileID: 1363031381}
   - component: {fileID: 1363031380}
+  - component: {fileID: 1363031382}
   m_Layer: 9
   m_Name: Browser
   m_TagString: Untagged
@@ -9659,6 +9661,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363031378}
   m_CullTransparentMesh: 1
+--- !u!114 &1363031382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363031378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2354a83f9d52d4143bc223351c91468f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1417921201
 GameObject:
   m_ObjectHideFlags: 0
@@ -14991,7 +15005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lightSwitch: {fileID: 4166064138672486074}
-  _roomAudio: {fileID: 861293762}
+  _bedroomAudio: {fileID: 861293762}
   _lightSources:
   - {fileID: 278560305}
   - {fileID: 1097178792}

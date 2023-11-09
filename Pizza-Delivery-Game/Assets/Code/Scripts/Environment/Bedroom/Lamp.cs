@@ -1,6 +1,7 @@
 using Interfaces;
 using Sounds.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Environment.Bedroom
 {
@@ -12,7 +13,7 @@ namespace Environment.Bedroom
         [Header("External references")]
         [SerializeField] private Light _lightSource;
         [SerializeField] private GameObject LampGameObject;
-        [SerializeField] private RoomAudio _roomAudio;
+        [FormerlySerializedAs("_roomAudio")] [SerializeField] private BedroomAudio _bedroomAudio;
 
         [Header("Settings")] 
         [SerializeField] private bool _isOn;
@@ -29,7 +30,7 @@ namespace Environment.Bedroom
             ToggleLight();
             ChangeMaterial();
             
-            _roomAudio.PlayLampLightSwitchSound();
+            _bedroomAudio.PlayLampLightSwitchSound();
         }
 
         public string GetActionDescription()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Sounds.Audio
 {
-    public class RoomAudio : AudioPlayer
+    public class BedroomAudio : AudioPlayer
     {
         [Header("External References")]
         [SerializeField] private AudioSource _audioSource;
@@ -14,22 +14,30 @@ namespace Sounds.Audio
         [SerializeField] private AudioClip _switchOnSound;
         [SerializeField] private AudioClip _lampSwitchSound;
         [SerializeField] private AudioClip _chairPullClip;
-
+        [SerializeField] private AudioClip _clickClip;
+        
         private void OnEnable()
         {
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
+            ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
         }
-
+        
         private void OnDisable()
         {
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
+            ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
         }
-
+        
         private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _chairPullClip);
         }
 
+        private void ClickedStaticEvent_OnClicked(object sender, EventArgs e)
+        {
+            PlaySoundWithRandomPitch(_audioSource, _clickClip, 0.9f, 1f, 0.65f);
+        }
+        
         public void PlayDoorOpenSound()
         {
             PlaySound(_audioSource, _doorOpen);

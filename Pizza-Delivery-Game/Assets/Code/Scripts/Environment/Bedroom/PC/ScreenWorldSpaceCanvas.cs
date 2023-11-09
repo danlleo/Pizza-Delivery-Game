@@ -1,6 +1,7 @@
 using System;
 using Enums.PC;
 using Enums.Player;
+using Interfaces;
 using Misc;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +30,8 @@ namespace Environment.Bedroom.PC
         private Image _cursorImage;
         
         private Vector3[] _rectCorners;
+
+        private bool _isHovering;
         
         private void Awake()
         {
@@ -41,6 +44,16 @@ namespace Environment.Bedroom.PC
             ApplyOffset();
         }
 
+        private void OnEnable()
+        {
+            ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
+        }
+
+        private void OnDisable()
+        {
+            ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
+        }
+
         private void Update()
         {
             if (Player.Player.Instance.State != PlayerState.UsingPC)
@@ -51,9 +64,15 @@ namespace Environment.Bedroom.PC
             Rect cursorRect = GetScreenObjectRect(_cursor.GetComponent<RectTransform>());
             Rect targetRect = GetScreenObjectRect(_targetObject.GetComponent<RectTransform>());
 
-            HandleCursorChange(IsOverlappingWithRect(cursorRect, targetRect)
-                ? CursorState.Pointing
-                : CursorState.Default);
+            if (IsOverlappingWithRect(cursorRect, targetRect))
+            {
+                HandleCursorChange(CursorState.Pointing);
+                _isHovering = true;
+                return;
+            }
+            
+            HandleCursorChange(CursorState.Default);
+            _isHovering = false;
         }
 
         private void MoveCursor()
@@ -111,5 +130,16 @@ namespace Environment.Bedroom.PC
             _rectCorners[0].y += _screenBoundariesOffset;
             _rectCorners[1].y -= _screenBoundariesOffset;
         }
+
+        #region Click Events
+
+        private void ClickedStaticEvent_OnClicked(object sender, EventArgs e)
+        {
+            if (!_isHovering) return;
+            
+            _targetObject.GetComponent<IClickable>().HandleClick();
+        }
+
+        #endregion
     }
 }
