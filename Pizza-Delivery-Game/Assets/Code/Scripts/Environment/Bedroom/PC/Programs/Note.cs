@@ -1,6 +1,6 @@
 namespace Environment.Bedroom.PC.Programs
 {
-    public class Browser : Clickable
+    public class Note : Clickable
     {
         public override void HandleClick()
         {

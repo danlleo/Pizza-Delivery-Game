@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Enums.PC;
 using Enums.Player;
 using Interfaces;
@@ -14,7 +15,7 @@ namespace Environment.Bedroom.PC
     {
         [Header("External references")]
         [SerializeField] private Transform _cursor;
-        [SerializeField] private Transform _targetObject;
+        [SerializeField] private List<Clickable> _clickableObjects;
 
         [Header("Settings")] 
         [SerializeField] private CursorState _defaultCursorState;
@@ -26,19 +27,26 @@ namespace Environment.Bedroom.PC
         [SerializeField] private float _screenBoundariesOffset = .125f;
         
         private RectTransform _screenRectTransform;
+        private RectTransform _cursorRectTransform;
+        
         private CursorState _currentCursorState;
         private Image _cursorImage;
         
         private Vector3[] _rectCorners;
+        private List<RectTransform> _clickableObjectRectTransforms;
 
         private bool _isHovering;
+
+        private IClickable _clickable;
         
         private void Awake()
         {
             _rectCorners = new Vector3[4];
             _cursorImage = _cursor.GetComponent<Image>();
+            _cursorRectTransform = _cursor.GetComponent<RectTransform>();
             _screenRectTransform = GetComponent<RectTransform>();
             _screenRectTransform.GetLocalCorners(_rectCorners);
+            _clickableObjectRectTransforms = GetClickableObjectRectTransforms();
             
             HandleCursorChange(_defaultCursorState);
             ApplyOffset();
@@ -60,19 +68,7 @@ namespace Environment.Bedroom.PC
                 return;
 
             MoveCursor();
-
-            Rect cursorRect = GetScreenObjectRect(_cursor.GetComponent<RectTransform>());
-            Rect targetRect = GetScreenObjectRect(_targetObject.GetComponent<RectTransform>());
-
-            if (IsOverlappingWithRect(cursorRect, targetRect))
-            {
-                HandleCursorChange(CursorState.Pointing);
-                _isHovering = true;
-                return;
-            }
-            
-            HandleCursorChange(CursorState.Default);
-            _isHovering = false;
+            TryOverlapWithClickableObjects();
         }
 
         private void MoveCursor()
@@ -81,13 +77,51 @@ namespace Environment.Bedroom.PC
             float mouseY = Input.GetAxisRaw(Axis.MouseY);
 
             var cursorMoveDirection = new Vector2(mouseX, mouseY) * (Time.deltaTime * _mouseSpeed);
-            var targetDirection = new Vector3(_cursor.transform.localPosition.x + cursorMoveDirection.x,
-                _cursor.transform.localPosition.y + cursorMoveDirection.y, _cursor.transform.localPosition.z);
+            var localPosition = _cursor.transform.localPosition;
+            var targetDirection = new Vector3(localPosition.x + cursorMoveDirection.x,
+                localPosition.y + cursorMoveDirection.y, localPosition.z);
 
             if (!WithingScreenBoundaries(targetDirection))
                 return;
             
             _cursor.transform.localPosition = targetDirection;
+        }
+
+        private void TryOverlapWithClickableObjects()
+        {
+            Rect cursorRect = GetScreenObjectRect(_cursorRectTransform);
+            
+            for (int i = 0; i < _clickableObjectRectTransforms.Count; i++)
+            {
+                Rect targetRect = GetScreenObjectRect(_clickableObjectRectTransforms[i]);
+
+                if (!IsOverlappingWithRect(cursorRect, targetRect)) continue;
+                
+                HandleCursorChange(CursorState.Pointing);
+
+                _clickable = _clickableObjectRectTransforms[i].GetComponent<IClickable>();
+                _isHovering = true;
+
+                return;
+            }
+
+            _clickable = null;
+            _isHovering = false;
+
+            HandleCursorChange(CursorState.Default);
+        }
+
+        private List<RectTransform> GetClickableObjectRectTransforms()
+        {
+            var rectTransforms = new List<RectTransform>();
+            
+            for (int i = 0; i < _clickableObjects.Count; i++)
+            {
+                var targetRect = _clickableObjects[i].GetComponent<RectTransform>();
+                rectTransforms.Add(targetRect);
+            }
+
+            return rectTransforms;
         }
         
         private void HandleCursorChange(CursorState targetState)
@@ -137,7 +171,7 @@ namespace Environment.Bedroom.PC
         {
             if (!_isHovering) return;
             
-            _targetObject.GetComponent<IClickable>().HandleClick();
+            _clickable.HandleClick();
         }
 
         #endregion
