@@ -4,7 +4,7 @@ namespace Environment.Bedroom.PC.Programs
     {
         public override void HandleClick()
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

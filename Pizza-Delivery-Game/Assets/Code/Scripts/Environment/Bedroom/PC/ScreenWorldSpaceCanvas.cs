@@ -11,7 +11,7 @@ namespace Environment.Bedroom.PC
 {
     [RequireComponent(typeof(RectTransform))]
     [DisallowMultipleComponent]
-    public class ScreenWorldSpaceCanvas : MonoBehaviour
+    public class ScreenWorldSpaceCanvas : Singleton<ScreenWorldSpaceCanvas>
     {
         [Header("External references")]
         [SerializeField] private Transform _cursor;
@@ -38,9 +38,11 @@ namespace Environment.Bedroom.PC
         private bool _isHovering;
 
         private IClickable _clickable;
-        
-        private void Awake()
+
+        protected override void Awake()
         {
+            base.Awake();
+            
             _rectCorners = new Vector3[4];
             _cursorImage = _cursor.GetComponent<Image>();
             _cursorRectTransform = _cursor.GetComponent<RectTransform>();
@@ -71,6 +73,15 @@ namespace Environment.Bedroom.PC
             TryOverlapWithClickableObjects();
         }
 
+        public void RemoveClickableObject(Clickable clickable)
+        {
+            _clickableObjects.Remove(clickable);
+            _clickableObjectRectTransforms.Remove(clickable.GetComponent<RectTransform>());
+            _clickable = null;
+            
+            print("Fartick");
+        }
+        
         private void MoveCursor()
         {
             float mouseX = Input.GetAxisRaw(Axis.MouseX);
@@ -90,6 +101,16 @@ namespace Environment.Bedroom.PC
         private void TryOverlapWithClickableObjects()
         {
             Rect cursorRect = GetScreenObjectRect(_cursorRectTransform);
+
+            if (_clickableObjectRectTransforms.Count == 0)
+            {
+                _clickable = null;
+                _isHovering = false;
+
+                HandleCursorChange(CursorState.Default);
+                
+                return;
+            }
             
             for (int i = 0; i < _clickableObjectRectTransforms.Count; i++)
             {
