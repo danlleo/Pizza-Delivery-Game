@@ -15,6 +15,7 @@ namespace Player
     [RequireComponent(typeof(LandedEvent))]
     [RequireComponent(typeof(AddingItemEvent))]
     [RequireComponent(typeof(RemovingItemEvent))]
+    [RequireComponent(typeof(SprintStateChangedEvent))]
     [DisallowMultipleComponent]
     public class Player : Singleton<Player>
     {
@@ -27,6 +28,7 @@ namespace Player
         [HideInInspector] public LandedEvent LandedEvent;
         [HideInInspector] public AddingItemEvent AddingItemEvent;
         [HideInInspector] public RemovingItemEvent RemovingItemEvent;
+        [HideInInspector] public SprintStateChangedEvent SprintStateChangedEvent;
         
         public PlayerState State { get; private set; }
 
@@ -41,6 +43,7 @@ namespace Player
             LandedEvent = GetComponent<LandedEvent>();
             AddingItemEvent = GetComponent<AddingItemEvent>();
             RemovingItemEvent = GetComponent<RemovingItemEvent>();
+            SprintStateChangedEvent = GetComponent<SprintStateChangedEvent>();
             
             SetExploringState();
         }

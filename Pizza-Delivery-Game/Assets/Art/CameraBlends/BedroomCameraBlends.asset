@@ -27,7 +27,7 @@ MonoBehaviour:
   - m_From: PCScreen Virtual Camera
     m_To: Main Camera
     m_Blend:
-      m_Style: 3
+      m_Style: 1
       m_Time: 2
       m_CustomCurve:
         serializedVersion: 2

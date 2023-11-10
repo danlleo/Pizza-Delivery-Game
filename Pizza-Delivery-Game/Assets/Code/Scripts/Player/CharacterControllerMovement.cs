@@ -1,5 +1,4 @@
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 using Enums.Player;
 
@@ -12,7 +11,6 @@ namespace Player
         [Header("External References")]
         [SerializeField] private Player _player;
         [SerializeField] private Transform _groundRaycastTransform;
-        [SerializeField] private Camera _camera;
         
         [Header("Settings")] 
         [SerializeField] private LayerMask _walkableAreaLayerMask;
@@ -44,10 +42,6 @@ namespace Player
         [SerializeField] private float _walkingFootstepTimeInSeconds;
         [SerializeField] private float _sprintingFootstepTimeInSeconds;
 
-        [Space(10)] 
-        [SerializeField, Range(1, 179)] private float _targetFOV;
-        [SerializeField] private float _timeToTransitionToTargetFOVInSeconds;
-        
         [Space(10)]
         [SerializeField] private bool _sprintEnabled;
         [SerializeField] private bool _crouchEnabled; 
@@ -59,7 +53,6 @@ namespace Player
         private Coroutine _recoverStaminaRoutine;
         private Coroutine _standCrouchRoutine;
         
-        private float _initialFOV;
         private float _staminaPercent;
         private float _currentMoveSpeed;
         private float _stepDelayTimer;
@@ -79,7 +72,6 @@ namespace Player
             _characterController = GetComponent<CharacterController>();
             _staminaPercent = _maxStaminaPercent;
             _currentMoveSpeed = _moveSpeed;
-            _initialFOV = _camera.fieldOfView;
             _canSprint = true;
         }
 
@@ -147,12 +139,12 @@ namespace Player
             if (_recoverStaminaRoutine != null)
                 StopCoroutine(_recoverStaminaRoutine);
             
+            _player.SprintStateChangedEvent.Call(_player, new SprintStateChangedEventArgs(true));
+            
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _sprintSpeed));
             _footstepTimer = _sprintingFootstepTimeInSeconds;
             _stoppedSprinting = false;
             _isSprinting = true;
-
-            _camera.DOFieldOfView(_targetFOV, _timeToTransitionToTargetFOVInSeconds);
         }
 
         public void Sprint()
@@ -206,7 +198,7 @@ namespace Player
                 StopCoroutine(_gainMomentumRoutine);
             
             _player.MovementEvent.Call(_player, new MovementEventArgs(_isMoving, false));
-            _camera.DOFieldOfView(_initialFOV, _timeToTransitionToTargetFOVInSeconds);
+            _player.SprintStateChangedEvent.Call(_player, new SprintStateChangedEventArgs(false));
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _moveSpeed));
             _delayStaminaRecoverRoutine = StartCoroutine(DelayStaminaRecoverRoutine());

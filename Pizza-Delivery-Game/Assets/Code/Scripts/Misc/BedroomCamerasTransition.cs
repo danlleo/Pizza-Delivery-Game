@@ -14,7 +14,7 @@ namespace Misc
         [Header("Settings")]
         [SerializeField] private int _lowPriorityValue = 1;
         [SerializeField] private int _highPriorityValue = 10;
-
+        
         private void OnEnable()
         {
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEventOn_Started;
