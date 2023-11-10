@@ -5,11 +5,9 @@ namespace Misc
     [DisallowMultipleComponent]
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private UI.Crossfade _crossfade;
-
-        private void Start()
+        private void Awake()
         {
-            _crossfade.FadeOut(InputAllowance.EnableInput);
+            InputAllowance.EnableInput();
         }
     }
 }

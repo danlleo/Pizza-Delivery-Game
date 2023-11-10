@@ -37,7 +37,7 @@ namespace Environment.Bedroom.PC
 
         private bool _isHovering;
 
-        private IClickable _clickable;
+        private Clickable _selectedClickable;
 
         protected override void Awake()
         {
@@ -77,7 +77,7 @@ namespace Environment.Bedroom.PC
         {
             _clickableObjects.Remove(clickable);
             _clickableObjectRectTransforms.Remove(clickable.GetComponent<RectTransform>());
-            _clickable = null;
+            _selectedClickable = null;
         }
         
         private void MoveCursor()
@@ -99,10 +99,10 @@ namespace Environment.Bedroom.PC
         private void TryOverlapWithClickableObjects()
         {
             Rect cursorRect = GetScreenObjectRect(_cursorRectTransform);
-
+            
             if (_clickableObjectRectTransforms.Count == 0)
             {
-                _clickable = null;
+                _selectedClickable = null;
                 _isHovering = false;
 
                 HandleCursorChange(CursorState.Default);
@@ -119,13 +119,13 @@ namespace Environment.Bedroom.PC
                 
                 HandleCursorChange(CursorState.Pointing);
 
-                _clickable = _clickableObjectRectTransforms[i].GetComponent<IClickable>();
+                _selectedClickable = _clickableObjects[i];
                 _isHovering = true;
 
                 return;
             }
 
-            _clickable = null;
+            _selectedClickable = null;
             _isHovering = false;
 
             HandleCursorChange(CursorState.Default);
@@ -191,7 +191,7 @@ namespace Environment.Bedroom.PC
         {
             if (!_isHovering) return;
             
-            _clickable.HandleClick();
+            _selectedClickable.HandleClick();
         }
 
         #endregion

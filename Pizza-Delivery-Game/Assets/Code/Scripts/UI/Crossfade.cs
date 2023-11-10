@@ -1,11 +1,12 @@
 using System;
 using DG.Tweening;
+using Misc;
 using UnityEngine;
 
 namespace UI
 {
     [DisallowMultipleComponent]
-    public class Crossfade : MonoBehaviour
+    public class Crossfade : Singleton<Crossfade>
     {
         [Header("External references")] 
         [SerializeField] private CanvasGroup _canvasGroup;
