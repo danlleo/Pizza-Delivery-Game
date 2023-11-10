@@ -78,8 +78,6 @@ namespace Environment.Bedroom.PC
             _clickableObjects.Remove(clickable);
             _clickableObjectRectTransforms.Remove(clickable.GetComponent<RectTransform>());
             _clickable = null;
-            
-            print("Fartick");
         }
         
         private void MoveCursor()
@@ -117,6 +115,7 @@ namespace Environment.Bedroom.PC
                 Rect targetRect = GetScreenObjectRect(_clickableObjectRectTransforms[i]);
 
                 if (!IsOverlappingWithRect(cursorRect, targetRect)) continue;
+                if (!_clickableObjects[i].gameObject.activeSelf) continue;
                 
                 HandleCursorChange(CursorState.Pointing);
 
