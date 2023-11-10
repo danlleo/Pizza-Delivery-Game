@@ -3,7 +3,7 @@ using Cinemachine;
 using Environment.Bedroom.PC;
 using UnityEngine;
 
-namespace Misc
+namespace Environment.Bedroom
 {
     public class BedroomCamerasTransition : MonoBehaviour
     {
@@ -18,25 +18,17 @@ namespace Misc
         private void OnEnable()
         {
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEventOn_Started;
-            StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEventOn_Ended;
         }
 
         private void OnDisable()
         {
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEventOn_Started;
-            StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEventOn_Ended;
         }
 
         private void StartedUsingPCStaticEventOn_Started(object sender, EventArgs e)
         {
             _mainVirtualCamera.Priority = _lowPriorityValue;
             _computerScreenVirtualCamera.Priority = _highPriorityValue;
-        }
-        
-        private void StoppedUsingPCStaticEventOn_Ended(object sender, EventArgs e)
-        {
-            _computerScreenVirtualCamera.Priority = _lowPriorityValue;
-            _mainVirtualCamera.Priority = _highPriorityValue;
         }
     }
 }

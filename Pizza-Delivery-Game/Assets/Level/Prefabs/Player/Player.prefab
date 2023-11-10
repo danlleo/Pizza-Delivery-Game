@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6415606395594410747}
   - component: {fileID: 5435732190297245622}
   - component: {fileID: 2116985814664749906}
-  - component: {fileID: 1896045799511543846}
   - component: {fileID: 3649553047365434863}
   m_Layer: 0
   m_Name: Main Camera
@@ -80,7 +79,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 471
+    m_Bits: 215
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -217,18 +216,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 5959860838386482284}
---- !u!114 &1896045799511543846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020010896817862302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7832acd0433ac042822bfdbc65eb157, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3649553047365434863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,7 +832,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 288
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

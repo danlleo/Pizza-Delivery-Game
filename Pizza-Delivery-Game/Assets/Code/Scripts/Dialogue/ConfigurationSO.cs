@@ -6,6 +6,9 @@ namespace Dialogue
     public class ConfigurationSO : ScriptableObject
     {
         [SerializeField] private AudioClip[] _audioClips;
+
+        [Space(5)] 
+        [SerializeField, Range(0, 2f)] private float _volume;
         
         [Space(5)]
         [SerializeField, Range(1, 8)] private int _characterPlaySoundFrequency;
@@ -19,6 +22,8 @@ namespace Dialogue
         [SerializeField] private bool _makePredictable;
 
         public AudioClip[] AudioClips => _audioClips;
+
+        public float Volume => _volume;
         
         public int CharacterPlaySoundFrequency => _characterPlaySoundFrequency;
 

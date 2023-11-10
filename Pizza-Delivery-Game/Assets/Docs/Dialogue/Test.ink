@@ -1,3 +1,0 @@
-Always knew I shouln't trust this bitches...
-They always leave you behind when you're in your lowest
-So tired, I wanna sleep, there so many things to do tomorrow

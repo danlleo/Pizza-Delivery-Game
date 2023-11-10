@@ -5,22 +5,11 @@ using UnityEngine;
 namespace Dialogue
 {
     [DisallowMultipleComponent]
-    public class Trigger : Singleton<Trigger>
+    public abstract class Trigger : Singleton<Trigger>
     {
-        [SerializeField] private UI.UI _ui;
-        [SerializeField] private DialogueSO _dialogue;
+        protected abstract UI.UI UI { get; }
         
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Invoke(_dialogue);
-            }
-        }
-
-        public void Invoke(DialogueSO dialogue)
-        {
-            _ui.DialogueOpeningEvent.Call(_ui, new DialogueOpeningEventArgs(dialogue));
-        }
+        public virtual void Invoke(DialogueSO dialogue)
+            => UI.DialogueOpeningEvent.Call(UI, new DialogueOpeningEventArgs(dialogue));
     }
 }

@@ -47,6 +47,8 @@ namespace UI.Dialogue
         private IEnumerator DisplayTextRoutine(UnityEvent onComplete, ConfigurationSO configuration)
         {
             ClearDialogueText();
+
+            _audioSource.volume = configuration.Volume;
             
             string line = _story.Continue();
             

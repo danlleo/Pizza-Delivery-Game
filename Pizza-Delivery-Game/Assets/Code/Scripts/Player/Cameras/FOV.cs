@@ -2,7 +2,7 @@ using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Player.MainCamera
+namespace Player.Cameras
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CinemachineVirtualCamera))]
@@ -12,8 +12,8 @@ namespace Player.MainCamera
         [SerializeField] private Player _player;
         
         [Header("Settings")]
-        [SerializeField] private float _targetFOV;
-        [SerializeField] private float _changeFOVSpeedInSeconds = 0.1245f;
+        [SerializeField] private float _targetFOV = 62.5f;
+        [SerializeField] private float _changeFOVSpeedInSeconds = 0.165f;
         
         private CinemachineVirtualCamera _cinemachineVirtualCamera;
         
