@@ -7,6 +7,8 @@ namespace Dialogue.ConcreteActions
 {
     public class ProceedToBed : DialogueAction
     {
+        [SerializeField] private OneHourLaterCanvas _oneHourLaterCanvas;
+        
         public override void Perform()
         {
             Crossfade.Instance.FadeIn(() => InputAllowance.DisableInput(), () =>
@@ -18,6 +20,7 @@ namespace Dialogue.ConcreteActions
         private IEnumerator WaitSpecificTimeBeforeDoorRingRoutine()
         {
             yield return new WaitForSeconds(2f);
+            Instantiate(_oneHourLaterCanvas);
         }
     }
 }

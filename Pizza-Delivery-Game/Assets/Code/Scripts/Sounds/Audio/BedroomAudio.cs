@@ -6,6 +6,8 @@ namespace Sounds.Audio
 {
     public class BedroomAudio : AudioPlayer
     {
+        public static BedroomAudio Instance;
+        
         [Header("External References")]
         [SerializeField] private AudioSource _audioSource;
         
@@ -16,7 +18,12 @@ namespace Sounds.Audio
         [SerializeField] private AudioClip _chairPullClip;
         [SerializeField] private AudioClip _clickClip;
         [SerializeField] private AudioClip _doorbellClip;
-        
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         private void OnEnable()
         {
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
