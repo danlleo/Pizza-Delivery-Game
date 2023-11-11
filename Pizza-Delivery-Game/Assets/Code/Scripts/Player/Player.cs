@@ -53,7 +53,6 @@ namespace Player
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
             _ui.InspectableObjectCloseEvent.Event += InspectableObjectClose_Event;
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
-            StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEventOn_Ended;
         }
 
         private void OnDisable()
@@ -61,7 +60,6 @@ namespace Player
             _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
             _ui.InspectableObjectCloseEvent.Event -= InspectableObjectClose_Event;
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
-            StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEventOn_Ended;
         }
         
         private void SetExploringState()
@@ -87,11 +85,6 @@ namespace Player
         private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
         {
             SetUsingPCState();
-        }
-
-        private void StoppedUsingPCStaticEventOn_Ended(object sender, EventArgs e)
-        {
-            SetExploringState();
         }
         
         #endregion

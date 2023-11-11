@@ -20,7 +20,7 @@ MonoBehaviour:
       - m_Target: {fileID: 6214947307359788043, guid: 77e2648233d5b6f4b93dcf884540a65c,
           type: 3}
         m_TargetAssemblyTypeName: Dialogue.Onread.Test, Assembly-CSharp
-        m_MethodName: PerformAction
+        m_MethodName: Invoke
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

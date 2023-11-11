@@ -2,13 +2,13 @@ using System;
 using Environment.Bedroom.PC;
 using UnityEngine;
 
-namespace Dialogue.Triggers
+namespace Dialogue.DialogueTriggers
 {
-    public class Bedroom : Trigger
+    public class Bedroom : DialogueTrigger
     {
         [SerializeField] private UI.UI _ui;
         [SerializeField] private DialogueSO _sentApplicationDialogueSO; 
-            
+        
         protected override UI.UI UI => _ui;
 
         private void OnEnable()

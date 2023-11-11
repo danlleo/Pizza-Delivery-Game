@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Dialogue
 {
     [DisallowMultipleComponent]
-    public abstract class Trigger : Singleton<Trigger>
+    public abstract class DialogueTrigger : Singleton<DialogueTrigger>
     {
         protected abstract UI.UI UI { get; }
         

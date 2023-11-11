@@ -15,6 +15,7 @@ namespace Sounds.Audio
         [SerializeField] private AudioClip _lampSwitchSound;
         [SerializeField] private AudioClip _chairPullClip;
         [SerializeField] private AudioClip _clickClip;
+        [SerializeField] private AudioClip _doorbellClip;
         
         private void OnEnable()
         {
@@ -51,6 +52,11 @@ namespace Sounds.Audio
         public void PlayLampLightSwitchSound()
         {
             PlaySound(_audioSource, _lampSwitchSound);
+        }
+
+        public void PlayDoorBellSound()
+        {
+            PlaySound(_audioSource, _doorbellClip);
         }
     }
 }
