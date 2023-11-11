@@ -56,7 +56,7 @@ namespace Sounds.Audio
 
         public void PlayDoorBellSound()
         {
-            PlaySound(_audioSource, _doorbellClip);
+            PlaySoundAtPoint(_doorbellClip, Vector3.zero);
         }
     }
 }

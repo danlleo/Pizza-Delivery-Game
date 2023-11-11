@@ -2,6 +2,8 @@ namespace Dialogue.DialogueActionTriggers
 {
     public class Bedroom : DialogueActionTrigger
     {
+        private DialogueAction _currentDialogueAction;
+
         public override void OnEnable()
         {
             DialogueActionStaticEvent.OnDialogueAction += DialogueActionStaticEvent_OnDialogueAction;
