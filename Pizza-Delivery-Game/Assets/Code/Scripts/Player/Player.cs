@@ -1,5 +1,6 @@
 using System;
 using Enums.Player;
+using Environment.Bedroom;
 using Environment.Bedroom.PC;
 using Misc;
 using Player.Inventory;
@@ -53,6 +54,7 @@ namespace Player
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
             _ui.InspectableObjectCloseEvent.Event += InspectableObjectClose_Event;
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
+            WokeUpStaticEvent.OnWokeUp += WokeUpStaticEvent_OnWokeUp;
         }
 
         private void OnDisable()
@@ -60,7 +62,11 @@ namespace Player
             _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
             _ui.InspectableObjectCloseEvent.Event -= InspectableObjectClose_Event;
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
+            WokeUpStaticEvent.OnWokeUp -= WokeUpStaticEvent_OnWokeUp;
         }
+
+        public void PlaceAt(Vector3 targetPosition)
+            => transform.position = targetPosition;
         
         private void SetExploringState()
             => State = PlayerState.Exploring;
@@ -85,6 +91,11 @@ namespace Player
         private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
         {
             SetUsingPCState();
+        }
+        
+        private void WokeUpStaticEvent_OnWokeUp(object sender, EventArgs e)
+        {
+            SetExploringState();
         }
         
         #endregion
