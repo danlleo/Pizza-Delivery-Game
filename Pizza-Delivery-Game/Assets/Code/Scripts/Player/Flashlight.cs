@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using Enums.Player;
 using Sounds.Audio;
@@ -22,6 +23,8 @@ namespace Player
         
         private bool _isOn;
 
+        private Coroutine _flickeringRoutine;
+        
         private void Awake()
         {
             _lightSource.enabled = false;
@@ -35,6 +38,23 @@ namespace Player
             FollowCameraWithSmooth();
         }
 
+        public void ToggleLight()
+        {
+            if (!_isEnabled) return;
+            //if (!_inventory.HasItem(_item)) return;
+            if (Player.Instance.State != PlayerState.Exploring) return;
+            if (_flickeringRoutine != null)
+                StopCoroutine(_flickeringRoutine);
+            
+            _isOn = !_isOn;
+            _lightSource.enabled = _isOn;
+
+            if (_isOn)
+                StartCoroutine(FlickeringRoutine());
+            
+            _playerAudio.PlayFlashLightSwitchSound(_isOn);
+        }
+        
         private void PlaceAtHolderPosition()
         {
             _lightSource.transform.position = _flashLightHolderTransform.position;
@@ -44,17 +64,48 @@ namespace Player
         {
             _lightSource.transform.DORotateQuaternion(_camera.transform.rotation, _followDuration);
         }
-        
-        public void ToggleLight()
+
+        private IEnumerator FlickeringRoutine()
         {
-            if (!_isEnabled) return;
-            if (!_inventory.HasItem(_item)) return;
-            if (Player.Instance.State != PlayerState.Exploring) return;
+            var timeElapsed = 0f;
+            var reachMaxIntensityTime = 0.0215f;
+            var reachMinIntensityTime = 0.0215f;
+            var stayTimeInSeconds = 0.05f;
             
-            _isOn = !_isOn;
-            _lightSource.enabled = _isOn;
+            while (timeElapsed <= reachMaxIntensityTime)
+            {
+                timeElapsed += Time.deltaTime;
+                float t = timeElapsed / reachMaxIntensityTime;
+
+                _lightSource.intensity = Mathf.Lerp(0f, 1f, t);
+                yield return null;
+            }
+
+            timeElapsed = 0f;
+
+            yield return new WaitForSeconds(stayTimeInSeconds);
             
-            _playerAudio.PlayFlashLightSwitchSound(_isOn);
+            while (timeElapsed <= reachMinIntensityTime)
+            {
+                timeElapsed += Time.deltaTime;
+                float t = timeElapsed / reachMaxIntensityTime;
+
+                _lightSource.intensity = Mathf.Lerp(1f, 0f, t);
+                yield return null;
+            }
+            
+            timeElapsed = 0f;
+            
+            yield return new WaitForSeconds(stayTimeInSeconds);
+            
+            while (timeElapsed <= reachMaxIntensityTime)
+            {
+                timeElapsed += Time.deltaTime;
+                float t = timeElapsed / reachMaxIntensityTime;
+
+                _lightSource.intensity = Mathf.Lerp(0f, 1f, t);
+                yield return null;
+            }
         }
     }
 }
