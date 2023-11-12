@@ -15,7 +15,7 @@ namespace Player
         [SerializeField] private Transform _flashLightHolderTransform;
         [SerializeField] private Camera _camera;
         [SerializeField] private PlayerAudio _playerAudio;
-        [SerializeField] private Light _lightSource;
+        [SerializeField] private Light _lightSourcePrefab;
 
         [Header("Settings")] 
         [SerializeField] private float _followDuration = 0.75f;
@@ -23,10 +23,12 @@ namespace Player
         
         private bool _isOn;
 
+        private Light _lightSource;
         private Coroutine _flickeringRoutine;
         
         private void Awake()
         {
+            _lightSource = Instantiate(_lightSourcePrefab, transform.position, Quaternion.identity);
             _lightSource.enabled = false;
         }
 
@@ -41,7 +43,7 @@ namespace Player
         public void ToggleLight()
         {
             if (!_isEnabled) return;
-            //if (!_inventory.HasItem(_item)) return;
+            if (!_inventory.HasItem(_item)) return;
             if (Player.Instance.State != PlayerState.Exploring) return;
             if (_flickeringRoutine != null)
                 StopCoroutine(_flickeringRoutine);

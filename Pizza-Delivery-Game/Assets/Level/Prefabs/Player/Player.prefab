@@ -617,7 +617,8 @@ MonoBehaviour:
   _flashLightHolderTransform: {fileID: 5964120003284314092}
   _camera: {fileID: 8686963950574366201}
   _playerAudio: {fileID: 6591719902434433139}
-  _lightSource: {fileID: 0}
+  _lightSourcePrefab: {fileID: 9057668252911292219, guid: c584f7d5680ebef46a9aac9d41d1aed0,
+    type: 3}
   _followDuration: 0.935
   _isEnabled: 1
 --- !u!114 &8587969999226990447
