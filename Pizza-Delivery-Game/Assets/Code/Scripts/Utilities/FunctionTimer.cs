@@ -24,11 +24,10 @@ namespace Utilities
         
         private static void InitIfNeeded()
         {
-            if (s_initGameObject == null)
-            {
-                s_initGameObject = new GameObject("FunctionTimer_InitGameObject");
-                s_activeTimerList = new List<FunctionTimer>();
-            }
+            if (s_initGameObject != null) return;
+            
+            s_initGameObject = new GameObject("FunctionTimer_InitGameObject");
+            s_activeTimerList = new List<FunctionTimer>();
         }
         
         private static void RemoveTimer(FunctionTimer functionTimer)

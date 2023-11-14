@@ -35,6 +35,7 @@ namespace Sounds.Audio
         [Space(10)] 
         [SerializeField] private AudioClip _flashLightOnClip;
         [SerializeField] private AudioClip _flashLightOffClip;
+        [SerializeField] private AudioClip _flashLightFlickClip;
         
         private void OnEnable()
         {
@@ -50,7 +51,12 @@ namespace Sounds.Audio
 
         public void PlayFlashLightSwitchSound(bool isOn)
         {
-            PlaySound(_audioSource, isOn ? _flashLightOnClip : _flashLightOffClip, 8f);
+            PlaySoundWithRandomPitch(_audioSource, isOn ? _flashLightOnClip : _flashLightOffClip, 0.9f, 1f, 4f);
+        }
+
+        public void PlayFlashLightFlickSound()
+        {
+            PlaySoundWithRandomPitch(_audioSource, _flashLightFlickClip, 0.8f, 1f);
         }
         
         private void Step_Event(object sender, StepEventArgs e)

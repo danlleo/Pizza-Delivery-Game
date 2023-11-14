@@ -600,6 +600,8 @@ MonoBehaviour:
     type: 2}
   _flashLightOnClip: {fileID: 8300000, guid: 9223a2ec2167eef4698093c547116d58, type: 3}
   _flashLightOffClip: {fileID: 8300000, guid: 607617fdbdf14ff44a0cf22276e9bf4e, type: 3}
+  _flashLightFlickClip: {fileID: 8300000, guid: e40dd6453c638724eb98d0bb0073dac2,
+    type: 3}
 --- !u!114 &8470514689133613516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,11 +622,12 @@ MonoBehaviour:
   _lightSourcePrefab: {fileID: 9057668252911292219, guid: c584f7d5680ebef46a9aac9d41d1aed0,
     type: 3}
   _followDurationDelayInSeconds: 0.935
-  _chanceToBeginFlickering: 30
+  _lightFadingTimeInSeconds: 0.125
+  _chanceToBeginFlickering: 50
   _maxFlickeringCount: 3
   _stayBetweenTransitionTimeInSeconds: 0.05
-  _minReachTargetIntensityTime: 0.0215
-  _maxReachTargetIntensityTime: 0.0515
+  _minReachTargetIntensityTime: 0.05
+  _maxReachTargetIntensityTime: 0.1
   _minLowIntensityValue: 0
   _maxLowIntensityValue: 0.225
   _minHighIntensityValue: 0.85

@@ -19,6 +19,7 @@ namespace Player
         
         [Header("Settings")] 
         [SerializeField] private float _followDurationDelayInSeconds = 0.75f;
+        [SerializeField] private float _lightFadingTimeInSeconds = 0.25f;
         
         [Space(5)]
         [SerializeField, Range(0f, 100f)] private float _chanceToBeginFlickering = 25f;
@@ -37,7 +38,9 @@ namespace Player
         private bool _isOn;
 
         private Light _lightSource;
+        
         private Coroutine _flickeringRoutine;
+        private Coroutine _lightFadingRoutine;
         
         private void Awake()
         {
@@ -56,39 +59,47 @@ namespace Player
         public void ToggleLight()
         {
             if (!_isEnabled) return;
-            //if (!_inventory.HasItem(_item)) return;
+            if (!_inventory.HasItem(_item)) return;
             if (Player.Instance.State != PlayerState.Exploring) return;
+            
             if (_flickeringRoutine != null)
                 StopCoroutine(_flickeringRoutine);
             
+            if (_lightFadingRoutine != null)
+                StopCoroutine(_lightFadingRoutine);
+            
             _isOn = !_isOn;
-            _lightSource.enabled = _isOn;
 
             if (_isOn)
+            {
                 FlickerIfChanceMet();
+                _lightSource.enabled = true;
+            }
+            else
+            {
+                _lightFadingRoutine = StartCoroutine(FadingLightRoutine());
+            }
             
             _playerAudio.PlayFlashLightSwitchSound(_isOn);
         }
 
         private void FlickerIfChanceMet()
         {
-            float randomChance = Random.Range(1, 100);
+            float randomChance = Random.Range(1, 101);
 
-            print(randomChance);
-            
             if (_chanceToBeginFlickering == 0)
             {
-                StartCoroutine(FlickeringRoutine(false));
+                _flickeringRoutine = StartCoroutine(FlickeringRoutine(false));
                 return;
             }
             
-            if (randomChance >= _chanceToBeginFlickering)
+            if (randomChance <= _chanceToBeginFlickering)
             {
-                StartCoroutine(FlickeringRoutine(true));
+                _flickeringRoutine = StartCoroutine(FlickeringRoutine(true));
                 return;
             }
             
-            StartCoroutine(FlickeringRoutine(false));
+            _flickeringRoutine = StartCoroutine(FlickeringRoutine(false));
         }
         
         private void PlaceAtHolderPosition()
@@ -101,6 +112,24 @@ namespace Player
             _lightSource.transform.DORotateQuaternion(_camera.transform.rotation, _followDurationDelayInSeconds);
         }
 
+        private IEnumerator FadingLightRoutine()
+        {
+            var timeElapsed = 0f;
+
+            while (timeElapsed <= _lightFadingTimeInSeconds)
+            {
+                timeElapsed += Time.deltaTime;
+
+                float t = timeElapsed / _lightFadingTimeInSeconds;
+
+                _lightSource.intensity = Mathf.Lerp(_lightSource.intensity, 0f, t);
+
+                yield return null;
+            }
+
+            _lightSource.enabled = false;
+        }
+        
         private IEnumerator FlickeringRoutine(bool shouldFlicker)
         {
             var timeElapsed = 0f;
@@ -135,6 +164,9 @@ namespace Player
                 
                 timeElapsed = 0f;
                 flickeringCount++;
+                
+                if (flickeringCount > 0)
+                    _playerAudio.PlayFlashLightFlickSound();
             }
             
             while (timeElapsed <= targetTime)

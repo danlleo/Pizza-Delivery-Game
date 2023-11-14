@@ -211,17 +211,7 @@ PrefabInstance:
     - target: {fileID: 8470514689133613516, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
         type: 3}
       propertyPath: _chanceToBeginFlickering
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8470514689133613516, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
-        type: 3}
-      propertyPath: _maxReachTargetIntensityTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8470514689133613516, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
-        type: 3}
-      propertyPath: _minReachTargetIntensityTime
-      value: 0.05
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
