@@ -16,9 +16,22 @@ namespace Player
         [SerializeField] private Camera _camera;
         [SerializeField] private PlayerAudio _playerAudio;
         [SerializeField] private Light _lightSourcePrefab;
-
+        
         [Header("Settings")] 
-        [SerializeField] private float _followDuration = 0.75f;
+        [SerializeField] private float _followDurationDelayInSeconds = 0.75f;
+        
+        [Space(5)]
+        [SerializeField, Range(0f, 100f)] private float _chanceToBeginFlickering = 25f;
+        [SerializeField, Range(1, 3)] private int _maxFlickeringCount = 4;
+        [SerializeField] private float _stayBetweenTransitionTimeInSeconds = 0.05f;
+        [SerializeField] private float _minReachTargetIntensityTime = 0.0215f;
+        [SerializeField] private float _maxReachTargetIntensityTime = 0.0515f;
+        [SerializeField] private float _minLowIntensityValue = 0.1f;
+        [SerializeField] private float _maxLowIntensityValue = .225f;
+        [SerializeField] private float _minHighIntensityValue = 0.85f; 
+        [SerializeField] private float _maxHighIntensityValue = 1.4f; 
+        
+        [Space(5)]
         [SerializeField] private bool _isEnabled = true;
         
         private bool _isOn;
@@ -43,7 +56,7 @@ namespace Player
         public void ToggleLight()
         {
             if (!_isEnabled) return;
-            if (!_inventory.HasItem(_item)) return;
+            //if (!_inventory.HasItem(_item)) return;
             if (Player.Instance.State != PlayerState.Exploring) return;
             if (_flickeringRoutine != null)
                 StopCoroutine(_flickeringRoutine);
@@ -52,9 +65,30 @@ namespace Player
             _lightSource.enabled = _isOn;
 
             if (_isOn)
-                StartCoroutine(FlickeringRoutine());
+                FlickerIfChanceMet();
             
             _playerAudio.PlayFlashLightSwitchSound(_isOn);
+        }
+
+        private void FlickerIfChanceMet()
+        {
+            float randomChance = Random.Range(1, 100);
+
+            print(randomChance);
+            
+            if (_chanceToBeginFlickering == 0)
+            {
+                StartCoroutine(FlickeringRoutine(false));
+                return;
+            }
+            
+            if (randomChance >= _chanceToBeginFlickering)
+            {
+                StartCoroutine(FlickeringRoutine(true));
+                return;
+            }
+            
+            StartCoroutine(FlickeringRoutine(false));
         }
         
         private void PlaceAtHolderPosition()
@@ -64,48 +98,51 @@ namespace Player
         
         private void FollowCameraWithSmooth()
         {
-            _lightSource.transform.DORotateQuaternion(_camera.transform.rotation, _followDuration);
+            _lightSource.transform.DORotateQuaternion(_camera.transform.rotation, _followDurationDelayInSeconds);
         }
 
-        private IEnumerator FlickeringRoutine()
+        private IEnumerator FlickeringRoutine(bool shouldFlicker)
         {
             var timeElapsed = 0f;
-            var reachMaxIntensityTime = 0.0215f;
-            var reachMinIntensityTime = 0.0215f;
-            var stayTimeInSeconds = 0.05f;
-            
-            while (timeElapsed <= reachMaxIntensityTime)
-            {
-                timeElapsed += Time.deltaTime;
-                float t = timeElapsed / reachMaxIntensityTime;
 
-                _lightSource.intensity = Mathf.Lerp(0f, 1f, t);
-                yield return null;
+            float targetTime = _minReachTargetIntensityTime;
+
+            int flickeringCount = 0;
+            int randomMaxFlickeringCount = shouldFlicker ? Random.Range(1, _maxFlickeringCount) : 1;
+            
+            while (flickeringCount < randomMaxFlickeringCount)
+            {
+                while (timeElapsed <= targetTime)
+                {
+                    timeElapsed += Time.deltaTime;
+
+                    float t = timeElapsed / targetTime;
+
+                    float randomHighIntensityValue = Random.Range(_minHighIntensityValue, _maxHighIntensityValue);
+                    float randomLowIntensityValue = Random.Range(_minLowIntensityValue, _maxLowIntensityValue);
+                    
+                    float lerpFrom = flickeringCount % 2 == 0 ? randomLowIntensityValue : randomHighIntensityValue;
+                    float lerpTo = flickeringCount % 2 == 0 ? randomHighIntensityValue : randomLowIntensityValue;
+                    
+                    _lightSource.intensity = Mathf.Lerp(lerpFrom, lerpTo, t);
+                    yield return null;
+                }
+                
+                yield return new WaitForSeconds(_stayBetweenTransitionTimeInSeconds);
+                
+                if (shouldFlicker)
+                    targetTime = Random.Range(_minReachTargetIntensityTime, _maxReachTargetIntensityTime);
+                
+                timeElapsed = 0f;
+                flickeringCount++;
             }
-
-            timeElapsed = 0f;
-
-            yield return new WaitForSeconds(stayTimeInSeconds);
             
-            while (timeElapsed <= reachMinIntensityTime)
+            while (timeElapsed <= targetTime)
             {
                 timeElapsed += Time.deltaTime;
-                float t = timeElapsed / reachMaxIntensityTime;
+                float t = timeElapsed / targetTime;
 
-                _lightSource.intensity = Mathf.Lerp(1f, 0f, t);
-                yield return null;
-            }
-            
-            timeElapsed = 0f;
-            
-            yield return new WaitForSeconds(stayTimeInSeconds);
-            
-            while (timeElapsed <= reachMaxIntensityTime)
-            {
-                timeElapsed += Time.deltaTime;
-                float t = timeElapsed / reachMaxIntensityTime;
-
-                _lightSource.intensity = Mathf.Lerp(0f, 1f, t);
+                _lightSource.intensity = Mathf.Lerp(_lightSource.intensity, 1f, t);
                 yield return null;
             }
         }

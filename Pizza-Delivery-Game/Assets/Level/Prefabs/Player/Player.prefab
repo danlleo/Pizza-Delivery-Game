@@ -619,7 +619,16 @@ MonoBehaviour:
   _playerAudio: {fileID: 6591719902434433139}
   _lightSourcePrefab: {fileID: 9057668252911292219, guid: c584f7d5680ebef46a9aac9d41d1aed0,
     type: 3}
-  _followDuration: 0.935
+  _followDurationDelayInSeconds: 0.935
+  _chanceToBeginFlickering: 30
+  _maxFlickeringCount: 3
+  _stayBetweenTransitionTimeInSeconds: 0.05
+  _minReachTargetIntensityTime: 0.0215
+  _maxReachTargetIntensityTime: 0.0515
+  _minLowIntensityValue: 0
+  _maxLowIntensityValue: 0.225
+  _minHighIntensityValue: 0.85
+  _maxHighIntensityValue: 1.4
   _isEnabled: 1
 --- !u!114 &8587969999226990447
 MonoBehaviour:
