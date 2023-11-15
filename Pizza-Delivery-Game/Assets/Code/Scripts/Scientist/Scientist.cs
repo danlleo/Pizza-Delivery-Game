@@ -1,29 +1,22 @@
-using System;
-using Scientist.StateMachine.ConcreteStates;
+using Scientist.StateMachine;
 using UnityEngine;
-using IdleState = Player.StateMachine.ConcreteStates.IdleState;
-using WalkingState = Player.StateMachine.ConcreteStates.WalkingState;
 
 namespace Scientist
 {
     public class Scientist : MonoBehaviour
     {
         public StateMachine.StateMachine StateMachine { get; set; }
-        
-        public StateMachine.ConcreteStates.IdleState IdleState { get; set; }
-        public StateMachine.ConcreteStates.WalkingState WalkingState { get; set; }
+        public StateFactory StateFactory;
 
         private void Awake()
         {
             StateMachine = new StateMachine.StateMachine();
-
-            //IdleState = new IdleState(this, StateMachine);
-            //WalkingState = new WalkingState(this, StateMachine);
+            StateFactory = new StateFactory(this, StateMachine);
         }
 
         private void Start()
         {
-            throw new NotImplementedException();
+            StateMachine.Initialize(StateFactory.Idle());
         }
 
         private void Update()

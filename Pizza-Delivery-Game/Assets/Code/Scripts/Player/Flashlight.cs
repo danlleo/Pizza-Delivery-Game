@@ -162,11 +162,11 @@ namespace Player
                 if (shouldFlicker)
                     targetTime = Random.Range(_minReachTargetIntensityTime, _maxReachTargetIntensityTime);
                 
-                timeElapsed = 0f;
-                flickeringCount++;
-                
                 if (flickeringCount > 0)
                     _playerAudio.PlayFlashLightFlickSound();
+                
+                timeElapsed = 0f;
+                flickeringCount++;
             }
             
             while (timeElapsed <= targetTime)

@@ -16,7 +16,5 @@ namespace Scientist.StateMachine
         public virtual void ExitState() { }
         
         public virtual void FrameUpdate() { }
-        
-        public virtual void AnimationTriggerEvent(Enums.Scientist.AnimationTriggerType triggerType) { }
     }
 }

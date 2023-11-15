@@ -853,7 +853,7 @@ MonoBehaviour:
   _descriptionText: {fileID: 5584484497099777018}
   _characterPrintClip: {fileID: 8300000, guid: 2586a0630f671bf42ba5bfcf6fab6019, type: 3}
   _playCharacterPrintSoundFrequency: 8
-  _characterTimeToPrintInSeconds: 0.01
+  _characterTimeToPrintInSeconds: 0.005
 --- !u!1 &3837689530654671978
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ namespace Scientist.StateMachine
         {
             CurrentState.ExitState();
             CurrentState = newState;
+            CurrentState.EnterState();
         }
     }
 }

@@ -1,3 +1,4 @@
+using DataPersistence;
 using UnityEngine;
 
 namespace Misc
@@ -8,6 +9,11 @@ namespace Misc
         private void Awake()
         {
             InputAllowance.EnableInput();
+        }
+
+        private void Start()
+        {
+            LoadStaticEvent.CallLoadEvent(this);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using DataPersistence;
 using Enums.Scenes;
 using Interfaces;
 using Misc;
@@ -39,6 +40,7 @@ namespace Environment.Bedroom
         {
             Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.TestingFeaturesScene));
             _bedroomAudio.PlayDoorOpenSound();
+            SaveStaticEvent.CallSaveEvent(this);
             Destroy(this);
         }
 

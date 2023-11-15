@@ -1,5 +1,3 @@
-using Enums.Scientist;
-
 namespace Scientist.StateMachine.ConcreteStates
 {
     public class WalkingState : State
@@ -20,11 +18,6 @@ namespace Scientist.StateMachine.ConcreteStates
         }
 
         public override void FrameUpdate()
-        {
-            
-        }
-
-        public override void AnimationTriggerEvent(AnimationTriggerType triggerType)
         {
             
         }

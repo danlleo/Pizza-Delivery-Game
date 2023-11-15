@@ -56,7 +56,7 @@ namespace Sounds.Audio
 
         public void PlayFlashLightFlickSound()
         {
-            PlaySoundWithRandomPitch(_audioSource, _flashLightFlickClip, 0.8f, 1f);
+            PlaySoundWithRandomPitch(_audioSource, _flashLightFlickClip, 0.9f, 1f);
         }
         
         private void Step_Event(object sender, StepEventArgs e)
