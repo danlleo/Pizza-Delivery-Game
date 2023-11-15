@@ -1,5 +1,6 @@
 using System;
 using Interfaces;
+using Scientist;
 using Scientist.Outdoor;
 using UnityEngine;
 

@@ -5,11 +5,16 @@ namespace Scientist.Outdoor
 {
     [RequireComponent(typeof(InteractedWithScientistEvent))]
     [RequireComponent(typeof(StartedTalkingEvent))]
+    [RequireComponent(typeof(StartedWalkingEvent))]
+    [RequireComponent(typeof(StoppedWalkingEvent))]
+    [SelectionBase]
     [DisallowMultipleComponent]
     public class Scientist : MonoBehaviour
     {
         [HideInInspector] public InteractedWithScientistEvent InteractedWithScientistEvent;
-        [HideInInspector] public StartedTalkingEvent StartedTalkingEvent; 
+        [HideInInspector] public StartedTalkingEvent StartedTalkingEvent;
+        [HideInInspector] public StartedWalkingEvent StartedWalkingEvent;
+        [HideInInspector] public StoppedWalkingEvent StoppedWalkingEvent;
         
         public StateMachine.StateMachine StateMachine { get; set; }
         public StateFactory StateFactory;
@@ -22,6 +27,8 @@ namespace Scientist.Outdoor
         {
             InteractedWithScientistEvent = GetComponent<InteractedWithScientistEvent>();
             StartedTalkingEvent = GetComponent<StartedTalkingEvent>();
+            StartedWalkingEvent = GetComponent<StartedWalkingEvent>();
+            StoppedWalkingEvent = GetComponent<StoppedWalkingEvent>();
             
             StateMachine = new StateMachine.StateMachine();
             StateFactory = new StateFactory(this, StateMachine);
@@ -36,5 +43,8 @@ namespace Scientist.Outdoor
         {
             StateMachine.CurrentState.FrameUpdate();
         }
+
+        public void DestroySelf()
+            => Destroy(gameObject);
     }
 }

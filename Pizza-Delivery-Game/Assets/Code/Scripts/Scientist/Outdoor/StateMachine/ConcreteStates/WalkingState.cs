@@ -4,6 +4,8 @@ namespace Scientist.Outdoor.StateMachine.ConcreteStates
 {
     public class WalkingState : State
     {
+        private Scientist _scientist;
+        
         private Transform _scientistTransform;
         private Transform _targetTransform;
         
@@ -13,8 +15,14 @@ namespace Scientist.Outdoor.StateMachine.ConcreteStates
         
         public WalkingState(Scientist scientist, StateMachine stateMachine) : base(scientist, stateMachine)
         {
+            _scientist = scientist;
             _scientistTransform = scientist.transform;
             _targetTransform = scientist.CarTransform;
+        }
+
+        public override void EnterState()
+        {
+            _scientist.StartedWalkingEvent.Call(_scientist);
         }
         
         public override void FrameUpdate()
@@ -34,7 +42,8 @@ namespace Scientist.Outdoor.StateMachine.ConcreteStates
             }
             else
             {
-                Debug.Log("Reached");
+                _scientist.StartedWalkingEvent.Call(_scientist);
+                _scientist.DestroySelf();
             }
         }
     }

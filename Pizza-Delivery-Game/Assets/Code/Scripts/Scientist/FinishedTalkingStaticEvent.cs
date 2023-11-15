@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scientist.Outdoor
+namespace Scientist
 {
     public static class FinishedTalkingStaticEvent
     {
