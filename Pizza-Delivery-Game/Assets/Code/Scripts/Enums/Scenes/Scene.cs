@@ -4,6 +4,8 @@ namespace Enums.Scenes
     {
         TestingFeaturesScene,
         BedroomScene,
+        OutdoorScene,
+        LaboratoryEntryScene,
         LoadingScene,
     }
 }

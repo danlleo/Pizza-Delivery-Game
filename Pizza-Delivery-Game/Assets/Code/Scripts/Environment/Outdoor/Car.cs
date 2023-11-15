@@ -1,7 +1,10 @@
 using System;
+using Enums.Scenes;
 using Interfaces;
+using Misc;
+using Misc.Loader;
 using Scientist;
-using Scientist.Outdoor;
+using UI;
 using UnityEngine;
 
 namespace Environment.Outdoor
@@ -14,6 +17,7 @@ namespace Environment.Outdoor
         private void Awake()
         {
             _boxCollider = GetComponent<BoxCollider>();
+            _boxCollider.enabled = false;
         }
 
         private void OnEnable()
@@ -28,12 +32,13 @@ namespace Environment.Outdoor
 
         private void FinishedTalkingStatic_Event(object sender, EventArgs e)
         {
-            // TODO: Enable collider
+            _boxCollider.enabled = true;
         }
 
         public void Interact()
         {
-            // TODO: Sit in the car
+            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.LaboratoryEntryScene));
+            Destroy(this);
         }
 
         public string GetActionDescription()

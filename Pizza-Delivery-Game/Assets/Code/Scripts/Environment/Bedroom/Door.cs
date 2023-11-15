@@ -38,7 +38,7 @@ namespace Environment.Bedroom
 
         public void Interact()
         {
-            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.TestingFeaturesScene));
+            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene));
             _bedroomAudio.PlayDoorOpenSound();
             SaveStaticEvent.CallSaveEvent(this);
             Destroy(this);
