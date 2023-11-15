@@ -1,7 +1,7 @@
 ﻿
 namespace Ink.Parsed
 {
-    public class Wrap<T> : Parsed.Object where T : Runtime.Object
+    public class Wrap<T> : Object where T : Runtime.Object
     {
         public Wrap (T objToWrap)
         {

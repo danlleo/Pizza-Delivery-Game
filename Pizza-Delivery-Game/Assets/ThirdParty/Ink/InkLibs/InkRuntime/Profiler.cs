@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
 
 namespace Ink.Runtime
 {
@@ -43,7 +42,7 @@ namespace Ink.Runtime
 			sb.AppendFormat("TOTAL TIME: {0}\n", FormatMillisecs(_continueTotal));
 			sb.AppendFormat("SNAPSHOTTING: {0}\n", FormatMillisecs(_snapTotal));
 			sb.AppendFormat("OTHER: {0}\n", FormatMillisecs(_continueTotal - (_stepTotal + _snapTotal)));
-			sb.Append(_rootNode.ToString());
+			sb.Append(_rootNode);
 			return sb.ToString();
 		}
 
@@ -93,7 +92,7 @@ namespace Ink.Runtime
 			string stepType = null;
 			var controlCommandStep = currObj as ControlCommand;
 			if( controlCommandStep )
-				stepType = controlCommandStep.commandType.ToString() + " CC";
+				stepType = controlCommandStep.commandType + " CC";
 			else
 				stepType = currObj.GetType().Name;
 
@@ -202,15 +201,21 @@ namespace Ink.Runtime
 				return string.Format("{0:N1} secs", num / 1000.0);
 			} if( num > 1000 ) {
 				return string.Format("{0:N2} secs", num / 1000.0);
-			} else if( num > 100 ) {
-				return string.Format("{0:N0} ms", num);
-			} else if( num > 1 ) {
-				return string.Format("{0:N1} ms", num);
-			} else if( num > 0.01 ) {
-				return string.Format("{0:N3} ms", num);
-			} else {
-				return string.Format("{0:N} ms", num);
 			}
+
+			if( num > 100 ) {
+				return string.Format("{0:N0} ms", num);
+			}
+
+			if( num > 1 ) {
+				return string.Format("{0:N1} ms", num);
+			}
+
+			if( num > 0.01 ) {
+				return string.Format("{0:N3} ms", num);
+			}
+
+			return string.Format("{0:N} ms", num);
 		}
 
 		Stopwatch _continueWatch = new Stopwatch();
@@ -228,7 +233,7 @@ namespace Ink.Runtime
 
 		struct StepDetails {
 			public string type;
-			public Runtime.Object obj;
+			public Object obj;
 			public double time;
 		}
 		List<StepDetails> _stepDetails = new List<StepDetails>();

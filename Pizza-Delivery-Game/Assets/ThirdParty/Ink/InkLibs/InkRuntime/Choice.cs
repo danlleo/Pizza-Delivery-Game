@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 namespace Ink.Runtime
 {
     /// <summary>
@@ -7,7 +8,7 @@ namespace Ink.Runtime
     /// different Choices dynamically dependent on state, so they're
     /// separated.
     /// </summary>
-	public class Choice : Runtime.Object
+	public class Choice : Object
 	{
         /// <summary>
         /// The main text to presented to the player for this Choice.
@@ -47,10 +48,6 @@ namespace Ink.Runtime
         public bool isInvisibleDefault;
 
         public List<string> tags;
-
-        public Choice()
-        {
-        }
-	}
+    }
 }
 

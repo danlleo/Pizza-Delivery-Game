@@ -1,5 +1,5 @@
-﻿using Ink.Parsed;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using Ink.Parsed;
 
 namespace Ink
 {
@@ -127,11 +127,9 @@ namespace Ink
             var conditions = Interleave<Expression> (ChoiceSingleCondition, ChoiceConditionsSpace);
             if (conditions == null)
                 return null;
-            else if (conditions.Count == 1)
+            if (conditions.Count == 1)
                 return conditions [0];
-            else {
-                return new MultipleConditionExpression (conditions);
-            }
+            return new MultipleConditionExpression (conditions);
         }
 
         protected object ChoiceConditionsSpace()
@@ -199,9 +197,9 @@ namespace Ink
 
             if (ParseString ("->") == null && ParseSingleCharacter () == '-') {
                 return SucceedRule (ruleId);
-            } else {
-                return FailRule (ruleId);
             }
+
+            return FailRule (ruleId);
         }
 
         protected Identifier BracketedName()

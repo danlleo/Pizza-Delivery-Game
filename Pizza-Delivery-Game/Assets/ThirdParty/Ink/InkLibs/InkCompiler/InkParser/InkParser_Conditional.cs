@@ -42,7 +42,7 @@ namespace Ink
                     //    Some content that isn't preceded by '-'
                     // }
                     if (initialQueryExpression) {
-                        List<Parsed.Object> soleContent = StatementsAtLevel (StatementLevel.InnerBlock);
+                        List<Object> soleContent = StatementsAtLevel (StatementLevel.InnerBlock);
                         if (soleContent != null) {
                             var soleBranch = new ConditionalSingleBranch (soleContent);
                             alternatives = new List<ConditionalSingleBranch> ();
@@ -174,7 +174,7 @@ namespace Ink
 
         protected List<ConditionalSingleBranch> InlineConditionalBranches()
         {
-            var listOfLists = Interleave<List<Parsed.Object>> (MixedTextAndLogic, Exclude (String ("|")), flatten: false);
+            var listOfLists = Interleave<List<Object>> (MixedTextAndLogic, Exclude (String ("|")), flatten: false);
             if (listOfLists == null || listOfLists.Count == 0) {
                 return null;
             }
@@ -231,12 +231,12 @@ namespace Ink
             if( !isElse )
                 expr = Parse(ConditionExpression);
 
-            List<Parsed.Object> content = StatementsAtLevel (StatementLevel.InnerBlock);
+            List<Object> content = StatementsAtLevel (StatementLevel.InnerBlock);
             if (expr == null && content == null) {
                 Error ("expected content for the conditional branch following '-'");
 
                 // Recover
-                content = new List<Ink.Parsed.Object> ();
+                content = new List<Object> ();
                 content.Add (new Text (""));
             }
 

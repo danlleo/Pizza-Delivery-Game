@@ -14,9 +14,9 @@ namespace Ink.Runtime
         /// Usually parents are Container objects. (TODO: Always?)
         /// </summary>
         /// <value>The parent.</value>
-		public Runtime.Object parent { get; set; }
+		public Object parent { get; set; }
 
-        public Runtime.DebugMetadata debugMetadata { 
+        public DebugMetadata debugMetadata { 
             get {
                 if (_debugMetadata == null) {
                     if (parent) {
@@ -32,7 +32,7 @@ namespace Ink.Runtime
             }
         }
 
-        public Runtime.DebugMetadata ownDebugMetadata {
+        public DebugMetadata ownDebugMetadata {
             get {
                 return _debugMetadata;
             }
@@ -49,9 +49,9 @@ namespace Ink.Runtime
                 return null;
             
             // Try to get a line number from debug metadata
-            var root = this.rootContentContainer;
+            var root = rootContentContainer;
             if (root) {
-                Runtime.Object targetContent = root.ContentAtPath (path).obj;
+                Object targetContent = root.ContentAtPath (path).obj;
                 if (targetContent) {
                     var dm = targetContent.debugMetadata;
                     if (dm != null) {
@@ -109,17 +109,17 @@ namespace Ink.Runtime
 
                 Container nearestContainer = this as Container;
                 if (!nearestContainer) {
-                    Debug.Assert (this.parent != null, "Can't resolve relative path because we don't have a parent");
-                    nearestContainer = this.parent as Container;
+                    Debug.Assert (parent != null, "Can't resolve relative path because we don't have a parent");
+                    nearestContainer = parent as Container;
                     Debug.Assert (nearestContainer != null, "Expected parent to be a container");
                     Debug.Assert (path.GetComponent(0).isParent);
                     path = path.tail;
                 }
 
                 return nearestContainer.ContentAtPath (path);
-            } else {
-                return this.rootContentContainer.ContentAtPath (path);
             }
+
+            return rootContentContainer.ContentAtPath (path);
         }
 
         public Path ConvertPathToRelative(Path globalPath)
@@ -128,7 +128,7 @@ namespace Ink.Runtime
             // 2. Drill up using ".." style (actually represented as "^")
             // 3. Re-build downward chain from common ancestor
 
-            var ownPath = this.path;
+            var ownPath = path;
 
 			int minPathLength = Math.Min (globalPath.length, ownPath.length);
             int lastSharedPathCompIndex = -1;
@@ -169,7 +169,7 @@ namespace Ink.Runtime
             string relativePathStr = null;
             if (otherPath.isRelative) {
                 relativePathStr = otherPath.componentsString;
-                globalPathStr = this.path.PathByAppendingPath(otherPath).componentsString;
+                globalPathStr = path.PathByAppendingPath(otherPath).componentsString;
             } else {
                 var relativePath = ConvertPathToRelative (otherPath);
                 relativePathStr = relativePath.componentsString;
@@ -178,15 +178,14 @@ namespace Ink.Runtime
 
             if (relativePathStr.Length < globalPathStr.Length) 
                 return relativePathStr;
-            else
-                return globalPathStr;
+            return globalPathStr;
         }
 
         public Container rootContentContainer
         {
             get 
             {
-                Runtime.Object ancestor = this;
+                Object ancestor = this;
                 while (ancestor.parent) {
                     ancestor = ancestor.parent;
                 }
@@ -194,16 +193,12 @@ namespace Ink.Runtime
             }
         }
 
-		public Object ()
-		{
-		}
-
         public virtual Object Copy()
         {
-            throw new System.NotImplementedException (GetType ().Name + " doesn't support copying");
+            throw new NotImplementedException (GetType ().Name + " doesn't support copying");
         }
 
-        public void SetChild<T>(ref T obj, T value) where T : Runtime.Object
+        public void SetChild<T>(ref T obj, T value) where T : Object
         {
             if (obj)
                 obj.parent = null;
@@ -218,14 +213,14 @@ namespace Ink.Runtime
         /// if( myObj != null ) ...
         public static implicit operator bool (Object obj)
         {
-            var isNull = object.ReferenceEquals (obj, null);
+            var isNull = ReferenceEquals (obj, null);
             return !isNull;
         }
 
         /// Required for implicit bool comparison
         public static bool operator ==(Object a, Object b)
         {
-            return object.ReferenceEquals (a, b);
+            return ReferenceEquals (a, b);
         }
 
         /// Required for implicit bool comparison
@@ -237,7 +232,7 @@ namespace Ink.Runtime
         /// Required for implicit bool comparison
         public override bool Equals (object obj)
         {
-            return object.ReferenceEquals (obj, this);
+            return ReferenceEquals (obj, this);
         }
 
         /// Required for implicit bool comparison

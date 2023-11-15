@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Scientist
+namespace Scientist.Outdoor
 {
     public class LookAt : MonoBehaviour
     {

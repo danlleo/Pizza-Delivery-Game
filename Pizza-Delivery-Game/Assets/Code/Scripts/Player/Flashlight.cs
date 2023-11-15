@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using Enums.Player;
+using Player.Inventory;
 using Sounds.Audio;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Player
     {
         [Header("External references")]
         [SerializeField] private Inventory.Inventory _inventory;
-        [SerializeField] private Inventory.ItemSO _item;
+        [SerializeField] private ItemSO _item;
         [SerializeField] private Transform _flashLightHolderTransform;
         [SerializeField] private Camera _camera;
         [SerializeField] private PlayerAudio _playerAudio;

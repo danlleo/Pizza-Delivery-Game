@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ink.Runtime
 {
-    public class NativeFunctionCall : Runtime.Object
+    public class NativeFunctionCall : Object
     {
         public const string Add      = "+";
         public const string Subtract = "-";
@@ -69,12 +69,13 @@ namespace Ink.Runtime
         string _name;
 
         public int numberOfParameters { 
-            get {
+            get
+            {
                 if (_prototype) {
                     return _prototype.numberOfParameters;
-                } else {
-                    return _numberOfParameters;
                 }
+
+                return _numberOfParameters;
             }
             protected set {
                 _numberOfParameters = value;
@@ -83,14 +84,14 @@ namespace Ink.Runtime
 
         int _numberOfParameters;
 
-        public Runtime.Object Call(List<Runtime.Object> parameters)
+        public Object Call(List<Object> parameters)
         {
             if (_prototype) {
                 return _prototype.Call(parameters);
             }
 
             if (numberOfParameters != parameters.Count) {
-                throw new System.Exception ("Unexpected number of parameters");
+                throw new Exception ("Unexpected number of parameters");
             }
 
             bool hasList = false;
@@ -110,13 +111,21 @@ namespace Ink.Runtime
 
             if (coercedType == ValueType.Int) {
                 return Call<int> (coercedParams);
-            } else if (coercedType == ValueType.Float) {
+            }
+
+            if (coercedType == ValueType.Float) {
                 return Call<float> (coercedParams);
-            } else if (coercedType == ValueType.String) {
+            }
+
+            if (coercedType == ValueType.String) {
                 return Call<string> (coercedParams);
-            } else if (coercedType == ValueType.DivertTarget) {
+            }
+
+            if (coercedType == ValueType.DivertTarget) {
                 return Call<Path> (coercedParams);
-            } else if (coercedType == ValueType.List) {
+            }
+
+            if (coercedType == ValueType.List) {
                 return Call<InkList> (coercedParams);
             }
 
@@ -125,7 +134,7 @@ namespace Ink.Runtime
 
         Value Call<T>(List<Value> parametersOfSingleType)
         {
-            Value param1 = (Value) parametersOfSingleType [0];
+            Value param1 = parametersOfSingleType [0];
             ValueType valType = param1.valueType;
 
             var val1 = (Value<T>)param1;
@@ -136,12 +145,12 @@ namespace Ink.Runtime
 
                 object opForTypeObj = null;
                 if (!_operationFuncs.TryGetValue (valType, out opForTypeObj)) {
-                    throw new StoryException ("Cannot perform operation '"+this.name+"' on "+valType);
+                    throw new StoryException ("Cannot perform operation '"+name+"' on "+valType);
                 }
 
                 // Binary
                 if (paramCount == 2) {
-                    Value param2 = (Value) parametersOfSingleType [1];
+                    Value param2 = parametersOfSingleType [1];
 
                     var val2 = (Value<T>)param2;
 
@@ -163,13 +172,11 @@ namespace Ink.Runtime
                     return Value.Create (resultVal);
                 }  
             }
-                
-            else {
-                throw new System.Exception ("Unexpected number of parameters to NativeFunctionCall: " + parametersOfSingleType.Count);
-            }
+
+            throw new Exception ("Unexpected number of parameters to NativeFunctionCall: " + parametersOfSingleType.Count);
         }
 
-        Value CallBinaryListOperation (List<Runtime.Object> parameters)
+        Value CallBinaryListOperation (List<Object> parameters)
         {
             // List-Int addition/subtraction returns a List (e.g. "alpha" + 1 = "beta")
             if ((name == "+" || name == "-") && parameters [0] is ListValue && parameters [1] is IntValue)
@@ -192,7 +199,7 @@ namespace Ink.Runtime
             throw new StoryException ("Can not call use '" + name + "' operation on " + v1.valueType + " and " + v2.valueType);
         }
 
-        Value CallListIncrementOperation (List<Runtime.Object> listIntParams)
+        Value CallListIncrementOperation (List<Object> listIntParams)
         {
             var listVal = (ListValue)listIntParams [0];
             var intVal = (IntValue)listIntParams [1];
@@ -228,7 +235,7 @@ namespace Ink.Runtime
             return new ListValue (resultRawList);
         }
 
-        List<Value> CoerceValuesToSingleType(List<Runtime.Object> parametersIn)
+        List<Value> CoerceValuesToSingleType(List<Object> parametersIn)
         {
             ValueType valType = ValueType.Int;
 
@@ -408,22 +415,22 @@ namespace Ink.Runtime
                 AddListBinaryOp (And, (x, y) => x.Count > 0 && y.Count > 0);
                 AddListBinaryOp (Or,  (x, y) => x.Count > 0 || y.Count > 0);
 
-                AddListUnaryOp (Not, x => x.Count == 0 ? (int)1 : (int)0);
+                AddListUnaryOp (Not, x => x.Count == 0 ? 1 : 0);
 
                 // Placeholders to ensure that these special case functions can exist,
                 // since these function is never actually run, and is special cased in Call
                 AddListUnaryOp (Invert, x => x.inverse);
                 AddListUnaryOp (All, x => x.all);
-                AddListUnaryOp (ListMin, (x) => x.MinAsList());
-                AddListUnaryOp (ListMax, (x) => x.MaxAsList());
-                AddListUnaryOp (Count,  (x) => x.Count);
-                AddListUnaryOp (ValueOfList,  (x) => x.maxItem.Value);
+                AddListUnaryOp (ListMin, x => x.MinAsList());
+                AddListUnaryOp (ListMax, x => x.MaxAsList());
+                AddListUnaryOp (Count,  x => x.Count);
+                AddListUnaryOp (ValueOfList,  x => x.maxItem.Value);
 
                 // Special case: The only operations you can do on divert target values
-                BinaryOp<Path> divertTargetsEqual = (Path d1, Path d2) => {
+                BinaryOp<Path> divertTargetsEqual = (d1, d2) => {
                     return d1.Equals (d2);
                 };
-                BinaryOp<Path> divertTargetsNotEqual = (Path d1, Path d2) => {
+                BinaryOp<Path> divertTargetsNotEqual = (d1, d2) => {
                 	return !d1.Equals (d2);
                 };
                 AddOpToNativeFunc (Equal, 2, ValueType.DivertTarget, divertTargetsEqual);

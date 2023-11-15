@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace Ink.Runtime
 {
@@ -153,10 +153,8 @@ namespace Ink.Runtime
             {
                 return currentTurnIndex - index;
             }
-            else
-            {
-                return -1;
-            }
+
+            return -1;
         }
 
         public int callstackDepth {
@@ -169,7 +167,7 @@ namespace Ink.Runtime
         // When adding state, update the Copy method, and serialisation.
         // REMEMBER! REMEMBER! REMEMBER!
 
-        public List<Runtime.Object> outputStream { 
+        public List<Object> outputStream { 
             get { 
                 return _currentFlow.outputStream; 
             } 
@@ -208,7 +206,7 @@ namespace Ink.Runtime
             // } 
         }
 
-        public List<Runtime.Object> evaluationStack { get; private set; }
+        public List<Object> evaluationStack { get; private set; }
         public Pointer divertedPointer { get; set; }
 
         public int currentTurnIndex { get; private set; }
@@ -226,12 +224,11 @@ namespace Ink.Runtime
                 var pointer = currentPointer;
                 if (pointer.isNull)
                     return null;
-                else
-                    return pointer.path.ToString();
+                return pointer.path.ToString();
             }
         }
 
-        public Runtime.Pointer currentPointer {
+        public Pointer currentPointer {
             get {
                 return callStack.currentElement.currentPointer;
             }
@@ -454,7 +451,7 @@ namespace Ink.Runtime
 			OutputStreamDirty();
             _aliveFlowNamesDirty = true;
 
-            evaluationStack = new List<Runtime.Object> ();
+            evaluationStack = new List<Object> ();
 
             variablesState = new VariablesState (callStack, story.listDefinitions);
 
@@ -480,7 +477,7 @@ namespace Ink.Runtime
 
         internal void SwitchFlow_Internal(string flowName)
         {
-            if(flowName == null) throw new System.Exception("Must pass a non-null string to Story.SwitchFlow");
+            if(flowName == null) throw new Exception("Must pass a non-null string to Story.SwitchFlow");
             
             if( _namedFlows == null ) {
                 _namedFlows = new Dictionary<string, Flow>();
@@ -513,8 +510,8 @@ namespace Ink.Runtime
 
         internal void RemoveFlow_Internal(string flowName)
         {
-            if(flowName == null) throw new System.Exception("Must pass a non-null string to Story.DestroyFlow");
-            if(flowName == kDefaultFlowName) throw new System.Exception("Cannot destroy default flow");
+            if(flowName == null) throw new Exception("Must pass a non-null string to Story.DestroyFlow");
+            if(flowName == kDefaultFlowName) throw new Exception("Cannot destroy default flow");
 
             // If we're currently in the flow that's being removed, switch back to default
             if( _currentFlow.name == flowName ) {
@@ -681,7 +678,8 @@ namespace Ink.Runtime
 			if (!jObject.TryGetValue("inkSaveVersion", out jSaveVersion)) {
                 throw new Exception ("ink save format incorrect, can't load.");
             }
-            else if ((int)jSaveVersion < kMinCompatibleLoadVersion) {
+
+            if ((int)jSaveVersion < kMinCompatibleLoadVersion) {
                 throw new Exception("Ink save format isn't compatible with the current version (saw '"+jSaveVersion+"', but minimum is "+kMinCompatibleLoadVersion+"), so can't load.");
             }
 
@@ -773,7 +771,7 @@ namespace Ink.Runtime
             currentWarnings = null;
         }
             
-        public void ResetOutput(List<Runtime.Object> objs = null)
+        public void ResetOutput(List<Object> objs = null)
         {
             outputStream.Clear ();
             if( objs != null ) outputStream.AddRange (objs);
@@ -782,7 +780,7 @@ namespace Ink.Runtime
 
         // Push to output stream, but split out newlines in text for consistency
         // in dealing with them later.
-        public void PushToOutputStream(Runtime.Object obj)
+        public void PushToOutputStream(Object obj)
         {
             var text = obj as StringValue;
             if (text) {
@@ -819,7 +817,7 @@ namespace Ink.Runtime
         //
         //  - If no splitting is necessary, null is returned.
         //  - A newline on its own is returned in a list for consistency.
-        List<Runtime.StringValue> TrySplittingHeadTailWhitespace(Runtime.StringValue single)
+        List<StringValue> TrySplittingHeadTailWhitespace(StringValue single)
         {
             string str = single.value;
 
@@ -857,7 +855,7 @@ namespace Ink.Runtime
             if (headFirstNewlineIdx == -1 && tailLastNewlineIdx == -1)
                 return null;
                 
-            var listTexts = new List<Runtime.StringValue> ();
+            var listTexts = new List<StringValue> ();
             int innerStrStart = 0;
             int innerStrEnd = str.Length;
 
@@ -891,10 +889,10 @@ namespace Ink.Runtime
             return listTexts;
         }
 
-        void PushToOutputStreamIndividual(Runtime.Object obj)
+        void PushToOutputStreamIndividual(Object obj)
         {
-            var glue = obj as Runtime.Glue;
-            var text = obj as Runtime.StringValue;
+            var glue = obj as Glue;
+            var text = obj as StringValue;
 
             bool includeInOutput = true;
 
@@ -936,7 +934,8 @@ namespace Ink.Runtime
                     } 
 
                     // Don't function-trim past the start of a string evaluation section
-                    else if (c && c.commandType == ControlCommand.CommandType.BeginString) {
+
+                    if (c && c.commandType == ControlCommand.CommandType.BeginString) {
                         if (i >= functionTrimIndex) {
                             functionTrimIndex = -1;
                         }
@@ -1015,8 +1014,9 @@ namespace Ink.Runtime
 
                 if (cmd || (txt && txt.isNonWhitespace)) {
                     break;
-                } 
-                else if (txt && txt.isNewline) {
+                }
+
+                if (txt && txt.isNewline) {
                     removeWhitespaceFrom = i;
                 }
                 i--;
@@ -1062,10 +1062,11 @@ namespace Ink.Runtime
                         if (obj is ControlCommand) // e.g. BeginString
                             break;
                         var text = outputStream [i] as StringValue;
-                        if (text) {
+                        if (text)
+                        {
                             if (text.isNewline)
                                 return true;
-                            else if (text.isNonWhitespace)
+                            if (text.isNonWhitespace)
                                 break;
                         }
                     }
@@ -1098,7 +1099,7 @@ namespace Ink.Runtime
             }
         }
 
-        public void PushEvaluationStack(Runtime.Object obj)
+        public void PushEvaluationStack(Object obj)
         {
             // Include metadata about the origin List for list values when
             // they're used, so that lower level functions can make use
@@ -1125,22 +1126,22 @@ namespace Ink.Runtime
             evaluationStack.Add(obj);
         }
 
-        public Runtime.Object PopEvaluationStack()
+        public Object PopEvaluationStack()
         {
             var obj = evaluationStack [evaluationStack.Count - 1];
             evaluationStack.RemoveAt (evaluationStack.Count - 1);
             return obj;
         }
 
-        public Runtime.Object PeekEvaluationStack()
+        public Object PeekEvaluationStack()
         {
             return evaluationStack [evaluationStack.Count - 1];
         }
 
-        public List<Runtime.Object> PopEvaluationStack(int numberOfObjects)
+        public List<Object> PopEvaluationStack(int numberOfObjects)
         {
             if(numberOfObjects > evaluationStack.Count) {
-                throw new System.Exception ("trying to pop too many objects");
+                throw new Exception ("trying to pop too many objects");
             }
 
             var popped = evaluationStack.GetRange (evaluationStack.Count - numberOfObjects, numberOfObjects);
@@ -1240,10 +1241,10 @@ namespace Ink.Runtime
             if (arguments != null) {
                 for (int i = 0; i < arguments.Length; i++) {
                     if (!(arguments [i] is int || arguments [i] is float || arguments [i] is string || arguments [i] is bool || arguments [i] is InkList)) {
-                        throw new System.ArgumentException ("ink arguments when calling EvaluateFunction / ChoosePathStringWithParameters must be int, float, string, bool or InkList. Argument was "+(arguments [i] == null ? "null" : arguments [i].GetType().Name));
+                        throw new ArgumentException ("ink arguments when calling EvaluateFunction / ChoosePathStringWithParameters must be int, float, string, bool or InkList. Argument was "+(arguments [i] == null ? "null" : arguments [i].GetType().Name));
                     }
 
-                    PushEvaluationStack (Runtime.Value.Create (arguments [i]));
+                    PushEvaluationStack (Value.Create (arguments [i]));
                 }
             }
         }
@@ -1271,7 +1272,7 @@ namespace Ink.Runtime
             // Potentially pop multiple values off the stack, in case we need
             // to clean up after ourselves (e.g. caller of EvaluateFunction may 
             // have passed too many arguments, and we currently have no way to check for that)
-            Runtime.Object returnedObj = null;
+            Object returnedObj = null;
             while (evaluationStack.Count > originalEvaluationStackHeight) {
                 var poppedObj = PopEvaluationStack ();
                 if (returnedObj == null)
@@ -1283,11 +1284,11 @@ namespace Ink.Runtime
 
             // What did we get back?
             if (returnedObj) {
-                if (returnedObj is Runtime.Void)
+                if (returnedObj is Void)
                     return null;
 
                 // Some kind of value, if not void
-                var returnVal = returnedObj as Runtime.Value;
+                var returnVal = returnedObj as Value;
 
                 // DivertTargets get returned as the string of components
                 // (rather than a Path, which isn't public)

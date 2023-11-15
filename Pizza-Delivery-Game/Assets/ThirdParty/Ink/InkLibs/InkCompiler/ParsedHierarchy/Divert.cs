@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Ink.Runtime;
 
 namespace Ink.Parsed
 {
-	public class Divert : Parsed.Object
+	public class Divert : Object
 	{
-		public Parsed.Path target { get; protected set; }
-        public Parsed.Object targetContent { get; protected set; }
+		public Path target { get; protected set; }
+        public Object targetContent { get; protected set; }
         public List<Expression> arguments { get; protected set; }
 		public Runtime.Divert runtimeDivert { get; protected set; }
         public bool isFunctionCall { get; set; }
@@ -24,17 +26,17 @@ namespace Ink.Parsed
             }
         }
 
-        public Divert (Parsed.Path target, List<Expression> arguments = null)
+        public Divert (Path target, List<Expression> arguments = null)
 		{
 			this.target = target;
             this.arguments = arguments;
 
             if (arguments != null) {
-                AddContent (arguments.Cast<Parsed.Object> ().ToList ());
+                AddContent (arguments.Cast<Object> ().ToList ());
             }
 		}
 
-        public Divert (Parsed.Object targetContent)
+        public Divert (Object targetContent)
         {
             this.targetContent = targetContent;
         }
@@ -44,10 +46,10 @@ namespace Ink.Parsed
             // End = end flow immediately
             // Done = return from thread or instruct the flow that it's safe to exit
             if (isEnd) {
-                return Runtime.ControlCommand.End ();
+                return ControlCommand.End ();
             }
             if (isDone) {
-                return Runtime.ControlCommand.Done ();
+                return ControlCommand.Done ();
             }
 
             runtimeDivert = new Runtime.Divert ();
@@ -69,7 +71,7 @@ namespace Ink.Parsed
             bool requiresArgCodeGen = arguments != null && arguments.Count > 0;
             if ( requiresArgCodeGen || isFunctionCall || isTunnel || isThread ) {
 
-                var container = new Runtime.Container ();
+                var container = new Container ();
 
                 // Generate code for argument evaluation
                 // This argument generation is coded defensively - it should
@@ -82,7 +84,7 @@ namespace Ink.Parsed
 
                     // Function calls already in an evaluation context
                     if (!isFunctionCall) {
-                        container.AddContent (Runtime.ControlCommand.EvalStart());
+                        container.AddContent (ControlCommand.EvalStart());
                     }
 
                     List<FlowBase.Argument> targetArguments = null;
@@ -100,19 +102,19 @@ namespace Ink.Parsed
 
                             var varRef = argToPass as VariableReference;
                             if (varRef == null) {
-                                Error ("Expected variable name to pass by reference to 'ref " + argExpected.identifier + "' but saw " + argToPass.ToString ());
+                                Error ("Expected variable name to pass by reference to 'ref " + argExpected.identifier + "' but saw " + argToPass);
                                 break;
                             }
 
                             // Check that we're not attempting to pass a read count by reference
                             var targetPath = new Path(varRef.pathIdentifiers);
-                            Parsed.Object targetForCount = targetPath.ResolveFromContext (this);
+                            Object targetForCount = targetPath.ResolveFromContext (this);
                             if (targetForCount != null) {
                                 Error ("can't pass a read count by reference. '" + targetPath.dotSeparatedComponents+"' is a knot/stitch/label, but '"+target.dotSeparatedComponents+"' requires the name of a VAR to be passed.");
                                 break;
                             }
 
-                            var varPointer = new Runtime.VariablePointerValue (varRef.name);
+                            var varPointer = new VariablePointerValue (varRef.name);
                             container.AddContent (varPointer);
                         }
 
@@ -124,7 +126,7 @@ namespace Ink.Parsed
 
                     // Function calls were already in an evaluation context
                     if (!isFunctionCall) {
-                        container.AddContent (Runtime.ControlCommand.EvalEnd());
+                        container.AddContent (ControlCommand.EvalEnd());
                     }
                 }
 
@@ -132,14 +134,14 @@ namespace Ink.Parsed
                 // Starting a thread? A bit like a push to the call stack below... but not.
                 // It sort of puts the call stack on a thread stack (argh!) - forks the full flow.
                 if (isThread) {
-                    container.AddContent(Runtime.ControlCommand.StartThread());
+                    container.AddContent(ControlCommand.StartThread());
                 }
 
                 // If this divert is a function call, tunnel, we push to the call stack
                 // so we can return again
                 else if (isFunctionCall || isTunnel) {
                     runtimeDivert.pushesToStack = true;
-                    runtimeDivert.stackPushType = isFunctionCall ? Runtime.PushPopType.Function : Runtime.PushPopType.Tunnel;
+                    runtimeDivert.stackPushType = isFunctionCall ? PushPopType.Function : PushPopType.Tunnel;
                 }
 
                 // Jump into the "function" (knot/stitch)
@@ -149,10 +151,9 @@ namespace Ink.Parsed
             }
 
             // Simple divert
-            else {
-                return runtimeDivert;
-            }
-		}
+
+            return runtimeDivert;
+        }
 
 
         // When the divert is to a target that's actually a variable name
@@ -186,7 +187,7 @@ namespace Ink.Parsed
                         if (resolveResult.isArgument) {
                             var argument = resolveResult.ownerFlow.arguments.Where (a => a.identifier.name == variableTargetName).First();
                             if ( !argument.isDivertTarget ) {
-                                Error ("Since '" + argument.identifier + "' is used as a variable divert target (on "+this.debugMetadata+"), it should be marked as: -> " + argument.identifier, resolveResult.ownerFlow);
+                                Error ("Since '" + argument.identifier + "' is used as a variable divert target (on "+debugMetadata+"), it should be marked as: -> " + argument.identifier, resolveResult.ownerFlow);
                             }
                         }
 
@@ -217,9 +218,9 @@ namespace Ink.Parsed
             // or if it's a variable target.
             var targetFlow = targetContent as FlowBase;
             if (targetFlow) {
-                if (!targetFlow.isFunction && this.isFunctionCall) {
+                if (!targetFlow.isFunction && isFunctionCall) {
                     base.Error (targetFlow.identifier + " hasn't been marked as a function, but it's being called as one. Do you need to delcare the knot as '== function " + targetFlow.identifier + " =='?");
-                } else if (targetFlow.isFunction && !this.isFunctionCall && !(this.parent is DivertTarget)) {
+                } else if (targetFlow.isFunction && !isFunctionCall && !(parent is DivertTarget)) {
                     base.Error (targetFlow.identifier + " can't be diverted to. It can only be called as a function since it's been marked as such: '" + targetFlow.identifier + "(...)'");
                 }
             }
@@ -246,7 +247,7 @@ namespace Ink.Parsed
                         if( arguments != null )
                             runtimeDivert.externalArgs = arguments.Count;
                         runtimeDivert.pushesToStack = false;
-                        runtimeDivert.targetPath = new Runtime.Path (this.target.firstComponent);
+                        runtimeDivert.targetPath = new Runtime.Path (target.firstComponent);
                         CheckExternalArgumentValidity (context);
                     }
                     return;
@@ -300,7 +301,7 @@ namespace Ink.Parsed
                 return;
             }
 
-            if( this.parent is DivertTarget ) {
+            if( parent is DivertTarget ) {
                 if (numArgs > 0)
                     Error ("can't store arguments in a divert target variable");
                 return;
@@ -324,7 +325,7 @@ namespace Ink.Parsed
             // Light type-checking for divert target arguments
             for (int i = 0; i < paramCount; ++i) {
                 FlowBase.Argument flowArg = targetFlow.arguments [i];
-                Parsed.Expression divArgExpr = arguments [i];
+                Expression divArgExpr = arguments [i];
 
                 // Expecting a divert target as an argument, let's do some basic type checking
                 if (flowArg.isDivertTarget) {
@@ -341,7 +342,7 @@ namespace Ink.Parsed
 
                         // Unfortunately have to manually resolve here since we're still in code gen
                         var knotCountPath = new Path(varRef.pathIdentifiers);
-                        Parsed.Object targetForCount = knotCountPath.ResolveFromContext (varRef);
+                        Object targetForCount = knotCountPath.ResolveFromContext (varRef);
                         if (targetForCount != null) {
                             Error ("Passing read count of '" + knotCountPath.dotSeparatedComponents + "' instead of a divert target. You probably meant '" + knotCountPath + "'");
                         }
@@ -353,8 +354,6 @@ namespace Ink.Parsed
                 Error ("Can't call as a function or with arguments unless it's a knot or stitch");
                 return;
             }
-
-            return;
         }
 
         void CheckExternalArgumentValidity(Story context)
@@ -362,7 +361,7 @@ namespace Ink.Parsed
             string externalName = target.firstComponent;
             ExternalDeclaration external = null;
             var found = context.externals.TryGetValue(externalName, out external);
-            System.Diagnostics.Debug.Assert (found, "external not found");
+            Debug.Assert (found, "external not found");
 
             int externalArgCount = external.argumentNames.Count;
             int ownArgCount = 0;
@@ -394,8 +393,7 @@ namespace Ink.Parsed
         {
             if (target != null)
                 return target.ToString ();
-            else
-                return "-> <empty divert>";
+            return "-> <empty divert>";
         }
 
 	}

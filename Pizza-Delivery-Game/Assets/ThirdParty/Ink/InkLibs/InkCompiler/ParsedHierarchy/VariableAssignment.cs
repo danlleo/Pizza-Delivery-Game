@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Ink.Runtime;
 
 namespace Ink.Parsed
 {
-    public class VariableAssignment : Parsed.Object
+    public class VariableAssignment : Object
     {
         public string variableName
         {
@@ -23,20 +23,20 @@ namespace Ink.Parsed
 
         public VariableAssignment (Identifier identifier, Expression assignedExpression)
         {
-            this.variableIdentifier = identifier;
+            variableIdentifier = identifier;
 
             // Defensive programming in case parsing of assignedExpression failed
             if( assignedExpression )
-                this.expression = AddContent(assignedExpression);
+                expression = AddContent(assignedExpression);
         }
 
         public VariableAssignment (Identifier identifier, ListDefinition listDef)
         {
-            this.variableIdentifier = identifier;
+            variableIdentifier = identifier;
 
             if (listDef) {
-                this.listDefinition = AddContent (listDef);
-                this.listDefinition.variableAssignment = this;
+                listDefinition = AddContent (listDef);
+                listDefinition.variableAssignment = this;
             }
 
             // List definitions are always global
@@ -61,7 +61,7 @@ namespace Ink.Parsed
             if( isGlobalDeclaration )
                 return null;
 
-            var container = new Runtime.Container ();
+            var container = new Container ();
 
             // The expression's runtimeObject is actually another nested container
             if( expression != null )
@@ -80,24 +80,24 @@ namespace Ink.Parsed
             base.ResolveReferences (context);
 
             // List definitions are checked for conflicts separately
-            if( this.isDeclaration && listDefinition == null )
-                context.CheckForNamingCollisions (this, variableIdentifier, this.isGlobalDeclaration ? Story.SymbolType.Var : Story.SymbolType.Temp);
+            if( isDeclaration && listDefinition == null )
+                context.CheckForNamingCollisions (this, variableIdentifier, isGlobalDeclaration ? Story.SymbolType.Var : Story.SymbolType.Temp);
 
             // Initial VAR x = [intialValue] declaration, not re-assignment
-            if (this.isGlobalDeclaration) {
+            if (isGlobalDeclaration) {
                 var variableReference = expression as VariableReference;
                 if (variableReference && !variableReference.isConstantReference && !variableReference.isListItemReference) {
                     Error ("global variable assignments cannot refer to other variables, only literal values, constants and list items");
                 }
             }
 
-            if (!this.isNewTemporaryDeclaration) {
-                var resolvedVarAssignment = context.ResolveVariableWithName(this.variableName, fromNode: this);
+            if (!isNewTemporaryDeclaration) {
+                var resolvedVarAssignment = context.ResolveVariableWithName(variableName, fromNode: this);
                 if (!resolvedVarAssignment.found) {
                     if (story.constants.ContainsKey (variableName)) {
-                        Error ("Can't re-assign to a constant (do you need to use VAR when declaring '" + this.variableName + "'?)", this);
+                        Error ("Can't re-assign to a constant (do you need to use VAR when declaring '" + variableName + "'?)", this);
                     } else {
-                        Error ("Variable could not be found to assign to: '" + this.variableName + "'", this);
+                        Error ("Variable could not be found to assign to: '" + variableName + "'", this);
                     }
                 }
 
@@ -110,10 +110,11 @@ namespace Ink.Parsed
 
 
         public override string typeName {
-            get {
+            get
+            {
                 if (isNewTemporaryDeclaration) return "temp";
-                else if (isGlobalDeclaration) return "VAR";
-                else return "variable assignment";
+                if (isGlobalDeclaration) return "VAR";
+                return "variable assignment";
             }
         }
 

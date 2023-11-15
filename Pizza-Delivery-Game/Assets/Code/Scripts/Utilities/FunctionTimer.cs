@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Utilities
 {
@@ -86,7 +87,7 @@ namespace Utilities
         private void DestroySelf()
         {
             _isDestroyed = true;
-            UnityEngine.Object.Destroy(_gameObject);
+            Object.Destroy(_gameObject);
             RemoveTimer(this);
         }
     }

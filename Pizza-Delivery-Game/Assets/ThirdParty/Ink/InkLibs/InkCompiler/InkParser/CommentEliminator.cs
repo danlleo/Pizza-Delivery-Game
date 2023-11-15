@@ -20,14 +20,14 @@ namespace Ink
 
             if (stringList != null) {
                 return string.Join("", stringList.ToArray());
-            } else {
-                return null;
             }
+
+            return null;
         }
 
         string MainInk()
         {
-            return ParseUntil (CommentsAndNewlines, _commentOrNewlineStartCharacter, null);
+            return ParseUntil (CommentsAndNewlines, _commentOrNewlineStartCharacter);
         }
 
         string CommentsAndNewlines()
@@ -36,9 +36,9 @@ namespace Ink
 
             if (newlines != null) {
                 return string.Join ("", newlines.ToArray());
-            } else {
-                return null;
             }
+
+            return null;
         }
 
         // Valid comments always return either an empty string or pure newlines,
@@ -67,7 +67,7 @@ namespace Ink
 
             int startLineIndex = lineIndex;
 
-            var commentResult = ParseUntil (String("*/"), _commentBlockEndCharacter, null);
+            var commentResult = ParseUntil (String("*/"), _commentBlockEndCharacter);
 
             if (!endOfInput) {
                 ParseString ("*/");
@@ -80,9 +80,8 @@ namespace Ink
             } 
 
             // No comment at all
-            else {
-                return null;
-            }
+
+            return null;
         }
           
         CharacterSet _commentOrNewlineStartCharacter = new CharacterSet ("/\r\n");

@@ -1,7 +1,9 @@
 ﻿
+using Ink.Runtime;
+
 namespace Ink.Parsed
 {
-	public class Text : Parsed.Object
+	public class Text : Object
 	{
 		public string text { get; set; }
 
@@ -12,12 +14,12 @@ namespace Ink.Parsed
 
 		public override Runtime.Object GenerateRuntimeObject ()
 		{
-			return new Runtime.StringValue(this.text);
+			return new StringValue(text);
 		}
 
         public override string ToString ()
         {
-            return this.text;
+            return text;
         }
 	}
 }

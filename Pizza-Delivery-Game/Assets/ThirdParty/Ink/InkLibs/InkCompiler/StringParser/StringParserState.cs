@@ -1,4 +1,6 @@
 
+using System;
+
 namespace Ink
 {
 	public class StringParserState
@@ -43,19 +45,15 @@ namespace Ink
             public int uniqueId;
             public uint customFlags;
 
-			public Element() {
-
-            }
-
             public void CopyFrom(Element fromElement)
             {
                 _uniqueIdCounter++;
-                this.uniqueId = _uniqueIdCounter;
-                this.characterIndex = fromElement.characterIndex;
-                this.characterInLineIndex = fromElement.characterInLineIndex;
-                this.lineIndex = fromElement.lineIndex;
-                this.customFlags = fromElement.customFlags;
-                this.reportedErrorInScope = false;
+                uniqueId = _uniqueIdCounter;
+                characterIndex = fromElement.characterIndex;
+                characterInLineIndex = fromElement.characterInLineIndex;
+                lineIndex = fromElement.lineIndex;
+                customFlags = fromElement.customFlags;
+                reportedErrorInScope = false;
             }
 
             // Squash is used when succeeding from a rule,
@@ -66,11 +64,11 @@ namespace Ink
             // state of the individual rule too.
             public void SquashFrom(Element fromElement)
             {
-                this.characterIndex = fromElement.characterIndex;
-                this.characterInLineIndex = fromElement.characterInLineIndex;
-                this.lineIndex = fromElement.lineIndex;
-                this.reportedErrorInScope = fromElement.reportedErrorInScope;
-                this.customFlags = fromElement.customFlags;
+                characterIndex = fromElement.characterIndex;
+                characterInLineIndex = fromElement.characterInLineIndex;
+                lineIndex = fromElement.lineIndex;
+                reportedErrorInScope = fromElement.reportedErrorInScope;
+                customFlags = fromElement.customFlags;
             }
 
             static int _uniqueIdCounter;
@@ -91,7 +89,7 @@ namespace Ink
 		public int Push()
 		{
             if (_numElements >= _stack.Length)
-                throw new System.Exception ("Stack overflow in parser state");
+                throw new Exception ("Stack overflow in parser state");
 
             var prevElement = _stack [_numElements - 1];
             var newElement = _stack[_numElements];
@@ -105,11 +103,11 @@ namespace Ink
         public void Pop(int expectedRuleId)
 		{
             if (_numElements == 1) {
-				throw new System.Exception ("Attempting to remove final stack element is illegal! Mismatched Begin/Succceed/Fail?");
+				throw new Exception ("Attempting to remove final stack element is illegal! Mismatched Begin/Succceed/Fail?");
 			}
 
             if ( currentElement.uniqueId != expectedRuleId)
-                throw new System.Exception ("Mismatched rule IDs - do you have mismatched Begin/Succeed/Fail?");
+                throw new Exception ("Mismatched rule IDs - do you have mismatched Begin/Succeed/Fail?");
 
 			// Restore state
             _numElements--;
@@ -118,18 +116,18 @@ namespace Ink
         public Element Peek(int expectedRuleId)
 		{
             if (currentElement.uniqueId != expectedRuleId)
-                throw new System.Exception ("Mismatched rule IDs - do you have mismatched Begin/Succeed/Fail?");
+                throw new Exception ("Mismatched rule IDs - do you have mismatched Begin/Succeed/Fail?");
 
             return _stack[_numElements-1];
 		}
 
         public Element PeekPenultimate()
         {
-            if (_numElements >= 2) {
+	        if (_numElements >= 2) {
                 return _stack [_numElements - 2];
-            } else {
-                return null;
             }
+
+	        return null;
         }
 
 		// Reduce stack height while maintaining currentElement
@@ -139,7 +137,7 @@ namespace Ink
 		public void Squash()
 		{
             if (_numElements < 2) {
-				throw new System.Exception ("Attempting to remove final stack element is illegal! Mismatched Begin/Succceed/Fail?");
+				throw new Exception ("Attempting to remove final stack element is illegal! Mismatched Begin/Succceed/Fail?");
 			}
 
             var penultimateEl = _stack [_numElements - 2];

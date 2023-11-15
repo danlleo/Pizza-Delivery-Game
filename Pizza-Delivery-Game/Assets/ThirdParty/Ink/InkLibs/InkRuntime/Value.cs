@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using System.Collections.Generic;
+﻿using System;
+using System.Globalization;
 
 namespace Ink.Runtime
 {
@@ -25,7 +25,7 @@ namespace Ink.Runtime
         VariablePointer
     }
 
-    public abstract class Value : Runtime.Object
+    public abstract class Value : Object
     {
         public abstract ValueType valueType { get; }
         public abstract bool isTruthy { get; }
@@ -44,19 +44,33 @@ namespace Ink.Runtime
 
             if( val is bool ) {
                 return new BoolValue((bool)val);
-            } else if (val is int) {
+            }
+
+            if (val is int) {
                 return new IntValue ((int)val);
-            } else if (val is long) {
+            }
+
+            if (val is long) {
                 return new IntValue ((int)(long)val);
-            } else if (val is float) {
+            }
+
+            if (val is float) {
                 return new FloatValue ((float)val);
-            } else if (val is double) {
+            }
+
+            if (val is double) {
                 return new FloatValue ((float)(double)val);
-            } else if (val is string) {
+            }
+
+            if (val is string) {
                 return new StringValue ((string)val);
-            } else if (val is Path) {
+            }
+
+            if (val is Path) {
                 return new DivertTargetValue ((Path)val);
-            } else if (val is InkList) {
+            }
+
+            if (val is InkList) {
                 return new ListValue ((InkList)val);
             }
 
@@ -70,7 +84,7 @@ namespace Ink.Runtime
 
         protected StoryException BadCastException (ValueType targetType)
         {
-            return new StoryException ("Can't cast "+this.valueObject+" from " + this.valueType+" to "+targetType);
+            return new StoryException ("Can't cast "+valueObject+" from " + valueType+" to "+targetType);
         }
     }
 
@@ -80,7 +94,7 @@ namespace Ink.Runtime
 
         public override object valueObject {
             get {
-                return (object)value;
+                return value;
             }
         }
 
@@ -113,15 +127,15 @@ namespace Ink.Runtime
             }
 
             if (newType == ValueType.Int) {
-                return new IntValue (this.value ? 1 : 0);
+                return new IntValue (value ? 1 : 0);
             }
 
             if (newType == ValueType.Float) {
-                return new FloatValue (this.value ? 1.0f : 0.0f);
+                return new FloatValue (value ? 1.0f : 0.0f);
             }
 
             if (newType == ValueType.String) {
-                return new StringValue(this.value ? "true" : "false");
+                return new StringValue(value ? "true" : "false");
             }
 
             throw BadCastException (newType);
@@ -152,15 +166,15 @@ namespace Ink.Runtime
             }
 
             if (newType == ValueType.Bool) {
-                return new BoolValue (this.value == 0 ? false : true);
+                return new BoolValue (value == 0 ? false : true);
             }
 
             if (newType == ValueType.Float) {
-                return new FloatValue ((float)this.value);
+                return new FloatValue (value);
             }
 
             if (newType == ValueType.String) {
-                return new StringValue("" + this.value);
+                return new StringValue("" + value);
             }
 
             throw BadCastException (newType);
@@ -185,15 +199,15 @@ namespace Ink.Runtime
             }
 
             if (newType == ValueType.Bool) {
-                return new BoolValue (this.value == 0.0f ? false : true);
+                return new BoolValue (value == 0.0f ? false : true);
             }
 
             if (newType == ValueType.Int) {
-                return new IntValue ((int)this.value);
+                return new IntValue ((int)value);
             }
 
             if (newType == ValueType.String) {
-                return new StringValue("" + this.value.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                return new StringValue("" + value.ToString(CultureInfo.InvariantCulture));
             }
 
             throw BadCastException (newType);
@@ -239,18 +253,18 @@ namespace Ink.Runtime
                 int parsedInt;
                 if (int.TryParse (value, out parsedInt)) {
                     return new IntValue (parsedInt);
-                } else {
-                    return null;
                 }
+
+                return null;
             }
 
             if (newType == ValueType.Float) {
                 float parsedFloat;
-                if (float.TryParse (value, System.Globalization.NumberStyles.Float ,System.Globalization.CultureInfo.InvariantCulture, out parsedFloat)) {
+                if (float.TryParse (value, NumberStyles.Float ,CultureInfo.InvariantCulture, out parsedFloat)) {
                     return new FloatValue (parsedFloat);
-                } else {
-                    return null;
                 }
+
+                return null;
             }
 
             throw BadCastException (newType);
@@ -259,9 +273,9 @@ namespace Ink.Runtime
 
     public class DivertTargetValue : Value<Path>
     {
-        public Path targetPath { get { return this.value; } set { this.value = value; } }
+        public Path targetPath { get { return value; } set { this.value = value; } }
         public override ValueType valueType { get { return ValueType.DivertTarget; } }
-        public override bool isTruthy { get { throw new System.Exception("Shouldn't be checking the truthiness of a divert target"); } }
+        public override bool isTruthy { get { throw new Exception("Shouldn't be checking the truthiness of a divert target"); } }
             
         public DivertTargetValue(Path targetPath) : base(targetPath)
         {
@@ -288,9 +302,9 @@ namespace Ink.Runtime
     // we really derive from Value<string>? That seems a bit misleading to me.
     public class VariablePointerValue : Value<string>
     {
-        public string variableName { get { return this.value; } set { this.value = value; } }
+        public string variableName { get { return value; } set { this.value = value; } }
         public override ValueType valueType { get { return ValueType.VariablePointer; } }
-        public override bool isTruthy { get { throw new System.Exception("Shouldn't be checking the truthiness of a variable pointer"); } }
+        public override bool isTruthy { get { throw new Exception("Shouldn't be checking the truthiness of a variable pointer"); } }
 
         // Where the variable is located
         // -1 = default, unknown, yet to be determined
@@ -347,25 +361,21 @@ namespace Ink.Runtime
                 var max = value.maxItem;
                 if( max.Key.isNull )
                     return new IntValue (0);
-                else
-                    return new IntValue (max.Value);
+                return new IntValue (max.Value);
             }
 
-            else if (newType == ValueType.Float) {
+            if (newType == ValueType.Float) {
                 var max = value.maxItem;
                 if (max.Key.isNull)
                     return new FloatValue (0.0f);
-                else
-                    return new FloatValue ((float)max.Value);
+                return new FloatValue (max.Value);
             }
 
-            else if (newType == ValueType.String) {
+            if (newType == ValueType.String) {
                 var max = value.maxItem;
                 if (max.Key.isNull)
                     return new StringValue ("");
-                else {
-                    return new StringValue (max.Key.ToString());
-                }
+                return new StringValue (max.Key.ToString());
             }
 
             if (newType == valueType)
@@ -390,7 +400,7 @@ namespace Ink.Runtime
             };
         }
 
-        public static void RetainListOriginsForAssignment (Runtime.Object oldValue, Runtime.Object newValue)
+        public static void RetainListOriginsForAssignment (Object oldValue, Object newValue)
         {
             var oldList = oldValue as ListValue;
             var newList = newValue as ListValue;

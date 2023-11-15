@@ -1,28 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using Ink.Runtime;
 
 namespace Ink.Parsed
 {
-    public class ContentList : Parsed.Object
+    public class ContentList : Object
     {
         public bool dontFlatten { get; set; }
 
-        public Runtime.Container runtimeContainer {
+        public Container runtimeContainer {
             get {
-                return (Runtime.Container) this.runtimeObject;
+                return (Container) runtimeObject;
             }
         }
 
-        public ContentList (List<Parsed.Object> objects)
+        public ContentList (List<Object> objects)
         {
             if( objects != null )
                 AddContent (objects);
         }
 
-        public ContentList (params Parsed.Object[] objects)
+        public ContentList (params Object[] objects)
         {
             if (objects != null) {
-                var objList = new List<Parsed.Object> (objects);
+                var objList = new List<Object> (objects);
                 AddContent (objList);
             }
         }
@@ -33,14 +34,14 @@ namespace Ink.Parsed
 
         public void TrimTrailingWhitespace()
         {
-            for (int i = this.content.Count - 1; i >= 0; --i) {
-                var text = this.content [i] as Text;
+            for (int i = content.Count - 1; i >= 0; --i) {
+                var text = content [i] as Text;
                 if (text == null)
                     break;
 
                 text.text = text.text.TrimEnd (' ', '\t');
                 if (text.text.Length == 0)
-                    this.content.RemoveAt (i);
+                    content.RemoveAt (i);
                 else
                     break;
             }
@@ -48,7 +49,7 @@ namespace Ink.Parsed
 
         public override Runtime.Object GenerateRuntimeObject ()
         {
-            var container = new Runtime.Container ();
+            var container = new Container ();
             if (content != null) {
                 foreach (var obj in content) {
                     var contentObjRuntime = obj.runtimeObject;

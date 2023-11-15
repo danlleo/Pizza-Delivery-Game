@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Ink.Runtime;
 
 namespace Ink.Parsed
 {
-    public class ListDefinition : Parsed.Object
+    public class ListDefinition : Object
     {
         public Identifier identifier;
         public List<ListElementDefinition> itemDefinitions;
@@ -43,10 +43,10 @@ namespace Ink.Parsed
 
         public ListDefinition (List<ListElementDefinition> elements)
         {
-            this.itemDefinitions = elements;
+            itemDefinitions = elements;
 
             int currentValue = 1;
-            foreach (var e in this.itemDefinitions) {
+            foreach (var e in itemDefinitions) {
                 if (e.explicitValue != null)
                     currentValue = e.explicitValue.Value;
 
@@ -60,10 +60,10 @@ namespace Ink.Parsed
 
         public override Runtime.Object GenerateRuntimeObject ()
         {
-            var initialValues = new Runtime.InkList ();
+            var initialValues = new InkList ();
             foreach (var itemDef in itemDefinitions) {
                 if (itemDef.inInitialList) {
-                    var item = new Runtime.InkListItem (this.identifier?.name, itemDef.name);
+                    var item = new InkListItem (identifier?.name, itemDef.name);
                     initialValues [item] = itemDef.seriesValue;
                 }
             }
@@ -71,7 +71,7 @@ namespace Ink.Parsed
             // Set origin name, so
             initialValues.SetInitialOriginName (identifier?.name);
 
-            return new Runtime.ListValue (initialValues);
+            return new ListValue (initialValues);
         }
 
         public override void ResolveReferences (Story context)
@@ -90,7 +90,7 @@ namespace Ink.Parsed
         Dictionary<string, ListElementDefinition> _elementsByName;
     }
 
-    public class ListElementDefinition : Parsed.Object
+    public class ListElementDefinition : Object
     {
         public string name
         {
@@ -105,7 +105,7 @@ namespace Ink.Parsed
             get {
                 var parentList = parent as ListDefinition;
                 if (parentList == null)
-                    throw new System.Exception ("Can't get full name without a parent list");
+                    throw new Exception ("Can't get full name without a parent list");
 
                 return parentList.identifier + "." + name;
             }
@@ -120,7 +120,7 @@ namespace Ink.Parsed
 
         public override Runtime.Object GenerateRuntimeObject ()
         {
-            throw new System.NotImplementedException ();
+            throw new NotImplementedException ();
         }
 
         public override void ResolveReferences (Story context)

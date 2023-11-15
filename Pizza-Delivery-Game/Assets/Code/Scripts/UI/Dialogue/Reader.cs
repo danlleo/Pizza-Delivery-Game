@@ -1,10 +1,9 @@
 using System.Collections;
 using Dialogue;
-using UnityEngine;
 using Ink.Runtime;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 namespace UI.Dialogue
 {

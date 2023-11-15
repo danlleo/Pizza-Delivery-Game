@@ -1,28 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Ink.Runtime;
 
 namespace Ink.Parsed
 {
-	public abstract class Expression : Parsed.Object
+	public abstract class Expression : Object
 	{
         public bool outputWhenComplete { get; set; }
 
 		public override Runtime.Object GenerateRuntimeObject ()
 		{
-            var container = new Runtime.Container ();
+            var container = new Container ();
 
             // Tell Runtime to start evaluating the following content as an expression
-            container.AddContent (Runtime.ControlCommand.EvalStart());
+            container.AddContent (ControlCommand.EvalStart());
 
             GenerateIntoContainer (container);
 
             // Tell Runtime to output the result of the expression evaluation to the output stream
             if (outputWhenComplete) {
-                container.AddContent (Runtime.ControlCommand.EvalOutput());
+                container.AddContent (ControlCommand.EvalOutput());
             }
 
             // Tell Runtime to stop evaluating the content as an expression
-            container.AddContent (Runtime.ControlCommand.EvalEnd());
+            container.AddContent (ControlCommand.EvalEnd());
 
             return container;
 		}
@@ -34,10 +36,10 @@ namespace Ink.Parsed
         // is impossible since each runtime object should have one parent.
         // Instead, we generate a prototype of the runtime object(s), then
         // copy them each time they're used.
-        public void GenerateConstantIntoContainer(Runtime.Container container)
+        public void GenerateConstantIntoContainer(Container container)
         {
             if( _prototypeRuntimeConstantExpression == null ) {
-                _prototypeRuntimeConstantExpression = new Runtime.Container ();
+                _prototypeRuntimeConstantExpression = new Container ();
                 GenerateIntoContainer (_prototypeRuntimeConstantExpression);
             }
 
@@ -46,9 +48,9 @@ namespace Ink.Parsed
             }
         }
 
-        public abstract void GenerateIntoContainer (Runtime.Container container);
+        public abstract void GenerateIntoContainer (Container container);
 
-        Runtime.Container _prototypeRuntimeConstantExpression;
+        Container _prototypeRuntimeConstantExpression;
 	}
 
 	public class BinaryExpression : Expression
@@ -64,14 +66,14 @@ namespace Ink.Parsed
 			this.opName = opName;
 		}
 
-        public override void GenerateIntoContainer(Runtime.Container container)
+        public override void GenerateIntoContainer(Container container)
 		{
 			leftExpression.GenerateIntoContainer (container);
 			rightExpression.GenerateIntoContainer (container);
 
             opName = NativeNameForOp (opName);
 
-            container.AddContent(Runtime.NativeFunctionCall.CallWithName(opName));
+            container.AddContent(NativeFunctionCall.CallWithName(opName));
 		}
 
         public override void ResolveReferences (Story context)
@@ -135,25 +137,33 @@ namespace Ink.Parsed
             var innerNumber = inner as Number;
             if( innerNumber ) {
 
-                if( op == "-" ) {
+                if( op == "-" )
+                {
                     if( innerNumber.value is int ) {
                         return new Number( -((int)innerNumber.value) );
-                    } else if( innerNumber.value is float ) {
+                    }
+
+                    if( innerNumber.value is float ) {
                         return new Number( -((float)innerNumber.value) );
                     }
                 }
 
-                else if( op == "!" || op == "not" ) {
+                else if( op == "!" || op == "not" )
+                {
                     if( innerNumber.value is int ) {
                         return new Number( (int)innerNumber.value == 0 );
-                    } else if( innerNumber.value is float ) {
+                    }
+
+                    if( innerNumber.value is float ) {
                         return new Number( (float)innerNumber.value == 0.0f );
-                    } else if( innerNumber.value is bool ) {
+                    }
+
+                    if( innerNumber.value is bool ) {
                         return new Number( !(bool)innerNumber.value );
                     }
                 }
 
-                throw new System.Exception ("Unexpected operation or number type");
+                throw new Exception ("Unexpected operation or number type");
             }
 
             // Normal fallback
@@ -163,15 +173,15 @@ namespace Ink.Parsed
 
         public UnaryExpression(Expression inner, string op)
 		{
-            this.innerExpression = AddContent(inner);
+            innerExpression = AddContent(inner);
             this.op = op;
 		}
 
-        public override void GenerateIntoContainer(Runtime.Container container)
+        public override void GenerateIntoContainer(Container container)
 		{
 			innerExpression.GenerateIntoContainer (container);
 
-            container.AddContent(Runtime.NativeFunctionCall.CallWithName(nativeNameForOp));
+            container.AddContent(NativeFunctionCall.CallWithName(nativeNameForOp));
 		}
 
         public override string ToString ()
@@ -210,7 +220,7 @@ namespace Ink.Parsed
             AddContent (expression);
         }
 
-        public override void GenerateIntoContainer(Runtime.Container container)
+        public override void GenerateIntoContainer(Container container)
         {
             // x = x + y
             // ^^^ ^ ^ ^
@@ -226,10 +236,10 @@ namespace Ink.Parsed
             if (expression)
                 expression.GenerateIntoContainer (container);
             else
-                container.AddContent (new Runtime.IntValue (1));
+                container.AddContent (new IntValue (1));
 
             // 3.
-            container.AddContent (Runtime.NativeFunctionCall.CallWithName (isInc ? "+" : "-"));
+            container.AddContent (NativeFunctionCall.CallWithName (isInc ? "+" : "-"));
 
             // 4.
             _runtimeAssignment = new Runtime.VariableAssignment(varIdentifier?.name, false);
@@ -242,7 +252,7 @@ namespace Ink.Parsed
 
             var varResolveResult = context.ResolveVariableWithName(varIdentifier?.name, fromNode: this);
             if (!varResolveResult.found) {
-                Error ("variable for "+incrementDecrementWord+" could not be found: '"+varIdentifier+"' after searching: "+this.descriptionOfScope);
+                Error ("variable for "+incrementDecrementWord+" could not be found: '"+varIdentifier+"' after searching: "+descriptionOfScope);
             }
 
             _runtimeAssignment.isGlobal = varResolveResult.isGlobal;
@@ -253,20 +263,19 @@ namespace Ink.Parsed
         }
 
         string incrementDecrementWord {
-            get {
+            get
+            {
                 if (isInc)
                     return "increment";
-                else
-                    return "decrement";
+                return "decrement";
             }
         }
 
         public override string ToString ()
         {
             if (expression)
-                return varIdentifier + (isInc ? " += " : " -= ") + expression.ToString ();
-            else
-                return varIdentifier + (isInc ? "++" : "--");
+                return varIdentifier + (isInc ? " += " : " -= ") + expression;
+            return varIdentifier + (isInc ? "++" : "--");
         }
 
         Runtime.VariableAssignment _runtimeAssignment;
@@ -276,7 +285,7 @@ namespace Ink.Parsed
     {
         public List<Expression> subExpressions {
             get {
-                return this.content.Cast<Expression> ().ToList ();
+                return content.Cast<Expression> ().ToList ();
             }
         }
 
@@ -285,7 +294,7 @@ namespace Ink.Parsed
             AddContent (conditionExpressions);
         }
 
-        public override void GenerateIntoContainer(Runtime.Container container)
+        public override void GenerateIntoContainer(Container container)
         {
             //    A && B && C && D
             // => (((A B &&) C &&) D &&) etc
@@ -295,7 +304,7 @@ namespace Ink.Parsed
                 conditionExpr.GenerateIntoContainer (container);
 
                 if (!isFirst) {
-                    container.AddContent (Runtime.NativeFunctionCall.CallWithName ("&&"));
+                    container.AddContent (NativeFunctionCall.CallWithName ("&&"));
                 }
 
                 isFirst = false;

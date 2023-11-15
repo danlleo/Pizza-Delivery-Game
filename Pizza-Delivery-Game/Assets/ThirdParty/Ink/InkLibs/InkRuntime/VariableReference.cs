@@ -1,6 +1,6 @@
 ﻿namespace Ink.Runtime
 {
-    public class VariableReference : Runtime.Object
+    public class VariableReference : Object
     {
         // Normal named variable
         public string name { get; set; }
@@ -10,7 +10,7 @@
 
         public Container containerForCount {
             get {
-                return this.ResolvePath (pathForCount).container;
+                return ResolvePath (pathForCount).container;
             }
         }
             
@@ -41,10 +41,10 @@
         {
             if (name != null) {
                 return string.Format ("var({0})", name);
-            } else {
-                var pathStr = pathStringForCount;
-                return string.Format("read_count({0})", pathStr);
             }
+
+            var pathStr = pathStringForCount;
+            return string.Format("read_count({0})", pathStr);
         }
     }
 }

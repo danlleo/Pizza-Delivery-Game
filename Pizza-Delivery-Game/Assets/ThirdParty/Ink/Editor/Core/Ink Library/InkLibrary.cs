@@ -1,10 +1,11 @@
-using UnityEngine;
-using UnityEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Debug = UnityEngine.Debug;
+using System.Text;
+using UnityEditor;
+using UnityEngine;
 
 /// <summary>
 /// Holds a reference to an InkFile object for every .ink file detected in the Assets folder.
@@ -18,12 +19,12 @@ namespace Ink.UnityIntegration {
 	public class InkLibrary : ScriptableObject, IEnumerable<InkFile> {
     #endif
         // Ink version. This should really come from the core ink code.
-		public static System.Version inkVersionCurrent = new System.Version(1,1,1);
-		public static System.Version unityIntegrationVersionCurrent = new System.Version(1,1,8);
+		public static Version inkVersionCurrent = new Version(1,1,1);
+		public static Version unityIntegrationVersionCurrent = new Version(1,1,8);
 
 		static string absoluteSavePath {
 			get {
-				return System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(),"Library","asset"));
+				return Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(),"Library","asset"));
 			}
 		}
 		
@@ -79,7 +80,7 @@ namespace Ink.UnityIntegration {
 		}
         #endif
         
-        public class AssetSaver : UnityEditor.AssetModificationProcessor {
+        public class AssetSaver : AssetModificationProcessor {
             static string[] OnWillSaveAssets(string[] paths) {
                 instance.Save(true);
                 return paths;
@@ -127,7 +128,6 @@ namespace Ink.UnityIntegration {
 					#endif
 					AssetDatabase.DeleteAsset(path);
 					AssetDatabase.Refresh();
-					return;
 				}
 			}
 		}
@@ -142,15 +142,16 @@ namespace Ink.UnityIntegration {
 		/// <summary>
 		/// Checks if the library is corrupt and rebuilds if necessary. Returns true if the library was valid
 		/// </summary>
-        public static bool Validate () {
-            if(RequiresRebuild()) {
+        public static bool Validate ()
+		{
+			if(RequiresRebuild()) {
                 Rebuild();
                 Debug.LogWarning("InkLibrary was invalid and has been rebuilt. This can occur if files are moved/deleted while the editor is closed. You can ignore this warning.");
 				return false;
-            } else {
-				return true;
-			}
-        }
+            }
+
+			return true;
+		}
         
 		/// <summary>
 		/// Checks if the library is corrupt and requires a Rebuild. 
@@ -227,7 +228,7 @@ namespace Ink.UnityIntegration {
             instance.inkLibraryDictionary.Clear();
 
 			// Reset the asset name
-			instance.name = "Ink Library "+unityIntegrationVersionCurrent.ToString();
+			instance.name = "Ink Library "+unityIntegrationVersionCurrent;
             
 			// Add any new file connections (if any are found it replaces the old library entirely)
 			string[] inkFilePaths = GetAllInkFilePaths();
@@ -394,7 +395,7 @@ namespace Ink.UnityIntegration {
 				return newFile;
 			}
 
-			System.Text.StringBuilder listOfFiles = new System.Text.StringBuilder();
+			StringBuilder listOfFiles = new StringBuilder();
 			foreach(InkFile inkFile in instance.inkLibrary) {
 				listOfFiles.AppendLine(inkFile.ToString());
 			}

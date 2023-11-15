@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 
 namespace Ink.Runtime
 {
@@ -11,7 +12,7 @@ namespace Ink.Runtime
             public Pointer currentPointer;
 
             public bool inExpressionEvaluation;
-            public Dictionary<string, Runtime.Object> temporaryVariables;
+            public Dictionary<string, Object> temporaryVariables;
             public PushPopType type;
 
             // When this callstack element is actually a function evaluation called from the game,
@@ -24,16 +25,16 @@ namespace Ink.Runtime
             public int functionStartInOuputStream;
 
             public Element(PushPopType type, Pointer pointer, bool inExpressionEvaluation = false) {
-                this.currentPointer = pointer;
+                currentPointer = pointer;
                 this.inExpressionEvaluation = inExpressionEvaluation;
-                this.temporaryVariables = new Dictionary<string, Object>();
+                temporaryVariables = new Dictionary<string, Object>();
                 this.type = type;
             }
 
             public Element Copy()
             {
-                var copy = new Element (this.type, currentPointer, this.inExpressionEvaluation);
-                copy.temporaryVariables = new Dictionary<string,Object>(this.temporaryVariables);
+                var copy = new Element (type, currentPointer, inExpressionEvaluation);
+                copy.temporaryVariables = new Dictionary<string,Object>(temporaryVariables);
                 copy.evaluationStackHeightWhenPushed = evaluationStackHeightWhenPushed;
                 copy.functionStartInOuputStream = functionStartInOuputStream;
                 return copy;
@@ -72,10 +73,10 @@ namespace Ink.Runtime
                         pointer.index = (int)jElementObj ["idx"];
 
                         if (threadPointerResult.obj == null)
-                            throw new System.Exception ("When loading state, internal story location couldn't be found: " + currentContainerPathStr + ". Has the story changed since this save data was created?");
-                        else if (threadPointerResult.approximate)
-                            storyContext.Warning ("When loading state, exact internal story location couldn't be found: '" + currentContainerPathStr + "', so it was approximated to '"+pointer.container.path.ToString()+"' to recover. Has the story changed since this save data was created?");
-					}
+                            throw new Exception ("When loading state, internal story location couldn't be found: " + currentContainerPathStr + ". Has the story changed since this save data was created?");
+                        if (threadPointerResult.approximate)
+                            storyContext.Warning ("When loading state, exact internal story location couldn't be found: '" + currentContainerPathStr + "', so it was approximated to '"+pointer.container.path+"' to recover. Has the story changed since this save data was created?");
+                    }
 
                     bool inExpressionEvaluation = (bool)jElementObj ["exp"];
 
@@ -115,7 +116,7 @@ namespace Ink.Runtime
                 // callstack
                 writer.WritePropertyStart("callstack");
                 writer.WriteArrayStart();
-                foreach (CallStack.Element el in callstack)
+                foreach (Element el in callstack)
                 {
                     writer.WriteObjectStart();
                     if(!el.currentPointer.isNull) {
@@ -246,7 +247,7 @@ namespace Ink.Runtime
                 {
                     writer.WriteArrayStart();
 
-                    foreach (CallStack.Thread thread in _threads)
+                    foreach (Thread thread in _threads)
                     {
                         thread.WriteJson(writer);
                     }
@@ -285,7 +286,7 @@ namespace Ink.Runtime
             if (canPopThread) {
                 _threads.Remove (currentThread);
             } else {
-				throw new System.Exception("Can't pop thread");
+				throw new Exception("Can't pop thread");
             }
         }
 
@@ -334,29 +335,29 @@ namespace Ink.Runtime
             if (CanPop (type)) {
                 callStack.RemoveAt (callStack.Count - 1);
                 return;
-            } else {
-				throw new System.Exception("Mismatched push/pop in Callstack");
             }
+
+            throw new Exception("Mismatched push/pop in Callstack");
         }
 
         // Get variable value, dereferencing a variable pointer if necessary
-        public Runtime.Object GetTemporaryVariableWithName(string name, int contextIndex = -1)
+        public Object GetTemporaryVariableWithName(string name, int contextIndex = -1)
         {
             if (contextIndex == -1)
                 contextIndex = currentElementIndex+1;
             
-            Runtime.Object varValue = null;
+            Object varValue = null;
 
             var contextElement = callStack [contextIndex-1];
 
             if (contextElement.temporaryVariables.TryGetValue (name, out varValue)) {
                 return varValue;
-            } else {
-                return null;
             }
+
+            return null;
         }
             
-        public void SetTemporaryVariable(string name, Runtime.Object value, bool declareNew, int contextIndex = -1)
+        public void SetTemporaryVariable(string name, Object value, bool declareNew, int contextIndex = -1)
         {
             if (contextIndex == -1)
                 contextIndex = currentElementIndex+1;
@@ -364,10 +365,10 @@ namespace Ink.Runtime
             var contextElement = callStack [contextIndex-1];
             
             if (!declareNew && !contextElement.temporaryVariables.ContainsKey(name)) {
-                throw new System.Exception ("Could not find temporary variable to set: " + name);
+                throw new Exception ("Could not find temporary variable to set: " + name);
             }
 
-            Runtime.Object oldValue;
+            Object oldValue;
             if( contextElement.temporaryVariables.TryGetValue(name, out oldValue) )
                 ListValue.RetainListOriginsForAssignment (oldValue, value);
 
@@ -387,9 +388,8 @@ namespace Ink.Runtime
             } 
 
             // Global
-            else {
-                return 0;
-            }
+
+            return 0;
         }
             
         public Thread ThreadWithIndex(int index)
@@ -406,7 +406,7 @@ namespace Ink.Runtime
 
 		public string callStackTrace {
 			get {
-				var sb = new System.Text.StringBuilder();
+				var sb = new StringBuilder();
 
 				for(int t=0; t<_threads.Count; t++) {
 
@@ -424,7 +424,7 @@ namespace Ink.Runtime
 						var pointer = thread.callstack[i].currentPointer;
 						if( !pointer.isNull ) {
 							sb.Append("<SOMEWHERE IN ");
-							sb.Append(pointer.container.path.ToString());
+							sb.Append(pointer.container.path);
 							sb.AppendLine(">");
 						}
 					}

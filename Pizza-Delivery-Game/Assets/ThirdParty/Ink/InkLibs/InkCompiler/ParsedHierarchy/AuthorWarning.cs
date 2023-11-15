@@ -1,7 +1,7 @@
 ﻿
 namespace Ink.Parsed
 {
-    public class AuthorWarning : Parsed.Object
+    public class AuthorWarning : Object
     {
         public string warningMessage;
 

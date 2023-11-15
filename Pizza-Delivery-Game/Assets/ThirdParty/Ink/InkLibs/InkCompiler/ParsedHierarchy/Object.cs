@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using Ink.Runtime;
 
 namespace Ink.Parsed
 {
 	public abstract class Object
 	{
-        public Runtime.DebugMetadata debugMetadata {
+        public DebugMetadata debugMetadata {
             get {
                 if (_debugMetadata == null) {
                     if (parent) {
@@ -20,7 +22,7 @@ namespace Ink.Parsed
                 _debugMetadata = value;
             }
         }
-        private Runtime.DebugMetadata _debugMetadata;
+        private DebugMetadata _debugMetadata;
 
         public bool hasOwnDebugMetadata {
             get {
@@ -34,16 +36,16 @@ namespace Ink.Parsed
             }
         }
 
-		public Parsed.Object parent { get; set; }
-        public List<Parsed.Object> content { get; protected set; }
+		public Object parent { get; set; }
+        public List<Object> content { get; protected set; }
 
-        public Parsed.Story story {
+        public Story story {
             get {
-                Parsed.Object ancestor = this;
+                Object ancestor = this;
                 while (ancestor.parent) {
                     ancestor = ancestor.parent;
                 }
-                return ancestor as Parsed.Story;
+                return ancestor as Story;
             }
         }
 
@@ -79,20 +81,20 @@ namespace Ink.Parsed
         // types may have different containers that needs to be counted.
         // For most it'll just be the object's main runtime object,
         // but for e.g. choices, it'll be the target container.
-        public virtual Runtime.Container containerForCounting
+        public virtual Container containerForCounting
         {
             get {
-                return this.runtimeObject as Runtime.Container;
+                return runtimeObject as Container;
             }
         }
 
-        public Parsed.Path PathRelativeTo(Parsed.Object otherObj)
+        public Path PathRelativeTo(Object otherObj)
         {
             var ownAncestry = ancestry;
             var otherAncestry = otherObj.ancestry;
 
-            Parsed.Object highestCommonAncestor = null;
-            int minLength = System.Math.Min (ownAncestry.Count, otherAncestry.Count);
+            Object highestCommonAncestor = null;
+            int minLength = Math.Min (ownAncestry.Count, otherAncestry.Count);
             for (int i = 0; i < minLength; ++i) {
                 var a1 = ancestry [i];
                 var a2 = otherAncestry [i];
@@ -144,12 +146,12 @@ namespace Ink.Parsed
             return null;
         }
 
-        public List<Parsed.Object> ancestry
+        public List<Object> ancestry
         {
             get {
-                var result = new List<Parsed.Object> ();
+                var result = new List<Object> ();
 
-                var ancestor = this.parent;
+                var ancestor = parent;
                 while(ancestor) {
                     result.Add (ancestor);
                     ancestor = ancestor.parent;
@@ -166,7 +168,7 @@ namespace Ink.Parsed
             get {
                 var locationNames = new List<string> ();
 
-                Parsed.Object ancestor = this;
+                Object ancestor = this;
                 while (ancestor) {
                     var ancestorFlow = ancestor as FlowBase;
                     if (ancestorFlow && ancestorFlow.identifier != null) {
@@ -189,10 +191,10 @@ namespace Ink.Parsed
         }
 
         // Return the object so that method can be chained easily
-        public T AddContent<T>(T subContent) where T : Parsed.Object
+        public T AddContent<T>(T subContent) where T : Object
         {
             if (content == null) {
-                content = new List<Parsed.Object> ();
+                content = new List<Object> ();
             }
 
             // Make resilient to content not existing, which can happen
@@ -207,17 +209,17 @@ namespace Ink.Parsed
             return subContent;
         }
 
-        public void AddContent<T>(List<T> listContent) where T : Parsed.Object
+        public void AddContent<T>(List<T> listContent) where T : Object
         {
             foreach (var obj in listContent) {
                 AddContent (obj);
             }
         }
 
-        public T InsertContent<T>(int index, T subContent) where T : Parsed.Object
+        public T InsertContent<T>(int index, T subContent) where T : Object
         {
             if (content == null) {
-                content = new List<Parsed.Object> ();
+                content = new List<Object> ();
             }
 
             subContent.parent = this;
@@ -230,7 +232,7 @@ namespace Ink.Parsed
         public T Find<T>(FindQueryFunc<T> queryFunc = null) where T : class
         {
             var tObj = this as T;
-            if (tObj != null && (queryFunc == null || queryFunc (tObj) == true)) {
+            if (tObj != null && (queryFunc == null || queryFunc (tObj))) {
                 return tObj;
             }
 
@@ -259,7 +261,7 @@ namespace Ink.Parsed
         void FindAll<T>(FindQueryFunc<T> queryFunc, List<T> foundSoFar) where T : class
         {
             var tObj = this as T;
-            if (tObj != null && (queryFunc == null || queryFunc (tObj) == true)) {
+            if (tObj != null && (queryFunc == null || queryFunc (tObj))) {
                 foundSoFar.Add (tObj);
             }
 
@@ -284,7 +286,7 @@ namespace Ink.Parsed
 
         public FlowBase ClosestFlowBase()
         {
-            var ancestor = this.parent;
+            var ancestor = parent;
             while (ancestor) {
                 if (ancestor is FlowBase) {
                     return (FlowBase)ancestor;
@@ -295,7 +297,7 @@ namespace Ink.Parsed
             return null;
         }
 
-        public virtual void Error(string message, Parsed.Object source = null, bool isWarning = false)
+        public virtual void Error(string message, Object source = null, bool isWarning = false)
 		{
 			if (source == null) {
 				source = this;
@@ -309,10 +311,10 @@ namespace Ink.Parsed
                 return;
             }
 
-            if (this.parent) {
-                this.parent.Error (message, source, isWarning);
+            if (parent) {
+                parent.Error (message, source, isWarning);
             } else {
-                throw new System.Exception ("No parent object to send error to: "+message);
+                throw new Exception ("No parent object to send error to: "+message);
             }
 
             if (isWarning) {
@@ -323,7 +325,7 @@ namespace Ink.Parsed
 
 		}
 
-        public void Warning(string message, Parsed.Object source = null)
+        public void Warning(string message, Object source = null)
         {
             Error (message, source, isWarning: true);
         }
@@ -332,13 +334,13 @@ namespace Ink.Parsed
         // if( myObj != null ) ...
         public static implicit operator bool (Object obj)
         {
-            var isNull = object.ReferenceEquals (obj, null);
+            var isNull = ReferenceEquals (obj, null);
             return !isNull;
         }
 
         public static bool operator ==(Object a, Object b)
         {
-            return object.ReferenceEquals (a, b);
+            return ReferenceEquals (a, b);
         }
 
         public static bool operator !=(Object a, Object b)
@@ -348,7 +350,7 @@ namespace Ink.Parsed
 
         public override bool Equals (object obj)
         {
-            return object.ReferenceEquals (obj, this);
+            return ReferenceEquals (obj, this);
         }
 
         public override int GetHashCode ()

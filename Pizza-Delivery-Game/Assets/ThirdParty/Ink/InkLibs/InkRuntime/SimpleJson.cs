@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Text;
 
 namespace Ink.Runtime
 {
@@ -59,26 +61,26 @@ namespace Ink.Runtime
 
                 if( currentChar == '{' )
                     return ReadDictionary ();
-                
-                else if (currentChar == '[')
+
+                if (currentChar == '[')
                     return ReadArray ();
 
-                else if (currentChar == '"')
+                if (currentChar == '"')
                     return ReadString ();
 
-                else if (IsFirstNumberChar(currentChar))
+                if (IsFirstNumberChar(currentChar))
                     return ReadNumber ();
 
-                else if (TryRead ("true"))
+                if (TryRead ("true"))
                     return true;
 
-                else if (TryRead ("false"))
+                if (TryRead ("false"))
                     return false;
 
-                else if (TryRead ("null"))
+                if (TryRead ("null"))
                     return null;
 
-                throw new System.Exception ("Unhandled object type in JSON: "+_text.Substring (_offset, 30));
+                throw new Exception ("Unhandled object type in JSON: "+_text.Substring (_offset, 30));
             }
 
             Dictionary<string, object> ReadDictionary ()
@@ -196,7 +198,7 @@ namespace Ink.Runtime
                                 }
                                 var digits = _text.Substring(_offset + 1, 4);
                                 int uchar;
-                                if (int.TryParse(digits, System.Globalization.NumberStyles.AllowHexSpecifier, System.Globalization.CultureInfo.InvariantCulture, out uchar)) {
+                                if (int.TryParse(digits, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out uchar)) {
                                     sb.Append((char)uchar);
                                     _offset += 4;
                                 } else {
@@ -228,15 +230,14 @@ namespace Ink.Runtime
                     if (c == '.' || c == 'e' || c == 'E') isFloat = true;
                     if (IsNumberChar (c))
                         continue;
-                    else
-                        break;
+                    break;
                 }
 
                 string numStr = _text.Substring (startOffset, _offset - startOffset);
 
                 if (isFloat) {
                     float f;
-                    if (float.TryParse (numStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out f)) {
+                    if (float.TryParse (numStr, NumberStyles.Float, CultureInfo.InvariantCulture, out f)) {
                         return f;
                     }
                 } else {
@@ -246,7 +247,7 @@ namespace Ink.Runtime
                     }
                 }
 
-                throw new System.Exception ("Failed to parse number value: "+numStr);
+                throw new Exception ("Failed to parse number value: "+numStr);
             }
 
             bool TryRead (string textToRead)
@@ -280,7 +281,7 @@ namespace Ink.Runtime
                     }
                     message += " at offset " + _offset;
 
-                    throw new System.Exception (message);
+                    throw new Exception (message);
                 }
             }
 
@@ -311,7 +312,7 @@ namespace Ink.Runtime
 
             public Writer(Stream stream)
             {
-                _writer = new System.IO.StreamWriter(stream, Encoding.UTF8);
+                _writer = new StreamWriter(stream, Encoding.UTF8);
             }
 
             public void WriteObject(Action<Writer> inner)
@@ -468,7 +469,7 @@ namespace Ink.Runtime
                 // TODO: Find an heap-allocation-free way to do this please!
                 // _writer.Write(formatStr, obj (the float)) requires boxing
                 // Following implementation seems to work ok but requires creating temporary garbage string.
-                string floatStr = f.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                string floatStr = f.ToString(CultureInfo.InvariantCulture);
                 if( floatStr == "Infinity" ) {
                     _writer.Write("3.4E+38"); // JSON doesn't support, do our best alternative
                 } else if (floatStr == "-Infinity") {
@@ -586,7 +587,7 @@ namespace Ink.Runtime
                 get
                 {
                     if (_stateStack.Count > 0) return _stateStack.Peek().type;
-                    else return State.None;
+                    return State.None;
                 }
             }
 
@@ -595,7 +596,7 @@ namespace Ink.Runtime
                 get
                 {
                     if (_stateStack.Count > 0) return _stateStack.Peek().childCount;
-                    else return 0;
+                    return 0;
                 }
             }
 
@@ -609,11 +610,11 @@ namespace Ink.Runtime
 
             // Shouldn't hit this assert outside of initial JSON development,
             // so it's save to make it debug-only.
-            [System.Diagnostics.Conditional("DEBUG")]
+            [Conditional("DEBUG")]
             void Assert(bool condition)
             {
                 if (!condition)
-                    throw new System.Exception("Assert failed while writing JSON");
+                    throw new Exception("Assert failed while writing JSON");
             }
 
             public override string ToString()
@@ -629,7 +630,7 @@ namespace Ink.Runtime
                 Property,
                 PropertyName,
                 String
-            };
+            }
 
             struct StateElement
             {

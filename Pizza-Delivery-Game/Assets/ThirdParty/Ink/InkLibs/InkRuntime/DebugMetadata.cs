@@ -4,16 +4,12 @@ namespace Ink.Runtime
 {
     public class DebugMetadata
     {
-        public int startLineNumber = 0;
-        public int endLineNumber = 0;
-        public int startCharacterNumber = 0;
-        public int endCharacterNumber = 0;
-        public string fileName = null;
-        public string sourceName = null;
-
-        public DebugMetadata ()
-        {
-        }
+        public int startLineNumber;
+        public int endLineNumber;
+        public int startCharacterNumber;
+        public int endCharacterNumber;
+        public string fileName;
+        public string sourceName;
 
         // Currently only used in VariableReference in order to
         // merge the debug metadata of a Path.Of.Indentifiers into
@@ -65,9 +61,9 @@ namespace Ink.Runtime
         {
             if (fileName != null) {
                 return string.Format ("line {0} of {1}", startLineNumber, fileName);
-            } else {
-                return "line " + startLineNumber;
             }
+
+            return "line " + startLineNumber;
 
         }
 

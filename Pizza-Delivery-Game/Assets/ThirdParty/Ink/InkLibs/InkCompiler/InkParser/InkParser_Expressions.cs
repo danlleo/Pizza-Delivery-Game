@@ -1,6 +1,7 @@
 ﻿using System;
-using Ink.Parsed;
 using System.Collections.Generic;
+using Ink.Parsed;
+using Object = Ink.Parsed.Object;
 
 namespace Ink
 {
@@ -24,7 +25,7 @@ namespace Ink
 			}
 		}
 
-        protected Parsed.Object TempDeclarationOrAssignment()
+        protected Object TempDeclarationOrAssignment()
         {
             Whitespace ();
 
@@ -68,9 +69,9 @@ namespace Ink
             }
         }
 
-        protected void DisallowIncrement (Parsed.Object expr)
+        protected void DisallowIncrement (Object expr)
         {
-        	if (expr is Parsed.IncDecExpression)
+        	if (expr is IncDecExpression)
         		Error ("Can't use increment/decrement here. It can only be used on a ~ line");
         }
 
@@ -81,13 +82,13 @@ namespace Ink
             if (Parse (Identifier) == "temp") {
                 SucceedRule (ruleId);
                 return true;
-            } else {
-                FailRule (ruleId);
-                return false;
             }
+
+            FailRule (ruleId);
+            return false;
         }
 
-        protected Parsed.Return ReturnStatement()
+        protected Return ReturnStatement()
         {
             Whitespace ();
 
@@ -150,7 +151,7 @@ namespace Ink
                         return null;
                     }
 
-                    expr = SucceedRule(ruleId, multiaryExpr) as Parsed.Expression;
+                    expr = SucceedRule(ruleId, multiaryExpr) as Expression;
 
 					continue;
 				}
@@ -259,9 +260,9 @@ namespace Ink
             int? intOrNull = ParseInt ();
             if (intOrNull == null) {
                 return null;
-            } else {
-                return new Number (intOrNull.Value);
             }
+
+            return new Number (intOrNull.Value);
         }
 
         protected Number ExpressionFloat()
@@ -269,9 +270,9 @@ namespace Ink
             float? floatOrNull = ParseFloat ();
             if (floatOrNull == null) {
                 return null;
-            } else {
-                return new Number (floatOrNull.Value);
             }
+
+            return new Number (floatOrNull.Value);
         }
 
         protected StringExpression ExpressionString()
@@ -284,15 +285,15 @@ namespace Ink
             // it knows to treat the quote character (") as an end character
             parsingStringExpression = true;
 
-            List<Parsed.Object> textAndLogic = Parse (MixedTextAndLogic);
+            List<Object> textAndLogic = Parse (MixedTextAndLogic);
 
             Expect (String ("\""), "close quote for string expression");
 
             parsingStringExpression = false;
 
             if (textAndLogic == null) {
-                textAndLogic = new List<Ink.Parsed.Object> ();
-                textAndLogic.Add (new Parsed.Text (""));
+                textAndLogic = new List<Object> ();
+                textAndLogic.Add (new Text (""));
             }
 
             else if (textAndLogic.Exists (c => c is Divert))
@@ -306,7 +307,9 @@ namespace Ink
             var id = Parse(Identifier);
             if (id == "true") {
                 return new Number (true);
-            } else if (id == "false") {
+            }
+
+            if (id == "false") {
                 return new Number (false);
             }
 
@@ -374,7 +377,7 @@ namespace Ink
             return innerExpr;
 		}
 
-		protected Expression ExpressionInfixRight(Parsed.Expression left, InfixOperator op)
+		protected Expression ExpressionInfixRight(Expression left, InfixOperator op)
 		{
 			Whitespace ();
 
@@ -415,7 +418,7 @@ namespace Ink
             return null;
 		}
 
-        protected Parsed.List ExpressionList ()
+        protected List ExpressionList ()
         {
             Whitespace ();
 

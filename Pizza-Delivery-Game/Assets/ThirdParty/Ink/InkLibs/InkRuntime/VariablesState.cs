@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Ink.Runtime
@@ -10,7 +11,7 @@ namespace Ink.Runtime
     /// </summary>
 	public class VariablesState : IEnumerable<string>
     {
-        public delegate void VariableChanged(string variableName, Runtime.Object newValue);
+        public delegate void VariableChanged(string variableName, Object newValue);
         public event VariableChanged variableChangedEvent;
 
         public StatePatch patch;
@@ -63,10 +64,10 @@ namespace Ink.Runtime
         public object this[string variableName]
         {
             get {
-                Runtime.Object varContents;
+                Object varContents;
 
                 if (patch != null && patch.TryGetGlobal(variableName, out varContents))
-                    return (varContents as Runtime.Value).valueObject;
+                    return (varContents as Value).valueObject;
 
                 // Search main dictionary first.
                 // If it's not found, it might be because the story content has changed,
@@ -74,29 +75,28 @@ namespace Ink.Runtime
                 // Should really warn somehow, but it's difficult to see how...!
                 if ( _globalVariables.TryGetValue (variableName, out varContents) || 
                      _defaultGlobalVariables.TryGetValue(variableName, out varContents) )
-                    return (varContents as Runtime.Value).valueObject;
-                else {
-                    return null;
-                }
+                    return (varContents as Value).valueObject;
+                return null;
             }
             set {
                 if (!_defaultGlobalVariables.ContainsKey (variableName))
                     throw new StoryException ("Cannot assign to a variable ("+variableName+") that hasn't been declared in the story");
                 
-                var val = Runtime.Value.Create(value);
-                if (val == null) {
+                var val = Value.Create(value);
+                if (val == null)
+                {
                     if (value == null) {
                         throw new Exception ("Cannot pass null to VariableState");
-                    } else {
-                        throw new Exception ("Invalid value passed to VariableState: "+value.ToString());
                     }
+
+                    throw new Exception ("Invalid value passed to VariableState: "+value);
                 }
 
                 SetGlobal (variableName, val);
             }
         }
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
 		}
@@ -166,7 +166,7 @@ namespace Ink.Runtime
 
                 if(dontSaveDefaultValues) {
                     // Don't write out values that are the same as the default global values
-                    Runtime.Object defaultVal;
+                    Object defaultVal;
                     if (_defaultGlobalVariables.TryGetValue(name, out defaultVal))
                     {
                         if (RuntimeObjectsEqual(val, defaultVal))
@@ -182,7 +182,7 @@ namespace Ink.Runtime
             writer.WriteObjectEnd();
         }
 
-        public bool RuntimeObjectsEqual(Runtime.Object obj1, Runtime.Object obj2)
+        public bool RuntimeObjectsEqual(Object obj1, Object obj2)
         {
             if (obj1.GetType() != obj2.GetType()) return false;
 
@@ -210,17 +210,17 @@ namespace Ink.Runtime
                 return val1.valueObject.Equals(val2.valueObject);
             }
 
-            throw new System.Exception("FastRoughDefinitelyEquals: Unsupported runtime object type: "+obj1.GetType());
+            throw new Exception("FastRoughDefinitelyEquals: Unsupported runtime object type: "+obj1.GetType());
         }
 
-        public Runtime.Object GetVariableWithName(string name)
+        public Object GetVariableWithName(string name)
         {
             return GetVariableWithName (name, -1);
         }
 
-        public Runtime.Object TryGetDefaultVariableValue (string name)
+        public Object TryGetDefaultVariableValue (string name)
         {
-            Runtime.Object val = null;
+            Object val = null;
             _defaultGlobalVariables.TryGetValue (name, out val);
             return val;
         }
@@ -230,9 +230,9 @@ namespace Ink.Runtime
 			return _globalVariables.ContainsKey(name) || _defaultGlobalVariables != null && _defaultGlobalVariables.ContainsKey(name);
 		}
 
-        Runtime.Object GetVariableWithName(string name, int contextIndex)
+        Object GetVariableWithName(string name, int contextIndex)
         {
-            Runtime.Object varValue = GetRawVariableWithName (name, contextIndex);
+            Object varValue = GetRawVariableWithName (name, contextIndex);
 
             // Get value from pointer?
             var varPointer = varValue as VariablePointerValue;
@@ -243,9 +243,9 @@ namespace Ink.Runtime
             return varValue;
         }
 
-        Runtime.Object GetRawVariableWithName(string name, int contextIndex)
+        Object GetRawVariableWithName(string name, int contextIndex)
         {
-            Runtime.Object varValue = null;
+            Object varValue = null;
 
             // 0 context = global
             if (contextIndex == 0 || contextIndex == -1) {
@@ -275,12 +275,12 @@ namespace Ink.Runtime
             return varValue;
         }
 
-        public Runtime.Object ValueAtVariablePointer(VariablePointerValue pointer)
+        public Object ValueAtVariablePointer(VariablePointerValue pointer)
         {
             return GetVariableWithName (pointer.variableName, pointer.contextIndex);
         }
 
-        public void Assign(VariableAssignment varAss, Runtime.Object value)
+        public void Assign(VariableAssignment varAss, Object value)
         {
             var name = varAss.variableName;
             int contextIndex = -1;
@@ -332,7 +332,7 @@ namespace Ink.Runtime
             _defaultGlobalVariables = new Dictionary<string, Object> (_globalVariables);
         }
 
-        void RetainListOriginsForAssignment (Runtime.Object oldValue, Runtime.Object newValue)
+        void RetainListOriginsForAssignment (Object oldValue, Object newValue)
         {
             var oldList = oldValue as ListValue;
             var newList = newValue as ListValue;
@@ -340,9 +340,9 @@ namespace Ink.Runtime
                 newList.value.SetInitialOriginNames (oldList.value.originNames);
         }
 
-        public void SetGlobal(string variableName, Runtime.Object value)
+        public void SetGlobal(string variableName, Object value)
         {
-            Runtime.Object oldValue = null;
+            Object oldValue = null;
             if( patch == null || !patch.TryGetGlobal(variableName, out oldValue) )
                 _globalVariables.TryGetValue (variableName, out oldValue);
 
@@ -389,9 +389,8 @@ namespace Ink.Runtime
 
             // Make copy of the variable pointer so we're not using the value direct from
             // the runtime. Temporary must be local to the current scope.
-            else {
-                return new VariablePointerValue (varPointer.variableName, contextIndex);
-            }
+
+            return new VariablePointerValue (varPointer.variableName, contextIndex);
         }
 
         // 0  if named variable is global
@@ -404,9 +403,9 @@ namespace Ink.Runtime
             return _callStack.currentElementIndex;
         }
 
-        Dictionary<string, Runtime.Object> _globalVariables;
+        Dictionary<string, Object> _globalVariables;
 
-        Dictionary<string, Runtime.Object> _defaultGlobalVariables;
+        Dictionary<string, Object> _defaultGlobalVariables;
 
         // Used for accessing temporary variables
         CallStack _callStack;

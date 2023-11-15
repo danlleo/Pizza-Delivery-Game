@@ -1,9 +1,3 @@
-using Ink.Parsed;
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Ink
 {
     public partial class InkParser
@@ -46,7 +40,7 @@ namespace Ink
         /// non-ASCII character ranges that can be used in identifier names.
         /// </returns>
         public static CharacterRange[] ListAllCharacterRanges() {
-            return new CharacterRange[] {
+            return new[] {
                 LatinBasic,
                 LatinExtendedA,
                 LatinExtendedB,

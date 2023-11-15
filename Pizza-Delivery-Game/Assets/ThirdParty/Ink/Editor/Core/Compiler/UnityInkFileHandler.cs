@@ -1,5 +1,5 @@
-﻿using Ink;
-using System.IO;
+﻿using System.IO;
+using Ink;
 
 // Utility class for the ink compiler, used to work out how to find include files and their contents
 public class UnityInkFileHandler : IFileHandler {

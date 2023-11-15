@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Ink.Runtime;
 
 namespace Ink.Parsed
 {
@@ -43,11 +44,11 @@ namespace Ink.Parsed
         public VariableReference (List<Identifier> pathIdentifiers)
         {
             this.pathIdentifiers = pathIdentifiers;
-            this.path = pathIdentifiers.Select(id => id?.name).ToList();
-            this.name = string.Join (".", pathIdentifiers);
+            path = pathIdentifiers.Select(id => id?.name).ToList();
+            name = string.Join (".", pathIdentifiers);
         }
 
-        public override void GenerateIntoContainer (Runtime.Container container)
+        public override void GenerateIntoContainer (Container container)
         {
             Expression constantValue = null;
 
@@ -95,7 +96,7 @@ namespace Ink.Parsed
 
             // Is it a read count?
             var parsedPath = new Path (pathIdentifiers);
-            Parsed.Object targetForCount = parsedPath.ResolveFromContext (this);
+            Object targetForCount = parsedPath.ResolveFromContext (this);
             if (targetForCount) {
 
                 targetForCount.containerForCounting.visitsShouldBeCounted = true;
@@ -136,8 +137,8 @@ namespace Ink.Parsed
                 return;
             }
 
-            if (!context.ResolveVariableWithName (this.name, fromNode: this).found) {
-                Error("Unresolved variable: "+this.ToString(), this);
+            if (!context.ResolveVariableWithName (name, fromNode: this).found) {
+                Error("Unresolved variable: "+ToString(), this);
             }
         }
 

@@ -1,6 +1,6 @@
+using Enums.Environment;
 using Player;
 using UnityEngine;
-using Enums.Environment;
 
 namespace Sounds.Audio
 {

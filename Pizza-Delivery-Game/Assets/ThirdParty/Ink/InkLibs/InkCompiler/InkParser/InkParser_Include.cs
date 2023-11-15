@@ -1,7 +1,5 @@
-﻿using Ink.Parsed;
-using System.Collections.Generic;
-using System.IO;
-
+﻿using System.Collections.Generic;
+using Ink.Parsed;
 
 namespace Ink
 {
@@ -26,11 +24,11 @@ namespace Ink
                 Error ("Recursive INCLUDE detected: '" + fullFilename + "' is already open.");
                 ParseUntilCharactersFromString("\r\n");
                 return new IncludedFile(null);
-            } else {
-                AddOpenFilename (fullFilename);
             }
 
-            Parsed.Story includedStory = null;
+            AddOpenFilename (fullFilename);
+
+            Story includedStory = null;
             string includedString = null;
             try {
                 includedString = _rootParser._fileHandler.LoadInkFileContents(fullFilename);

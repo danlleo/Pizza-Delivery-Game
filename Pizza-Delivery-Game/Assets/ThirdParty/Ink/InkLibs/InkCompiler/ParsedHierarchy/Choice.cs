@@ -1,8 +1,8 @@
-﻿using System.Text;
+﻿using Ink.Runtime;
 
 namespace Ink.Parsed
 {
-    public class Choice : Parsed.Object, IWeavePoint, INamedContent
+    public class Choice : Object, IWeavePoint, INamedContent
 	{
         public ContentList startContent { get; protected set; }
         public ContentList choiceOnlyContent { get; protected set; }
@@ -34,16 +34,16 @@ namespace Ink.Parsed
         // Required for IWeavePoint interface
         // Choice's target container. Used by weave to append any extra
         // nested weave content into.
-        public Runtime.Container runtimeContainer { get { return _innerContentContainer; } }
+        public Container runtimeContainer { get { return _innerContentContainer; } }
 
 
-        public Runtime.Container innerContentContainer {
+        public Container innerContentContainer {
             get {
                 return _innerContentContainer;
             }
         }
 
-        public override Runtime.Container containerForCounting {
+        public override Container containerForCounting {
             get {
                 return _innerContentContainer;
             }
@@ -64,7 +64,7 @@ namespace Ink.Parsed
             this.startContent = startContent;
             this.choiceOnlyContent = choiceOnlyContent;
             this.innerContent = innerContent;
-			this.indentationDepth = 1;
+			indentationDepth = 1;
 
             if (startContent)
                 AddContent (this.startContent);
@@ -75,13 +75,13 @@ namespace Ink.Parsed
             if( innerContent )
                 AddContent (this.innerContent);
 
-            this.onceOnly = true; // default
+            onceOnly = true; // default
 		}
 
 
 		public override Runtime.Object GenerateRuntimeObject ()
         {
-            _outerContainer = new Runtime.Container ();
+            _outerContainer = new Container ();
 
             // Content names for different types of choice:
             //  * start content [choice only content] inner content
@@ -121,11 +121,11 @@ namespace Ink.Parsed
             //  ]
             //
 
-            _runtimeChoice = new Runtime.ChoicePoint (onceOnly);
-            _runtimeChoice.isInvisibleDefault = this.isInvisibleDefault;
+            _runtimeChoice = new ChoicePoint (onceOnly);
+            _runtimeChoice.isInvisibleDefault = isInvisibleDefault;
 
             if (startContent || choiceOnlyContent || condition) {
-                _outerContainer.AddContent (Runtime.ControlCommand.EvalStart ());
+                _outerContainer.AddContent (ControlCommand.EvalStart ());
             }
 
             // Start content is put into a named container that's referenced both
@@ -137,20 +137,20 @@ namespace Ink.Parsed
                 //  - We can't use a function since it uses a call stack element, which would
                 //    put temporary values out of scope. Instead we manually divert around.
                 //  - $r is a variable divert target contains the return point
-                _returnToR1 = new Runtime.DivertTargetValue ();
+                _returnToR1 = new DivertTargetValue ();
                 _outerContainer.AddContent (_returnToR1);
                 var varAssign = new Runtime.VariableAssignment ("$r", true);
                 _outerContainer.AddContent (varAssign);
 
                 // Mark the start of the choice text generation, so that the runtime
                 // knows where to rewind to to extract the content from the output stream.
-                _outerContainer.AddContent (Runtime.ControlCommand.BeginString ());
+                _outerContainer.AddContent (ControlCommand.BeginString ());
 
                 _divertToStartContentOuter = new Runtime.Divert ();
                 _outerContainer.AddContent (_divertToStartContentOuter);
 
                 // Start content itself in a named container
-                _startContentRuntimeContainer = startContent.GenerateRuntimeObject () as Runtime.Container;
+                _startContentRuntimeContainer = startContent.GenerateRuntimeObject () as Container;
                 _startContentRuntimeContainer.name = "s";
 
                 // Effectively, the "return" statement - return to the point specified by $r
@@ -162,23 +162,23 @@ namespace Ink.Parsed
                 _outerContainer.AddToNamedContentOnly (_startContentRuntimeContainer);
 
                 // This is the label to return to
-                _r1Label = new Runtime.Container ();
+                _r1Label = new Container ();
                 _r1Label.name = "$r1";
                 _outerContainer.AddContent (_r1Label);
 
-                _outerContainer.AddContent (Runtime.ControlCommand.EndString ());
+                _outerContainer.AddContent (ControlCommand.EndString ());
 
                 _runtimeChoice.hasStartContent = true;
             }
 
             // Choice only content - mark the start, then generate it directly into the outer container
             if (choiceOnlyContent) {
-                _outerContainer.AddContent (Runtime.ControlCommand.BeginString ());
+                _outerContainer.AddContent (ControlCommand.BeginString ());
 
-                var choiceOnlyRuntimeContent = choiceOnlyContent.GenerateRuntimeObject () as Runtime.Container;
+                var choiceOnlyRuntimeContent = choiceOnlyContent.GenerateRuntimeObject () as Container;
                 _outerContainer.AddContentsOfContainer (choiceOnlyRuntimeContent);
 
-                _outerContainer.AddContent (Runtime.ControlCommand.EndString ());
+                _outerContainer.AddContent (ControlCommand.EndString ());
 
                 _runtimeChoice.hasChoiceOnlyContent = true;
             }
@@ -190,24 +190,24 @@ namespace Ink.Parsed
             }
 
             if (startContent || choiceOnlyContent || condition) {
-                _outerContainer.AddContent (Runtime.ControlCommand.EvalEnd ());
+                _outerContainer.AddContent (ControlCommand.EvalEnd ());
             }
 
             // Add choice itself
             _outerContainer.AddContent (_runtimeChoice);
 
             // Container that choice points to for when it's chosen
-            _innerContentContainer = new Runtime.Container ();
+            _innerContentContainer = new Container ();
 
             // Repeat start content by diverting to its container
             if (startContent) {
 
                 // Set the return point when jumping back into the start content
                 //  - In this case, it's the $r2 point, within the choice content "c".
-                _returnToR2 = new Runtime.DivertTargetValue ();
-                _innerContentContainer.AddContent (Runtime.ControlCommand.EvalStart ());
+                _returnToR2 = new DivertTargetValue ();
+                _innerContentContainer.AddContent (ControlCommand.EvalStart ());
                 _innerContentContainer.AddContent (_returnToR2);
-                _innerContentContainer.AddContent (Runtime.ControlCommand.EvalEnd ());
+                _innerContentContainer.AddContent (ControlCommand.EvalEnd ());
                 var varAssign = new Runtime.VariableAssignment ("$r", true);
                 _innerContentContainer.AddContent (varAssign);
 
@@ -216,18 +216,18 @@ namespace Ink.Parsed
                 _innerContentContainer.AddContent (_divertToStartContentInner);
 
                 // Define label to return to
-                _r2Label = new Runtime.Container ();
+                _r2Label = new Container ();
                 _r2Label.name = "$r2";
                 _innerContentContainer.AddContent (_r2Label);
             }
 
             // Choice's own inner content
             if (innerContent) {
-				var innerChoiceOnlyContent = innerContent.GenerateRuntimeObject () as Runtime.Container;
+				var innerChoiceOnlyContent = innerContent.GenerateRuntimeObject () as Container;
                 _innerContentContainer.AddContentsOfContainer (innerChoiceOnlyContent);
             }
 
-            if (this.story.countAllVisits) {
+            if (story.countAllVisits) {
                 _innerContentContainer.visitsShouldBeCounted = true;
             }
 
@@ -268,21 +268,21 @@ namespace Ink.Parsed
         {
             if (choiceOnlyContent != null) {
                 return string.Format ("* {0}[{1}]...", startContent, choiceOnlyContent);
-            } else {
-                return string.Format ("* {0}...", startContent);
             }
+
+            return string.Format ("* {0}...", startContent);
         }
 
-        Runtime.ChoicePoint _runtimeChoice;
-        Runtime.Container _innerContentContainer;
-        Runtime.Container _outerContainer;
-        Runtime.Container _startContentRuntimeContainer;
+        ChoicePoint _runtimeChoice;
+        Container _innerContentContainer;
+        Container _outerContainer;
+        Container _startContentRuntimeContainer;
         Runtime.Divert _divertToStartContentOuter;
         Runtime.Divert _divertToStartContentInner;
-        Runtime.Container _r1Label;
-        Runtime.Container _r2Label;
-        Runtime.DivertTargetValue _returnToR1;
-        Runtime.DivertTargetValue _returnToR2;
+        Container _r1Label;
+        Container _r2Label;
+        DivertTargetValue _returnToR1;
+        DivertTargetValue _returnToR2;
         Expression _condition;
 	}
 

@@ -2,7 +2,7 @@
 
 namespace Ink.Parsed
 {
-    public class ConstantDeclaration : Parsed.Object
+    public class ConstantDeclaration : Object
     {
         public string constantName
         {
@@ -13,11 +13,11 @@ namespace Ink.Parsed
 
         public ConstantDeclaration (Identifier name, Expression assignedExpression)
         {
-            this.constantIdentifier = name;
+            constantIdentifier = name;
 
             // Defensive programming in case parsing of assignedExpression failed
             if( assignedExpression )
-                this.expression = AddContent(assignedExpression);
+                expression = AddContent(assignedExpression);
         }
 
         public override Runtime.Object GenerateRuntimeObject ()

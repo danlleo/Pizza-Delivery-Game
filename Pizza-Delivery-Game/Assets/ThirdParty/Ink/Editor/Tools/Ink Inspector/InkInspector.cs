@@ -1,10 +1,10 @@
-using UnityEngine;
-using UnityEditor;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEditorInternal;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Ink.UnityIntegration {
@@ -101,10 +101,10 @@ namespace Ink.UnityIntegration {
 		void CreateIncludeList () {
 			List<DefaultAsset> includeTextAssets = inkFile.includes;
 			includesFileList = new ReorderableList(includeTextAssets, typeof(DefaultAsset), false, true, false, false);
-			includesFileList.drawHeaderCallback = (Rect rect) => {  
+			includesFileList.drawHeaderCallback = rect => {  
 				EditorGUI.LabelField(rect, "Included Files");
 			};
-			includesFileList.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
+			includesFileList.drawElementCallback = (rect, index, isActive, isFocused) => {
 				DefaultAsset childAssetFile = ((List<DefaultAsset>)includesFileList.list)[index];
 				if(childAssetFile == null) {
 					Debug.LogError("Ink file in include list is null. This should never occur. Use Assets > Recompile Ink to fix this issue.");
@@ -140,10 +140,10 @@ namespace Ink.UnityIntegration {
 		void CreateMastersList () {
 			List<DefaultAsset> mastersTextAssets = inkFile.masterInkAssets;
 			mastersFileList = new ReorderableList(mastersTextAssets, typeof(DefaultAsset), false, true, false, false);
-			mastersFileList.drawHeaderCallback = (Rect rect) => {  
+			mastersFileList.drawHeaderCallback = rect => {  
 				EditorGUI.LabelField(rect, "Master Files");
 			};
-			mastersFileList.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
+			mastersFileList.drawElementCallback = (rect, index, isActive, isFocused) => {
 				DefaultAsset masterAssetFile = ((List<DefaultAsset>)mastersFileList.list)[index];
 				if(masterAssetFile == null) {
 					Debug.LogError("Ink file in masters list is null. This should never occur. Use Assets > Recompile Ink to fix this issue.");
@@ -195,7 +195,7 @@ namespace Ink.UnityIntegration {
 
 		ReorderableList CreateErrorList () {
 			var reorderableList = new ReorderableList(inkFile.errors, typeof(string), false, true, false, false);
-			reorderableList.drawHeaderCallback = (Rect rect) => {  
+			reorderableList.drawHeaderCallback = rect => {  
 				EditorGUI.LabelField(rect, new GUIContent(InkBrowserIcons.errorIcon), new GUIContent("Errors"));
 			};
 			reorderableList.elementHeight = 26;
@@ -205,7 +205,7 @@ namespace Ink.UnityIntegration {
 
 		ReorderableList CreateWarningList () {
 			var reorderableList = new ReorderableList(inkFile.warnings, typeof(string), false, true, false, false);
-			reorderableList.drawHeaderCallback = (Rect rect) => {  
+			reorderableList.drawHeaderCallback = rect => {  
 				EditorGUI.LabelField(rect, new GUIContent(InkBrowserIcons.warningIcon), new GUIContent("Warnings"));
 			};
 			reorderableList.elementHeight = 26;
@@ -215,7 +215,7 @@ namespace Ink.UnityIntegration {
 
 		ReorderableList CreateTodoList () {
 			var reorderableList = new ReorderableList(inkFile.todos, typeof(string), false, true, false, false);
-			reorderableList.drawHeaderCallback = (Rect rect) => {  
+			reorderableList.drawHeaderCallback = rect => {  
 				EditorGUI.LabelField(rect, "To do");
 			};
 			reorderableList.elementHeight = 26;
@@ -389,10 +389,10 @@ namespace Ink.UnityIntegration {
 		void DrawEditAndCompileDates (InkFile masterInkFile) {
 			string editAndCompileDateString = "";
 			DateTime lastEditDate = inkFile.lastEditDate;
-			editAndCompileDateString += "Last edit date "+lastEditDate.ToString();
+			editAndCompileDateString += "Last edit date "+lastEditDate;
 			if(masterInkFile.jsonAsset != null) {
 				DateTime lastCompileDate = masterInkFile.lastCompileDate;
-				editAndCompileDateString += "\nLast compile date "+lastCompileDate.ToString();
+				editAndCompileDateString += "\nLast compile date "+lastCompileDate;
 				if(lastEditDate > lastCompileDate) {
                     if(EditorApplication.isPlaying && InkSettings.instance.delayInPlayMode) {
 					    editAndCompileDateString += "\nWill compile on exiting play mode";

@@ -1,7 +1,9 @@
 ﻿
+using Ink.Runtime;
+
 namespace Ink.Parsed
 {
-    public class Gather : Parsed.Object, IWeavePoint, INamedContent
+    public class Gather : Object, IWeavePoint, INamedContent
     {
         public string name
         {
@@ -10,7 +12,7 @@ namespace Ink.Parsed
         public Identifier identifier { get; set; }
         public int indentationDepth { get; protected set; }
 
-        public Runtime.Container runtimeContainer { get { return (Runtime.Container) runtimeObject; } }
+        public Container runtimeContainer { get { return (Container) runtimeObject; } }
 
         public Gather (Identifier identifier, int indentationDepth)
         {
@@ -20,10 +22,10 @@ namespace Ink.Parsed
 
         public override Runtime.Object GenerateRuntimeObject ()
         {
-            var container = new Runtime.Container ();
+            var container = new Container ();
             container.name = name;
 
-            if (this.story.countAllVisits) {
+            if (story.countAllVisits) {
                 container.visitsShouldBeCounted = true;
             }
 

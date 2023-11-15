@@ -1,4 +1,4 @@
-namespace Scientist.StateMachine
+namespace Scientist.Outdoor.StateMachine
 {
     public class State
     {

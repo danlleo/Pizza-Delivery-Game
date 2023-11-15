@@ -3,7 +3,7 @@ using DG.Tweening;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
-using Math = Utilities.Math;
+using Utilities;
 
 namespace UI
 {

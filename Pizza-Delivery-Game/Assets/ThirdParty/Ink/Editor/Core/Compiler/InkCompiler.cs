@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
-using Debug = UnityEngine.Debug;
+using UnityEditor;
+using UnityEngine;
 
 namespace Ink.UnityIntegration {
 	// Ink Compiler handles the compilation of Ink Files, storing and logging todos, warnings and errors.
@@ -104,7 +103,7 @@ namespace Ink.UnityIntegration {
 
 		
 		public static void CompileInk (params InkFile[] inkFiles) {
-            CompileInk(inkFiles, false, null);
+            CompileInk(inkFiles, false);
         }
 		public static void CompileInk (InkFile[] inkFiles, bool immediate, Action onComplete = null) {
 			if(inkFiles == null || inkFiles.Length == 0) return;
@@ -219,13 +218,13 @@ namespace Ink.UnityIntegration {
 
 		#region Static Private Variables
 		// If we just blocked a build because of an ink compile
-		static bool buildBlocked = false;
+		static bool buildBlocked;
 		// If we just blocked entering play mode because of an ink compile
-		static bool playModeBlocked = false;
+		static bool playModeBlocked;
 
 
 		// Track if we've currently locked compilation of Unity C# Scripts
-		static bool hasLockedUnityCompilation = false;
+		static bool hasLockedUnityCompilation;
 		
 		// When compiling we call AssetDatabase.DisallowAutoRefresh. 
 		// We NEED to remember to re-allow it or unity stops registering file changes!
@@ -271,10 +270,10 @@ namespace Ink.UnityIntegration {
 
 		// The state of files currently being compiled.
 		[SerializeField]
-		List<InkCompiler.CompilationStackItem> compilationStack = new List<InkCompiler.CompilationStackItem>();
+		List<CompilationStackItem> compilationStack = new List<CompilationStackItem>();
 		#endregion
 		
-		[System.Serializable]
+		[Serializable]
 		class CompilationStackItem {
 			public CompilationStackItemState state = CompilationStackItemState.Queued;
 			public bool immediate;
@@ -288,14 +287,13 @@ namespace Ink.UnityIntegration {
 			public DateTime endTime;
 
 			public float timeTaken {
-				get {
+				get
+				{
 					if(state == CompilationStackItemState.Complete) return (float)(endTime - startTime).TotalSeconds;
-					else return (float)(DateTime.Now - startTime).TotalSeconds;
+					return (float)(DateTime.Now - startTime).TotalSeconds;
 				}
 			}
 
-			public CompilationStackItem () {}
-			
 			// Sets errors, warnings and todos to the ink file, and logs them to the console.
 			public void SetOutputLog () {
 				inkFile.errors.Clear();
@@ -328,9 +326,9 @@ namespace Ink.UnityIntegration {
 
 		#region Init, Update, Saving
         // Ensure we save the InkCompiler state when we save assets.
-        class AssetSaver : UnityEditor.AssetModificationProcessor {
+        class AssetSaver : AssetModificationProcessor {
             static string[] OnWillSaveAssets(string[] paths) {
-                InkCompiler.instance.Save(true);
+                instance.Save(true);
                 return paths;
             }
         }
@@ -456,7 +454,7 @@ namespace Ink.UnityIntegration {
 			
             RemoveFromPendingCompilationStack(inkFile);
 			if(IsInkFileOnCompilationStack(inkFile)) {
-				UnityEngine.Debug.LogWarning("Tried compiling ink file, but file is already compiling. "+inkFile.filePath);
+				Debug.LogWarning("Tried compiling ink file, but file is already compiling. "+inkFile.filePath);
 				return;
 			}
 
@@ -561,7 +559,7 @@ namespace Ink.UnityIntegration {
 			{
 				countAllVisits = true,
 				fileHandler = new UnityInkFileHandler(Path.GetDirectoryName(item.inkAbsoluteFilePath)),
-				errorHandler = (string message, ErrorType type) => {
+				errorHandler = (message, type) => {
 					InkCompilerLog log;
 					if(InkCompilerLog.TryParse(message, out log)) {
 						if(string.IsNullOrEmpty(log.relativeFilePath)) log.relativeFilePath = Path.GetFileName(item.inkAbsoluteFilePath);
@@ -589,7 +587,7 @@ namespace Ink.UnityIntegration {
 		// When the compilation stack first gains an item
 		private static void OnBeginCompilationStack () {
 			#if UNITY_2020_2_OR_NEWER
-			compileProgressID = Progress.Start("Compiling Ink", null, Progress.Options.None, -1);
+			compileProgressID = Progress.Start("Compiling Ink");
 			#endif
 		}
 

@@ -1,4 +1,6 @@
 ﻿
+using Ink.Runtime;
+
 namespace Ink.Parsed
 {
     public class DivertTarget : Expression
@@ -10,12 +12,12 @@ namespace Ink.Parsed
             this.divert = AddContent(divert);
         }
 
-        public override void GenerateIntoContainer (Runtime.Container container)
+        public override void GenerateIntoContainer (Container container)
         {
             divert.GenerateRuntimeObject();
 
-            _runtimeDivert = (Runtime.Divert) divert.runtimeDivert;
-            _runtimeDivertTargetValue = new Runtime.DivertTargetValue ();
+            _runtimeDivert = divert.runtimeDivert;
+            _runtimeDivertTargetValue = new DivertTargetValue ();
 
             container.AddContent (_runtimeDivertTargetValue);
         }
@@ -30,7 +32,7 @@ namespace Ink.Parsed
                 return;
             }
 
-            Parsed.Object usageContext = this;
+            Object usageContext = this;
             while (usageContext && usageContext is Expression) {
 
                 bool badUsage = false;
@@ -103,13 +105,13 @@ namespace Ink.Parsed
             // Tell hard coded (yet variable) divert targets that they also need to be counted
             // TODO: Only detect DivertTargets that are values rather than being used directly for
             // read or turn counts. Should be able to detect this by looking for other uses of containerForCounting
-            var targetContent = this.divert.targetContent;
+            var targetContent = divert.targetContent;
             if (targetContent != null ) {
                 var target = targetContent.containerForCounting;
                 if (target != null)
                 {
                     // Purpose is known: used directly in TURNS_SINCE(-> divTarg)
-                    var parentFunc = this.parent as FunctionCall;
+                    var parentFunc = parent as FunctionCall;
                     if( parentFunc && parentFunc.isTurnsSince ) {
                         target.turnIndexShouldBeCounted = true;
                     }
@@ -153,7 +155,7 @@ namespace Ink.Parsed
             var otherDivTarget = obj as DivertTarget;
             if (otherDivTarget == null) return false;
 
-            var targetStr = this.divert.target.dotSeparatedComponents;
+            var targetStr = divert.target.dotSeparatedComponents;
             var otherTargetStr = otherDivTarget.divert.target.dotSeparatedComponents;
 
             return targetStr.Equals (otherTargetStr);
@@ -161,11 +163,11 @@ namespace Ink.Parsed
 
         public override int GetHashCode ()
         {
-            var targetStr = this.divert.target.dotSeparatedComponents;
+            var targetStr = divert.target.dotSeparatedComponents;
             return targetStr.GetHashCode ();
         }
 
-        Runtime.DivertTargetValue _runtimeDivertTargetValue;
+        DivertTargetValue _runtimeDivertTargetValue;
         Runtime.Divert _runtimeDivert;
     }
 }

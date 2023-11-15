@@ -25,8 +25,7 @@ namespace Ink.Runtime
             int intVal;
             if (_itemNameToValues.TryGetValue (item.itemName, out intVal))
                 return intVal;
-            else
-                return 0;
+            return 0;
         }
 
         public bool ContainsItem (InkListItem item)

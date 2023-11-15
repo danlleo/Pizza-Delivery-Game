@@ -2,7 +2,7 @@
 
 namespace Ink.Runtime
 {
-	public class Divert : Runtime.Object
+	public class Divert : Object
 	{
         public Path targetPath { 
             get { 
@@ -82,12 +82,13 @@ namespace Ink.Runtime
         {
             var otherDivert = obj as Divert;
             if (otherDivert) {
-                if (this.hasVariableTarget == otherDivert.hasVariableTarget) {
-                    if (this.hasVariableTarget) {
-                        return this.variableDivertName == otherDivert.variableDivertName;
-                    } else {
-                        return this.targetPath.Equals(otherDivert.targetPath);
+                if (hasVariableTarget == otherDivert.hasVariableTarget)
+                {
+                    if (hasVariableTarget) {
+                        return variableDivertName == otherDivert.variableDivertName;
                     }
+
+                    return targetPath.Equals(otherDivert.targetPath);
                 }
             }
             return false;
@@ -98,10 +99,10 @@ namespace Ink.Runtime
             if (hasVariableTarget) {
                 const int variableTargetSalt = 12345;
                 return variableDivertName.GetHashCode() + variableTargetSalt;
-            } else {
-                const int pathTargetSalt = 54321;
-                return targetPath.GetHashCode() + pathTargetSalt;
             }
+
+            const int pathTargetSalt = 54321;
+            return targetPath.GetHashCode() + pathTargetSalt;
         }
 
         public override string ToString ()
@@ -109,40 +110,40 @@ namespace Ink.Runtime
             if (hasVariableTarget) {
                 return "Divert(variable: " + variableDivertName + ")";
             }
-            else if (targetPath == null) {
+
+            if (targetPath == null) {
                 return "Divert(null)";
-            } else {
-
-                var sb = new StringBuilder ();
-
-                string targetStr = targetPath.ToString ();
-                int? targetLineNum = DebugLineNumberOfPath (targetPath);
-                if (targetLineNum != null) {
-                    targetStr = "line " + targetLineNum;
-                }
-
-                sb.Append ("Divert");
-
-                if (isConditional)
-                    sb.Append ("?");
-
-                if (pushesToStack) {
-                    if (stackPushType == PushPopType.Function) {
-                        sb.Append (" function");
-                    } else {
-                        sb.Append (" tunnel");
-                    }
-                }
-
-                sb.Append (" -> ");
-                sb.Append (targetPathString);
-
-                sb.Append (" (");
-                sb.Append (targetStr);
-                sb.Append (")");
-
-                return sb.ToString ();
             }
+
+            var sb = new StringBuilder ();
+
+            string targetStr = targetPath.ToString ();
+            int? targetLineNum = DebugLineNumberOfPath (targetPath);
+            if (targetLineNum != null) {
+                targetStr = "line " + targetLineNum;
+            }
+
+            sb.Append ("Divert");
+
+            if (isConditional)
+                sb.Append ("?");
+
+            if (pushesToStack) {
+                if (stackPushType == PushPopType.Function) {
+                    sb.Append (" function");
+                } else {
+                    sb.Append (" tunnel");
+                }
+            }
+
+            sb.Append (" -> ");
+            sb.Append (targetPathString);
+
+            sb.Append (" (");
+            sb.Append (targetStr);
+            sb.Append (")");
+
+            return sb.ToString ();
         }
 	}
 }

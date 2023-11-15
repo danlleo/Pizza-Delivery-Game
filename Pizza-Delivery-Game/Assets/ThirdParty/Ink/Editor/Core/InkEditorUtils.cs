@@ -1,12 +1,15 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System;
+﻿using System;
 using System.IO;
-using System.Text;
 using System.Linq;
+using System.Text;
 using Ink.Runtime;
-using UnityEditor.ProjectWindowCallback;
+using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEditor.ProjectWindowCallback;
+using UnityEditorInternal;
+using UnityEngine;
+using Object = UnityEngine.Object;
+using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 using Path = System.IO.Path;
 
 namespace Ink.UnityIntegration {
@@ -21,7 +24,7 @@ namespace Ink.UnityIntegration {
 					streamReader.Close();
 				}
 				var assetPath = CreateScriptAsset(pathName, text);
-				var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(assetPath);
+				var asset = AssetDatabase.LoadAssetAtPath<Object>(assetPath);
 				ProjectWindowUtil.ShowCreatedAsset(asset);
 			}
 		}
@@ -59,7 +62,7 @@ namespace Ink.UnityIntegration {
                                    "Recompile All Immediately will compile "+string.Join(", ", filesToRecompile.Select(x => Path.GetFileName(x.filePath)).ToArray()) :
                                    "No valid ink found. Note that only files with 'Compile Automatic' checked are compiled if not set to compile all files automatically in InkSettings file.";
             Debug.Log(logString);
-            InkCompiler.CompileInk(filesToRecompile, true, null);
+            InkCompiler.CompileInk(filesToRecompile, true);
         }
 
 
@@ -105,7 +108,7 @@ namespace Ink.UnityIntegration {
 
 		private static string GetSelectedPathOrFallback() {
 			string path = "Assets";
-			foreach (UnityEngine.Object obj in Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets)) {
+			foreach (Object obj in Selection.GetFiltered(typeof(Object), SelectionMode.Assets)) {
 				path = AssetDatabase.GetAssetPath(obj);
 				if (!string.IsNullOrEmpty(path) && File.Exists(path)) {
 					path = Path.GetDirectoryName(path);
@@ -166,7 +169,8 @@ namespace Ink.UnityIntegration {
 				TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(relativePath);
 				return textAsset;
 			}
-			else return null;
+
+			return null;
 		}
 
 		public static bool StoryContainsVariables (Story story) {
@@ -242,7 +246,7 @@ namespace Ink.UnityIntegration {
 		}
 
 		public static string UnityRelativeToAbsolutePath(string filePath) {
-			return InkEditorUtils.CombinePaths(Application.dataPath, filePath.Substring(7));
+			return CombinePaths(Application.dataPath, filePath.Substring(7));
 		}
 
 		/// <summary>
@@ -271,7 +275,7 @@ namespace Ink.UnityIntegration {
 		/// <returns>True if it's an ink file, otherwise false.</returns>
 		public static bool IsInkFile(string path) {
 			string extension = Path.GetExtension(path);
-			if (extension == InkEditorUtils.inkFileExtension) {
+			if (extension == inkFileExtension) {
 				return true;
 			}
 
@@ -313,7 +317,7 @@ namespace Ink.UnityIntegration {
 			// This function replaces OpenFileAtLineExternal, but I guess it's totally internal and can't be accessed.
 			// CodeEditorUtility.Editor.Current.OpenProject(masterFilePath, lineNumber);
 			#pragma warning disable
-			UnityEditorInternal.InternalEditorUtility.OpenFileAtLineExternal(masterFilePath, lineNumber);
+			InternalEditorUtility.OpenFileAtLineExternal(masterFilePath, lineNumber);
 			#pragma warning restore
 			#else
 			UnityEditorInternal.InternalEditorUtility.OpenFileAtLineExternal(masterFilePath, lineNumber);
@@ -345,10 +349,10 @@ namespace Ink.UnityIntegration {
 
 
 		// If this plugin is installed as a package, returns info about it.
-		public static UnityEditor.PackageManager.PackageInfo GetPackageInfo() {
+		public static PackageInfo GetPackageInfo() {
 			var packageAssetPath = "Packages/com.inkle.ink-unity-integration";
-			if (AssetDatabase.IsValidFolder(packageAssetPath)) return UnityEditor.PackageManager.PackageInfo.FindForAssetPath(packageAssetPath);
-			else return null;
+			if (AssetDatabase.IsValidFolder(packageAssetPath)) return PackageInfo.FindForAssetPath(packageAssetPath);
+			return null;
 		}
 		
 		// Gets the root directory of this plugin, enabling us to find assets within it.
@@ -357,14 +361,14 @@ namespace Ink.UnityIntegration {
 			var packageInfo = GetPackageInfo();
 			if (packageInfo != null) {
 				return packageInfo.resolvedPath;
-			} else {
-				// Find the InkLibs folder. We assume that it exists in the top level of the plugin folder. We use this folder because it has a fairly unique name and is essential for the plugin to function.
-				string[] guids = AssetDatabase.FindAssets("t:DefaultAsset", new[] {"Assets"}).Where(g => AssetDatabase.GUIDToAssetPath(g).EndsWith("/InkLibs")).ToArray();
-				if (guids.Length > 0) {
-					var assetPathOfInkLibsFolder = AssetDatabase.GUIDToAssetPath(guids[0]);
-					var rootPluginFolder = assetPathOfInkLibsFolder.Substring(0, assetPathOfInkLibsFolder.Length - "/InkLibs".Length);
-					return Path.GetFullPath(Path.Combine(Application.dataPath, "..", rootPluginFolder));
-				}
+			}
+
+			// Find the InkLibs folder. We assume that it exists in the top level of the plugin folder. We use this folder because it has a fairly unique name and is essential for the plugin to function.
+			string[] guids = AssetDatabase.FindAssets("t:DefaultAsset", new[] {"Assets"}).Where(g => AssetDatabase.GUIDToAssetPath(g).EndsWith("/InkLibs")).ToArray();
+			if (guids.Length > 0) {
+				var assetPathOfInkLibsFolder = AssetDatabase.GUIDToAssetPath(guids[0]);
+				var rootPluginFolder = assetPathOfInkLibsFolder.Substring(0, assetPathOfInkLibsFolder.Length - "/InkLibs".Length);
+				return Path.GetFullPath(Path.Combine(Application.dataPath, "..", rootPluginFolder));
 			}
 			return null; // If no folder is found
 		}

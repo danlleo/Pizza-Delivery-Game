@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Ink.Parsed
@@ -7,11 +6,11 @@ namespace Ink.Parsed
 	public class Path
 	{
         public FlowLevel baseTargetLevel {
-            get {
+            get
+            {
                 if (baseLevelIsAmbiguous)
                     return FlowLevel.Story;
-                else
-                    return (FlowLevel) _baseTargetLevel;
+                return (FlowLevel) _baseTargetLevel;
             }
         }
 
@@ -70,17 +69,17 @@ namespace Ink.Parsed
 
 		public override string ToString ()
 		{
-            if (components == null || components.Count == 0) {
+            if (components == null || components.Count == 0)
+            {
                 if (baseTargetLevel == FlowLevel.WeavePoint)
                     return "-> <next gather point>";
-                else
-                    return "<invalid Path>";
+                return "<invalid Path>";
             }
 
             return "-> " + dotSeparatedComponents;
 		}
 
-        public Parsed.Object ResolveFromContext(Parsed.Object context)
+        public Object ResolveFromContext(Object context)
         {
             if (components == null || components.Count == 0) {
                 return null;
@@ -105,12 +104,12 @@ namespace Ink.Parsed
 
         // Find the root object from the base, i.e. root from:
         //    root.sub1.sub2
-        Parsed.Object ResolveBaseTarget(Parsed.Object originalContext)
+        Object ResolveBaseTarget(Object originalContext)
         {
             var firstComp = firstComponent;
 
             // Work up the ancestry to find the node that has the named object
-            Parsed.Object ancestorContext = originalContext;
+            Object ancestorContext = originalContext;
             while (ancestorContext != null) {
 
                 // Only allow deep search when searching deeper from original context.
@@ -135,16 +134,16 @@ namespace Ink.Parsed
 
         // Find the final child from path given root, i.e.:
         //   root.sub.finalChild
-        Parsed.Object ResolveTailComponents(Parsed.Object rootTarget)
+        Object ResolveTailComponents(Object rootTarget)
         {
-            Parsed.Object foundComponent = rootTarget;
+            Object foundComponent = rootTarget;
             for (int i = 1; i < components.Count; ++i) {
                 var compName = components [i].name;
 
                 FlowLevel minimumExpectedLevel;
                 var foundFlow = foundComponent as FlowBase;
                 if (foundFlow != null)
-                    minimumExpectedLevel = (FlowLevel)(foundFlow.flowLevel + 1);
+                    minimumExpectedLevel = foundFlow.flowLevel + 1;
                 else
                     minimumExpectedLevel = FlowLevel.WeavePoint;
 
@@ -161,7 +160,7 @@ namespace Ink.Parsed
         // Can either be a named knot/stitch (a FlowBase) or a weave point within a Weave (Choice or Gather)
         // This function also ignores any other object types that are neither FlowBase nor Weave.
         // Called from both ResolveBase (force deep) and ResolveTail for the individual components.
-        Parsed.Object TryGetChildFromContext(Parsed.Object context, string childName, FlowLevel? minimumLevel, bool forceDeepSearch = false)
+        Object TryGetChildFromContext(Object context, string childName, FlowLevel? minimumLevel, bool forceDeepSearch = false)
         {
             // null childLevel means that we don't know where to find it
             bool ambiguousChildLevel = minimumLevel == null;
@@ -169,7 +168,7 @@ namespace Ink.Parsed
             // Search for WeavePoint within Weave
             var weaveContext = context as Weave;
             if ( weaveContext != null && (ambiguousChildLevel || minimumLevel == FlowLevel.WeavePoint)) {
-                return (Parsed.Object) weaveContext.WeavePointNamed (childName);
+                return (Object) weaveContext.WeavePointNamed (childName);
             }
 
             // Search for content within Flow (either a sub-Flow or a WeavePoint)

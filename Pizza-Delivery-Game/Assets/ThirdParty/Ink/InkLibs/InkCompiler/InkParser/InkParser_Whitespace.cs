@@ -21,9 +21,9 @@ namespace Ink
 
             if( !gotNewline ) {
                 return null;
-            } else {
-                return ParseSuccess;
             }
+
+            return ParseSuccess;
         }
 
 		protected object EndOfFile()
@@ -49,9 +49,9 @@ namespace Ink
 			int numNewlines = newlines.Count;
 			if (numNewlines >= 1) {
                 return ParseSuccess;
-			} else {
-                return null;
 			}
+
+			return null;
 		}
 
 		protected object Whitespace()

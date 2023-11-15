@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 
-namespace Scientist.StateMachine.ConcreteStates
+namespace Scientist.Outdoor.StateMachine.ConcreteStates
 {
     public class IdleState : State
     {
@@ -41,8 +40,7 @@ namespace Scientist.StateMachine.ConcreteStates
         
         private void InteractedWithScientist_Event(object sender, EventArgs e)
         {
-            Debug.Log("Hi!");
-            _stateMachine.ChangeState(_scientist.StateFactory.Walking());
+            _stateMachine.ChangeState(_scientist.StateFactory.Talking());
         }
     }
 }

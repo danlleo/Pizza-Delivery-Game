@@ -1,8 +1,7 @@
-using UnityEngine;
-using UnityEditor;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace Ink.UnityIntegration {
 	[CustomEditor(typeof(DefaultAsset), true)]

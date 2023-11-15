@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Ink.UnityIntegration {
 	public abstract class DefaultAssetInspector {

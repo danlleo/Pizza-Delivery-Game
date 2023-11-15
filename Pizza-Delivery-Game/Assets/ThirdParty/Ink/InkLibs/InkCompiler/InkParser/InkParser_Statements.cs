@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Ink.Parsed;
+using Object = Ink.Parsed.Object;
 
 namespace Ink
 {
@@ -15,7 +16,7 @@ namespace Ink
 			Top
 		}
 
-		protected List<Parsed.Object> StatementsAtLevel(StatementLevel level)
+		protected List<Object> StatementsAtLevel(StatementLevel level)
 		{
             // Check for error: Should not be allowed gather dashes within an inner block
             if (level == StatementLevel.InnerBlock) {
@@ -25,7 +26,7 @@ namespace Ink
                 }
             }
                 
-			return Interleave<Parsed.Object>(
+			return Interleave<Object>(
                 Optional (MultilineWhitespace), 
                 () => StatementAtLevel (level), 
                 untilTerminator: () => StatementsBreakForLevel(level));

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Ink.Runtime
@@ -36,8 +37,8 @@ namespace Ink.Runtime
         public InkListItem (string fullName)
         {
             var nameParts = fullName.Split ('.');
-            this.originName = nameParts [0];
-            this.itemName = nameParts [1];
+            originName = nameParts [0];
+            itemName = nameParts [1];
         }
 
         public static InkListItem Null {
@@ -139,7 +140,7 @@ namespace Ink.Runtime
             if (originStory.listDefinitions.TryListGetDefinition (singleOriginListName, out def))
                 origins = new List<ListDefinition> { def };
             else
-                throw new System.Exception ("InkList origin could not be found in story when constructing new list: " + singleOriginListName);
+                throw new Exception ("InkList origin could not be found in story when constructing new list: " + singleOriginListName);
         }
 
         public InkList (KeyValuePair<InkListItem, int> singleElement)
@@ -157,9 +158,8 @@ namespace Ink.Runtime
 			var listValue = originStory.listDefinitions.FindSingleItemListWithName (myListItem);
 			if (listValue)
 				return new InkList (listValue.value);
-			else 
-                throw new System.Exception ("Could not find the InkListItem from the string '" + myListItem + "' to create an InkList because it doesn't exist in the original list definition in ink.");
-		}
+            throw new Exception ("Could not find the InkListItem from the string '" + myListItem + "' to create an InkList because it doesn't exist in the original list definition in ink.");
+        }
 
 
         /// <summary>
@@ -181,13 +181,13 @@ namespace Ink.Runtime
                     if (origin.TryGetValueForItem (item, out intVal)) {
                         this [item] = intVal;
                         return;
-                    } else {
-                        throw new System.Exception ("Could not add the item " + item + " to this list because it doesn't exist in the original list definition in ink.");
                     }
+
+                    throw new Exception ("Could not add the item " + item + " to this list because it doesn't exist in the original list definition in ink.");
                 }
             }
 
-            throw new System.Exception ("Failed to add item to list because the item was from a new list definition that wasn't previously known to this list. Only items from previously known lists can be used, so that the int value can be found.");
+            throw new Exception ("Failed to add item to list because the item was from a new list definition that wasn't previously known to this list. Only items from previously known lists can be used, so that the int value can be found.");
         }
 
         /// <summary>
@@ -202,17 +202,18 @@ namespace Ink.Runtime
             ListDefinition foundListDef = null;
 
             foreach (var origin in origins) {
-                if (origin.ContainsItemWithName (itemName)) {
+                if (origin.ContainsItemWithName (itemName))
+                {
                     if (foundListDef != null) {
-                        throw new System.Exception ("Could not add the item " + itemName + " to this list because it could come from either " + origin.name + " or " + foundListDef.name);
-                    } else {
-                        foundListDef = origin;
+                        throw new Exception ("Could not add the item " + itemName + " to this list because it could come from either " + origin.name + " or " + foundListDef.name);
                     }
+
+                    foundListDef = origin;
                 }
             }
 
             if (foundListDef == null)
-                throw new System.Exception ("Could not add the item " + itemName + " to this list because it isn't known to any list definitions previously associated with this list.");
+                throw new Exception ("Could not add the item " + itemName + " to this list because it isn't known to any list definitions previously associated with this list.");
 
             var item = new InkListItem (foundListDef.name, itemName);
             var itemVal = foundListDef.ValueForItem(item);
@@ -255,8 +256,8 @@ namespace Ink.Runtime
         // that is currently empty.
         public List<string> originNames {
             get {
-                if (this.Count > 0) {
-                    if (_originNames == null && this.Count > 0)
+                if (Count > 0) {
+                    if (_originNames == null && Count > 0)
                         _originNames = new List<string> ();
                     else
                         _originNames.Clear ();
@@ -320,7 +321,7 @@ namespace Ink.Runtime
                 if (origins != null) {
                     foreach (var origin in origins) {
                         foreach (var itemAndValue in origin.items) {
-                            if (!this.ContainsKey (itemAndValue.Key))
+                            if (!ContainsKey (itemAndValue.Key))
                                 list.Add (itemAndValue.Key, itemAndValue.Value);
                         }
                     }
@@ -408,9 +409,9 @@ namespace Ink.Runtime
         /// <param name="otherList">Other list.</param>
         public bool Contains (InkList otherList)
         {
-            if( otherList.Count == 0 || this.Count == 0 )  return false;
+            if( otherList.Count == 0 || Count == 0 )  return false;
             foreach (var kv in otherList) {
-                if (!this.ContainsKey (kv.Key)) return false;
+                if (!ContainsKey (kv.Key)) return false;
             }
             return true;
         }
@@ -487,16 +488,14 @@ namespace Ink.Runtime
         {
             if (Count > 0)
                 return new InkList (maxItem);
-            else
-                return new InkList ();
+            return new InkList ();
         }
 
         public InkList MinAsList ()
         {
             if (Count > 0)
                 return new InkList (minItem);
-            else
-                return new InkList ();
+            return new InkList ();
         }
 
         /// <summary>
@@ -509,7 +508,7 @@ namespace Ink.Runtime
         /// </summary>
         public InkList ListWithSubRange(object minBound, object maxBound) 
         {
-            if (this.Count == 0) return new InkList();
+            if (Count == 0) return new InkList();
 
             var ordered = orderedItems;
 
@@ -579,13 +578,14 @@ namespace Ink.Runtime
             get {
                 var ordered = new List<KeyValuePair<InkListItem, int>>();
                 ordered.AddRange(this);
-                ordered.Sort((x, y) => {
+                ordered.Sort((x, y) =>
+                {
                     // Ensure consistent ordering of mixed lists.
                     if( x.Value == y.Value ) {
                         return x.Key.originName.CompareTo(y.Key.originName);
-                    } else {
-                        return x.Value.CompareTo(y.Value);
                     }
+
+                    return x.Value.CompareTo(y.Value);
                 });
                 return ordered;
             }

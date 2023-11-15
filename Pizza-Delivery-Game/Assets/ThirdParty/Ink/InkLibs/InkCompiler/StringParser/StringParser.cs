@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
+using Object = Ink.Parsed.Object;
 
 namespace Ink
 {
@@ -29,7 +31,7 @@ namespace Ink
 			inputString = str;
 		}
 
-		public class ParseSuccessStruct {};
+		public class ParseSuccessStruct {}
 		public static ParseSuccessStruct ParseSuccess = new ParseSuccessStruct();
 
 		public static CharacterSet numbersCharacterSet = new CharacterSet("0123456789");
@@ -42,9 +44,9 @@ namespace Ink
 			{
 				if (index >= 0 && remainingLength > 0) {
 					return _chars [index];
-				} else {
-					return (char)0;
 				}
+
+				return (char)0;
 			}
 		}
 
@@ -135,7 +137,7 @@ namespace Ink
             ErrorOnLine (message, lineIndex + 1, isWarning);
 		}
 
-        protected void ErrorWithParsedObject(string message, Parsed.Object result, bool isWarning = false)
+        protected void ErrorWithParsedObject(string message, Object result, bool isWarning = false)
         {
             ErrorOnLine (message, result.debugMetadata.startLineNumber, isWarning);
         }
@@ -147,10 +149,10 @@ namespace Ink
                 var errorType = isWarning ? "Warning" : "Error";
 
                 if (errorHandler == null) {
-                    throw new System.Exception (errorType+" on line " + lineNumber + ": " + message);
-                } else {
-                    errorHandler (message, index, lineNumber-1, isWarning);
+                    throw new Exception (errorType+" on line " + lineNumber + ": " + message);
                 }
+
+                errorHandler (message, index, lineNumber-1, isWarning);
 
                 state.NoteErrorReported ();
             }
@@ -250,7 +252,7 @@ namespace Ink
             var result = rule ();
 
             if (stackHeightBefore != state.stackHeight) {
-                throw new System.Exception ("Mismatched Begin/Fail/Succeed rules");
+                throw new Exception ("Mismatched Begin/Fail/Succeed rules");
             }
 
             if (result == null)
@@ -264,7 +266,7 @@ namespace Ink
         {
             int ruleId = BeginRule ();
 
-            var result = rule () as T;
+            var result = rule ();
             if (result == null) {
                 FailRule (ruleId);
                 return null;
@@ -299,9 +301,9 @@ namespace Ink
 
 			if (results.Count > 0) {
 				return results;
-			} else {
-				return null;
 			}
+
+			return null;
 		}
 
 		public ParseRule Optional(ParseRule rule)
@@ -352,7 +354,7 @@ namespace Ink
 			}
 
 			if (flatten) {
-				var resultCollection = result as System.Collections.ICollection;
+				var resultCollection = result as ICollection;
 				if (resultCollection != null) {
 					foreach (object obj in resultCollection) {
 						Debug.Assert (obj is T);
@@ -377,9 +379,9 @@ namespace Ink
             var firstA = ParseObject(ruleA);
 			if (firstA == null) {
                 return (List<T>) FailRule(ruleId);
-			} else {
-				TryAddResultToList(firstA, results, flatten);
 			}
+
+			TryAddResultToList(firstA, results, flatten);
 
 			object lastMainResult = null, outerResult = null;
 			do {
@@ -393,9 +395,9 @@ namespace Ink
                 lastMainResult = ParseObject(ruleB);
 				if( lastMainResult == null ) {
 					break;
-				} else {
-					TryAddResultToList(lastMainResult, results, flatten);
 				}
+
+				TryAddResultToList(lastMainResult, results, flatten);
 
 				// Outer result (i.e. last A in ABA)
 				outerResult = null;
@@ -403,9 +405,9 @@ namespace Ink
                     outerResult = ParseObject(ruleA);
 					if (outerResult == null) {
 						break;
-					} else {
-						TryAddResultToList(outerResult, results, flatten);
 					}
+
+					TryAddResultToList(outerResult, results, flatten);
 				}
 
 			// Stop if there are no results, or if both are the placeholder "ParseSuccess" (i.e. Optional success rather than a true value)
@@ -460,14 +462,13 @@ namespace Ink
 			if (success) {
                 return (string) SucceedRule(ruleId, str);
 			}
-			else {
-                return (string) FailRule (ruleId);
-			}
+
+			return (string) FailRule (ruleId);
 		}
 
         public char ParseSingleCharacter()
         {
-            if (remainingLength > 0) {
+	        if (remainingLength > 0) {
                 char c = _chars [index];
                 if (c == '\n') {
                     lineIndex++;
@@ -476,9 +477,9 @@ namespace Ink
                 index++;
                 characterInLineIndex++;
                 return c;
-            } else {
-                return (char)0;
             }
+
+	        return (char)0;
         }
 
 		public string ParseUntilCharactersFromString(string str, int maxCount = -1)
@@ -535,9 +536,9 @@ namespace Ink
 			int lastCharIndex = index;
 			if (lastCharIndex > startIndex) {
 				return new string (_chars, startIndex, index - startIndex);
-			} else {
-				return null;
 			}
+
+			return null;
 		}
 
 		public object Peek(ParseRule rule)
@@ -581,35 +582,34 @@ namespace Ink
 				// Rule completed - we're done
 				if( ruleResultAtPause != null ) {
 					break;
-				} else {
-
-					if( endOfInput ) {
-						break;
-					}
-
-					// Reached a pause point, but rule failed. Step past and continue parsing string
-					char pauseCharacter = currentCharacter;
-					if( pauseCharacters != null && pauseCharacters.Contains(pauseCharacter) ) {
-						parsedString.Append(pauseCharacter);
-                        if( pauseCharacter == '\n' ) {
-                            lineIndex++;
-                            characterInLineIndex = -1;
-                        }
-						index++;
-                        characterInLineIndex++;
-						continue;
-					} else {
-						break;
-					}
 				}
+
+				if( endOfInput ) {
+					break;
+				}
+
+				// Reached a pause point, but rule failed. Step past and continue parsing string
+				char pauseCharacter = currentCharacter;
+				if( pauseCharacters != null && pauseCharacters.Contains(pauseCharacter) ) {
+					parsedString.Append(pauseCharacter);
+					if( pauseCharacter == '\n' ) {
+						lineIndex++;
+						characterInLineIndex = -1;
+					}
+					index++;
+					characterInLineIndex++;
+					continue;
+				}
+
+				break;
 
 			} while(true);
 
 			if (parsedString.Length > 0) {
                 return (string) SucceedRule (ruleId, parsedString.ToString ());
-			} else {
-                return (string) FailRule (ruleId);
 			}
+
+			return (string) FailRule (ruleId);
 
 		}
 
@@ -653,7 +653,7 @@ namespace Ink
                 if (ParseString (".") != null) {
 
                     var afterDecimalPointStr = ParseCharactersFromCharSet (numbersCharacterSet);
-                    return float.Parse (leadingInt+"." + afterDecimalPointStr, System.Globalization.CultureInfo.InvariantCulture);
+                    return float.Parse (leadingInt+"." + afterDecimalPointStr, CultureInfo.InvariantCulture);
                 }
             }
 
@@ -674,9 +674,9 @@ namespace Ink
 
             if( ParseString ("\n") == null ) {
                 return (string) FailRule(ruleId);
-            } else {
-                return (string) SucceedRule(ruleId, "\n");
             }
+
+            return (string) SucceedRule(ruleId, "\n");
         }
 
 		private char[] _chars;

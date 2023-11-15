@@ -1,6 +1,4 @@
-﻿using Ink.Runtime;
-
-namespace Ink.Runtime
+﻿namespace Ink.Runtime
 {
     /// <summary>
     /// Internal structure used to point to a particular / current point in the story.
@@ -21,7 +19,7 @@ namespace Ink.Runtime
             this.index = index;
         }
 
-		public Runtime.Object Resolve ()
+		public Object Resolve ()
 		{
             if (index < 0) return container;
             if (container == null) return null;
@@ -43,8 +41,7 @@ namespace Ink.Runtime
 
                 if (index >= 0)
                     return container.path.PathByAppendingComponent (new Path.Component(index));
-                else
-                    return container.path;
+                return container.path;
             }
         }
 
@@ -53,7 +50,7 @@ namespace Ink.Runtime
             if (container == null)
                 return "Ink Pointer (null)";
 
-            return "Ink Pointer -> " + container.path.ToString () + " -- index " + index;
+            return "Ink Pointer -> " + container.path + " -- index " + index;
         }
 
         public static Pointer StartOf (Container container)

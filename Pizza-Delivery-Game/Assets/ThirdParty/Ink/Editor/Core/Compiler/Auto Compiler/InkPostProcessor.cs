@@ -1,10 +1,10 @@
 ﻿// Automatically creates JSON files from an ink placed within the Assets/Ink folder.
-using UnityEngine;
-using UnityEditor;
-using System.IO;
-using Debug = UnityEngine.Debug;
+
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 namespace Ink.UnityIntegration {
 	
@@ -130,10 +130,9 @@ namespace Ink.UnityIntegration {
 							inkFile.FindCompiledJSONAsset();
 						};
 						// Debug.Log(jsonAssetPath+" to "+newPath);
-					} else {
-						// This will fire if the JSON file is also moved with the ink - in this case the json file will be in movedAssets.
-						// Debug.Log($"Failed to move asset from path '{jsonAssetPath}' to '{newPath}'.");
 					}
+					// This will fire if the JSON file is also moved with the ink - in this case the json file will be in movedAssets.
+					// Debug.Log($"Failed to move asset from path '{jsonAssetPath}' to '{newPath}'.");
 				}
 			}
 			// Check if no JSON assets were moved (as a result of none needing to move, or this function being called as a result of JSON files being moved)

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
-using Ink.Parsed;
 using System.Linq;
+using Ink.Parsed;
+using Ink.Runtime;
+using Object = Ink.Parsed.Object;
 
 namespace Ink
 {
@@ -8,7 +10,7 @@ namespace Ink
 	{
         protected class NameWithMetadata {
             public string name;
-            public Runtime.DebugMetadata metadata;
+            public DebugMetadata metadata;
         }
 
         protected class FlowDecl
@@ -28,7 +30,7 @@ namespace Ink
 
 			ParseRule innerKnotStatements = () => StatementsAtLevel (StatementLevel.Knot);
 
-            var content = Expect (innerKnotStatements, "at least one line within the knot", recoveryRule: KnotStitchNoContentRecoveryRule) as List<Parsed.Object>;
+            var content = Expect (innerKnotStatements, "at least one line within the knot", recoveryRule: KnotStitchNoContentRecoveryRule) as List<Object>;
 
             return new Knot (knotDecl.name, content, knotDecl.arguments, knotDecl.isFunction);
 		}
@@ -68,7 +70,7 @@ namespace Ink
             // Optional equals after name
             Parse(KnotTitleEquals);
 
-            return new FlowDecl () { name = knotName, arguments = parameterNames, isFunction = isFunc };
+            return new FlowDecl { name = knotName, arguments = parameterNames, isFunction = isFunc };
         }
 
         protected string KnotTitleEquals()
@@ -77,9 +79,9 @@ namespace Ink
             var multiEquals = ParseCharactersFromString ("=");
             if (multiEquals == null || multiEquals.Length <= 1) {
                 return null;
-            } else {
-                return multiEquals;
             }
+
+            return multiEquals;
         }
 
 		protected object StitchDefinition()
@@ -92,7 +94,7 @@ namespace Ink
 
 			ParseRule innerStitchStatements = () => StatementsAtLevel (StatementLevel.Stitch);
 
-            var content = Expect(innerStitchStatements, "at least one line within the stitch", recoveryRule: KnotStitchNoContentRecoveryRule) as List<Parsed.Object>;
+            var content = Expect(innerStitchStatements, "at least one line within the stitch", recoveryRule: KnotStitchNoContentRecoveryRule) as List<Object>;
 
             return new Stitch (decl.name, content, decl.arguments, decl.isFunction );
 		}
@@ -127,17 +129,17 @@ namespace Ink
 
             Whitespace ();
 
-            return new FlowDecl () { name = stitchName, arguments = flowArgs, isFunction = isFunc };
+            return new FlowDecl { name = stitchName, arguments = flowArgs, isFunction = isFunc };
         }
 
 
 		protected object KnotStitchNoContentRecoveryRule()
 		{
             // Jump ahead to the next knot or the end of the file
-            ParseUntil (KnotDeclaration, new CharacterSet ("="), null);
+            ParseUntil (KnotDeclaration, new CharacterSet ("="));
 
-            var recoveredFlowContent = new List<Parsed.Object>();
-			recoveredFlowContent.Add( new Parsed.Text("<ERROR IN FLOW>" ) );
+            var recoveredFlowContent = new List<Object>();
+			recoveredFlowContent.Add( new Text("<ERROR IN FLOW>" ) );
 			return recoveredFlowContent;
 		}
 

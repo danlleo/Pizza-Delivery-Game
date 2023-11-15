@@ -142,16 +142,17 @@ namespace Ink.UnityIntegration {
 		/// </summary>
 		/// <value>The last compile date of the story.</value>
 		public DateTime lastCompileDate {
-			get {
+			get
+			{
 				if(isMaster) {
 					if(jsonAsset == null)
 						return default(DateTime);
 				
 					string fullJSONFilePath = InkEditorUtils.UnityRelativeToAbsolutePath(AssetDatabase.GetAssetPath(jsonAsset));
 					return File.GetLastWriteTime(fullJSONFilePath);
-				} else {
-					return default(DateTime);
 				}
+
+				return default(DateTime);
 			}
 		}
 

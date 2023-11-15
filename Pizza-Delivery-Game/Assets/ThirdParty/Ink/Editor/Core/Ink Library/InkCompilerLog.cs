@@ -1,16 +1,18 @@
+using System;
+using System.IO;
 using System.Text.RegularExpressions;
-using Debug = UnityEngine.Debug;
+using UnityEngine;
 
 namespace Ink.UnityIntegration
 {
-    [System.Serializable]
+    [Serializable]
 	public class InkCompilerLog {
-		public Ink.ErrorType type;
+		public ErrorType type;
 		public string content;
 		public string relativeFilePath;
 		public int lineNumber;
 
-		public InkCompilerLog (Ink.ErrorType type, string content, string relativeFilePath, int lineNumber = -1) {
+		public InkCompilerLog (ErrorType type, string content, string relativeFilePath, int lineNumber = -1) {
 			this.type = type;
 			this.content = content;
 			this.relativeFilePath = relativeFilePath;
@@ -20,13 +22,13 @@ namespace Ink.UnityIntegration
 		public string GetAbsoluteFilePath (InkFile masterInkFile) {
 			Debug.Log(masterInkFile.absoluteFolderPath);
 			Debug.Log(relativeFilePath);
-			return System.IO.Path.Combine(masterInkFile.absoluteFolderPath, relativeFilePath);
+			return Path.Combine(masterInkFile.absoluteFolderPath, relativeFilePath);
 		}
 
 		public static bool TryParse (string rawLog, out InkCompilerLog log) {
 			var match = _errorRegex.Match(rawLog);
 			if (match.Success) {
-				Ink.ErrorType errorType = Ink.ErrorType.Author;
+				ErrorType errorType = ErrorType.Author;
 				string relativeFilePath = null;
 				int lineNo = -1;
 				string message = null;
@@ -34,9 +36,9 @@ namespace Ink.UnityIntegration
 				var errorTypeCapture = match.Groups["errorType"];
 				if( errorTypeCapture != null ) {
 					var errorTypeStr = errorTypeCapture.Value;
-					if(errorTypeStr == "AUTHOR" || errorTypeStr == "TODO") errorType = Ink.ErrorType.Author;
-					else if(errorTypeStr == "WARNING") errorType = Ink.ErrorType.Warning;
-					else if(errorTypeStr == "ERROR") errorType = Ink.ErrorType.Error;
+					if(errorTypeStr == "AUTHOR" || errorTypeStr == "TODO") errorType = ErrorType.Author;
+					else if(errorTypeStr == "WARNING") errorType = ErrorType.Warning;
+					else if(errorTypeStr == "ERROR") errorType = ErrorType.Error;
 					else Debug.LogWarning("Could not parse error type from "+errorTypeStr);
 				}
 				
@@ -53,11 +55,11 @@ namespace Ink.UnityIntegration
 					message = messageCapture.Value.Trim();
 				log = new InkCompilerLog(errorType, message, relativeFilePath, lineNo);
 				return true;
-			} else {
-				Debug.LogWarning("Could not parse InkFileLog from log: "+rawLog);
-				log = null;
-				return false;
 			}
+
+			Debug.LogWarning("Could not parse InkFileLog from log: "+rawLog);
+			log = null;
+			return false;
 		}
 		private static Regex _errorRegex = new Regex(@"(?<errorType>ERROR|WARNING|TODO):(?:\s(?:'(?<filename>[^']*)'\s)?line (?<lineNo>\d+):)?(?<message>.*)");
 	}

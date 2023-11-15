@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace Ink.Runtime
@@ -16,7 +15,7 @@ namespace Ink.Runtime
                 if (!isFirst)
                     sb.Append (separator);
 
-                sb.Append (o.ToString ());
+                sb.Append (o);
 
                 isFirst = false;
             }

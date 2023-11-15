@@ -623,7 +623,7 @@ MonoBehaviour:
     type: 3}
   _followDurationDelayInSeconds: 0.935
   _lightFadingTimeInSeconds: 0.125
-  _chanceToBeginFlickering: 50
+  _chanceToBeginFlickering: 60
   _maxFlickeringCount: 3
   _stayBetweenTransitionTimeInSeconds: 0.05
   _minReachTargetIntensityTime: 0.05

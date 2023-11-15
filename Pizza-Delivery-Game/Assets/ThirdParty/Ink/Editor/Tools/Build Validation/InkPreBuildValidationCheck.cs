@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using UnityEditor;
-using UnityEditor.Build;
+﻿using System.Linq;
 using System.Text;
 using Ink.UnityIntegration;
-using System.Linq;
+using UnityEditor;
+using UnityEditor.Build;
+using UnityEngine;
 #if UNITY_2018_1_OR_NEWER
 using UnityEditor.Build.Reporting;
 #endif
@@ -42,7 +42,7 @@ IPreprocessBuild
             StringBuilder sb = new StringBuilder("Ink is currently compiling!");
             var errorString = sb.ToString();
             InkCompiler.SetBuildBlocked();
-            if(UnityEditor.EditorUtility.DisplayDialog("Ink Build Error!", errorString, "Ok")) {
+            if(EditorUtility.DisplayDialog("Ink Build Error!", errorString, "Ok")) {
                 Debug.LogError(errorString);
             }
             return false;
@@ -55,7 +55,7 @@ IPreprocessBuild
         var filesToRecompile = InkLibrary.GetFilesRequiringRecompile();
         if(filesToRecompile.Any()) {
             if(InkSettings.instance.compileAllFilesAutomatically) {
-                InkCompiler.CompileInk(filesToRecompile.ToArray(), true, null);
+                InkCompiler.CompileInk(filesToRecompile.ToArray(), true);
             }
         }
     }

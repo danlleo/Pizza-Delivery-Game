@@ -1,7 +1,9 @@
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
-using Debug = UnityEngine.Debug;
+using System.IO;
+using UnityEditor;
+using UnityEditorInternal;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Holds a reference to an InkFile object for every .ink file detected in the Assets folder.
@@ -24,26 +26,26 @@ namespace Ink.UnityIntegration {
 		}
 		static string absoluteSavePath {
 			get {
-				return System.IO.Path.GetFullPath(System.IO.Path.Combine(Application.dataPath,"..","ProjectSettings","InkSettings.asset"));
+				return Path.GetFullPath(Path.Combine(Application.dataPath,"..","ProjectSettings","InkSettings.asset"));
 
 			}
 		}
 		public static void SaveStatic (bool saveAsText) {
-			UnityEditorInternal.InternalEditorUtility.SaveToSerializedFileAndForget(new[] { instance }, absoluteSavePath, saveAsText);
+			InternalEditorUtility.SaveToSerializedFileAndForget(new[] { instance }, absoluteSavePath, saveAsText);
 		}
         public void Save (bool saveAsText) {
-			UnityEditorInternal.InternalEditorUtility.SaveToSerializedFileAndForget((UnityEngine.Object[]) new InkSettings[1] {this}, absoluteSavePath, saveAsText);
+			InternalEditorUtility.SaveToSerializedFileAndForget(new InkSettings[1] {this}, absoluteSavePath, saveAsText);
 		}
 
 		private static InkSettings _instance;
 		public static InkSettings instance {
 			get {
 				if(_instance == null) {
-					Object[] objects = UnityEditorInternal.InternalEditorUtility.LoadSerializedFileAndForget(absoluteSavePath);
+					Object[] objects = InternalEditorUtility.LoadSerializedFileAndForget(absoluteSavePath);
 					if (objects != null && objects.Length > 0) {
 						instance = objects[0] as InkSettings;
 					} else {
-						instance = ScriptableObject.CreateInstance<InkSettings>();
+						instance = CreateInstance<InkSettings>();
 						instance.Save(true);
 					}
 					// Oh gosh Unity never unloads ScriptableObjects once created! This fixes it but is more of an expensive call than I like.
@@ -61,9 +63,9 @@ namespace Ink.UnityIntegration {
 		}
 		// #endif
 
-        public class AssetSaver : UnityEditor.AssetModificationProcessor {
+        public class AssetSaver : AssetModificationProcessor {
             static string[] OnWillSaveAssets(string[] paths) {
-                InkSettings.instance.Save(true);
+                instance.Save(true);
                 return paths;
             }
         }
@@ -72,15 +74,16 @@ namespace Ink.UnityIntegration {
 		
 		public DefaultAsset templateFile;
 		public string templateFilePath {
-			get {
+			get
+			{
 				if(templateFile == null) return "";
-				else return AssetDatabase.GetAssetPath(templateFile);
+				return AssetDatabase.GetAssetPath(templateFile);
 			}
 		}
 
 
         public DefaultAsset defaultJsonAssetPath;
-		[UnityEngine.Serialization.FormerlySerializedAs("compileAutomatically")]
+		[FormerlySerializedAs("compileAutomatically")]
         public bool compileAllFilesAutomatically = true;
         public List<DefaultAsset> includeFilesToCompileAsMasterFiles = new List<DefaultAsset>();
         public List<DefaultAsset> filesToCompileAutomatically = new List<DefaultAsset>();
@@ -136,7 +139,6 @@ namespace Ink.UnityIntegration {
 					#endif
                     AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(this));
 					AssetDatabase.Refresh();
-					return;
 				}
 			}
 		}

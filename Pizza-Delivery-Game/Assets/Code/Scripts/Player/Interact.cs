@@ -1,8 +1,6 @@
-using Interfaces;
 using Enums.Player;
+using Interfaces;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Player
 {

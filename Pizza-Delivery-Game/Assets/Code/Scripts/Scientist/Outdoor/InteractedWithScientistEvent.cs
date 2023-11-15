@@ -2,7 +2,7 @@
 using Interfaces;
 using UnityEngine;
 
-namespace Scientist
+namespace Scientist.Outdoor
 {
     public class InteractedWithScientistEvent : MonoBehaviour, IEvent
     {

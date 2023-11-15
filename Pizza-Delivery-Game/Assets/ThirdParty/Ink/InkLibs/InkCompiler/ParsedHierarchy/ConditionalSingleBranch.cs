@@ -1,9 +1,10 @@
 ﻿
 using System.Collections.Generic;
+using Ink.Runtime;
 
 namespace Ink.Parsed
 {
-    public class ConditionalSingleBranch : Parsed.Object
+    public class ConditionalSingleBranch : Object
     {
         // bool condition, e.g.:
         // { 5 == 4:
@@ -45,7 +46,7 @@ namespace Ink.Parsed
 
         public Runtime.Divert returnDivert { get; protected set; }
 
-        public ConditionalSingleBranch (List<Parsed.Object> content)
+        public ConditionalSingleBranch (List<Object> content)
         {
             // Branches are allowed to be empty
             if (content != null) {
@@ -64,7 +65,7 @@ namespace Ink.Parsed
             // Check for common mistake, of putting "else:" instead of "- else:"
             if (_innerWeave) {
                 foreach (var c in _innerWeave.content) {
-                    var text = c as Parsed.Text;
+                    var text = c as Text;
                     if (text) {
                         // Don't need to trim at the start since the parser handles that already
                         if (text.text.StartsWith ("else:")) {
@@ -74,7 +75,7 @@ namespace Ink.Parsed
                 }
             }
                                            
-            var container = new Runtime.Container ();
+            var container = new Container ();
 
             // Are we testing against a condition that's used for more than just this
             // branch? If so, the first thing we need to do is replicate the value that's
@@ -82,7 +83,7 @@ namespace Ink.Parsed
             // branches need to use it.
             bool duplicatesStackValue = matchingEquality && !isElse;
             if ( duplicatesStackValue )
-                container.AddContent (Runtime.ControlCommand.Duplicate ());
+                container.AddContent (ControlCommand.Duplicate ());
 
             _conditionalDivert = new Runtime.Divert ();
 
@@ -94,17 +95,17 @@ namespace Ink.Parsed
 
                 bool needsEval = ownExpression != null;
                 if( needsEval )
-                    container.AddContent (Runtime.ControlCommand.EvalStart ());
+                    container.AddContent (ControlCommand.EvalStart ());
 
                 if (ownExpression)
                     ownExpression.GenerateIntoContainer (container);
 
                 // Uses existing duplicated value
                 if (matchingEquality)
-                    container.AddContent (Runtime.NativeFunctionCall.CallWithName ("=="));
+                    container.AddContent (NativeFunctionCall.CallWithName ("=="));
 
                 if( needsEval ) 
-                    container.AddContent (Runtime.ControlCommand.EvalEnd ()); 
+                    container.AddContent (ControlCommand.EvalEnd ()); 
             }
 
             // Will pop from stack if conditional
@@ -117,11 +118,11 @@ namespace Ink.Parsed
             // (as opposed to the start of the multi-line conditional since the condition
             //  may evaluate to false.)
             if (!isInline) {
-                _contentContainer.InsertContent (new Runtime.StringValue ("\n"), 0);
+                _contentContainer.InsertContent (new StringValue ("\n"), 0);
             }
 
             if( duplicatesStackValue || (isElse && matchingEquality) )
-                _contentContainer.InsertContent (Runtime.ControlCommand.PopEvaluatedValue (), 0);
+                _contentContainer.InsertContent (ControlCommand.PopEvaluatedValue (), 0);
 
             container.AddToNamedContentOnly (_contentContainer);
 
@@ -131,11 +132,11 @@ namespace Ink.Parsed
             return container;
         }
 
-        Runtime.Container GenerateRuntimeForContent()
+        Container GenerateRuntimeForContent()
         {
             // Empty branch - create empty container
             if (_innerWeave == null) {
-                return new Runtime.Container ();
+                return new Container ();
             }
 
             return _innerWeave.rootContainer;
@@ -148,7 +149,7 @@ namespace Ink.Parsed
             base.ResolveReferences (context);
         }
 
-        Runtime.Container _contentContainer;
+        Container _contentContainer;
         Runtime.Divert _conditionalDivert;
         Expression _ownExpression;
 

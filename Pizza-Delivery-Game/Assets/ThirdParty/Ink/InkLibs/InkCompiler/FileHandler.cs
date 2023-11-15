@@ -8,7 +8,7 @@ namespace Ink
         string LoadInkFileContents (string fullFilename);
     }
 
-    public class DefaultFileHandler : Ink.IFileHandler {
+    public class DefaultFileHandler : IFileHandler {
         public string ResolveInkFilename (string includeName)
         {
             var workingDir = Directory.GetCurrentDirectory ();

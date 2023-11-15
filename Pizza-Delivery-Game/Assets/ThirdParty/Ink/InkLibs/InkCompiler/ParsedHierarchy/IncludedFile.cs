@@ -1,11 +1,11 @@
 ﻿
 namespace Ink.Parsed
 {
-    public class IncludedFile : Parsed.Object
+    public class IncludedFile : Object
     {
-        public Parsed.Story includedStory { get; private set; }
+        public Story includedStory { get; private set; }
 
-        public IncludedFile (Parsed.Story includedStory)
+        public IncludedFile (Story includedStory)
         {
             this.includedStory = includedStory;
         }

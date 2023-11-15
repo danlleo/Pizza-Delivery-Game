@@ -1,9 +1,9 @@
 using System;
 using Environment.Bedroom.PC;
 using Player;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Flashlight = Player.Flashlight;
 
 namespace Misc
 {
@@ -37,8 +37,8 @@ namespace Misc
         
         private void OnEnable()
         {
-            UI.UIOpenedStaticEvent.OnUIOpen += UIOpenedStaticEvent_OnUIOpen;
-            UI.UIClosedStaticEvent.OnUIClose += UIClosedStaticEvent_OnUIClose;
+            UIOpenedStaticEvent.OnUIOpen += UIOpenedStaticEvent_OnUIOpen;
+            UIClosedStaticEvent.OnUIClose += UIClosedStaticEvent_OnUIClose;
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
             StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEvent_OnEnded;
         }
@@ -47,8 +47,8 @@ namespace Misc
         {
             _gameInput.Disable();
             
-            UI.UIOpenedStaticEvent.OnUIOpen -= UIOpenedStaticEvent_OnUIOpen;
-            UI.UIClosedStaticEvent.OnUIClose -= UIClosedStaticEvent_OnUIClose;
+            UIOpenedStaticEvent.OnUIOpen -= UIOpenedStaticEvent_OnUIOpen;
+            UIClosedStaticEvent.OnUIClose -= UIClosedStaticEvent_OnUIClose;
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
             StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEvent_OnEnded;
         }

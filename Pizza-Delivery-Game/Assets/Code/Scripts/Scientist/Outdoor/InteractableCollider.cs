@@ -1,7 +1,7 @@
 using Interfaces;
 using UnityEngine;
 
-namespace Scientist
+namespace Scientist.Outdoor
 {
     [RequireComponent(typeof(BoxCollider))]
     [DisallowMultipleComponent]
@@ -19,6 +19,7 @@ namespace Scientist
         public void Interact()
         {
             _scientist.InteractedWithScientistEvent.Call(_scientist);
+            _boxCollider.enabled = false;
         }
 
         public string GetActionDescription()

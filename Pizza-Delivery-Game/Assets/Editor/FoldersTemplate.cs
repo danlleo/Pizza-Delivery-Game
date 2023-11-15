@@ -37,26 +37,26 @@ namespace Editor
             }
 
             // Subfolders
-            var artFolders = new List<string>()
+            var artFolders = new List<string>
             {
                 "Materials",
                 "Models",
                 "Textures"
             };
 
-            var audioFolders = new List<string>()
+            var audioFolders = new List<string>
             {
                 "Music",
                 "Sound",
             };
 
-            var codeFolders = new List<string>()
+            var codeFolders = new List<string>
             {
                 "Scripts",
                 "Shaders",
             };
 
-            var levelFolders = new List<string>()
+            var levelFolders = new List<string>
             {
                 "Prefabs",
                 "Scenes",

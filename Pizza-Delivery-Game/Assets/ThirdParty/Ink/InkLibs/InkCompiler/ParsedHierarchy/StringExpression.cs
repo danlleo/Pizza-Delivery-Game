@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
+using Ink.Runtime;
 
 namespace Ink.Parsed
 {
-    public class StringExpression : Parsed.Expression
+    public class StringExpression : Expression
     {
         public bool isSingleString {
             get {
@@ -19,20 +19,20 @@ namespace Ink.Parsed
             }
         }
 
-        public StringExpression (List<Parsed.Object> content)
+        public StringExpression (List<Object> content)
         {
             AddContent (content);
         }
 
-        public override void GenerateIntoContainer (Runtime.Container container)
+        public override void GenerateIntoContainer (Container container)
         {
-            container.AddContent (Runtime.ControlCommand.BeginString());
+            container.AddContent (ControlCommand.BeginString());
 
             foreach (var c in content) {
                 container.AddContent (c.runtimeObject);
             }
                 
-            container.AddContent (Runtime.ControlCommand.EndString());
+            container.AddContent (ControlCommand.EndString());
         }
 
         public override string ToString ()
@@ -52,18 +52,18 @@ namespace Ink.Parsed
 
             // Can only compare direct equality on single strings rather than
             // complex string expressions that contain dynamic logic
-            if (!this.isSingleString || !otherStr.isSingleString) {
+            if (!isSingleString || !otherStr.isSingleString) {
                 return false;
             }
 
-            var thisTxt = this.ToString ();
+            var thisTxt = ToString ();
             var otherTxt = otherStr.ToString ();
             return thisTxt.Equals (otherTxt);
         }
 
         public override int GetHashCode ()
         {
-            return this.ToString ().GetHashCode ();
+            return ToString ().GetHashCode ();
         }
     }
 }

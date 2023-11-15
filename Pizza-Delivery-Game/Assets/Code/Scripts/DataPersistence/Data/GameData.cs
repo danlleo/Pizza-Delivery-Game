@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace DataPersistence.Data
 {
-    [System.Serializable]
+    [Serializable]
     public class GameData
     {
         public List<string> SavedInventoryItems;

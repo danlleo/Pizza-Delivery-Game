@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using Ink.Parsed;
+using Ink.Runtime;
+using Object = Ink.Parsed.Object;
+using Story = Ink.Parsed.Story;
 
 namespace Ink
 {
@@ -16,7 +19,7 @@ namespace Ink
             GenerateStatementLevelRules ();
 
             // Built in handler for all standard parse errors and warnings
-            this.errorHandler = OnStringParserError;
+            errorHandler = OnStringParserError;
 
             // The above parse errors are then formatted as strings and passed
             // to the Ink.ErrorHandler, or it throws an exception
@@ -41,16 +44,16 @@ namespace Ink
         }
 
         // Main entry point
-        public Parsed.Story Parse()
+        public Story Parse()
         {
-            List<Parsed.Object> topLevelContent = StatementsAtLevel (StatementLevel.Top);
+            List<Object> topLevelContent = StatementsAtLevel (StatementLevel.Top);
 
             // Note we used to return null if there were any errors, but this would mean
             // that include files would return completely empty rather than attempting to
             // continue with errors. Returning an empty include files meant that anything
             // that *did* compile successfully would otherwise be ignored, generating way
             // more errors than necessary.
-            return new Parsed.Story (topLevelContent, isInclude:_rootParser != this);
+            return new Story (topLevelContent, isInclude:_rootParser != this);
         }
 
         protected List<T> SeparatedList<T> (SpecificParseRule<T> mainRule, ParseRule separatorRule) where T : class
@@ -92,9 +95,9 @@ namespace Ink
             return inputWithCommentsRemoved;
         }
 
-        protected Runtime.DebugMetadata CreateDebugMetadata(StringParserState.Element stateAtStart, StringParserState.Element stateAtEnd)
+        protected DebugMetadata CreateDebugMetadata(StringParserState.Element stateAtStart, StringParserState.Element stateAtEnd)
         {
-            var md = new Runtime.DebugMetadata ();
+            var md = new DebugMetadata ();
             md.startLineNumber = stateAtStart.lineIndex + 1;
             md.endLineNumber = stateAtEnd.lineIndex + 1;
             md.startCharacterNumber = stateAtStart.characterInLineIndex + 1;
@@ -107,14 +110,14 @@ namespace Ink
         {
             // Apply DebugMetadata based on the state at the start of the rule
             // (i.e. use line number as it was at the start of the rule)
-            var parsedObj = result as Parsed.Object;
+            var parsedObj = result as Object;
             if ( parsedObj) {
                 parsedObj.debugMetadata = CreateDebugMetadata(stateAtStart, stateAtEnd);
                 return;
             }
 
             // A list of objects that doesn't already have metadata?
-            var parsedListObjs = result as List<Parsed.Object>;
+            var parsedListObjs = result as List<Object>;
             if (parsedListObjs != null) {
                 foreach (var parsedListObj in parsedListObjs) {
                     if (!parsedListObj.hasOwnDebugMetadata) {
@@ -123,7 +126,7 @@ namespace Ink
                 }
             }
 
-            var id = result as Parsed.Identifier;
+            var id = result as Identifier;
             if (id != null) {
                 id.debugMetadata = CreateDebugMetadata(stateAtStart, stateAtEnd);
             }
@@ -168,7 +171,7 @@ namespace Ink
             if (_externalErrorHandler != null) {
                 _externalErrorHandler (fullMessage, isWarning ? ErrorType.Warning : ErrorType.Error);
             } else {
-                throw new System.Exception (fullMessage);
+                throw new Exception (fullMessage);
             }
         }
 

@@ -73,7 +73,7 @@ namespace Ink
                 }
             }
 
-            if (sequenceType == (SequenceType)0)
+            if (sequenceType == 0)
                 return null;
 
             return sequenceType;
@@ -171,7 +171,7 @@ namespace Ink
                 // Real content
                 else {
 
-                    var content = contentOrPipe as List<Parsed.Object>;
+                    var content = contentOrPipe as List<Object>;
                     if (content == null) {
                         Error ("Expected content, but got " + contentOrPipe + " (this is an ink compiler bug!)");
                     } else {
@@ -214,14 +214,14 @@ namespace Ink
             Whitespace ();
 
 
-            List<Parsed.Object> content = StatementsAtLevel (StatementLevel.InnerBlock);
+            List<Object> content = StatementsAtLevel (StatementLevel.InnerBlock);
 
             if (content == null)
                 MultilineWhitespace ();
 
             // Add newline at the start of each branch
             else {
-                content.Insert (0, new Parsed.Text ("\n"));
+                content.Insert (0, new Text ("\n"));
             }
 
             return new ContentList (content);

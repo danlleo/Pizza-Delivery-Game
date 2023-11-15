@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Diagnostics;
-using Ink.Runtime;
+using System.Linq;
 
 namespace Ink.Runtime
 {
@@ -18,7 +17,7 @@ namespace Ink.Runtime
 			public bool isIndex { get { return index >= 0; } }
             public bool isParent {
                 get {
-                    return name == Path.parentId;
+                    return name == parentId;
                 }
             }
 
@@ -26,14 +25,14 @@ namespace Ink.Runtime
 			{
 				Debug.Assert(index >= 0);
 				this.index = index;
-				this.name = null;
+				name = null;
 			}
 
 			public Component(string name)
 			{
 				Debug.Assert(name != null && name.Length > 0);
 				this.name = name;
-				this.index = -1;
+				index = -1;
 			}
 
             public static Component ToParent()
@@ -45,9 +44,9 @@ namespace Ink.Runtime
 			{
 				if (isIndex) {
 					return index.ToString ();
-				} else {
-					return name;
 				}
+
+				return name;
 			}
 
             public override bool Equals (object obj)
@@ -57,12 +56,13 @@ namespace Ink.Runtime
 
             public bool Equals(Component otherComp)
             {
-                if (otherComp != null && otherComp.isIndex == this.isIndex) {
-                    if (isIndex) {
+                if (otherComp != null && otherComp.isIndex == isIndex)
+                {
+	                if (isIndex) {
                         return index == otherComp.index;   
-                    } else {
-                        return name == otherComp.name;
                     }
+
+	                return name == otherComp.name;
                 }
 
                 return false;
@@ -70,10 +70,9 @@ namespace Ink.Runtime
 
             public override int GetHashCode ()
             {
-                if (isIndex)
-                    return this.index;
-                else
-                    return this.name.GetHashCode ();
+	            if (isIndex)
+                    return index;
+	            return name.GetHashCode ();
             }
 		}
 
@@ -86,28 +85,26 @@ namespace Ink.Runtime
 
 		public Component head 
 		{ 
-			get 
-			{ 
+			get
+			{
 				if (_components.Count > 0) {
 					return _components.First ();
-				} else {
-					return null;
 				}
+
+				return null;
 			} 
 		}
 
 		public Path tail 
 		{ 
-			get 
+			get
 			{
 				if (_components.Count >= 2) {
 					List<Component> tailComps = _components.GetRange (1, _components.Count - 1);
 					return new Path(tailComps);
-				} 
-
-                else {
-                    return Path.self;
 				}
+
+				return self;
 
 			}
 		}
@@ -121,8 +118,7 @@ namespace Ink.Runtime
 				var lastComponentIdx = _components.Count-1;
 				if( lastComponentIdx >= 0 )
 					return _components[lastComponentIdx];
-				else
-					return null;
+				return null;
 			} 
 		}
 
@@ -150,8 +146,8 @@ namespace Ink.Runtime
 
 		public Path(IEnumerable<Component> components, bool relative = false) : this()
 		{
-			this._components.AddRange (components);
-            this.isRelative = relative;
+			_components.AddRange (components);
+            isRelative = relative;
 		}
 
         public Path(string componentsString) : this()
@@ -180,8 +176,8 @@ namespace Ink.Runtime
                 }
             }
 
-            for (int i = 0; i < this._components.Count - upwardMoves; ++i) {
-                p._components.Add (this._components [i]);
+            for (int i = 0; i < _components.Count - upwardMoves; ++i) {
+                p._components.Add (_components [i]);
             }
 
             for(int i=upwardMoves; i<pathToAppend._components.Count; ++i) {
@@ -222,10 +218,10 @@ namespace Ink.Runtime
                 // is equivalent to file system style path:
                 //  ../../hello/5
                 if (_componentsString [0] == '.') {
-                    this.isRelative = true;
+                    isRelative = true;
                     _componentsString = _componentsString.Substring (1);
                 } else {
-                    this.isRelative = false;
+                    isRelative = false;
                 }
 
                 var componentStrings = _componentsString.Split('.');
@@ -256,19 +252,19 @@ namespace Ink.Runtime
             if (otherPath == null)
                 return false;
 
-            if (otherPath._components.Count != this._components.Count)
+            if (otherPath._components.Count != _components.Count)
                 return false;
 
-            if (otherPath.isRelative != this.isRelative)
+            if (otherPath.isRelative != isRelative)
                 return false;
 
-            return otherPath._components.SequenceEqual (this._components);
+            return otherPath._components.SequenceEqual (_components);
         }
 
         public override int GetHashCode ()
         {
             // TODO: Better way to make a hash code!
-            return this.ToString ().GetHashCode ();
+            return ToString ().GetHashCode ();
         }
 
 		List<Component> _components;
