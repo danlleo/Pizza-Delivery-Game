@@ -4,8 +4,8 @@ namespace Scientist.StateMachine
 {
     public class StateFactory
     {
-        private Scientist _scientist;
-        private StateMachine _currentContext;
+        private readonly Scientist _scientist;
+        private readonly StateMachine _currentContext;
 
         public StateFactory(Scientist scientist, StateMachine currentContext)
         {
@@ -21,6 +21,11 @@ namespace Scientist.StateMachine
         public State Walking()
         {
             return new WalkingState(_scientist, _currentContext);
+        }
+
+        public State Talking()
+        {
+            return new TalkingState(_scientist, _currentContext);
         }
     }
 }

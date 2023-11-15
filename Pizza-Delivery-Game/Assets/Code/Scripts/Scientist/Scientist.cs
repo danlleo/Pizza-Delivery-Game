@@ -3,13 +3,19 @@ using UnityEngine;
 
 namespace Scientist
 {
+    [RequireComponent(typeof(InteractedWithScientistEvent))]
+    [DisallowMultipleComponent]
     public class Scientist : MonoBehaviour
     {
+        [HideInInspector] public InteractedWithScientistEvent InteractedWithScientistEvent;
+        
         public StateMachine.StateMachine StateMachine { get; set; }
         public StateFactory StateFactory;
 
         private void Awake()
         {
+            InteractedWithScientistEvent = GetComponent<InteractedWithScientistEvent>();
+            
             StateMachine = new StateMachine.StateMachine();
             StateFactory = new StateFactory(this, StateMachine);
         }

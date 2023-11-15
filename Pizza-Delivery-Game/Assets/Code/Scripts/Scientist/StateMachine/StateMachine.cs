@@ -8,13 +8,16 @@ namespace Scientist.StateMachine
         {
             CurrentState = startingState;
             CurrentState.EnterState();
+            CurrentState.SubscribeToEvents();
         }
 
         public void ChangeState(State newState)
         {
             CurrentState.ExitState();
+            CurrentState.UnsubscribeFromEvents();
             CurrentState = newState;
             CurrentState.EnterState();
+            CurrentState.SubscribeToEvents();
         }
     }
 }

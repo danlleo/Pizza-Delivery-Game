@@ -13,6 +13,10 @@ namespace Scientist.StateMachine
         
         public virtual void EnterState() { }
         
+        public virtual void SubscribeToEvents() {}
+        
+        public virtual void UnsubscribeFromEvents() {}
+        
         public virtual void ExitState() { }
         
         public virtual void FrameUpdate() { }
