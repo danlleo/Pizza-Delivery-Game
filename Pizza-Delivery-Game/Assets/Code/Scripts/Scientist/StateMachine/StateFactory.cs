@@ -27,5 +27,10 @@ namespace Scientist.StateMachine
         {
             return new TalkingState(_scientist, _currentContext);
         }
+
+        public State OpeningDoor()
+        {
+            return new OpeningDoorState(_scientist, _currentContext);
+        }
     }
 }

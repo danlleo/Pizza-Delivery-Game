@@ -22,6 +22,7 @@ namespace Scientist
             _scientist.StartedTalkingEvent.Event += StartedTalking_Event;
             _scientist.StartedWalkingEvent.Event += StartedWalking_Event;
             _scientist.StoppedWalkingEvent.Event += StoppedWalking_Event;
+            _scientist.StartedOpeningDoorEvent.Event += StartedOpeningDoor_Event;
         }
 
         private void OnDisable()
@@ -29,6 +30,7 @@ namespace Scientist
             _scientist.StartedTalkingEvent.Event -= StartedTalking_Event;
             _scientist.StartedWalkingEvent.Event -= StartedWalking_Event;
             _scientist.StoppedWalkingEvent.Event -= StoppedWalking_Event;
+            _scientist.StartedOpeningDoorEvent.Event -= StartedOpeningDoor_Event;
         }
         
         private void StartedTalking_Event(object sender, EventArgs e)
@@ -44,6 +46,11 @@ namespace Scientist
         private void StoppedWalking_Event(object sender, EventArgs e)
         {
             _animator.SetBool(AnimationParams.IsWalking, false);
+        }
+        
+        private void StartedOpeningDoor_Event(object sender, EventArgs e)
+        {
+            _animator.SetTrigger(AnimationParams.OnDoorOpen);
         }
     }
 }

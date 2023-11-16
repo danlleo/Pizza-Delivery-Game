@@ -1,4 +1,5 @@
 using System;
+using Enums.Scientist;
 
 namespace Scientist.StateMachine.ConcreteStates
 {
@@ -12,12 +13,7 @@ namespace Scientist.StateMachine.ConcreteStates
             _scientist = scientist;
             _stateMachine = stateMachine;
         }
-
-        public override void EnterState()
-        {
-            
-        }
-
+        
         public override void SubscribeToEvents()
         {
             _scientist.InteractedWithScientistEvent.Event += InteractedWithScientist_Event;
@@ -27,20 +23,20 @@ namespace Scientist.StateMachine.ConcreteStates
         {
             _scientist.InteractedWithScientistEvent.Event -= InteractedWithScientist_Event;
         }
-
-        public override void ExitState()
-        {
-            
-        }
-
-        public override void FrameUpdate()
-        {
-            
-        }
         
         private void InteractedWithScientist_Event(object sender, EventArgs e)
         {
-            _stateMachine.ChangeState(_scientist.StateFactory.Talking());
+            switch (_scientist.ScientistType)
+            {
+                case ScientistType.Outdoor:
+                    _stateMachine.ChangeState(_scientist.StateFactory.Talking());
+                    break;
+                case ScientistType.LaboratoryEntry:
+                    _stateMachine.ChangeState(_scientist.StateFactory.Talking());
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

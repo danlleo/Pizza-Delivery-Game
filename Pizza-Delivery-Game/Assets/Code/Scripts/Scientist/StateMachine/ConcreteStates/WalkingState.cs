@@ -1,3 +1,5 @@
+using System;
+using Enums.Scientist;
 using UnityEngine;
 
 namespace Scientist.StateMachine.ConcreteStates
@@ -5,6 +7,7 @@ namespace Scientist.StateMachine.ConcreteStates
     public class WalkingState : State
     {
         private Scientist _scientist;
+        private StateMachine _stateMachine;
         
         private Transform _scientistTransform;
         private Transform _targetTransform;
@@ -17,7 +20,8 @@ namespace Scientist.StateMachine.ConcreteStates
         {
             _scientist = scientist;
             _scientistTransform = scientist.transform;
-            _targetTransform = scientist.CarTransform;
+            _targetTransform = scientist.endWalkingPointTransform;
+            _stateMachine = stateMachine;
         }
 
         public override void EnterState()
@@ -42,8 +46,19 @@ namespace Scientist.StateMachine.ConcreteStates
             }
             else
             {
-                _scientist.StartedWalkingEvent.Call(_scientist);
-                _scientist.DestroySelf();
+                switch (_scientist.ScientistType)
+                {
+                    case ScientistType.Outdoor:
+                        _scientist.StoppedWalkingEvent.Call(_scientist);
+                        _scientist.DestroySelf();
+                        break;
+                    case ScientistType.LaboratoryEntry:
+                        _scientist.StoppedWalkingEvent.Call(_scientist);
+                        _stateMachine.ChangeState(_scientist.StateFactory.OpeningDoor());
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
     }
