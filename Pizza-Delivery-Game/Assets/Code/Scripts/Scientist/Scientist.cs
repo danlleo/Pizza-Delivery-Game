@@ -1,7 +1,7 @@
-using Scientist.Outdoor.StateMachine;
+using Scientist.StateMachine;
 using UnityEngine;
 
-namespace Scientist.Outdoor
+namespace Scientist
 {
     [RequireComponent(typeof(InteractedWithScientistEvent))]
     [RequireComponent(typeof(StartedTalkingEvent))]

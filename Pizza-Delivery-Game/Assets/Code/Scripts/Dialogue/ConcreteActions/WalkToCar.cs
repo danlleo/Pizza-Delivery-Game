@@ -1,5 +1,4 @@
 using Scientist;
-using Scientist.Outdoor;
 
 namespace Dialogue.ConcreteActions
 {

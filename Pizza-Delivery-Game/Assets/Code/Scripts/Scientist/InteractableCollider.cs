@@ -1,7 +1,7 @@
 using Interfaces;
 using UnityEngine;
 
-namespace Scientist.Outdoor
+namespace Scientist
 {
     [RequireComponent(typeof(BoxCollider))]
     [DisallowMultipleComponent]

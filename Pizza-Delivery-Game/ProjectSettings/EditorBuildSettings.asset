@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Level/Scenes/LaboratoryEntryScene.unity
     guid: 7750b54e7d8cb774fa64ac7f29ecd194
+  - enabled: 1
+    path: Assets/Level/Scenes/OutdoorScene.unity
+    guid: a964f20b4d481ee4cb91d20e88b93bfd
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 81f27ac2fdd0f0148b44c0632791d076,
       type: 2}

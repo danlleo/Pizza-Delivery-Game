@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scientist.Outdoor.StateMachine.ConcreteStates
+namespace Scientist.StateMachine.ConcreteStates
 {
     public class WalkingState : State
     {

@@ -7,7 +7,7 @@ namespace Dialogue.DialogueTriggers
     {
         [Header("External references")]
         [SerializeField] private UI.UI _ui;
-        [SerializeField] private Scientist.Outdoor.Scientist _scientist;
+        [SerializeField] private Scientist.Scientist _scientist;
         [SerializeField] private DialogueSO _scientistGreetingsDialogueSO;
         
         protected override UI.UI UI => _ui;

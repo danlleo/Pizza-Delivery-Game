@@ -1,6 +1,6 @@
-using Scientist.Outdoor.StateMachine.ConcreteStates;
+using Scientist.StateMachine.ConcreteStates;
 
-namespace Scientist.Outdoor.StateMachine
+namespace Scientist.StateMachine
 {
     public class StateFactory
     {
