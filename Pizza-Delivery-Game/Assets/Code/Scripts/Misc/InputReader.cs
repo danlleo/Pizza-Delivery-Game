@@ -208,7 +208,7 @@ namespace Misc
             switch (context.phase)
             {
                 case InputActionPhase.Started:
-                    ClickedStaticEvent.Call(_player);
+                    _player.CallClickedStaticEvent();
                     break;
             }
         }

@@ -2,7 +2,6 @@ using System;
 using Enums.Scientist;
 using Scientist.StateMachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Scientist
 {
@@ -30,7 +29,7 @@ namespace Scientist
         public ScientistType ScientistType => _scientistType;
         
         [Header("External references")]
-        [FormerlySerializedAs("_carTransform")] [SerializeField] private Transform _endWalkingPointTransform;
+        [SerializeField] private Transform _endWalkingPointTransform;
         
         [Header("Settings")] 
         [SerializeField] private ScientistType _scientistType;

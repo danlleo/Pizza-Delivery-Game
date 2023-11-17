@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace Monster
 {
-    public class AnimationParams : MonoBehaviour
+    public static class AnimationParams
     {
-    
+        public static readonly int IsWalking = Animator.StringToHash(nameof(IsWalking));
+        public static readonly int IsRunning = Animator.StringToHash(nameof(IsRunning));
     }
 }

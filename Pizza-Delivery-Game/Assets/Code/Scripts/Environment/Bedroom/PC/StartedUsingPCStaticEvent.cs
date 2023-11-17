@@ -6,7 +6,7 @@ namespace Environment.Bedroom.PC
     {
         public static event EventHandler OnStarted;
         
-        public static void Call(object sender)
-            => OnStarted?.Invoke(sender, EventArgs.Empty);
+        public static void CallStartedUsingPC(this Player.Player player)
+            => OnStarted?.Invoke(player, EventArgs.Empty);
     }
 }

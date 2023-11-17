@@ -1,13 +1,11 @@
-using UnityEngine;
-
 namespace Monster.StateMachine
 {
-    public class State : MonoBehaviour
+    public class State
     {
        protected Monster Monster;
        protected StateMachine StateMachine;
 
-       protected State(Monster monster, StateMachine stateMachine)
+       public State(Monster monster, StateMachine stateMachine)
        {
            Monster = monster;
            StateMachine = stateMachine;

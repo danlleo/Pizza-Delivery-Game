@@ -17,7 +17,7 @@ namespace Environment.Bedroom.PC
         public void Interact()
         {
             _boxCollider.enabled = false;
-            StartedUsingPCStaticEvent.Call(Player.Player.Instance);
+            Player.Player.Instance.CallStartedUsingPC();
         }
 
         public string GetActionDescription()

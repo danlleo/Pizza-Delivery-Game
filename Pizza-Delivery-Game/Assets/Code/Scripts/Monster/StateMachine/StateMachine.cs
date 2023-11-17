@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace Monster.StateMachine
 {
-    public class StateMachine : MonoBehaviour
+    public class StateMachine
     {
         public State CurrentState { get; private set; }
 
