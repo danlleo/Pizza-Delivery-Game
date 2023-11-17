@@ -10,7 +10,6 @@ namespace Player
     public class Flashlight : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private CharacterControllerMovement _characterController;
         [SerializeField] private Inventory.Inventory _inventory;
         [SerializeField] private ItemSO _item;
         [SerializeField] private Transform _flashLightHolderTransform;
@@ -34,7 +33,6 @@ namespace Player
         [SerializeField] private float _maxHighIntensityValue = 1.4f;
 
         [Space(5)] 
-        [SerializeField] private float _swingTimeInSeconds = 0.5f;
         [Tooltip("Use negative value")]
         [SerializeField] private float _swingMinimumHeightValue = -.5f;
         [Tooltip("Use positive value")]
@@ -128,45 +126,13 @@ namespace Player
 
         private void Swing()
         {
-            if (!_characterController.IsMoving)
-            {
-                if (_resetLightSourcePositionRoutine != null)
-                {
-                    StopCoroutine(_resetLightSourcePositionRoutine);
-                    _resetLightSourcePositionRoutine = null;
-                }
+            Vector3 endSwingPosition = Vector3.up *
+                                       (Mathf.PingPong(Time.time, 2.0f) *
+                                        (_swingMaximumHeightValue - _swingMinimumHeightValue) +
+                                        _swingMinimumHeightValue);
 
-                Vector3 endSwingPosition = Vector3.up *
-                                           (Mathf.PingPong(Time.time, 2.0f) *
-                                            (_swingMaximumHeightValue - _swingMinimumHeightValue) +
-                                            _swingMinimumHeightValue);
-
-                _lightSource.transform.localPosition = Vector3.Lerp(_lightSource.transform.localPosition,
-                    endSwingPosition, Time.deltaTime);
-                
-                return;
-            }
-
-            _resetLightSourcePositionRoutine ??= StartCoroutine(ResetLightSourcePositionRoutine());
-        }
-
-        private IEnumerator ResetLightSourcePositionRoutine()
-        {
-            var timeElapsed = 0f;
-            
-            while (timeElapsed <= _swingTimeInSeconds)
-            {
-                timeElapsed += Time.deltaTime;
-                
-                float t = timeElapsed / _swingTimeInSeconds;
-
-                _lightSource.transform.localPosition =
-                    Vector3.Lerp(_lightSource.transform.localPosition, Vector3.zero, t);
-
-                yield return null;
-            }
-
-            _lightSource.transform.localPosition = Vector3.zero;
+            _lightSource.transform.localPosition = Vector3.Lerp(_lightSource.transform.localPosition,
+                endSwingPosition, Time.deltaTime);
         }
         
         private IEnumerator FadingLightRoutine()
