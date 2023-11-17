@@ -8,8 +8,6 @@ namespace Player
     [RequireComponent(typeof(CharacterController))]
     public class CharacterControllerMovement : MonoBehaviour
     {
-        public bool IsMoving { get; private set; }
-        
         [Header("External References")]
         [SerializeField] private Player _player;
         [SerializeField] private Transform _groundRaycastTransform;
@@ -59,6 +57,8 @@ namespace Player
         private float _currentMoveSpeed;
         private float _stepDelayTimer;
         private float _footstepTimer;
+
+        private bool _isMoving;
         
         private bool _canSprint;
         private bool _isSprinting;
@@ -87,7 +87,7 @@ namespace Player
 
         private void Update()
         {
-            if (IsMoving) return;
+            if (_isMoving) return;
             
             _player.MovementEvent.Call(_player, new MovementEventArgs(false));
         }
@@ -103,10 +103,10 @@ namespace Player
             Vector3 moveDirection = transform.right * input.x + transform.forward * input.y;
             moveDirection.Normalize();
             
-            IsMoving = moveDirection != Vector3.zero;
+            _isMoving = moveDirection != Vector3.zero;
 
             if (!_isSprinting)
-                _player.MovementEvent.Call(_player, new MovementEventArgs(IsMoving));
+                _player.MovementEvent.Call(_player, new MovementEventArgs(_isMoving));
 
             _characterController.Move(moveDirection * (_currentMoveSpeed * Time.deltaTime));
         }
@@ -132,12 +132,15 @@ namespace Player
         {
             if (!_sprintEnabled) return;
             if (!_canSprint) return;
-            if (!IsMoving) return;
+            if (!_isMoving) return;
             if (!IsGrounded()) return;
             if (_isCrouching) return;
-            
+
             if (_recoverStaminaRoutine != null)
+            {
                 StopCoroutine(_recoverStaminaRoutine);
+                _recoverStaminaRoutine = null;
+            }
             
             _player.SprintStateChangedEvent.Call(_player, new SprintStateChangedEventArgs(true));
             
@@ -160,7 +163,7 @@ namespace Player
                 return;
             }
             
-            if (!IsMoving)
+            if (!_isMoving)
             {
                 StopSprint();
                 return;
@@ -187,17 +190,26 @@ namespace Player
             if (!_sprintEnabled) return;
             if (!_canSprint) return;
             if (_stoppedSprinting) return;
-            
+
             if (_delayStaminaRecoverRoutine != null)
+            {
                 StopCoroutine(_delayStaminaRecoverRoutine);
-            
+                _delayStaminaRecoverRoutine = null;
+            }
+
             if (_recoverStaminaRoutine != null)
+            {
                 StopCoroutine(_recoverStaminaRoutine);
-            
+                _recoverStaminaRoutine = null;
+            }
+
             if (_gainMomentumRoutine != null)
+            {
                 StopCoroutine(_gainMomentumRoutine);
+                _gainMomentumRoutine = null;
+            }
             
-            _player.MovementEvent.Call(_player, new MovementEventArgs(IsMoving, false));
+            _player.MovementEvent.Call(_player, new MovementEventArgs(_isMoving, false));
             _player.SprintStateChangedEvent.Call(_player, new SprintStateChangedEventArgs(false));
             
             _gainMomentumRoutine = StartCoroutine(SpeedTransitionRoutine(_currentMoveSpeed, _moveSpeed));
