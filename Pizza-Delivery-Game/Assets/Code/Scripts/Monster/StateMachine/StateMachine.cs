@@ -1,6 +1,8 @@
-namespace Scientist.StateMachine
+using UnityEngine;
+
+namespace Monster.StateMachine
 {
-    public class StateMachine
+    public class StateMachine : MonoBehaviour
     {
         public State CurrentState { get; private set; }
 
