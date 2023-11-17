@@ -614,6 +614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f7b8ab44c603e46a402c21dbe128eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterController: {fileID: 8692333199270675001}
   _inventory: {fileID: 8587969999226990447}
   _item: {fileID: 11400000, guid: c7588ff0de97fe44290238bddc3fb1f5, type: 2}
   _flashLightHolderTransform: {fileID: 5964120003284314092}
@@ -621,7 +622,7 @@ MonoBehaviour:
   _playerAudio: {fileID: 6591719902434433139}
   _lightSourcePrefab: {fileID: 9057668252911292219, guid: c584f7d5680ebef46a9aac9d41d1aed0,
     type: 3}
-  _followDurationDelayInSeconds: 0.935
+  _flashlightFollowSpeed: 4
   _lightFadingTimeInSeconds: 0.125
   _chanceToBeginFlickering: 60
   _maxFlickeringCount: 3
@@ -629,9 +630,12 @@ MonoBehaviour:
   _minReachTargetIntensityTime: 0.05
   _maxReachTargetIntensityTime: 0.1
   _minLowIntensityValue: 0
-  _maxLowIntensityValue: 0.225
-  _minHighIntensityValue: 0.85
-  _maxHighIntensityValue: 1.4
+  _maxLowIntensityValue: 3
+  _minHighIntensityValue: 7
+  _maxHighIntensityValue: 10
+  _swingTimeInSeconds: 2
+  _swingMinimumHeightValue: -0.1
+  _swingMaximumHeightValue: 0.1
   _isEnabled: 1
 --- !u!114 &8587969999226990447
 MonoBehaviour:
