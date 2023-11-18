@@ -1,10 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Monster
 {
     public class FieldOfView : MonoBehaviour
     {
+        public GameObject PlayerGameObject { get; private set; }
+        
+        public float Radius => _radius;
+        public float Angle => _angle;
+        
+        public bool CanSeePlayer { get; private set; }
+        
         [Header("Settings")]
         [SerializeField] private LayerMask _targetMask;
         [SerializeField] private LayerMask _obstructionLayerMask;
@@ -12,11 +20,10 @@ namespace Monster
         [SerializeField] private float _radius;
         [SerializeField, Range(0f, 360f)] private float _angle;
 
-        private GameObject _playerGameObject;
         
         private void Start()
         {
-            _playerGameObject = Player.Player.Instance.gameObject;
+            PlayerGameObject = Player.Player.Instance.gameObject;
             StartCoroutine(FOVRoutine());
         }
 
@@ -35,7 +42,11 @@ namespace Monster
         {
             Collider[] rangeCheck = Physics.OverlapSphere(transform.position, _radius, _targetMask);
 
-            if (rangeCheck.Length <= 0) return;
+            if (rangeCheck.Length <= 0)
+            {
+                CanSeePlayer = false;
+                return;
+            }
             
             Transform target = rangeCheck[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
@@ -49,8 +60,17 @@ namespace Monster
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _obstructionLayerMask))
                 {
                     // If we detect target with our raycast
+                    CanSeePlayer = true;
                 }
+                else
+                {
+                    CanSeePlayer = false;
+                }
+
+                return;
             }
+
+            CanSeePlayer = false;
         }
     }
 }

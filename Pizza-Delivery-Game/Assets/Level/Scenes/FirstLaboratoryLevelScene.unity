@@ -2869,8 +2869,8 @@ MonoBehaviour:
   _obstructionLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  _radius: 0
-  _angle: 0
+  _radius: 7
+  _angle: 120
 --- !u!1 &179335851003688714
 GameObject:
   m_ObjectHideFlags: 0
