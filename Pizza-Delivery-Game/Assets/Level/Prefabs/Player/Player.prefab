@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 604388056162124406}
   - component: {fileID: 1907360469936217690}
   - component: {fileID: 167387503132259744}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f7b8ab44c603e46a402c21dbe128eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterController: {fileID: 8692333199270675001}
   _inventory: {fileID: 8587969999226990447}
   _item: {fileID: 11400000, guid: c7588ff0de97fe44290238bddc3fb1f5, type: 2}
   _flashLightHolderTransform: {fileID: 5964120003284314092}
@@ -633,7 +632,6 @@ MonoBehaviour:
   _maxLowIntensityValue: 3
   _minHighIntensityValue: 7
   _maxHighIntensityValue: 10
-  _swingTimeInSeconds: 2
   _swingMinimumHeightValue: -0.1
   _swingMaximumHeightValue: 0.1
   _isEnabled: 1

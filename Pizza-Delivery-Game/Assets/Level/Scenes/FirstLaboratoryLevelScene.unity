@@ -1513,7 +1513,7 @@ PrefabInstance:
     - target: {fileID: 5253437735211751402, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000059604645
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2511,8 +2511,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4759721414916342}
   - component: {fileID: 95509903248604240}
-  - component: {fileID: 95509903248604241}
   - component: {fileID: 95509903248604242}
+  - component: {fileID: 95509903248604241}
+  - component: {fileID: 95509903248604245}
+  - component: {fileID: 95509903248604244}
+  - component: {fileID: 95509903248604243}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -2798,6 +2801,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe3a19b5ba5cc04985973600cda5291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartedChasingEvent: {fileID: 0}
+  StoppedChasingEvent: {fileID: 0}
+  _walkingSpeed: 0
+  _runningSpeed: 0
 --- !u!195 &95509903248604242
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2820,6 +2827,50 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &95509903248604243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260597902016428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4ecb3f1f3304e39913f70e3035eabbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &95509903248604244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260597902016428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e8d666cf624492bf4e360b38eb3a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &95509903248604245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260597902016428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b689172992cde48b2e4534e9f1e233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  _obstructionLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _radius: 0
+  _angle: 0
 --- !u!1 &179335851003688714
 GameObject:
   m_ObjectHideFlags: 0
