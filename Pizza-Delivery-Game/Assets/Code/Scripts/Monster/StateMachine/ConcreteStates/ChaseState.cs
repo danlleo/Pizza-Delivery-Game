@@ -12,6 +12,7 @@ namespace Monster.StateMachine.ConcreteStates
         
         public ChaseState(Monster monster, StateMachine stateMachine) : base(monster, stateMachine)
         {
+            _monster = monster;
             _transform = monster.transform;
             _navMeshAgent = monster.NavMeshAgent;
         }
