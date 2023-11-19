@@ -34,7 +34,6 @@ namespace Monster
         private void StartedPatrolling_Event(object sender, EventArgs e)
         {
             _animator.SetBool(AnimationParams.IsWalking, true);
-            print("Fart");
         }
 
         private void StartedChasing_Event(object sender, EventArgs e)

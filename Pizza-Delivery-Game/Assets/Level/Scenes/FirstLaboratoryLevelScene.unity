@@ -2973,7 +2973,7 @@ MonoBehaviour:
   - {fileID: 806269752}
   - {fileID: 173246873}
   _walkingSpeed: 2.2
-  _runningSpeed: 3
+  _runningSpeed: 0.1
 --- !u!195 &95509903248604242
 NavMeshAgent:
   m_ObjectHideFlags: 0
