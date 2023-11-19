@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Sounds
 {
+    [RequireComponent(typeof(AudioSource))]
     [DisallowMultipleComponent]
     public abstract class AudioPlayer : MonoBehaviour
     {

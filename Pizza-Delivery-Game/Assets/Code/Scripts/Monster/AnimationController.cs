@@ -19,24 +19,32 @@ namespace Monster
 
         private void OnEnable()
         {
+            _monster.StartedPatrollingEvent.Event += StartedPatrolling_Event;
             _monster.StartedChasingEvent.Event += StartedChasing_Event;
             _monster.StoppedChasingEvent.Event += StoppedChasing_Event;
         }
 
         private void OnDisable()
         {
+            _monster.StartedPatrollingEvent.Event -= StartedPatrolling_Event;
             _monster.StartedChasingEvent.Event -= StartedChasing_Event;
             _monster.StoppedChasingEvent.Event -= StoppedChasing_Event;
         }
 
+        private void StartedPatrolling_Event(object sender, EventArgs e)
+        {
+            _animator.SetBool(AnimationParams.IsWalking, true);
+            print("Fart");
+        }
+
         private void StartedChasing_Event(object sender, EventArgs e)
         {
-            
+            _animator.SetBool(AnimationParams.IsRunning, true);
         }
 
         private void StoppedChasing_Event(object sender, EventArgs e)
         {
-            
+            _animator.SetBool(AnimationParams.IsRunning, false);
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Monster.StateMachine.ConcreteStates
         public override void EnterState()
         {
             _monster.FieldOfView.enabled = true;
+            _monster.StartedPatrollingEvent.Call(_monster);
             _patrolPointList = new List<Transform>(_monster.PatrolPointList);
             SetNextPatrolPoint();
         }

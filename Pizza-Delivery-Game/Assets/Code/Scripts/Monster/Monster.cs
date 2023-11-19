@@ -13,6 +13,7 @@ namespace Monster
     [RequireComponent(typeof(StoppedChasingEvent))]
     [RequireComponent(typeof(DetectedTargetEvent))]
     [RequireComponent(typeof(LostTargetEvent))]
+    [RequireComponent(typeof(StartedPatrollingEvent))]
     [SelectionBase]
     [DisallowMultipleComponent]
     public class Monster : MonoBehaviour
@@ -21,6 +22,7 @@ namespace Monster
         [HideInInspector] public StoppedChasingEvent StoppedChasingEvent;
         [HideInInspector] public DetectedTargetEvent DetectedTargetEvent;
         [HideInInspector] public LostTargetEvent LostTargetEvent;
+        [HideInInspector] public StartedPatrollingEvent StartedPatrollingEvent;
         
         public StateMachine.StateMachine StateMachine { get; set; }
         public StateFactory StateFactory;
@@ -44,7 +46,8 @@ namespace Monster
             StoppedChasingEvent = GetComponent<StoppedChasingEvent>();
             DetectedTargetEvent = GetComponent<DetectedTargetEvent>();
             LostTargetEvent = GetComponent<LostTargetEvent>();
-
+            StartedPatrollingEvent = GetComponent<StartedPatrollingEvent>();
+            
             FieldOfView.enabled = false;
             NavMeshAgent.speed = _walkingSpeed;
             

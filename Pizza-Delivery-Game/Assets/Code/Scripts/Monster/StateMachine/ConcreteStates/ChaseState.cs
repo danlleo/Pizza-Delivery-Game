@@ -25,7 +25,7 @@ namespace Monster.StateMachine.ConcreteStates
 
         public override void FrameUpdate()
         {
-            if (Vector3.Distance(_transform.position, _targetTransform.position) > 5f)
+            // if (Vector3.Distance(_transform.position, _targetTransform.position) > 5f)
                 _navMeshAgent.SetDestination(_targetTransform.position);
         }
 
