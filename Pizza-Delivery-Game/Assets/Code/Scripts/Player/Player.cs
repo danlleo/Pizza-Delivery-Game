@@ -3,6 +3,7 @@ using Enums.Player;
 using Environment.Bedroom;
 using Environment.Bedroom.PC;
 using Misc;
+using Monster;
 using Player.Inventory;
 using UI.InspectableObject;
 using UnityEngine;
