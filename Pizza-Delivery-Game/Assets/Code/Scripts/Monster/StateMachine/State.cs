@@ -5,7 +5,7 @@ namespace Monster.StateMachine
        protected Monster Monster;
        protected StateMachine StateMachine;
 
-       public State(Monster monster, StateMachine stateMachine)
+       protected State(Monster monster, StateMachine stateMachine)
        {
            Monster = monster;
            StateMachine = stateMachine;

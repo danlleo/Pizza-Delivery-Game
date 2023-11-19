@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Monster.StateMachine;
@@ -45,6 +46,7 @@ namespace Monster
             LostTargetEvent = GetComponent<LostTargetEvent>();
 
             FieldOfView.enabled = false;
+            NavMeshAgent.speed = _walkingSpeed;
             
             StateMachine = new StateMachine.StateMachine();
             StateFactory = new StateFactory(this, StateMachine);
@@ -53,6 +55,28 @@ namespace Monster
         private void Start()
         {
             StateMachine.Initialize(StateFactory.Roam());
+        }
+
+        private void OnEnable()
+        {
+            StartedChasingEvent.Event += StartedChasing_Event;
+            StoppedChasingEvent.Event += StoppedChasing_Event;
+        }
+
+        private void OnDisable()
+        {
+            StartedChasingEvent.Event -= StartedChasing_Event;
+            StoppedChasingEvent.Event -= StoppedChasing_Event;
+        }
+
+        private void StartedChasing_Event(object sender, EventArgs e)
+        {
+            NavMeshAgent.speed = _runningSpeed;
+        }
+
+        private void StoppedChasing_Event(object sender, EventArgs e)
+        {
+            NavMeshAgent.speed = _walkingSpeed;
         }
 
         private void Update()
