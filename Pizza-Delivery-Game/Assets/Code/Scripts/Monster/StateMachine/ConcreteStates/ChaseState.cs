@@ -58,16 +58,6 @@ namespace Monster.StateMachine.ConcreteStates
         {
             _monster.StoppedChasingEvent.Call(_monster);
         }
-
-        private void CountTimeToLooseTarget()
-        {
-            _timer += Time.deltaTime;
-            
-            Debug.Log(_timer);
-            
-            if (_timer >= TIME_TO_LOSE_TARGET_IN_SECONDS)
-                _stateMachine.ChangeState(_monster.StateFactory.Roam());
-        }
         
         private void ResetTimer()
             => _timer = 0f;
