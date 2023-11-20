@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,16 +7,19 @@ namespace Monster.StateMachine.ConcreteStates
 {
     public class ChaseState : State
     {
-        private const float TIME_TO_LOSE_TARGET = 0.7f;
+        private const float TIME_TO_LOSE_TARGET_IN_SECONDS = 2f;
         
-        private Monster _monster;
-        private StateMachine _stateMachine;
+        private readonly Monster _monster;
+        private readonly StateMachine _stateMachine;
         
-        private NavMeshAgent _navMeshAgent;
+        private readonly NavMeshAgent _navMeshAgent;
         
         private Transform _transform;
         private Transform _targetTransform;
 
+        private Coroutine _loosingTargetRoutine;
+
+        private float _stoppingDistance = 5f;
         private float _timer;
         
         public ChaseState(Monster monster, StateMachine stateMachine) : base(monster, stateMachine)
@@ -46,7 +50,7 @@ namespace Monster.StateMachine.ConcreteStates
 
         public override void FrameUpdate()
         {
-            // if (Vector3.Distance(_transform.position, _targetTransform.position) > 5f)
+            if (Vector3.Distance(_transform.position, _targetTransform.position) > _stoppingDistance)
                 _navMeshAgent.SetDestination(_targetTransform.position);
         }
 
@@ -61,23 +65,38 @@ namespace Monster.StateMachine.ConcreteStates
             
             Debug.Log(_timer);
             
-            if (_timer >= TIME_TO_LOSE_TARGET)
+            if (_timer >= TIME_TO_LOSE_TARGET_IN_SECONDS)
                 _stateMachine.ChangeState(_monster.StateFactory.Roam());
         }
         
         private void ResetTimer()
             => _timer = 0f;
 
+        private IEnumerator LoosingTargetRoutine()
+        {
+            yield return new WaitForSeconds(TIME_TO_LOSE_TARGET_IN_SECONDS);
+            
+            _stateMachine.ChangeState(_monster.StateFactory.Roam());
+        }
+        
         #region Events
         
         private void LostTarget_Event(object sender, EventArgs e)
         {
-            CountTimeToLooseTarget();
+            if (_loosingTargetRoutine != null)
+                return;
+
+            _loosingTargetRoutine = _monster.StartCoroutine(LoosingTargetRoutine());
         }
 
         private void DetectedTarget_Event(object sender, EventArgs e)
         {
             ResetTimer();
+
+            if (_loosingTargetRoutine == null) return;
+            
+            _monster.StopCoroutine(_loosingTargetRoutine);
+            _loosingTargetRoutine = null;
         }
         
         #endregion
