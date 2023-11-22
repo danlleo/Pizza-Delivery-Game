@@ -1,4 +1,5 @@
 using Interfaces;
+using Misc;
 using UnityEngine;
 
 namespace Environment.Bedroom.PC
@@ -17,6 +18,7 @@ namespace Environment.Bedroom.PC
         public void Interact()
         {
             _boxCollider.enabled = false;
+            CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
             Player.Player.Instance.CallStartedUsingPC();
         }
 

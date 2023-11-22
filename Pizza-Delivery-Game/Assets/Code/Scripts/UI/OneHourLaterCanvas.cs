@@ -25,7 +25,7 @@ namespace UI
             _canvasGroup.DOFade(0f, _timeToFade).OnComplete(() =>
             {
                 BedroomAudio.Instance.PlayDoorBellSound();
-                Player.Player.Instance.PlaceAt(new Vector3(2.75f, 0.1f, -7.75f));
+                Player.Player.Instance.PlaceAt(new Vector3(1.5f, 0.1f, 2.25f));
                 BedroomCamerasTransition.Instance.ResetMainCamera();
                 Destroy(gameObject);
             });

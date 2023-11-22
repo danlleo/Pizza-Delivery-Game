@@ -1,30 +1,33 @@
 using UnityEngine;
 
-public static class ComponentExtensions
+namespace Utilities
 {
-    public static void Activate(this Component component) => component.gameObject.SetActive(true);
-
-    public static void Deactivate(this Component component) => component.gameObject.SetActive(false);
-
-    public static bool TryGetComponentInChildren<T>(GameObject parentGameObject, out T desiredComponent, bool includeInactive = false) where T : Component
+    public static class ComponentExtensions
     {
-        int childCount = parentGameObject.transform.childCount;
+        public static void Activate(this Component component) => component.gameObject.SetActive(true);
 
-        for (int i = 0; i < childCount; i++)
+        public static void Deactivate(this Component component) => component.gameObject.SetActive(false);
+
+        public static bool TryGetComponentInChildren<T>(GameObject parentGameObject, out T desiredComponent, bool includeInactive = false) where T : Component
         {
-            GameObject childGameObject = parentGameObject.transform.GetChild(i).gameObject;
+            int childCount = parentGameObject.transform.childCount;
 
-            if (!includeInactive && !childGameObject.activeSelf)
-                continue;
-
-            if (childGameObject.TryGetComponent(out T childComponent))
+            for (int i = 0; i < childCount; i++)
             {
-                desiredComponent = childComponent;
-                return true;
-            }
-        }
+                GameObject childGameObject = parentGameObject.transform.GetChild(i).gameObject;
 
-        desiredComponent = null;
-        return false;
+                if (!includeInactive && !childGameObject.activeSelf)
+                    continue;
+
+                if (childGameObject.TryGetComponent(out T childComponent))
+                {
+                    desiredComponent = childComponent;
+                    return true;
+                }
+            }
+
+            desiredComponent = null;
+            return false;
+        }
     }
 }

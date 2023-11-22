@@ -4080,6 +4080,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1158912401 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3963931947629213716, guid: 951906a02c9e95b48903d29d9c644024,
+    type: 3}
+  m_PrefabInstance: {fileID: 42956060}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11fd80a3a50a4f644b4d9998d0195995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1220290254 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 965229083523558271, guid: ddd24bdb5e200284ab06417b980055e2,
@@ -10260,7 +10272,9 @@ GameObject:
   - component: {fileID: 6595494837366031260}
   - component: {fileID: 7087158996836544815}
   - component: {fileID: 3355399892963929590}
-  m_Layer: 0
+  - component: {fileID: 7087158996836544816}
+  - component: {fileID: 7087158996836544817}
+  m_Layer: 6
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12839,6 +12853,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4572190484826011279}
   m_Mesh: {fileID: -8622421094780494841, guid: cb07ca870cf1d5444b85ea4e3ee49a58, type: 3}
+--- !u!65 &7087158996836544816
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572190484826011279}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.8079048, y: 3.1367457, z: 0.30070007}
+  m_Center: {x: 0, y: 1.5683724, z: 1.2510347}
+--- !u!114 &7087158996836544817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572190484826011279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36fce2de336e1e4180a3c778141ec9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bedroomAudio: {fileID: 1158912401}
 --- !u!23 &7114151239120192010
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13356,7 +13404,7 @@ MonoBehaviour:
   _pointingCursorSprite: {fileID: 21300000, guid: 4664455c8f1029c4f83bb34b0d02d73b,
     type: 3}
   _mouseSpeed: 1.2
-  _screenBoundariesOffset: 0.005
+  _screenBoundariesOffset: 0.009
 --- !u!1 &7665314853217331763
 GameObject:
   m_ObjectHideFlags: 0

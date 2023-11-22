@@ -170,7 +170,7 @@ namespace Environment.Bedroom.PC
         {
             Vector3 position = target.GetWorldRectPosition();
 
-            var targetPosition = new Vector2(-position.z, position.y);
+            var targetPosition = new Vector2(position.z, position.y);
             var rect = new Rect(targetPosition, target.rect.size);
 
             return rect;

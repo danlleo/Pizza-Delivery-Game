@@ -30,6 +30,7 @@ namespace Dialogue.ConcreteActions
             {
                 InputAllowance.EnableInput();
                 WokeUpStaticEvent.Call(Player.Player.Instance);
+                CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(true));
             });
         }
     }
