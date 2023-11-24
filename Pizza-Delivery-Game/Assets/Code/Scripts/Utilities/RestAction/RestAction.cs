@@ -8,28 +8,35 @@ namespace Utilities.RestAction
     {
         private readonly Action _action;
         private readonly float _delayTimeInSeconds;
+        
+        private readonly TaskCompletionSource<bool> _taskCompletionSource = new();
 
-        public RestAction(Action action, float delayTimeInSeconds)
+        private RestAction _nextAction;
+
+        public RestAction() { }
+        
+        private RestAction(Action action, float delayTimeInSeconds)
         {
             _action = action;
             _delayTimeInSeconds = delayTimeInSeconds;
         }
 
-        public async Task<RestAction> Execute()
+        public void PerformChain()
         {
-            await Task.Delay((int)Mathf.Round(_delayTimeInSeconds * 1000f));
-            _action();
+            Task.Run(async () =>
+            {
+                await Task.Delay((int)Mathf.Round(_delayTimeInSeconds * 1000f));
+                _action?.Invoke();
+                _taskCompletionSource.SetResult(true);
 
-            return this;
+                _nextAction?.PerformChain();
+            });
         }
 
         public RestAction Continue(Action action, float delayTimeInSeconds)
         {
-            return new RestAction(async () =>
-            {
-                await Execute();
-                action?.Invoke();
-            }, delayTimeInSeconds);
+            _nextAction = new RestAction(action, delayTimeInSeconds);
+            return _nextAction;
         }
     }
 }

@@ -50,16 +50,6 @@ namespace Player
             SetExploringState();
         }
 
-        private void Start()
-        {
-            var restAction = new RestAction(() => print("This is monster"), 5f);
-
-            restAction
-                .Continue(() => print("Fart"), 5f)
-                .Continue(() => print("Popisyav"), 2f)
-                .Continue(() => print("Pokakav"), 2f);
-        }
-
         private void OnEnable()
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
