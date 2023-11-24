@@ -2,15 +2,13 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Utilities.RestAction
+namespace Utilities
 {
     public class RestAction
     {
         private readonly Action _action;
         private readonly float _delayTimeInSeconds;
         
-        private readonly TaskCompletionSource<bool> _taskCompletionSource = new();
-
         private RestAction _nextAction;
 
         public RestAction() { }
@@ -27,7 +25,6 @@ namespace Utilities.RestAction
             {
                 await Task.Delay((int)Mathf.Round(_delayTimeInSeconds * 1000f));
                 _action?.Invoke();
-                _taskCompletionSource.SetResult(true);
 
                 _nextAction?.PerformChain();
             });

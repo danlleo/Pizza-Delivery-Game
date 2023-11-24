@@ -6,7 +6,7 @@ using Misc;
 using Player.Inventory;
 using UI.InspectableObject;
 using UnityEngine;
-using Utilities.RestAction;
+using Utilities;
 
 namespace Player
 {
@@ -49,7 +49,7 @@ namespace Player
             
             SetExploringState();
         }
-
+        
         private void OnEnable()
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
