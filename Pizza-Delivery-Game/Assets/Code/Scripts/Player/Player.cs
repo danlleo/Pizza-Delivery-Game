@@ -3,10 +3,10 @@ using Enums.Player;
 using Environment.Bedroom;
 using Environment.Bedroom.PC;
 using Misc;
-using Monster;
 using Player.Inventory;
 using UI.InspectableObject;
 using UnityEngine;
+using Utilities.RestAction;
 
 namespace Player
 {
@@ -48,6 +48,16 @@ namespace Player
             SprintStateChangedEvent = GetComponent<SprintStateChangedEvent>();
             
             SetExploringState();
+        }
+
+        private void Start()
+        {
+            var restAction = new RestAction(() => print("This is monster"), 5f);
+
+            restAction
+                .Continue(() => print("Fart"), 5f)
+                .Continue(() => print("Popisyav"), 2f)
+                .Continue(() => print("Pokakav"), 2f);
         }
 
         private void OnEnable()
