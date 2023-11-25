@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,31 +9,46 @@ namespace Utilities
     {
         private readonly Action _action;
         private readonly float _delayTimeInSeconds;
-        
-        private RestAction _nextAction;
 
-        public RestAction() { }
+        private MonoBehaviour _owner;
+        private RestAction _nextAction;
         
-        private RestAction(Action action, float delayTimeInSeconds)
+        private CancellationToken _destroyCancellationToken;
+
+        public RestAction(MonoBehaviour owner)
         {
+            _owner = owner;
+        }
+        
+        private RestAction(MonoBehaviour owner, Action action, float delayTimeInSeconds)
+        {
+            _owner = owner;
             _action = action;
             _delayTimeInSeconds = delayTimeInSeconds;
+            _destroyCancellationToken = owner.destroyCancellationToken;
         }
 
         public void PerformChain()
         {
             Task.Run(async () =>
             {
-                await Task.Delay((int)Mathf.Round(_delayTimeInSeconds * 1000f));
-                _action?.Invoke();
+                try
+                {
+                    await Task.Delay((int)Mathf.Round(_delayTimeInSeconds * 1000f), _destroyCancellationToken);
+                    _action?.Invoke();
 
-                _nextAction?.PerformChain();
+                    _nextAction?.PerformChain();
+                }
+                catch (TaskCanceledException)
+                {
+                    Debug.Log("Destroyed");
+                }
             });
         }
 
         public RestAction Continue(Action action, float delayTimeInSeconds)
         {
-            _nextAction = new RestAction(action, delayTimeInSeconds);
+            _nextAction = new RestAction(_owner, action, delayTimeInSeconds);
             return _nextAction;
         }
     }
