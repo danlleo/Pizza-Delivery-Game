@@ -481,7 +481,7 @@ MonoBehaviour:
   _walkingFootstepTimeInSeconds: 0.625
   _sprintingFootstepTimeInSeconds: 0.3325
   _sprintEnabled: 1
-  _crouchEnabled: 1
+  _crouchEnabled: 0
 --- !u!114 &7599180676435459405
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,22 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Level/Scenes/BedroomScene.unity
     guid: 7c5b7ebc518fa3e4387e5c5339f1494a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Level/Scenes/TestingFeaturesScene.unity
     guid: 4d7a557bdb7f95248b935098dd4e3f27
-  - enabled: 0
+  - enabled: 1
     path: Assets/Level/Scenes/LoadingScene.unity
     guid: 2df72b6b2c7155c499927597133e4c68
-  - enabled: 0
+  - enabled: 1
     path: Assets/Level/Scenes/LaboratoryEntryScene.unity
     guid: 7750b54e7d8cb774fa64ac7f29ecd194
-  - enabled: 0
+  - enabled: 1
     path: Assets/Level/Scenes/OutdoorScene.unity
     guid: a964f20b4d481ee4cb91d20e88b93bfd
-  - enabled: 0
+  - enabled: 1
     path: Assets/Level/Scenes/FirstLaboratoryLevelScene.unity
     guid: 3da35f4f18b58c240a1585ce643bf6b9
   - enabled: 1
