@@ -41,7 +41,7 @@ namespace Utilities
                 }
                 catch (TaskCanceledException)
                 {
-                    Debug.Log("Destroyed");
+                    
                 }
             });
         }
