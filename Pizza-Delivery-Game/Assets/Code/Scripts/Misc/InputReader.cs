@@ -210,6 +210,16 @@ namespace Misc
                 case InputActionPhase.Started:
                     _player.CallClickedStaticEvent();
                     break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Performed:
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

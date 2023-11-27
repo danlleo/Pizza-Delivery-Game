@@ -50,17 +50,6 @@ namespace Player
             SetExploringState();
         }
 
-        private void Start()
-        {
-            var restAction = new RestAction(this);
-            restAction
-                .Continue(() => print("First Action"), 1f)
-                .Continue(() => print("Second Action"), 2f)
-                .Continue(() => print("Third Action"), 3f);
-            
-            restAction.PerformChain();
-        }
-
         private void OnEnable()
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
