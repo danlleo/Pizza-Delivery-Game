@@ -10,7 +10,7 @@ namespace Door
         [Header("Settings")]
         [SerializeField] private float _rotateSpeed = 1f;
         [SerializeField] private float _rotationAmount = 90f;
-        [SerializeField] private float _forwardDirection = 0f;
+        [SerializeField] private float _forwardDirection;
         [SerializeField] private bool _isLocked;
         
         private Vector3 _startRotation;
