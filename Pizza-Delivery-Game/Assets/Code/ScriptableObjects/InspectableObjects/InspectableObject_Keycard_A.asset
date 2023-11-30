@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d48bc0a2b2847f391f986402b6a36e9, type: 3}
+  m_Name: InspectableObject_Keycard_A
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 367005158135093586, guid: b799f7977064d064c90c12c7685544cc, type: 3}
+  _scale: {x: 24, y: 24, z: 24}
+  _rectScale: {x: 50000, y: 50000, z: 50000}
+  _item: {fileID: 11400000, guid: 1d73740cc60bf834c89d9ab8d4e9547f, type: 2}
+  _headerText: Keycard Room A
+  _descriptionText: Looks like this will help me to get to that room in the beginning
