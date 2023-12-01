@@ -118,8 +118,9 @@ namespace UI.InspectableObject
             inspectableGameObject.transform.position = _objectParentContainer.transform.position;
             inspectableGameObject.transform.localScale = inspectableObject.Scale;
             inspectableGameObject.transform.AddComponent<RectTransform>().localScale = inspectableObject.RectScale;
-            inspectableGameObject.layer = LayerMask.NameToLayer(UI_LAYER);
-
+            
+            SetLayersFor(inspectableGameObject);
+            
             _rotateObjectRoutine = StartCoroutine(RotateObjectRoutine(inspectableGameObject));
         }
 
@@ -131,6 +132,16 @@ namespace UI.InspectableObject
                 targetGameObject.transform.Rotate(Vector3.forward * (_objectRotationSpeed * Time.deltaTime));
                 
                 yield return null;
+            }
+        }
+
+        private void SetLayersFor(GameObject target)
+        {
+            target.layer = LayerMask.NameToLayer(UI_LAYER);
+
+            foreach (Transform child in target.transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer(UI_LAYER);
             }
         }
         
