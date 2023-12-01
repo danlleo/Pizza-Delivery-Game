@@ -1,5 +1,5 @@
-using Environment.LaboratoryFirstLevel;
 using Interfaces;
+using Player.Inventory;
 using UnityEngine;
 
 namespace Terminal
@@ -8,11 +8,13 @@ namespace Terminal
     [SelectionBase]
     public class Terminal : MonoBehaviour, IInteractable
     {
+        [Header("External references")]
+        [SerializeField] private ItemSO _requiredKeycard;
         [SerializeField] private Door.Door _door;
         
         public void Interact()
         {
-            NoKeycardStaticEvent.Call(Player.Player.Instance);
+            print(Player.Player.Instance.GetComponent<Inventory>().HasItem(_requiredKeycard) ? "Opened" : "Can't open");
         }
 
         public string GetActionDescription()

@@ -1,5 +1,6 @@
 using System.Collections;
 using Interfaces;
+using Player.Inventory;
 using UnityEngine;
 
 namespace Door

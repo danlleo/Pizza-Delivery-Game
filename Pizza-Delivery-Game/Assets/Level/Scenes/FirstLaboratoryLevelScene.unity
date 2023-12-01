@@ -12078,13 +12078,30 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1586503554}
+  - component: {fileID: 1586987939}
   m_Layer: 0
-  m_Name: Door_Prefab
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1586987939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586987938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4088cceacf5180047bc8d82396ee6360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotateSpeed: 1
+  _rotationAmount: 90
+  _forwardDirection: 0
+  _isLocked: 0
 --- !u!1 &1586987946
 GameObject:
   m_ObjectHideFlags: 0
@@ -17621,7 +17638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e39caf6d7e23f724794f0f7fad14868e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _door: {fileID: 0}
+  _requiredKeycard: {fileID: 11400000, guid: 1d73740cc60bf834c89d9ab8d4e9547f, type: 2}
+  _door: {fileID: 1586987939}
 --- !u!23 &6296644320001870814
 MeshRenderer:
   m_ObjectHideFlags: 0
