@@ -14,7 +14,12 @@ namespace Terminal
         
         public void Interact()
         {
-            print(Player.Player.Instance.GetComponent<Inventory>().HasItem(_requiredKeycard) ? "Opened" : "Can't open");
+            if (!Player.Player.Instance.GetComponent<Inventory>().HasItem(_requiredKeycard)) return;
+            
+            _door.Unlock();
+            _door.Open();
+            
+            Destroy(this);
         }
 
         public string GetActionDescription()

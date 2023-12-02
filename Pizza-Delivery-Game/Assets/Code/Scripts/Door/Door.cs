@@ -1,69 +1,56 @@
 using System.Collections;
-using Interfaces;
-using Player.Inventory;
 using UnityEngine;
 
 namespace Door
 {
     [DisallowMultipleComponent]
-    public class Door : MonoBehaviour, IInteractable
+    public class Door : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private float _rotateSpeed = 1f;
-        [SerializeField] private float _rotationAmount = 90f;
-        [SerializeField] private float _forwardDirection;
+        [SerializeField] private float _slideSpeed = 1f;
         [SerializeField] private bool _isLocked;
         
-        private Vector3 _startRotation;
+        private Vector3 _startPosition;
         
-        private Coroutine _rotationRoutine;
+        private Coroutine _slideRoutine;
 
         private void Awake()
         {
-            Transform cachedTransform = transform;
-            
-            _startRotation = cachedTransform.rotation.eulerAngles;
+            _startPosition = transform.position;
         }
-
+        
         public void Unlock()
         {
             _isLocked = false;
         }
         
-        public void Interact()
-        {
-            Open(Player.Player.Instance.transform.forward);
-        }
-
-        public string GetActionDescription()
-        {
-            return "Open";
-        }
-
-        private void Open(Vector3 ownerForward)
+        public void Open()
         {
             if (_isLocked) return;
 
-            _rotationRoutine ??= StartCoroutine(RotationRoutine(ownerForward));
+            _slideRoutine ??= StartCoroutine(SlideRoutine());
         }
 
-        private IEnumerator RotationRoutine(Vector3 ownerForward)
+        private IEnumerator SlideRoutine()
         {
-            float dot = Vector3.Dot(transform.forward, ownerForward.normalized);
-            float timeToRotate = 1f;
-            float timer = 0f;
+            float duration = 1.0f / _slideSpeed;  // Total time to complete the slide
+            float elapsed = 0;  // Time elapsed since the start of the slide
+            float targetHeightMultiplyValue = 2.3f;
             
-            Quaternion startRotation = transform.rotation;
-            Quaternion endRotation = Quaternion.Euler(dot >= _forwardDirection
-                ? new Vector3(_startRotation.x, _startRotation.y - _rotationAmount, 0f)
-                : new Vector3(_startRotation.x, _startRotation.y + _rotationAmount, 0f));
+            Vector3 endPosition = _startPosition + Vector3.up * targetHeightMultiplyValue; // Assuming you want to slide the door up by 1 unit
 
-            while (timer < timeToRotate)
+            while (elapsed < duration)
             {
-                transform.rotation = Quaternion.Slerp(startRotation, endRotation, timer);
-                yield return null;
-                timer += Time.deltaTime * _rotateSpeed;
+                elapsed += Time.deltaTime;
+                float fraction = elapsed / duration;  // Fraction of the total duration completed
+
+                transform.position = Vector3.Lerp(_startPosition, endPosition, fraction);
+
+                yield return null;  // Wait for the next frame
             }
+
+            transform.position = endPosition;  // Ensure the door is exactly in the end position
         }
+
     }
 }

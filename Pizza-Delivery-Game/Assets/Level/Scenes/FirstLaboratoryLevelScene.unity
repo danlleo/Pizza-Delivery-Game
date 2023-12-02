@@ -8492,6 +8492,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6593694248493032596, guid: 2786dfa44f873aa478bb54f2d68fcc64,
         type: 3}
+      propertyPath: m_TagString
+      value: Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 6593694248493032596, guid: 2786dfa44f873aa478bb54f2d68fcc64,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -12098,9 +12103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4088cceacf5180047bc8d82396ee6360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotateSpeed: 1
-  _rotationAmount: 90
-  _forwardDirection: 0
+  _slideSpeed: 1
   _isLocked: 0
 --- !u!1 &1586987946
 GameObject:
