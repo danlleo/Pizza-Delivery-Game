@@ -13,15 +13,15 @@ namespace Dialogue.DialogueTriggers
 
         private void OnEnable()
         {
-            NoKeycardStaticEvent.OnNoKeycardStaticEvent += NoKeycard_Event;
+            KeycardStateStaticEvent.OnKeycardStateChanged += KeycardEvent;
         }
 
         private void OnDisable()
         {
-            NoKeycardStaticEvent.OnNoKeycardStaticEvent -= NoKeycard_Event;
+            KeycardStateStaticEvent.OnKeycardStateChanged -= KeycardEvent;
         }
 
-        private void NoKeycard_Event(object sender, EventArgs e)
+        private void KeycardEvent(object sender, EventArgs e)
         {
             Invoke(_noKeycardDialogueSO);
         }
