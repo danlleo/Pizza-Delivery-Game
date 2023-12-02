@@ -2848,6 +2848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _keycardAcceptedClip: {fileID: 0}
   _keycardDeclinedClip: {fileID: 0}
+  _doorOpenClip: {fileID: 8300000, guid: 6429ef6fc932abf48bd557105f587cfb, type: 3}
 --- !u!4 &292728670
 Transform:
   m_ObjectHideFlags: 0
@@ -12103,8 +12104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4088cceacf5180047bc8d82396ee6360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slideSpeed: 1
-  _isLocked: 0
+  _slideSpeed: 0.7
+  _isLocked: 1
 --- !u!1 &1586987946
 GameObject:
   m_ObjectHideFlags: 0

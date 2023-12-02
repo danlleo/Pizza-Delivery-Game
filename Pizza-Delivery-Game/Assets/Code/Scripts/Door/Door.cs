@@ -29,6 +29,7 @@ namespace Door
             if (_isLocked) return;
 
             _slideRoutine ??= StartCoroutine(SlideRoutine());
+            DoorOpenStaticEvent.Call(this, new DoorOpenStaticEventArgs(transform.position));
         }
 
         private IEnumerator SlideRoutine()
