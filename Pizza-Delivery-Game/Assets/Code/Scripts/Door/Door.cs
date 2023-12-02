@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Utilities;
 
 namespace Door
 {
@@ -43,7 +44,7 @@ namespace Door
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
-                float fraction = elapsed / duration;  // Fraction of the total duration completed
+                float fraction = Interpolation.EaseOut(elapsed / duration);  // Fraction of the total duration completed
 
                 transform.position = Vector3.Lerp(_startPosition, endPosition, fraction);
 
