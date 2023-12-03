@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d48bc0a2b2847f391f986402b6a36e9, type: 3}
+  m_Name: InspectableObject_Keycard_B
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 6870385990131262074, guid: 09ed473fe681b0341bb1e4b7903cefe0, type: 3}
+  _scale: {x: 24, y: 24, z: 24}
+  _rectScale: {x: 1700, y: 1700, z: 1700}
+  _item: {fileID: 11400000, guid: d5213f579702c7f469832bcc02eb4918, type: 2}
+  _headerText: Keycard Room B
+  _descriptionText: Hope it will help me

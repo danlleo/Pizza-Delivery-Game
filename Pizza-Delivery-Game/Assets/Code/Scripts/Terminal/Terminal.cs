@@ -17,14 +17,14 @@ namespace Terminal
         {
             if (!Player.Player.Instance.GetComponent<Inventory>().HasItem(_requiredKeycard))
             {
-                KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(true, transform.position));
+                KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(false, transform.position));
                 return;
             }
             
             _door.Unlock();
             _door.Open();
             
-            KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(false, transform.position));
+            KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(true, transform.position));
             
             Destroy(this);
         }

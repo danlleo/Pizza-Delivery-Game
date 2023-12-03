@@ -1,4 +1,3 @@
-using System;
 using Environment.LaboratoryFirstLevel;
 using UnityEngine;
 
@@ -21,8 +20,10 @@ namespace Dialogue.DialogueTriggers
             KeycardStateStaticEvent.OnKeycardStateChanged -= KeycardEvent;
         }
 
-        private void KeycardEvent(object sender, EventArgs e)
+        private void KeycardEvent(object sender, KeycardStateStaticEventArgs e)
         {
+            if (e.AccessGranted) return;
+            
             Invoke(_noKeycardDialogueSO);
         }
     }
