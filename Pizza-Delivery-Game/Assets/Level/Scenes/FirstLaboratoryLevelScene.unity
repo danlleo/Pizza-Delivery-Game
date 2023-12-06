@@ -8716,11 +8716,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6593694248493032596, guid: 2786dfa44f873aa478bb54f2d68fcc64,
         type: 3}
-      propertyPath: m_TagString
-      value: Rock
-      objectReference: {fileID: 0}
-    - target: {fileID: 6593694248493032596, guid: 2786dfa44f873aa478bb54f2d68fcc64,
-        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -8873,17 +8868,17 @@ PrefabInstance:
     - target: {fileID: 5835248112835761183, guid: f702de85d981c4847b86d672a7a7f980,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.061494
+      value: 3.418
       objectReference: {fileID: 0}
     - target: {fileID: 5835248112835761183, guid: f702de85d981c4847b86d672a7a7f980,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.938198
+      value: 1.431
       objectReference: {fileID: 0}
     - target: {fileID: 5835248112835761183, guid: f702de85d981c4847b86d672a7a7f980,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 75.67505
+      value: 9.189
       objectReference: {fileID: 0}
     - target: {fileID: 5835248112835761183, guid: f702de85d981c4847b86d672a7a7f980,
         type: 3}

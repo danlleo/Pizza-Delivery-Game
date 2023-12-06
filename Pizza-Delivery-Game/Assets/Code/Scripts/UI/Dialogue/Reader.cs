@@ -49,7 +49,7 @@ namespace UI.Dialogue
 
             _audioSource.volume = configuration.Volume;
             
-            string line = _story.Continue();
+            string line = _story.Continue().Trim();
             
             int characterCount = 0;
             
@@ -64,6 +64,7 @@ namespace UI.Dialogue
                 PrintTextCharacter(textCharacter);
                 
                 line = line[1..];
+                
                 yield return new WaitForSeconds(_characterTimeToPrintInSeconds);
             }
 

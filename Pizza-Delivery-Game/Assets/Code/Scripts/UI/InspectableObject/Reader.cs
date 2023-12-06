@@ -21,7 +21,6 @@ namespace UI.InspectableObject
         
         private AudioSource _audioSource;
 
-        private string _textToRead;
         private bool _isReading;
         
         private void Awake()
@@ -54,18 +53,19 @@ namespace UI.InspectableObject
             if (_isReading) return;
             
             _isReading = true;
-            _textToRead = description;
             
-            StartCoroutine(DisplayTextRoutine());
+            StartCoroutine(DisplayTextRoutine(description));
         }
 
-        private IEnumerator DisplayTextRoutine()
+        private IEnumerator DisplayTextRoutine(string text)
         {
+            string displayText = text.Trim();
+            
             int characterCount = 0;
             
-            while (_textToRead.Length > 1)
+            while (displayText.Length >= 1)
             {
-                char textCharacter = _textToRead[0];
+                char textCharacter = displayText[0];
                 
                 PlayCharacterTypeSound(characterCount);
 
@@ -73,7 +73,7 @@ namespace UI.InspectableObject
                 
                 PrintTextCharacter(textCharacter);
 
-                _textToRead = _textToRead[1..];
+                displayText = displayText[1..];
                 yield return new WaitForSeconds(_characterTimeToPrintInSeconds);
             }
 
