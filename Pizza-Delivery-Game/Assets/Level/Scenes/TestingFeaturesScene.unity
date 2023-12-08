@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.006013802, g: 0.06016229, b: 0.19518852, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4757,6 +4757,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5253437735211751402, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000023841858
       objectReference: {fileID: 0}
     - target: {fileID: 6057162901034556649, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
         type: 3}
@@ -15891,7 +15896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c5a25956e94b44093ac4dadfbac68b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 2034735488}
 --- !u!4 &2034735490
 Transform:
   m_ObjectHideFlags: 0
@@ -21677,9 +21681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4088cceacf5180047bc8d82396ee6360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotateSpeed: 1
-  _rotationAmount: 90
-  _forwardDirection: 0
+  _slideSpeed: 1
   _isLocked: 0
 --- !u!23 &8422927445332003571
 MeshRenderer:
