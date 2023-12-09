@@ -6,7 +6,6 @@ using Misc;
 using Player.Inventory;
 using UI.InspectableObject;
 using UnityEngine;
-using Utilities;
 
 namespace Player
 {
@@ -21,7 +20,9 @@ namespace Player
     [DisallowMultipleComponent]
     public class Player : Singleton<Player>
     {
+        [Header("External references")]
         [SerializeField] private UI.UI _ui;
+        [SerializeField] private Transform _itemHolderTransform;
         
         [HideInInspector] public StaminaEvent StaminaEvent;
         [HideInInspector] public MovementEvent MovementEvent;
@@ -68,6 +69,9 @@ namespace Player
 
         public void PlaceAt(Vector3 targetPosition)
             => transform.position = targetPosition;
+
+        public Transform GetItemHolderTransform()
+            => _itemHolderTransform;
         
         private void SetExploringState()
             => State = PlayerState.Exploring;

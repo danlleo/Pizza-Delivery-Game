@@ -1,6 +1,7 @@
 using System;
 using Environment.Bedroom.PC;
 using Player;
+using Tablet;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -41,8 +42,10 @@ namespace Misc
             UIClosedStaticEvent.OnUIClose += UIClosedStaticEvent_OnUIClose;
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
             StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEvent_OnEnded;
+            PickedUpStaticEvent.OnTabletPickedUp += OnAnyTabletPickedUp;
+            PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
         }
-        
+
         private void OnDisable()
         {
             _gameInput.Disable();
@@ -51,6 +54,8 @@ namespace Misc
             UIClosedStaticEvent.OnUIClose -= UIClosedStaticEvent_OnUIClose;
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
             StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEvent_OnEnded;
+            PickedUpStaticEvent.OnTabletPickedUp -= OnAnyTabletPickedUp;
+            PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
         }
         
         private void Update()
@@ -92,7 +97,7 @@ namespace Misc
 
         #endregion
 
-        #region PCEvents
+        #region PC Events
 
         private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
         {
@@ -106,6 +111,22 @@ namespace Misc
 
         #endregion
 
+        #region TabletEvents
+
+        private void OnAnyTabletPickedUp(object sender, EventArgs e)
+        {
+            InputAllowance.DisableInput();
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.Tablet));
+        }
+        
+        private void OnAnyTabletPutDown(object sender, EventArgs e)
+        {
+            InputAllowance.EnableInput();
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
+        }
+
+        #endregion
+        
         #region PlayerInputActions
 
         public void OnMovement(InputAction.CallbackContext context)

@@ -296,6 +296,34 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Tablet"",
+            ""id"": ""59b0895f-8455-4909-a51a-81538a40b295"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""dbead56d-eda5-48c1-8ce8-2f01ea20da46"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""88264ffc-1e3f-4a09-884c-f3e948d5aedf"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -313,6 +341,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // PC
         m_PC = asset.FindActionMap("PC", throwIfNotFound: true);
         m_PC_Click = m_PC.FindAction("Click", throwIfNotFound: true);
+        // Tablet
+        m_Tablet = asset.FindActionMap("Tablet", throwIfNotFound: true);
+        m_Tablet_Newaction = m_Tablet.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -540,6 +571,52 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public PCActions @PC => new PCActions(this);
+
+    // Tablet
+    private readonly InputActionMap m_Tablet;
+    private List<ITabletActions> m_TabletActionsCallbackInterfaces = new List<ITabletActions>();
+    private readonly InputAction m_Tablet_Newaction;
+    public struct TabletActions
+    {
+        private @GameInput m_Wrapper;
+        public TabletActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Tablet_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_Tablet; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TabletActions set) { return set.Get(); }
+        public void AddCallbacks(ITabletActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TabletActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TabletActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        private void UnregisterCallbacks(ITabletActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        public void RemoveCallbacks(ITabletActions instance)
+        {
+            if (m_Wrapper.m_TabletActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITabletActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TabletActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TabletActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TabletActions @Tablet => new TabletActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -555,5 +632,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     public interface IPCActions
     {
         void OnClick(InputAction.CallbackContext context);
+    }
+    public interface ITabletActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }
