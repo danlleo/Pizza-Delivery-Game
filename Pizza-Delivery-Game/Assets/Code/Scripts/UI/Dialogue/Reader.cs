@@ -53,7 +53,7 @@ namespace UI.Dialogue
             
             int characterCount = 0;
             
-            while (line.Length > 1)
+            while (line.Length >= 1)
             {
                 char textCharacter = line[0];
 
