@@ -11,6 +11,7 @@ namespace UI
     [RequireComponent(typeof(InspectableObjectClosingEvent))]
     [RequireComponent(typeof(InspectableObjectCloseEvent))]
     [RequireComponent(typeof(ConfirmEvent))]
+    [RequireComponent(typeof(OnObjectiveUpdated))]
     [DisallowMultipleComponent]
     public class UI : MonoBehaviour
     {
@@ -24,6 +25,8 @@ namespace UI
 
         [HideInInspector] public ConfirmEvent ConfirmEvent;
 
+        [HideInInspector] public OnObjectiveUpdated OnObjectiveUpdated;
+
         private void Awake()
         {
             DialogueOpeningEvent = GetComponent<DialogueOpeningEvent>();
@@ -35,6 +38,8 @@ namespace UI
             InspectableObjectCloseEvent = GetComponent<InspectableObjectCloseEvent>();
 
             ConfirmEvent = GetComponent<ConfirmEvent>();
+
+            OnObjectiveUpdated = GetComponent<OnObjectiveUpdated>();
         }
     }
 }

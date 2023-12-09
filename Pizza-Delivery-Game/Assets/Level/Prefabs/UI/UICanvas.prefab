@@ -916,6 +916,7 @@ GameObject:
   - component: {fileID: 7269266296557149968}
   - component: {fileID: 4793986125981619321}
   - component: {fileID: 6125330398367582732}
+  - component: {fileID: 5552108210663328240}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -1126,6 +1127,7 @@ MonoBehaviour:
   InspectableObjectClosingEvent: {fileID: 0}
   InspectableObjectCloseEvent: {fileID: 0}
   ConfirmEvent: {fileID: 0}
+  OnObjectiveUpdated: {fileID: 0}
 --- !u!114 &6894446411172980243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1172,6 +1174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa5dde7eb4692847a9ee57c4d3136cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ui: {fileID: 965229083523558271}
   _objectiveUI: {fileID: 7256250525187818623}
   _objectRectWindow: {fileID: 6196879768591219292}
   _objectiveText: {fileID: 7976836911315640613}
@@ -1193,6 +1196,7 @@ MonoBehaviour:
   _ui: {fileID: 965229083523558271}
   _itemObtained: {fileID: 8300000, guid: dc76eaeab1372564da730ec471df494f, type: 3}
   _confirm: {fileID: 8300000, guid: ae575344ed94ce54ea9ab0fe138671a0, type: 3}
+  _objectiveSet: {fileID: 8300000, guid: 9470a92e2a2f823418b23dae7b15e378, type: 3}
 --- !u!114 &3052869315457094710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,6 +1294,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _crosshair: {fileID: 4164928613521283241}
+--- !u!114 &5552108210663328240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837689530654671978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac59276733d54975a0fd6afb1e1dcbe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3925852911189296028
 GameObject:
   m_ObjectHideFlags: 0

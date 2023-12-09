@@ -9,6 +9,7 @@ namespace UI.Objective
     public class ObjectiveUI : MonoBehaviour
     {
         [Header("External references")] 
+        [SerializeField] private UI _ui;
         [SerializeField] private GameObject _objectiveUI;
         [SerializeField] private RectTransform _objectRectWindow;
         [SerializeField] private TextMeshProUGUI _objectiveText;
@@ -22,6 +23,7 @@ namespace UI.Objective
         private void Awake()
         {
             Initialize();
+            HideUI();
         }
 
         private void OnEnable()
@@ -56,8 +58,7 @@ namespace UI.Objective
         
         private void CloseObjectiveWindow()
         {
-            _objectRectWindow.DOLocalMove(_closedObjectiveWindowRectPosition, _objectiveWindowSlideTimeInSeconds)
-                .OnComplete(HideUI);
+            _objectRectWindow.DOLocalMove(_closedObjectiveWindowRectPosition, _objectiveWindowSlideTimeInSeconds);
         }
 
         private void ShowUI()
@@ -81,11 +82,14 @@ namespace UI.Objective
         {
             UpdateDisplayObjective(e.SetObjective.GetObjectiveSO());
             OpenObjectiveWindow();
+            
+            _ui.OnObjectiveUpdated.Call(_ui);
         }
         
         private void OnObjectiveFinished(object sender, ObjectiveFinishedStaticEventArgs e)
         {
             UpdateDisplayObjective(e.FinishedObjective.GetObjectiveSO());
+            _ui.OnObjectiveUpdated.Call(_ui);
         }
     }
 }

@@ -45,9 +45,9 @@ namespace Objective
 
         public bool TryGetCurrentObjective(out Objective currentObjective)
         {
-            if (_objectiveQueue.Count == 0)
+            if (_currentObjective == null)
             {
-                Debug.LogWarning("Objective queue is empty");
+                Debug.LogWarning("Current objective is null");
                 currentObjective = null;
                 return false;
             }
@@ -60,7 +60,8 @@ namespace Objective
         {
             if (_objectiveQueue.Count == 0)
             {
-                Debug.LogError("Objective queue is empty");
+                Debug.LogWarning("Can't set new objective because queue is empty!");
+                _currentObjective = null;
                 return;
             }
             

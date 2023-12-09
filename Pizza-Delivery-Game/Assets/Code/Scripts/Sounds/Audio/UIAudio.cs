@@ -13,7 +13,8 @@ namespace Sounds.Audio
         [Header("Settings")]
         [SerializeField] private AudioClip _itemObtained;
         [SerializeField] private AudioClip _confirm;
-
+        [SerializeField] private AudioClip _objectiveSet;
+        
         private AudioSource _audioSource;
 
         private void Awake()
@@ -25,12 +26,14 @@ namespace Sounds.Audio
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
             _ui.ConfirmEvent.Event += Confirm_Event;
+            _ui.OnObjectiveUpdated.Event += OnObjectiveUpdated;
         }
 
         private void OnDisable()
         {
             _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
             _ui.ConfirmEvent.Event -= Confirm_Event;
+            _ui.OnObjectiveUpdated.Event -= OnObjectiveUpdated;
         }
 
         private void InspectableObjectOpening_Event(object sender, InspectableObjectOpeningEventArgs e)
@@ -41,6 +44,11 @@ namespace Sounds.Audio
         private void Confirm_Event(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _confirm, 0.48f);
+        }
+        
+        private void OnObjectiveUpdated(object sender, EventArgs e)
+        {
+            PlaySound(_audioSource, _objectiveSet, 0.5f);
         }
     }
 }
