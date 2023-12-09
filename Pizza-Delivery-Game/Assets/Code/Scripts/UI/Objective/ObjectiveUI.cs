@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using Objective;
 using TMPro;
@@ -29,12 +28,14 @@ namespace UI.Objective
         {
             FirstObjectiveSetStaticEvent.OnFirstObjectiveSet += OnFirstObjectiveSet;
             ObjectiveFinishedStaticEvent.OnObjectiveFinished += OnObjectiveFinished;
+            ToggleObjectiveWindowStaticEvent.OnObjectiveWindowToggleChanged += OnObjectiveWindowToggleChanged;
         }
 
         private void OnDisable()
         {
             FirstObjectiveSetStaticEvent.OnFirstObjectiveSet -= OnFirstObjectiveSet;
             ObjectiveFinishedStaticEvent.OnObjectiveFinished -= OnObjectiveFinished;
+            ToggleObjectiveWindowStaticEvent.OnObjectiveWindowToggleChanged -= OnObjectiveWindowToggleChanged;
         }
 
         private void UpdateDisplayObjective(ObjectiveSO objective)
@@ -65,17 +66,26 @@ namespace UI.Objective
         private void HideUI()
             => _objectiveUI.SetActive(false);
         
-        private void OnFirstObjectiveSet(object sender, EventArgs e)
+        private void OnObjectiveWindowToggleChanged(object sender, ToggleObjectiveWindowStaticEventArgs e)
         {
-            var objectiveRegistry = (ObjectiveRegistry)sender;
+            if (e.IsOpen)
+            {
+                OpenObjectiveWindow();
+                return;
+            }
             
-            UpdateDisplayObjective(objectiveRegistry.GetCurrentObjective().GetObjectiveSO());
+            CloseObjectiveWindow();
+        }
+        
+        private void OnFirstObjectiveSet(object sender, FirstObjectiveSetStaticEventArgs e)
+        {
+            UpdateDisplayObjective(e.SetObjective.GetObjectiveSO());
             OpenObjectiveWindow();
         }
         
-        private void OnObjectiveFinished(object sender, EventArgs e)
+        private void OnObjectiveFinished(object sender, ObjectiveFinishedStaticEventArgs e)
         {
-            
+            UpdateDisplayObjective(e.FinishedObjective.GetObjectiveSO());
         }
     }
 }

@@ -40,6 +40,7 @@ namespace Environment.Bedroom
         {
             Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene));
             _bedroomAudio.PlayDoorOpenSound();
+            OpenedDoorStaticEvent.Call(this);
             SaveStaticEvent.CallSaveEvent(this);
             Destroy(this);
         }

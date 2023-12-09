@@ -24,7 +24,17 @@ namespace Objective
         public static ObjectiveRegistry Create(List<ObjectiveSO> objectiveList)
         {
             var objectiveRegistry = new ObjectiveRegistry(objectiveList);
-            FirstObjectiveSetStaticEvent.Call(objectiveRegistry);
+
+            if (objectiveRegistry.TryGetCurrentObjective(out Objective objective))
+            {
+                FirstObjectiveSetStaticEvent.Call(objectiveRegistry,
+                    new FirstObjectiveSetStaticEventArgs(objective));
+            }
+            else
+            {
+                Debug.LogWarning("Objective List is null!");
+            }
+            
             return objectiveRegistry;
         }
 
@@ -33,12 +43,17 @@ namespace Objective
             _objectiveQueue.Clear();
         }
 
-        public Objective GetCurrentObjective()
+        public bool TryGetCurrentObjective(out Objective currentObjective)
         {
             if (_objectiveQueue.Count == 0)
+            {
                 Debug.LogWarning("Objective queue is empty");
-            
-            return _currentObjective;
+                currentObjective = null;
+                return false;
+            }
+    
+            currentObjective = _currentObjective;
+            return true;
         }
 
         public void SetNextObjective()

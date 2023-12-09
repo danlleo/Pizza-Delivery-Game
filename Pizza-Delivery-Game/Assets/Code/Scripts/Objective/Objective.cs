@@ -14,7 +14,11 @@
         public void Finish()
         {
             _objectiveRegistry.SetNextObjective();
-            ObjectiveFinishedStaticEvent.Call(this);
+
+            if (_objectiveRegistry.TryGetCurrentObjective(out Objective objective))
+            {
+                ObjectiveFinishedStaticEvent.Call(this, new ObjectiveFinishedStaticEventArgs(objective));
+            }
         }
 
         public ObjectiveSO GetObjectiveSO()

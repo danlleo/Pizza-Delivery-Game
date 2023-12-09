@@ -31,6 +31,11 @@ namespace Objective
         }
 
         protected void FinishObjective()
-            => _objectiveRegistry.GetCurrentObjective().Finish();
+        {
+            if (_objectiveRegistry.TryGetCurrentObjective(out Objective objective))
+            {
+                objective.Finish();
+            }
+        }
     }
 }
