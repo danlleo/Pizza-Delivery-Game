@@ -7,11 +7,16 @@ namespace Tablet
     [DisallowMultipleComponent]
     public class BloodWiper : MonoBehaviour
     {
-        private Vector3 _initialPosition;
+        [SerializeField] private float _rotationTimeInSeconds = .35f;
+        [SerializeField] private float _moveTimeInSeconds = .35f;
         
-        public void Initialize(Vector3 initialPosition)
+        private Vector3 _initialPosition;
+        private Quaternion _initialRotation;
+        
+        public void Initialize(Vector3 initialPosition, Quaternion initialRotation)
         {
             _initialPosition = initialPosition;
+            _initialRotation = initialRotation;
         }
 
         public void PickUp()
@@ -24,13 +29,18 @@ namespace Tablet
             if (Camera.main != null) 
                 transform.SetParent(Camera.main.transform);
             
+            transform.DOLocalMove(itemHolderTransform.localPosition, _moveTimeInSeconds);
             RotateTowardsPlayer();
-            //transform.DOLocalMove(itemHolderTransform.localPosition, .35f);
         }
 
         private void RotateTowardsPlayer()
         {
+            Vector3 itemHolderPosition = Player.Player.Instance.GetItemHolderTransform().position;
+            Vector3 directionToItemHolder = itemHolderPosition - transform.position;
             
+            Quaternion lookRotation = Quaternion.LookRotation(directionToItemHolder);
+            
+            transform.DORotateQuaternion(lookRotation, _rotationTimeInSeconds);
         }
     }
 }

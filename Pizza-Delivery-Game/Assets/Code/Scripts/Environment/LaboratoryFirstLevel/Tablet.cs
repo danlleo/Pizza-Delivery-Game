@@ -15,7 +15,7 @@ namespace Environment.LaboratoryFirstLevel
         public void Interact()
         {
             Destroy(this);
-            _bloodWiper.Initialize(transform.position);
+            _bloodWiper.Initialize(transform.position, transform.rotation);
             _bloodWiper.PickUp();
         }
 
