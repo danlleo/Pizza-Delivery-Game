@@ -23,24 +23,29 @@ namespace Tablet
         {
             PickedUpStaticEvent.Call(this);
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
-
-            Transform itemHolderTransform = Player.Player.Instance.GetItemHolderTransform();
-
+            
             if (Camera.main != null) 
                 transform.SetParent(Camera.main.transform);
             
-            transform.DOLocalMove(itemHolderTransform.localPosition, _moveTimeInSeconds);
+            MoveToPlayer();
             RotateTowardsPlayer();
         }
 
+        private void MoveToPlayer()
+        {
+            Transform itemHolderTransform = Player.Player.Instance.GetItemHolderTransform();
+            transform.DOLocalMove(itemHolderTransform.localPosition, _moveTimeInSeconds);
+        }
+        
         private void RotateTowardsPlayer()
         {
-            Vector3 itemHolderPosition = Player.Player.Instance.GetItemHolderTransform().position;
-            Vector3 directionToItemHolder = itemHolderPosition - transform.position;
-            
-            Quaternion lookRotation = Quaternion.LookRotation(directionToItemHolder);
-            
-            transform.DORotateQuaternion(lookRotation, _rotationTimeInSeconds);
+            transform.DOLocalRotateQuaternion(Quaternion.Euler(0f, -185f, 0f), _rotationTimeInSeconds);
+        }
+
+        private void PutBack()
+        {
+            transform.DOMove(_initialPosition, _moveTimeInSeconds);
+            transform.DORotate(_initialRotation.eulerAngles, _rotationTimeInSeconds);
         }
     }
 }
