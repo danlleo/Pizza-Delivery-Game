@@ -12,7 +12,34 @@ namespace Misc
             if (!_isLocked)
                 return;
 
-            Cursor.lockState = CursorLockMode.Locked;
+            LockCursor();
+        }
+
+        private void OnEnable()
+        {
+            CursorLockStateChangedStaticEvent.OnCursorLockStatedChanged += OnCursorLockStatedChanged;
+        }
+
+        private void OnDisable()
+        {
+            CursorLockStateChangedStaticEvent.OnCursorLockStatedChanged -= OnCursorLockStatedChanged;
+        }
+        
+        private void LockCursor()
+            => Cursor.lockState = CursorLockMode.Locked;
+
+        private void UnlockCursor()
+            => Cursor.lockState = CursorLockMode.None;
+        
+        private void OnCursorLockStatedChanged(object sender, CursorLockStateChangedStaticEventArgs e)
+        {
+            if (e.IsLocked)
+            {
+                LockCursor();
+                return;
+            }
+            
+            UnlockCursor();
         }
     }
 }
