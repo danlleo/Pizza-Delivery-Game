@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d48bc0a2b2847f391f986402b6a36e9, type: 3}
-  m_Name: InspectableObject_Keycard_B
+  m_Name: InspectableObject_Keycard_C
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 381147870392744323, guid: f702de85d981c4847b86d672a7a7f980, type: 3}
+  _prefab: {fileID: 1835221106261182989, guid: 65527436704a70d41917832e97100f8c, type: 3}
   _scale: {x: 24, y: 24, z: 24}
   _rectScale: {x: 1700, y: 1700, z: 1700}
-  _item: {fileID: 11400000, guid: d5213f579702c7f469832bcc02eb4918, type: 2}
-  _headerText: Keycard Room B
+  _item: {fileID: 11400000, guid: a4eff544931de50449ebcfe3463c3e99, type: 2}
+  _headerText: Keycard Room C
   _descriptionText: Hope it will help me
