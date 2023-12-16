@@ -11,11 +11,7 @@ namespace Environment.LaboratoryFirstLevel
         
         private void OnTriggerEnter(Collider other)
         {
-            print("Govno");
-            
             if (!other.gameObject.TryGetComponent(out Player.Player _)) return;
-            
-            print("Fart");
             
             ObjectSpawner.Instance.SpawnObject<MonsterCornerPeek>(_monsterCornerPeek.gameObject,
                 _monsterCornerPeek.transform.position, _monsterCornerPeek.transform.rotation);
