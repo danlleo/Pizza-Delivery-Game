@@ -1,3 +1,4 @@
+using Enums.Keycards;
 using InspectableObject;
 using Interfaces;
 using Player.Inventory;
@@ -8,10 +9,17 @@ namespace Environment.LaboratoryFirstLevel
     [DisallowMultipleComponent]
     public class Keycard : MonoBehaviour, IInteractable, IInspectable
     {
+        [Header("External references")]
         [SerializeField] private InspectableObjectSO _inspectableObject;
-        
+
+        [Header("Settings")] 
+        [SerializeField] private KeycardType _keycardType;
+            
         public void Interact()
         {
+            if (_keycardType == KeycardType.KeycardC)
+                PickedUpKeycardCStaticEvent.Call(this);
+            
             Trigger.Instance.Invoke(_inspectableObject, AddToInventory);
             Destroy(gameObject);
         }
