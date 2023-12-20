@@ -1,3 +1,4 @@
+using System;
 using Enums.Keycards;
 using InspectableObject;
 using Interfaces;
@@ -17,8 +18,19 @@ namespace Environment.LaboratoryFirstLevel
             
         public void Interact()
         {
-            if (_keycardType == KeycardType.KeycardC)
-                PickedUpKeycardCStaticEvent.Call(this);
+            switch (_keycardType)
+            {
+                case KeycardType.KeycardA:
+                    PickedUpKeycardAStaticEvent.Call(this);
+                    break;
+                case KeycardType.KeycardB:
+                    break;
+                case KeycardType.KeycardC:
+                        PickedUpKeycardCStaticEvent.Call(this);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             
             Trigger.Instance.Invoke(_inspectableObject, AddToInventory);
             Destroy(gameObject);
