@@ -13,11 +13,17 @@ namespace Door
         
         private Vector3 _startPosition;
         
-        private Coroutine _slideRoutine;
-
+        private Coroutine _openDoorRoutine;
+        private Coroutine _closeDoorRoutine;
+        
         private void Awake()
         {
             _startPosition = transform.position;
+        }
+        
+        private void Lock()
+        {
+            _isLocked = true;
         }
         
         public void Unlock()
@@ -29,11 +35,19 @@ namespace Door
         {
             if (_isLocked) return;
 
-            _slideRoutine ??= StartCoroutine(SlideRoutine());
+            _openDoorRoutine ??= StartCoroutine(OpenDoorRoutine());
             DoorOpenStaticEvent.Call(this, new DoorOpenStaticEventArgs(transform.position));
         }
 
-        private IEnumerator SlideRoutine()
+        public void Close()
+        {
+            if (!_isLocked) 
+                Lock();
+
+            _closeDoorRoutine ??= StartCoroutine(CloseDoorRoutine());
+        }
+        
+        private IEnumerator OpenDoorRoutine()
         {
             float duration = 1.0f / _slideSpeed;  // Total time to complete the slide
             float elapsed = 0;  // Time elapsed since the start of the slide
@@ -53,6 +67,25 @@ namespace Door
 
             transform.position = endPosition;  // Ensure the door is exactly in the end position
         }
+        
+        private IEnumerator CloseDoorRoutine()
+        {
+            float duration = 1.0f / _slideSpeed;
+            float elapsed = 0;
 
+            Vector3 endPosition = _startPosition;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float fraction = Interpolation.EaseOut(elapsed / duration);
+
+                transform.position = Vector3.Lerp(transform.position, endPosition, fraction);
+
+                yield return null;
+            }
+
+            transform.position = endPosition;
+        }
     }
 }

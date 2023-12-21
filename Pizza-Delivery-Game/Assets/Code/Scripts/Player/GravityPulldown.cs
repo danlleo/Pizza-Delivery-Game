@@ -7,8 +7,6 @@ namespace Player
     [DisallowMultipleComponent]
     public class GravityPulldown : MonoBehaviour
     {
-        public bool IsGrounded { get; private set; }
-        
         [Header("External References")]
         [SerializeField] private CharacterControllerMovement _characterControllerMovement;
         [SerializeField] private CharacterController _characterController;
@@ -21,6 +19,7 @@ namespace Player
         private float _gravityValue;
 
         private bool _hasLanded;
+        private bool _gravityEnabled;
 
         private void Awake()
         {
@@ -50,16 +49,28 @@ namespace Player
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            _gravityEnabled = true;
+        }
+
+        private void OnEnable()
+        {
+            GravityPulldownEnableStateStaticEvent.OnAnyGravityPulldownEnableStateChanged += OnAnyGravityPulldownEnableStateChanged;
+        }
+
+        private void OnDisable()
+        {
+            GravityPulldownEnableStateStaticEvent.OnAnyGravityPulldownEnableStateChanged -= OnAnyGravityPulldownEnableStateChanged;
         }
 
         private void Update()
         {
+            if (!_gravityEnabled) return;
+            
             if (_characterControllerMovement.IsGrounded() && _velocity.y < 0)
             {
                 ResetVelocity();
 
-                IsGrounded = true;
-                
                 if (_hasLanded) return;
                 
                 _characterControllerMovement.Land();
@@ -68,7 +79,6 @@ namespace Player
                 return;
             }
 
-            IsGrounded = false;
             _hasLanded = false;
             
             ApplyGravity();
@@ -85,5 +95,10 @@ namespace Player
 
         private void SetGravityValue(float value)
             => _gravityValue = -value;
+        
+        private void OnAnyGravityPulldownEnableStateChanged(object sender, GravityPulldownEnableStateStaticEventArgs e)
+        {
+            _gravityEnabled = e.Enabled;
+        }
     }
 }
