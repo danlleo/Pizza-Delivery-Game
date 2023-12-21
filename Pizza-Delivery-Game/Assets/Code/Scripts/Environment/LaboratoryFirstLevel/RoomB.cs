@@ -44,8 +44,6 @@ namespace Environment.LaboratoryFirstLevel
             
             _player = player;
             _player.transform.SetParent(transform);
-            
-            print("Player detected");
         }
 
         private void OnTriggerExit(Collider other)
