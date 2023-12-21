@@ -9,9 +9,16 @@ namespace Sounds.Audio
     {
         [SerializeField] private AudioClip _keycardAcceptedClip;
         [SerializeField] private AudioClip _keycardDeclinedClip;
+        
+        [Space(5)]
         [SerializeField] private AudioClip _doorOpenClip;
         [SerializeField] private AudioClip _monsterPeekClip;
 
+        [Space(5)] 
+        [SerializeField] private AudioClip _gasLeakClip;
+        [SerializeField] private AudioClip _gasHissingClip;
+        [SerializeField] private AudioClip _gasLeakSpookyClip;
+        
         private AudioSource _audioSource;
 
         private void Awake()
@@ -24,13 +31,15 @@ namespace Sounds.Audio
             DoorOpenStaticEvent.OnDoorOpened += DoorOpenStaticEvent_OnDoorOpened;
             KeycardStateStaticEvent.OnKeycardStateChanged += KeycardStateStaticEvent_OnKeycardStateChanged;
             MonsterPeekedStaticEvent.OnAnyMonsterPeaked += OnAnyMonsterPeaked;
+            GasLeakedStaticEvent.OnAnyGasLeaked += OnAnyGasLeaked;
         }
-
+        
         private void OnDisable()
         {
             DoorOpenStaticEvent.OnDoorOpened -= DoorOpenStaticEvent_OnDoorOpened;
             KeycardStateStaticEvent.OnKeycardStateChanged -= KeycardStateStaticEvent_OnKeycardStateChanged;
             MonsterPeekedStaticEvent.OnAnyMonsterPeaked -= OnAnyMonsterPeaked;
+            GasLeakedStaticEvent.OnAnyGasLeaked -= OnAnyGasLeaked;
         }
 
         private void KeycardStateStaticEvent_OnKeycardStateChanged(object sender, KeycardStateStaticEventArgs e)
@@ -52,6 +61,12 @@ namespace Sounds.Audio
         private void OnAnyMonsterPeaked(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _monsterPeekClip, 2f);
+        }
+        
+        private void OnAnyGasLeaked(object sender, GasLeakedStaticEventArgs e)
+        {
+            PlaySound(_audioSource, _gasLeakSpookyClip, 2f);
+            PlaySoundAtPoint(_gasLeakClip, e.GasLeakedPosition, 4f);
         }
     }
 }

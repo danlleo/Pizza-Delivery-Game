@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Environment.LaboratoryFirstLevel
 {
+    [DisallowMultipleComponent]
     public class RoomB : MonoBehaviour
     {
         [Header("External references")]
