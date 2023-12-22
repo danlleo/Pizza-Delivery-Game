@@ -9,6 +9,7 @@ TagManager:
   - Metal
   - Grass
   - Rock
+  - SF_Door
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Inspectable
   - Clickable
   - Player
-  - 
+  - WorldScreenSpaceIcon
   - 
   - 
   - 

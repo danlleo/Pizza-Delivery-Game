@@ -36,6 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1989694867141719978}
+  - {fileID: 1619989716135326758}
   - {fileID: 5964120003284314092}
   - {fileID: 5959860838386482284}
   m_Father: {fileID: 6401409662826238238}
@@ -231,6 +232,37 @@ MonoBehaviour:
   _player: {fileID: 1418063800019633332}
   _targetFOV: 62.5
   _changeFOVSpeedInSeconds: 0.165
+--- !u!1 &1606615116072994424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1619989716135326758}
+  m_Layer: 0
+  m_Name: WorldScreenSpaceIconDetectPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1619989716135326758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606615116072994424}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5253437735211751402}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4173784742728827568
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +294,7 @@ GameObject:
   - component: {fileID: 167387503132259744}
   - component: {fileID: 5921299844548752529}
   - component: {fileID: 4378556504438040712}
+  - component: {fileID: 3501078519673154868}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -797,6 +830,22 @@ CapsuleCollider:
   m_Height: 2.0265782
   m_Direction: 1
   m_Center: {x: 0, y: 0.48393905, z: 0}
+--- !u!114 &3501078519673154868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173784742728827568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703e351824a14f20882a7dae26a15f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detectPoint: {fileID: 1619989716135326758}
+  _worldScreenSpaceIconMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &4572496924224856881
 GameObject:
   m_ObjectHideFlags: 0

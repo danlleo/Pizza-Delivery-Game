@@ -4,11 +4,12 @@ using InspectableObject;
 using Interfaces;
 using Player.Inventory;
 using UnityEngine;
+using Vector3 = System.Numerics.Vector3;
 
 namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
-    public class Keycard : MonoBehaviour, IInteractable, IInspectable
+    public class Keycard : MonoBehaviour, IInteractable, IInspectable, IWorldScreenSpaceIcon
     {
         [Header("External references")]
         [SerializeField] private InspectableObjectSO _inspectableObject;
@@ -45,6 +46,16 @@ namespace Environment.LaboratoryFirstLevel
         {
             Player.Player player = Player.Player.Instance;
             player.AddingItemEvent.Call(player, new AddingItemEventArgs(_inspectableObject.Item));
+        }
+
+        public Transform GetLookAtTarget()
+        {
+            return transform;
+        }
+
+        public Vector3 GetOffset()
+        {
+            return Vector3.Zero;
         }
     }
 }
