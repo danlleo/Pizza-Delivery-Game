@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-using Vector3 = System.Numerics.Vector3;
+﻿using UI;
 
 namespace Interfaces
 {
     public interface IWorldScreenSpaceIcon
     {
-        public Transform GetLookAtTarget();
-        public Vector3 GetOffset();
+        public WorldScreenSpaceIcon GetWorldScreenSpaceIcon();
     }
 }

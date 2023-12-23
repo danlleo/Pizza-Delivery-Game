@@ -3,8 +3,8 @@ using Enums.Keycards;
 using InspectableObject;
 using Interfaces;
 using Player.Inventory;
+using UI;
 using UnityEngine;
-using Vector3 = System.Numerics.Vector3;
 
 namespace Environment.LaboratoryFirstLevel
 {
@@ -48,14 +48,9 @@ namespace Environment.LaboratoryFirstLevel
             player.AddingItemEvent.Call(player, new AddingItemEventArgs(_inspectableObject.Item));
         }
 
-        public Transform GetLookAtTarget()
+        public WorldScreenSpaceIcon GetWorldScreenSpaceIcon()
         {
-            return transform;
-        }
-
-        public Vector3 GetOffset()
-        {
-            return Vector3.Zero;
+            return new WorldScreenSpaceIcon(transform, Vector3.zero);
         }
     }
 }

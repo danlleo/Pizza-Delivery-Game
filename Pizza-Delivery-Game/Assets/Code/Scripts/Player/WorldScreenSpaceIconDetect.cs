@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using UI;
 using UnityEngine;
 
 namespace Player
@@ -6,6 +7,7 @@ namespace Player
     public class WorldScreenSpaceIconDetect : MonoBehaviour
     {
         [Header("External references")] 
+        [SerializeField] private UI.UI _ui;
         [SerializeField] private Transform _detectPoint;
         
         [Header("Settings")]
@@ -15,17 +17,38 @@ namespace Player
         [SerializeField] private float _detectDistance;
         [SerializeField] private float _detectRadius;
         
+        private Camera _camera;
+        private RaycastHit _hitInfo;
+
+        private void Awake()
+        {
+            _camera = Camera.main;
+        }
+
         private void Update()
         {
-            var ray = new Ray(_detectPoint.position, _detectPoint.forward * _detectDistance);
+            Plane[] cameraPlanes = GeometryUtility.CalculateFrustumPlanes(_camera);
+            Collider[] hitColliders =
+                Physics.OverlapSphere(_detectPoint.position, _detectRadius, _worldScreenSpaceIconMask);
 
-            if (!Physics.SphereCast(ray, _detectRadius, out RaycastHit hit, _worldScreenSpaceIconMask))
-                return;
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (!hitCollider.TryGetComponent(out IWorldScreenSpaceIcon worldScreenSpaceIcon))
+                    continue;
 
-            if (!hit.collider.TryGetComponent(out IWorldScreenSpaceIcon worldScreenSpaceIcon))
-                return;
-            
-            
+                bool isInView = GeometryUtility.TestPlanesAABB(cameraPlanes, hitCollider.bounds);
+
+                if (!isInView)
+                {
+                    print("I don't see it");
+                    continue;
+                }
+
+                _ui.WorldScreenSpaceIconDetectedEvent.Call(this,
+                    new WorldScreenSpaceIconDetectedEventArgs(worldScreenSpaceIcon));
+                
+                print("I see it");
+            }
         }
     }
 }

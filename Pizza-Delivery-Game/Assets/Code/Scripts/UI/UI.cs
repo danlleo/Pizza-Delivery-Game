@@ -12,6 +12,8 @@ namespace UI
     [RequireComponent(typeof(InspectableObjectCloseEvent))]
     [RequireComponent(typeof(ConfirmEvent))]
     [RequireComponent(typeof(OnObjectiveUpdated))]
+    [RequireComponent(typeof(WorldScreenSpaceIconDetectedEvent))]
+    [RequireComponent(typeof(WorldScreenSpaceIconLostEvent))]
     [DisallowMultipleComponent]
     public class UI : MonoBehaviour
     {
@@ -27,6 +29,9 @@ namespace UI
 
         [HideInInspector] public OnObjectiveUpdated OnObjectiveUpdated;
 
+        [HideInInspector] public WorldScreenSpaceIconDetectedEvent WorldScreenSpaceIconDetectedEvent;
+        [HideInInspector] public WorldScreenSpaceIconLostEvent WorldScreenSpaceIconLostEvent;
+        
         private void Awake()
         {
             DialogueOpeningEvent = GetComponent<DialogueOpeningEvent>();
@@ -40,6 +45,9 @@ namespace UI
             ConfirmEvent = GetComponent<ConfirmEvent>();
 
             OnObjectiveUpdated = GetComponent<OnObjectiveUpdated>();
+
+            WorldScreenSpaceIconDetectedEvent = GetComponent<WorldScreenSpaceIconDetectedEvent>();
+            WorldScreenSpaceIconLostEvent = GetComponent<WorldScreenSpaceIconLostEvent>();
         }
     }
 }

@@ -4713,6 +4713,11 @@ PrefabInstance:
       objectReference: {fileID: 1713837658}
     - target: {fileID: 1014147315916973634, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
+      propertyPath: _ui
+      value: 
+      objectReference: {fileID: 1713837658}
+    - target: {fileID: 1014147315916973634, guid: 530d746b804020948a76e48f66d7973c,
+        type: 3}
       propertyPath: _detectRadius
       value: 5
       objectReference: {fileID: 0}
@@ -4720,6 +4725,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _detectDistance
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014147315916973634, guid: 530d746b804020948a76e48f66d7973c,
+        type: 3}
+      propertyPath: _worldScreenSpaceIconMask.m_Bits
+      value: 2112
       objectReference: {fileID: 0}
     - target: {fileID: 3254224848900657090, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
@@ -4779,7 +4789,7 @@ PrefabInstance:
     - target: {fileID: 8530758911292480668, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00000071525574
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20183,6 +20193,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1577762550}
+    - target: {fileID: 8796747495163695251, guid: ddd24bdb5e200284ab06417b980055e2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 27.899994
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -2,13 +2,10 @@ using UnityEngine;
 
 namespace UI
 {
-    public class FollowWorld : MonoBehaviour
+    public class ScreenSpaceIconFollowWorld : MonoBehaviour
     {
-        [Header("External references")] 
-        [SerializeField] private Transform _lookAt;
-
-        [Header("Settings")]
-        [SerializeField] private Vector3 _offset;
+        private Transform _lookAt;
+        private Vector3 _offset;
 
         private Camera _mainCamera;
         
@@ -23,6 +20,12 @@ namespace UI
             
             if (transform.position != pos)
                 transform.position = pos;
+        }
+
+        public void Initialize(Transform lookAtTarget, Vector3 offset)
+        {
+            _lookAt = lookAtTarget;
+            _offset = offset;
         }
     }
 }
