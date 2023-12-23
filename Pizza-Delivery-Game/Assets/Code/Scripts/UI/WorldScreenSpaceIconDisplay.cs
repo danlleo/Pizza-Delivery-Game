@@ -12,7 +12,8 @@ namespace UI
         [SerializeField] private Transform _container;
         [SerializeField] private Image _worldScreenSpaceIconPrefab;
 
-        private List<IWorldScreenSpaceIcon> _worldScreenSpaceIconList = new();
+        private readonly Dictionary<IWorldScreenSpaceIcon, ScreenSpaceIconFollowWorld> _worldScreenSpaceIconDictionary =
+            new();
         
         private void OnEnable()
         {
@@ -27,23 +28,30 @@ namespace UI
         }
 
         private bool IsInList(IWorldScreenSpaceIcon worldScreenSpaceIcon)
-            => _worldScreenSpaceIconList.Contains(worldScreenSpaceIcon);
+        {
+            return _worldScreenSpaceIconDictionary.TryGetValue(worldScreenSpaceIcon,
+                out ScreenSpaceIconFollowWorld _);
+        }
 
         private void Display(IWorldScreenSpaceIcon icon)
         {
-            _worldScreenSpaceIconList.Add(icon);
-            
             Image worldScreenSpaceIconImage = Instantiate(_worldScreenSpaceIconPrefab, _container);
             WorldScreenSpaceIcon worldScreenSpaceIcon = icon.GetWorldScreenSpaceIcon();
-    
+         
             var screenSpaceIconFollowWorld = worldScreenSpaceIconImage.gameObject.AddComponent<ScreenSpaceIconFollowWorld>();
+    
+            _worldScreenSpaceIconDictionary.Add(icon, screenSpaceIconFollowWorld);
             
             screenSpaceIconFollowWorld.Initialize(worldScreenSpaceIcon.LookAtTarget, worldScreenSpaceIcon.Offset);
         }
 
         private void Conceal(IWorldScreenSpaceIcon worldScreenSpaceIcon)
         {
-            _worldScreenSpaceIconList.Remove(worldScreenSpaceIcon);
+            if (!_worldScreenSpaceIconDictionary.TryGetValue(worldScreenSpaceIcon,
+                    out ScreenSpaceIconFollowWorld screenSpaceIconFollowWorld)) return;
+            
+            Destroy(screenSpaceIconFollowWorld.gameObject);
+            _worldScreenSpaceIconDictionary.Remove(worldScreenSpaceIcon);
         }
         
         private void OnWorldScreenSpaceIconDetected(object sender, WorldScreenSpaceIconDetectedEventArgs e)

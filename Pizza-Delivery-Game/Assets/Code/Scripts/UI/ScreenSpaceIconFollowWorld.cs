@@ -6,7 +6,6 @@ namespace UI
     {
         private Transform _lookAt;
         private Vector3 _offset;
-
         private Camera _mainCamera;
         
         private void Awake()

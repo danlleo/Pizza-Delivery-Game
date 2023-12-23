@@ -34,12 +34,19 @@ namespace Player
             foreach (Collider hitCollider in hitColliders)
             {
                 if (!hitCollider.TryGetComponent(out IWorldScreenSpaceIcon worldScreenSpaceIcon))
+                {
+                    _ui.WorldScreenSpaceIconLostEvent.Call(this,
+                        new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
+                    
                     continue;
+                }
 
                 bool isInView = GeometryUtility.TestPlanesAABB(cameraPlanes, hitCollider.bounds);
 
                 if (!isInView)
                 {
+                    _ui.WorldScreenSpaceIconLostEvent.Call(this,
+                        new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
                     print("I don't see it");
                     continue;
                 }
