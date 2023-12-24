@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
 
@@ -19,12 +20,14 @@ namespace UI
         {
             _ui.WorldScreenSpaceIconDetectedEvent.OnWorldScreenSpaceIconDetected += OnWorldScreenSpaceIconDetected;
             _ui.WorldScreenSpaceIconLostEvent.OnWorldScreenSpaceIconLost += OnWorldScreenSpaceIconLost;
+            _ui.WorldScreenSpaceIconLostAllEvent.OnWorldScreenSpaceIconLostAll += OnWorldScreenSpaceIconLostAll;
         }
 
         private void OnDisable()
         {
             _ui.WorldScreenSpaceIconDetectedEvent.OnWorldScreenSpaceIconDetected -= OnWorldScreenSpaceIconDetected;
             _ui.WorldScreenSpaceIconLostEvent.OnWorldScreenSpaceIconLost -= OnWorldScreenSpaceIconLost;
+            _ui.WorldScreenSpaceIconLostAllEvent.OnWorldScreenSpaceIconLostAll -= OnWorldScreenSpaceIconLostAll;
         }
 
         private bool IsInList(IWorldScreenSpaceIcon worldScreenSpaceIcon)
@@ -43,13 +46,23 @@ namespace UI
             screenSpaceIconFollowWorld.InitializeAndDisplay(worldScreenSpaceIcon.LookAtTarget, worldScreenSpaceIcon.Offset);
         }
 
-        private void Conceal(IWorldScreenSpaceIcon worldScreenSpaceIcon)
+        private void ConcealSingle(IWorldScreenSpaceIcon worldScreenSpaceIcon)
         {
             if (!_worldScreenSpaceIconDictionary.TryGetValue(worldScreenSpaceIcon,
                     out ScreenSpaceIconFollowWorld screenSpaceIconFollowWorld)) return;
             
             Destroy(screenSpaceIconFollowWorld.gameObject);
             _worldScreenSpaceIconDictionary.Remove(worldScreenSpaceIcon);
+        }
+
+        private void ConcealAll()
+        {
+            foreach (KeyValuePair<IWorldScreenSpaceIcon, ScreenSpaceIconFollowWorld> pair in _worldScreenSpaceIconDictionary)
+            {
+                Destroy(pair.Value.gameObject);
+            }
+
+            _worldScreenSpaceIconDictionary.Clear();
         }
         
         private void OnWorldScreenSpaceIconDetected(object sender, WorldScreenSpaceIconDetectedEventArgs e)
@@ -63,7 +76,12 @@ namespace UI
         {
             if (!IsInList(e.WorldScreenSpaceIcon)) return;
 
-            Conceal(e.WorldScreenSpaceIcon);
+            ConcealSingle(e.WorldScreenSpaceIcon);
+        }
+        
+        private void OnWorldScreenSpaceIconLostAll(object sender, EventArgs e)
+        {
+            ConcealAll();
         }
     }
 }

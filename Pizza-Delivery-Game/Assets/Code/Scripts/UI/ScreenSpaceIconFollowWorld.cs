@@ -37,6 +37,8 @@ namespace UI
 
         private void Place()
         {
+            if (_lookAt == null) return;
+            
             Vector3 pos = _mainCamera.WorldToScreenPoint(_lookAt.position + _offset);
             
             if (transform.position != pos)

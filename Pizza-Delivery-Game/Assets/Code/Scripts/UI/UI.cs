@@ -14,6 +14,7 @@ namespace UI
     [RequireComponent(typeof(OnObjectiveUpdated))]
     [RequireComponent(typeof(WorldScreenSpaceIconDetectedEvent))]
     [RequireComponent(typeof(WorldScreenSpaceIconLostEvent))]
+    [RequireComponent(typeof(WorldScreenSpaceIconLostAllEvent))]
     [DisallowMultipleComponent]
     public class UI : MonoBehaviour
     {
@@ -31,6 +32,7 @@ namespace UI
 
         [HideInInspector] public WorldScreenSpaceIconDetectedEvent WorldScreenSpaceIconDetectedEvent;
         [HideInInspector] public WorldScreenSpaceIconLostEvent WorldScreenSpaceIconLostEvent;
+        [HideInInspector] public WorldScreenSpaceIconLostAllEvent WorldScreenSpaceIconLostAllEvent;
         
         private void Awake()
         {
@@ -48,6 +50,7 @@ namespace UI
 
             WorldScreenSpaceIconDetectedEvent = GetComponent<WorldScreenSpaceIconDetectedEvent>();
             WorldScreenSpaceIconLostEvent = GetComponent<WorldScreenSpaceIconLostEvent>();
+            WorldScreenSpaceIconLostAllEvent = GetComponent<WorldScreenSpaceIconLostAllEvent>();
         }
     }
 }
