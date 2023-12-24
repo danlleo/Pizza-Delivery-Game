@@ -504,7 +504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _peekInTimeInSeconds: 0.25
   _stayInPeekTimeInSeconds: 1.3
-  _peekOutTimeInSeconds: 0.8
+  _peekOutTimeInSeconds: 0.2
   _targetRotation: {x: 0, y: 170, z: 0}
 --- !u!1 &1872741124105710514
 GameObject:

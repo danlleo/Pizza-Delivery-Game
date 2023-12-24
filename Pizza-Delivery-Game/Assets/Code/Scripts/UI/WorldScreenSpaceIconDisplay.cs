@@ -32,6 +32,9 @@ namespace UI
 
         private bool IsInList(IWorldScreenSpaceIcon worldScreenSpaceIcon)
         {
+            if (worldScreenSpaceIcon == null)
+                return false;
+            
             return _worldScreenSpaceIconDictionary.TryGetValue(worldScreenSpaceIcon,
                 out ScreenSpaceIconFollowWorld _);
         }

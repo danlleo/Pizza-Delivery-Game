@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Interfaces;
 using UI;
 using UnityEngine;
@@ -16,11 +15,9 @@ namespace Player
         [SerializeField] private LayerMask _worldScreenSpaceIconMask;
         
         [Space(5)]
-        [SerializeField] private float _detectDistance;
         [SerializeField] private float _detectRadius;
         
         private Camera _camera;
-        private RaycastHit _hitInfo;
         
         private void Awake()
         {
@@ -34,7 +31,7 @@ namespace Player
 
         private IEnumerator ScanRoutine()
         {
-            var delay = new WaitForSeconds(0.2f);
+            var delay = new WaitForSeconds(0.1f);
 
             while (true)
             {
@@ -71,14 +68,30 @@ namespace Player
                 {
                     _ui.WorldScreenSpaceIconLostEvent.Call(this,
                         new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
-                    print("I don't see it");
+
                     continue;
                 }
 
+                Vector3 directionToCollider = (hitCollider.transform.position - _detectPoint.position).normalized;
+
+                if (!Physics.Raycast(_detectPoint.position, directionToCollider, out RaycastHit raycastHit, float.MaxValue))
+                {
+                    _ui.WorldScreenSpaceIconLostEvent.Call(this,
+                        new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
+
+                    continue;
+                }
+
+                if (!raycastHit.collider.TryGetComponent(out IWorldScreenSpaceIcon _))
+                {
+                    _ui.WorldScreenSpaceIconLostEvent.Call(this,
+                        new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
+
+                    continue;
+                }
+                    
                 _ui.WorldScreenSpaceIconDetectedEvent.Call(this,
                     new WorldScreenSpaceIconDetectedEventArgs(worldScreenSpaceIcon));
-                
-                print("I see it");
             }
         }
     }

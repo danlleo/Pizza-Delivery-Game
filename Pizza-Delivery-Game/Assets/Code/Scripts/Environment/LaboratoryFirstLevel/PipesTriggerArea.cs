@@ -17,6 +17,8 @@ namespace Environment.LaboratoryFirstLevel
             
             _blockWayBoxCollider.enabled = true;
             _smokeParticleSystem.Play();
+            
+            Destroy(gameObject);
         }
     }
 }
