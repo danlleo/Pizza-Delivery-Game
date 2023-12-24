@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI
 {
+    [DisallowMultipleComponent]
     public class WorldScreenSpaceIconDisplay : MonoBehaviour
     {
         [Header("External references")]
         [SerializeField] private UI _ui;
         [SerializeField] private Transform _container;
-        [SerializeField] private Image _worldScreenSpaceIconPrefab;
+        [SerializeField] private ScreenSpaceIconFollowWorld _screenSpaceIconFollowWorldPrefab;
 
         private readonly Dictionary<IWorldScreenSpaceIcon, ScreenSpaceIconFollowWorld> _worldScreenSpaceIconDictionary =
             new();
@@ -35,14 +35,12 @@ namespace UI
 
         private void Display(IWorldScreenSpaceIcon icon)
         {
-            Image worldScreenSpaceIconImage = Instantiate(_worldScreenSpaceIconPrefab, _container);
             WorldScreenSpaceIcon worldScreenSpaceIcon = icon.GetWorldScreenSpaceIcon();
-         
-            var screenSpaceIconFollowWorld = worldScreenSpaceIconImage.gameObject.AddComponent<ScreenSpaceIconFollowWorld>();
+            ScreenSpaceIconFollowWorld screenSpaceIconFollowWorld = Instantiate(_screenSpaceIconFollowWorldPrefab, _container);
     
             _worldScreenSpaceIconDictionary.Add(icon, screenSpaceIconFollowWorld);
             
-            screenSpaceIconFollowWorld.Initialize(worldScreenSpaceIcon.LookAtTarget, worldScreenSpaceIcon.Offset);
+            screenSpaceIconFollowWorld.InitializeAndDisplay(worldScreenSpaceIcon.LookAtTarget, worldScreenSpaceIcon.Offset);
         }
 
         private void Conceal(IWorldScreenSpaceIcon worldScreenSpaceIcon)

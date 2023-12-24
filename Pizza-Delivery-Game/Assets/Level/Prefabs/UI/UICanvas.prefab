@@ -135,41 +135,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &509801630594994273
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3789840621865653097}
-  m_Layer: 5
-  m_Name: WorldScreenSpaceIconDisplayContainer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &3789840621865653097
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 509801630594994273}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2316893093598077723}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &517742591280074569
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,7 +908,6 @@ GameObject:
   - component: {fileID: 648338960582354618}
   - component: {fileID: 4933541167557079172}
   - component: {fileID: 4435646814417281189}
-  - component: {fileID: 6493678267489519078}
   - component: {fileID: 3052869315457094710}
   - component: {fileID: 1276309748421659246}
   - component: {fileID: 2542664292289074305}
@@ -980,7 +944,6 @@ RectTransform:
   - {fileID: 8973516832342753334}
   - {fileID: 1572179221062415034}
   - {fileID: 5356632753010998396}
-  - {fileID: 3789840621865653097}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1238,22 +1201,6 @@ MonoBehaviour:
   _itemObtained: {fileID: 8300000, guid: dc76eaeab1372564da730ec471df494f, type: 3}
   _confirm: {fileID: 8300000, guid: ae575344ed94ce54ea9ab0fe138671a0, type: 3}
   _objectiveSet: {fileID: 8300000, guid: 9470a92e2a2f823418b23dae7b15e378, type: 3}
---- !u!114 &6493678267489519078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837689530654671978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41afe567acf345579178faa84bf94879, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ui: {fileID: 965229083523558271}
-  _container: {fileID: 3789840621865653097}
-  _worldScreenSpaceIconPrefab: {fileID: 8990073558500662564, guid: 4479c60f215b9e849ad4189b72ec3583,
-    type: 3}
 --- !u!114 &3052869315457094710
 MonoBehaviour:
   m_ObjectHideFlags: 0
