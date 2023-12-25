@@ -2,6 +2,7 @@ using System;
 using Enums.Player;
 using Environment.Bedroom;
 using Environment.Bedroom.PC;
+using EventBus;
 using Misc;
 using Player.Inventory;
 using UI.InspectableObject;
@@ -32,6 +33,9 @@ namespace Player
         [HideInInspector] public AddingItemEvent AddingItemEvent;
         [HideInInspector] public RemovingItemEvent RemovingItemEvent;
         [HideInInspector] public SprintStateChangedEvent SprintStateChangedEvent;
+
+        private EventBinding<TestEvent> _testEventBinding;
+        private EventBinding<PlayerEvent> _playerEventBinding;
         
         public PlayerState State { get; private set; }
 
@@ -57,6 +61,12 @@ namespace Player
             _ui.InspectableObjectCloseEvent.Event += InspectableObjectClose_Event;
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
             WokeUpStaticEvent.OnWokeUp += WokeUpStaticEvent_OnWokeUp;
+
+            _testEventBinding = new EventBinding<TestEvent>(HandleTestEvent);
+            EventBus<TestEvent>.Register(_testEventBinding);
+
+            _playerEventBinding = new EventBinding<PlayerEvent>(HandlePlayerEvent);
+            EventBus<PlayerEvent>.Register(_playerEventBinding);
         }
 
         private void OnDisable()
@@ -65,6 +75,35 @@ namespace Player
             _ui.InspectableObjectCloseEvent.Event -= InspectableObjectClose_Event;
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
             WokeUpStaticEvent.OnWokeUp -= WokeUpStaticEvent_OnWokeUp;
+            
+            EventBus<TestEvent>.Deregister(_testEventBinding);
+            EventBus<PlayerEvent>.Deregister(_playerEventBinding);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                EventBus<TestEvent>.Raise(new TestEvent());
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                EventBus<PlayerEvent>.Raise(new PlayerEvent
+                {
+                    Health = 17,
+                    Mana = 10,
+                });
+            }
+        }
+
+        private void HandleTestEvent()
+        {
+            Debug.Log("Test event received!");
+        }
+
+        private void HandlePlayerEvent(PlayerEvent playerEvent)
+        {
+            Debug.Log($"Player event received! Health: {playerEvent.Health}, Mana: {playerEvent.Mana}");
         }
 
         public void PlaceAt(Vector3 targetPosition)
