@@ -1,10 +1,9 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Monster
 {
-    public class StartedChasingEvent : MonoBehaviour, IEvent
+    public class StartedChasingEvent : MonoBehaviour
     {
         public event EventHandler Event;
         

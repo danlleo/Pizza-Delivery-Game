@@ -8,16 +8,16 @@ namespace UI
     public class ScreenSpaceIconFollowWorld : MonoBehaviour
     {
         private Image _image;
-        
+
         private Transform _lookAt;
-        private Vector3 _offset;
         private Camera _mainCamera;
-        
+        private Vector3 _offset;
+
         private void Awake()
         {
             _image = GetComponent<Image>();
             _mainCamera = Camera.main;
-            
+
             SetImageEnabledState(false);
         }
 
@@ -38,14 +38,16 @@ namespace UI
         private void Place()
         {
             if (_lookAt == null) return;
-            
+
             Vector3 pos = _mainCamera.WorldToScreenPoint(_lookAt.position + _offset);
-            
+
             if (transform.position != pos)
                 transform.position = pos;
         }
 
         private void SetImageEnabledState(bool isEnabled)
-            => _image.enabled = isEnabled;
+        {
+            _image.enabled = isEnabled;
+        }
     }
 }

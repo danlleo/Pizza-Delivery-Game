@@ -1,10 +1,9 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Player
 {
-    public class SprintStateChangedEvent : MonoBehaviour, IEvent<SprintStateChangedEventArgs>
+    public class SprintStateChangedEvent : MonoBehaviour
     {
         public event EventHandler<SprintStateChangedEventArgs> Event;
         

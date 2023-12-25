@@ -1,10 +1,9 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Scientist
 {
-    public class StoppedWalkingEvent : MonoBehaviour, IEvent
+    public class StoppedWalkingEvent : MonoBehaviour
     {
         public event EventHandler Event;
         

@@ -1,11 +1,10 @@
 using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Player
 {
     [DisallowMultipleComponent]
-    public class StaminaEvent : MonoBehaviour, IEvent<StaminaEventArgs>
+    public class StaminaEvent : MonoBehaviour
     {
         public event EventHandler<StaminaEventArgs> Event;
         

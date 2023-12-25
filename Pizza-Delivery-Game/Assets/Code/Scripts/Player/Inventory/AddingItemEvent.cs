@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Player.Inventory
 {
     [DisallowMultipleComponent]
-    public class AddingItemEvent : MonoBehaviour, IEvent<AddingItemEventArgs>
+    public class AddingItemEvent : MonoBehaviour
     {
         public event EventHandler<AddingItemEventArgs> Event;
         

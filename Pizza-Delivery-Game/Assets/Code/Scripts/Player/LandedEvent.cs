@@ -1,11 +1,10 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Player
 {
     [DisallowMultipleComponent]
-    public class LandedEvent : MonoBehaviour, IEvent<LandedEventArgs>
+    public class LandedEvent : MonoBehaviour
     {
         public event EventHandler<LandedEventArgs> Event;
         

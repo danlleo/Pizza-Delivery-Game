@@ -11,60 +11,61 @@ namespace UI.Dialogue
     [DisallowMultipleComponent]
     public class Reader : MonoBehaviour
     {
-        [Header("External references")]
-        [SerializeField] private GameObject _dialogueContainer;
+        [Header("External references")] [SerializeField]
+        private GameObject _dialogueContainer;
+
         [SerializeField] private UI _ui;
         [SerializeField] private TextMeshProUGUI _dialogueText;
-        
-        [Header("Settings")] 
-        [SerializeField] private float _waitTimeToMoveToNextLineInSeconds;
 
-        [Space(5)] 
-        [SerializeField, Range(0f, 0.35f)] private float _characterTimeToPrintInSeconds;
-        
-        private Story _story;
+        [Header("Settings")] [SerializeField] private float _waitTimeToMoveToNextLineInSeconds;
+
+        [Space(5)] [SerializeField] [Range(0f, 0.35f)]
+        private float _characterTimeToPrintInSeconds;
+
         private AudioSource _audioSource;
-        
+
         private bool _isReading;
+
+        private Story _story;
 
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
         }
-        
+
         public void ReadDialogue(DialogueSO dialogue)
         {
             if (_isReading) return;
-            
+
             _isReading = true;
             _story = new Story(dialogue.DialogueText.text);
-            
+
             ShowDialogueContainer();
             StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd, dialogue.Configuration));
         }
-        
+
         private IEnumerator DisplayTextRoutine(UnityEvent onComplete, ConfigurationSO configuration)
         {
             ClearDialogueText();
 
             _audioSource.volume = configuration.Volume;
-            
+
             string line = _story.Continue().Trim();
-            
-            int characterCount = 0;
-            
+
+            var characterCount = 0;
+
             while (line.Length >= 1)
             {
                 char textCharacter = line[0];
 
                 PlayCharacterTypeSound(characterCount, textCharacter, configuration);
-                
+
                 characterCount++;
-                
+
                 PrintTextCharacter(textCharacter);
-                
+
                 line = line[1..];
-                
+
                 yield return new WaitForSeconds(_characterTimeToPrintInSeconds);
             }
 
@@ -76,25 +77,26 @@ namespace UI.Dialogue
             else
             {
                 _isReading = false;
-                
+
                 yield return new WaitForSeconds(_waitTimeToMoveToNextLineInSeconds);
-                
+
                 _ui.DialogueClosingEvent.Call(_ui);
                 onComplete?.Invoke();
                 HideDialogueContainer();
             }
         }
-        
-        private void PlayCharacterTypeSound(int currentDisplayCharacterCount, char character, ConfigurationSO configuration)
+
+        private void PlayCharacterTypeSound(int currentDisplayCharacterCount, char character,
+            ConfigurationSO configuration)
         {
             if (currentDisplayCharacterCount % configuration.CharacterPlaySoundFrequency != 0)
                 return;
-            
+
             if (configuration.StopCharacterTypeSound)
                 _audioSource.Stop();
 
             AudioClip targetAudioClip;
-            
+
             if (configuration.MakePredictable)
             {
                 int hashCode = character.GetHashCode();
@@ -102,13 +104,13 @@ namespace UI.Dialogue
 
                 targetAudioClip = configuration.AudioClips[predictableIndex];
 
-                int minPitch = (int)(configuration.MinimumPitch * 100);
-                int maxPitch = (int)(configuration.MaximumPitch * 100);
+                var minPitch = (int)(configuration.MinimumPitch * 100);
+                var maxPitch = (int)(configuration.MaximumPitch * 100);
                 int pitchRange = maxPitch - minPitch;
 
                 if (pitchRange != 0)
                 {
-                    int predictablePitchInt = (hashCode % pitchRange) + minPitch;
+                    int predictablePitchInt = hashCode % pitchRange + minPitch;
                     float predictablePitch = predictablePitchInt / 100f;
 
                     _audioSource.pitch = predictablePitch;
@@ -121,23 +123,31 @@ namespace UI.Dialogue
             else
             {
                 targetAudioClip = configuration.AudioClips[Random.Range(0, configuration.AudioClips.Length)];
-            
+
                 _audioSource.pitch = Random.Range(configuration.MinimumPitch, configuration.MaximumPitch);
             }
-            
+
             _audioSource.PlayOneShot(targetAudioClip);
         }
 
         private void ClearDialogueText()
-            => _dialogueText.text = "";
+        {
+            _dialogueText.text = "";
+        }
 
         private void PrintTextCharacter(char character)
-            => _dialogueText.text += character;
-        
+        {
+            _dialogueText.text += character;
+        }
+
         private void ShowDialogueContainer()
-            => _dialogueContainer.SetActive(true);
-        
+        {
+            _dialogueContainer.SetActive(true);
+        }
+
         private void HideDialogueContainer()
-            => _dialogueContainer.SetActive(false);
+        {
+            _dialogueContainer.SetActive(false);
+        }
     }
 }

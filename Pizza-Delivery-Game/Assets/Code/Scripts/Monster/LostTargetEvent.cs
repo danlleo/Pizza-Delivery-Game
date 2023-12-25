@@ -1,10 +1,9 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Monster
 {
-    public class LostTargetEvent : MonoBehaviour, IEvent
+    public class LostTargetEvent : MonoBehaviour
     {
         public event EventHandler Event;
         

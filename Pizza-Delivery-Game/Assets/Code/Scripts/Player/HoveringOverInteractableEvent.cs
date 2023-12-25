@@ -1,11 +1,10 @@
 using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Player
 {
     [DisallowMultipleComponent]
-    public class HoveringOverInteractableEvent : MonoBehaviour, IEvent<HoveringOverInteractableEventArgs>
+    public class HoveringOverInteractableEvent : MonoBehaviour
     {
         public event EventHandler<HoveringOverInteractableEventArgs> Event;
         

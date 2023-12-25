@@ -20,7 +20,7 @@ namespace UI
     {
         [HideInInspector] public DialogueOpeningEvent DialogueOpeningEvent;
         [HideInInspector] public DialogueClosingEvent DialogueClosingEvent;
-        
+
         [HideInInspector] public InspectableObjectFinishedReadingEvent InspectableObjectFinishedReadingEvent;
         [HideInInspector] public InspectableObjectOpeningEvent InspectableObjectOpeningEvent;
         [HideInInspector] public InspectableObjectClosingEvent InspectableObjectClosingEvent;
@@ -33,12 +33,12 @@ namespace UI
         [HideInInspector] public WorldScreenSpaceIconDetectedEvent WorldScreenSpaceIconDetectedEvent;
         [HideInInspector] public WorldScreenSpaceIconLostEvent WorldScreenSpaceIconLostEvent;
         [HideInInspector] public WorldScreenSpaceIconLostAllEvent WorldScreenSpaceIconLostAllEvent;
-        
+
         private void Awake()
         {
             DialogueOpeningEvent = GetComponent<DialogueOpeningEvent>();
             DialogueClosingEvent = GetComponent<DialogueClosingEvent>();
-            
+
             InspectableObjectFinishedReadingEvent = GetComponent<InspectableObjectFinishedReadingEvent>();
             InspectableObjectOpeningEvent = GetComponent<InspectableObjectOpeningEvent>();
             InspectableObjectClosingEvent = GetComponent<InspectableObjectClosingEvent>();

@@ -8,8 +8,8 @@ namespace UI
     [DisallowMultipleComponent]
     public class InteractText : MonoBehaviour
     {
-        private Player.Player _player;
         private TextMeshProUGUI _interactText;
+        private Player.Player _player;
 
         private void Awake()
         {
@@ -37,11 +37,15 @@ namespace UI
 
             ResetInteractText();
         }
-        
+
         private void SetInteractText(string targetText)
-            => _interactText.text = $"[E] {targetText}";
-        
+        {
+            _interactText.text = $"[E] {targetText}";
+        }
+
         private void ResetInteractText()
-            => _interactText.text = "";
+        {
+            _interactText.text = "";
+        }
     }
 }

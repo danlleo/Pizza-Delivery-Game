@@ -1,11 +1,10 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Player
 {
     [DisallowMultipleComponent]
-    public class StepEvent : MonoBehaviour, IEvent<StepEventArgs>
+    public class StepEvent : MonoBehaviour
     {
         public event EventHandler<StepEventArgs> Event;
         

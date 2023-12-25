@@ -1,10 +1,9 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Scientist
 {
-    public class InteractedWithScientistEvent : MonoBehaviour, IEvent
+    public class InteractedWithScientistEvent : MonoBehaviour
     {
         public event EventHandler Event;
         

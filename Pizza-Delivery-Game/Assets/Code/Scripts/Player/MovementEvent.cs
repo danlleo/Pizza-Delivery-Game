@@ -1,11 +1,10 @@
 using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Player
 {
     [DisallowMultipleComponent]
-    public class MovementEvent : MonoBehaviour, IEvent<MovementEventArgs>
+    public class MovementEvent : MonoBehaviour
     {
         public event EventHandler<MovementEventArgs> Event;
         

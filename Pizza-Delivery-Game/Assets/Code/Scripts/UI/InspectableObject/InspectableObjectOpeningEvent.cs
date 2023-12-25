@@ -1,15 +1,14 @@
 ﻿using System;
 using InspectableObject;
-using Interfaces;
 using UnityEngine;
 
 namespace UI.InspectableObject
 {
     [DisallowMultipleComponent]
-    public class InspectableObjectOpeningEvent : MonoBehaviour, IEvent<InspectableObjectOpeningEventArgs>
+    public class InspectableObjectOpeningEvent : MonoBehaviour
     {
         public event EventHandler<InspectableObjectOpeningEventArgs> Event;
-        
+
         public void Call(object sender, InspectableObjectOpeningEventArgs eventArgs)
         {
             Event?.Invoke(sender, eventArgs);

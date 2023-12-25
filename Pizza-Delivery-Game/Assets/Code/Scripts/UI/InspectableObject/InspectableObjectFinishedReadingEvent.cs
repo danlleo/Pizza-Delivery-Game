@@ -1,14 +1,13 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace UI.InspectableObject
 {
     [DisallowMultipleComponent]
-    public class InspectableObjectFinishedReadingEvent : MonoBehaviour, IEvent<InspectableObjectFinishedReadingEventArgs>
+    public class InspectableObjectFinishedReadingEvent : MonoBehaviour
     {
         public event EventHandler<InspectableObjectFinishedReadingEventArgs> Event;
-        
+
         public void Call(object sender, InspectableObjectFinishedReadingEventArgs eventArgs)
         {
             Event?.Invoke(sender, eventArgs);

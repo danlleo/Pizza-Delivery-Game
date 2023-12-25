@@ -8,13 +8,13 @@ namespace UI
 {
     public class OneHourLaterCanvas : MonoBehaviour
     {
-        [Header("External references")]
-        [SerializeField] private CanvasGroup _canvasGroup;
-    
-        [Header("Settings")]
-        [SerializeField] private float _timeToFade;
+        [Header("External references")] [SerializeField]
+        private CanvasGroup _canvasGroup;
+
+        [Header("Settings")] [SerializeField] private float _timeToFade;
+
         [SerializeField] private float _timeToStayBeforeFadeOut;
-    
+
         private void Start()
         {
             _canvasGroup.DOFade(1f, _timeToFade).OnComplete(() => StartCoroutine(WaitBeforeFadeOutRoutine()));

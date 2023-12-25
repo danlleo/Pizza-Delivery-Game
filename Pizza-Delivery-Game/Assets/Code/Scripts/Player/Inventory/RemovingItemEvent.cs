@@ -1,11 +1,10 @@
 ﻿using System;
-using Interfaces;
 using UnityEngine;
 
 namespace Player.Inventory
 {
     [DisallowMultipleComponent]
-    public class RemovingItemEvent : MonoBehaviour, IEvent<RemovingItemEventArgs>
+    public class RemovingItemEvent : MonoBehaviour
     {
         public event EventHandler<RemovingItemEventArgs> Event;
         
