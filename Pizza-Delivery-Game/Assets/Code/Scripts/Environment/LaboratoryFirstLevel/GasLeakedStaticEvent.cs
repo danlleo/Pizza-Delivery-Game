@@ -14,10 +14,12 @@ namespace Environment.LaboratoryFirstLevel
     public class GasLeakedStaticEventArgs : EventArgs
     {
         public readonly Vector3 GasLeakedPosition;
+        public readonly AudioSource GasLeakedAudioSource;
 
-        public GasLeakedStaticEventArgs(Vector3 gasLeakedPosition)
+        public GasLeakedStaticEventArgs(Vector3 gasLeakedPosition, AudioSource gasLeakedAudioSource)
         {
             GasLeakedPosition = gasLeakedPosition;
+            GasLeakedAudioSource = gasLeakedAudioSource;
         }
     }
 }

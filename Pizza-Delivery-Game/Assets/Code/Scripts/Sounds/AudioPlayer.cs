@@ -20,6 +20,26 @@ namespace Sounds
             audioSource.PlayOneShot(audioClips[Random.Range(0, audioClips.Length - 1)], volume);
         }
 
+        protected void PlaySoundLoop(AudioSource audioSource, AudioClip audioClip, float volume = 1f)
+        {
+            audioSource.loop = true;
+            audioSource.clip = audioClip;
+            audioSource.Play();
+        }
+        
+        protected void PlaySoundLoop(AudioSource audioSource, AudioClip[] audioClips, float volume = 1f)
+        {
+            audioSource.loop = true;
+            audioSource.clip = audioClips[Random.Range(0, audioClips.Length - 1)];
+            audioSource.Play();
+        }
+
+        protected void StopLoopSound(AudioSource audioSource)
+        {
+            audioSource.loop = false;
+            audioSource.Stop();
+        }
+        
         protected void PlaySoundWithRandomPitch(AudioSource audioSource, AudioClip audioClip, float minPitch,
             float maxPitch, float volume = 1f)
         {

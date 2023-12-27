@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Interfaces;
+﻿using Interfaces;
 using UI;
 using UnityEngine;
 
@@ -23,21 +22,10 @@ namespace Player
         {
             _camera = Camera.main;
         }
-
-        private void Start()
+        
+        private void Update()
         {
-            StartCoroutine(ScanRoutine());
-        }
-
-        private IEnumerator ScanRoutine()
-        {
-            var delay = new WaitForSeconds(0.1f);
-
-            while (true)
-            {
-                yield return delay;
-                Scan();
-            }
+            Scan();
         }
         
         private void Scan()
