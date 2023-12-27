@@ -41,7 +41,7 @@ namespace Environment.LaboratoryFirstLevel
         {
             return "Keycard";
         }
-        
+
         public void AddToInventory()
         {
             Player.Player player = Player.Player.Instance;

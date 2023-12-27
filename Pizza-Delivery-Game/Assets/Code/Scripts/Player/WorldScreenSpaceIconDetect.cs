@@ -15,7 +15,7 @@ namespace Player
         
         [Space(5)]
         [SerializeField] private float _detectRadius;
-        
+                
         private Camera _camera;
         
         private void Awake()

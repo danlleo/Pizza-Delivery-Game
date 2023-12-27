@@ -66,7 +66,6 @@ namespace Sounds.Audio
         private void OnAnyGasLeaked(object sender, GasLeakedStaticEventArgs e)
         {
             PlaySound(_audioSource, _gasLeakSpookyClip, 2f);
-            PlaySoundLoop(e.GasLeakedAudioSource, _gasHissingClip, 0.8f);
             PlaySoundAtPoint(_gasLeakClip, e.GasLeakedPosition, 4f);
         }
     }

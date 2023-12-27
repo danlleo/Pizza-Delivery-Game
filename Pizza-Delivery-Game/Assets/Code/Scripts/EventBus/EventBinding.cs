@@ -25,11 +25,8 @@ namespace EventBus
             set => _onEventEmptyArgs = value;
         }
 
-        public EventBinding(Action<T> onEvent)
-            => _onEvent = onEvent;
-
-        public EventBinding(Action onEventEmptyArgs)
-            => _onEventEmptyArgs = _onEventEmptyArgs;
+        public EventBinding(Action<T> onEvent) => _onEvent = onEvent;
+        public EventBinding(Action onEventEmptyArgs) => _onEventEmptyArgs = _onEventEmptyArgs;
 
         public void Add(Action onEvent) => _onEventEmptyArgs += onEvent;
         public void Remove(Action onEvent) => _onEventEmptyArgs -= onEvent;
