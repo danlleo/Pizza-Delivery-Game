@@ -283,17 +283,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""85460d74-bdef-4af2-bf50-bf151330685f"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Click"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -324,6 +313,34 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Keypad"",
+            ""id"": ""e762d931-d5d7-450a-863c-1c32303b97a7"",
+            ""actions"": [
+                {
+                    ""name"": ""ButtonPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""765015bd-b392-4eac-9205-1cfbb4f9c761"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e8b2e840-e6c6-4e53-8ad2-57b6cf185b0b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ButtonPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -344,6 +361,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // Tablet
         m_Tablet = asset.FindActionMap("Tablet", throwIfNotFound: true);
         m_Tablet_Newaction = m_Tablet.FindAction("New action", throwIfNotFound: true);
+        // Keypad
+        m_Keypad = asset.FindActionMap("Keypad", throwIfNotFound: true);
+        m_Keypad_ButtonPress = m_Keypad.FindAction("ButtonPress", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -617,6 +637,52 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public TabletActions @Tablet => new TabletActions(this);
+
+    // Keypad
+    private readonly InputActionMap m_Keypad;
+    private List<IKeypadActions> m_KeypadActionsCallbackInterfaces = new List<IKeypadActions>();
+    private readonly InputAction m_Keypad_ButtonPress;
+    public struct KeypadActions
+    {
+        private @GameInput m_Wrapper;
+        public KeypadActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ButtonPress => m_Wrapper.m_Keypad_ButtonPress;
+        public InputActionMap Get() { return m_Wrapper.m_Keypad; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(KeypadActions set) { return set.Get(); }
+        public void AddCallbacks(IKeypadActions instance)
+        {
+            if (instance == null || m_Wrapper.m_KeypadActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_KeypadActionsCallbackInterfaces.Add(instance);
+            @ButtonPress.started += instance.OnButtonPress;
+            @ButtonPress.performed += instance.OnButtonPress;
+            @ButtonPress.canceled += instance.OnButtonPress;
+        }
+
+        private void UnregisterCallbacks(IKeypadActions instance)
+        {
+            @ButtonPress.started -= instance.OnButtonPress;
+            @ButtonPress.performed -= instance.OnButtonPress;
+            @ButtonPress.canceled -= instance.OnButtonPress;
+        }
+
+        public void RemoveCallbacks(IKeypadActions instance)
+        {
+            if (m_Wrapper.m_KeypadActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IKeypadActions instance)
+        {
+            foreach (var item in m_Wrapper.m_KeypadActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_KeypadActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public KeypadActions @Keypad => new KeypadActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -636,5 +702,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     public interface ITabletActions
     {
         void OnNewaction(InputAction.CallbackContext context);
+    }
+    public interface IKeypadActions
+    {
+        void OnButtonPress(InputAction.CallbackContext context);
     }
 }

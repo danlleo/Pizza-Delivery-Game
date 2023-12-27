@@ -1,5 +1,7 @@
 using System;
 using Environment.Bedroom.PC;
+using EventBus;
+using Keypad;
 using Player;
 using Tablet;
 using UI;
@@ -9,7 +11,7 @@ using UnityEngine.InputSystem;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class InputReader : MonoBehaviour, GameInput.IPlayerActions, GameInput.IUIActions, GameInput.IPCActions
+    public class InputReader : MonoBehaviour, GameInput.IPlayerActions, GameInput.IUIActions, GameInput.IPCActions, GameInput.IKeypadActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
@@ -27,12 +29,15 @@ namespace Misc
 
         private Vector3 _rotateDirection;
 
+        private EventBinding<InteractedWithKeypadEvent> _interactedWithKeypadEventBinding;
+
         private void Awake()
         {
             _gameInput = new GameInput();
             _gameInput.Player.SetCallbacks(this);
             _gameInput.UI.SetCallbacks(this);
             _gameInput.PC.SetCallbacks(this);            
+            _gameInput.Keypad.SetCallbacks(this);
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
         
@@ -44,6 +49,11 @@ namespace Misc
             StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEvent_OnEnded;
             PickedUpStaticEvent.OnTabletPickedUp += OnAnyTabletPickedUp;
             PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
+
+            _interactedWithKeypadEventBinding =
+                new EventBinding<InteractedWithKeypadEvent>(HandleInteractedWithKeypadEvent);
+
+            EventBus<InteractedWithKeypadEvent>.Register(_interactedWithKeypadEventBinding);
         }
 
         private void OnDisable()
@@ -56,6 +66,8 @@ namespace Misc
             StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEvent_OnEnded;
             PickedUpStaticEvent.OnTabletPickedUp -= OnAnyTabletPickedUp;
             PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
+
+            EventBus<InteractedWithKeypadEvent>.Deregister(_interactedWithKeypadEventBinding);
         }
         
         private void Update()
@@ -230,6 +242,35 @@ namespace Misc
             {
                 case InputActionPhase.Started:
                     _player.CallClickedStaticEvent();
+                    break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Performed:
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        #endregion
+
+        #region IKeypadActions
+
+        private void HandleInteractedWithKeypadEvent(InteractedWithKeypadEvent interactedWithKeypadEvent)
+        {
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.Keypad));
+        }
+        
+        public void OnButtonPress(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    EventBus<ButtonPressedEvent>.Raise(new ButtonPressedEvent());
                     break;
                 case InputActionPhase.Disabled:
                     break;

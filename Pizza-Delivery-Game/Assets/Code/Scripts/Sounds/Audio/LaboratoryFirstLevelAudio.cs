@@ -1,6 +1,8 @@
 using System;
 using Door;
 using Environment.LaboratoryFirstLevel;
+using EventBus;
+using Keypad;
 using UnityEngine;
 
 namespace Sounds.Audio
@@ -19,8 +21,12 @@ namespace Sounds.Audio
         [SerializeField] private AudioClip _gasHissingClip;
         [SerializeField] private AudioClip _gasLeakSpookyClip;
         
+        [Space(5)]
+        [SerializeField] private AudioClip _buttonPressClip;
+        
         private AudioSource _audioSource;
-
+        private EventBinding<ButtonPressedEvent> _buttonPressedEventBinding;
+        
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
@@ -32,6 +38,9 @@ namespace Sounds.Audio
             KeycardStateStaticEvent.OnKeycardStateChanged += KeycardStateStaticEvent_OnKeycardStateChanged;
             MonsterPeekedStaticEvent.OnAnyMonsterPeaked += OnAnyMonsterPeaked;
             GasLeakedStaticEvent.OnAnyGasLeaked += OnAnyGasLeaked;
+
+            _buttonPressedEventBinding = new EventBinding<ButtonPressedEvent>(HandleButtonPressedEvent);
+            EventBus<ButtonPressedEvent>.Register(_buttonPressedEventBinding);
         }
         
         private void OnDisable()
@@ -40,6 +49,8 @@ namespace Sounds.Audio
             KeycardStateStaticEvent.OnKeycardStateChanged -= KeycardStateStaticEvent_OnKeycardStateChanged;
             MonsterPeekedStaticEvent.OnAnyMonsterPeaked -= OnAnyMonsterPeaked;
             GasLeakedStaticEvent.OnAnyGasLeaked -= OnAnyGasLeaked;
+            
+            EventBus<ButtonPressedEvent>.Deregister(_buttonPressedEventBinding);
         }
 
         private void KeycardStateStaticEvent_OnKeycardStateChanged(object sender, KeycardStateStaticEventArgs e)
@@ -67,6 +78,11 @@ namespace Sounds.Audio
         {
             PlaySound(_audioSource, _gasLeakSpookyClip, 2f);
             PlaySoundAtPoint(_gasLeakClip, e.GasLeakedPosition, 4f);
+        }
+
+        private void HandleButtonPressedEvent(ButtonPressedEvent buttonPressedEvent)
+        {
+            PlaySoundWithRandomPitch(_audioSource, _buttonPressClip, 0.9f, 1f);
         }
     }
 }
