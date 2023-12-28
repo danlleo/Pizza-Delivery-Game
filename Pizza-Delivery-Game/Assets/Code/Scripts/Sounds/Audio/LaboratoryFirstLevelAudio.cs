@@ -23,9 +23,13 @@ namespace Sounds.Audio
         
         [Space(5)]
         [SerializeField] private AudioClip _buttonPressClip;
+        [SerializeField] private AudioClip _keypadDeniedClip;
+        [SerializeField] private AudioClip _keypadGrantedClip;
         
         private AudioSource _audioSource;
-        private EventBinding<ButtonPressedEvent> _buttonPressedEventBinding;
+        
+        private EventBinding<DigitRegisteredEvent> _digitRegisteredEventBinding;
+        private EventBinding<PasswordValidationResponseEvent> _passwordValidationResponseEventBinding;
         
         private void Awake()
         {
@@ -39,8 +43,12 @@ namespace Sounds.Audio
             MonsterPeekedStaticEvent.OnAnyMonsterPeaked += OnAnyMonsterPeaked;
             GasLeakedStaticEvent.OnAnyGasLeaked += OnAnyGasLeaked;
 
-            _buttonPressedEventBinding = new EventBinding<ButtonPressedEvent>(HandleButtonPressedEvent);
-            EventBus<ButtonPressedEvent>.Register(_buttonPressedEventBinding);
+            _digitRegisteredEventBinding = new EventBinding<DigitRegisteredEvent>(HandleButtonPressedEvent);
+            EventBus<DigitRegisteredEvent>.Register(_digitRegisteredEventBinding);
+
+            _passwordValidationResponseEventBinding =
+                new EventBinding<PasswordValidationResponseEvent>(HandlePasswordValidationResponseEvent);
+            EventBus<PasswordValidationResponseEvent>.Register(_passwordValidationResponseEventBinding);
         }
         
         private void OnDisable()
@@ -49,8 +57,9 @@ namespace Sounds.Audio
             KeycardStateStaticEvent.OnKeycardStateChanged -= KeycardStateStaticEvent_OnKeycardStateChanged;
             MonsterPeekedStaticEvent.OnAnyMonsterPeaked -= OnAnyMonsterPeaked;
             GasLeakedStaticEvent.OnAnyGasLeaked -= OnAnyGasLeaked;
-            
-            EventBus<ButtonPressedEvent>.Deregister(_buttonPressedEventBinding);
+
+            EventBus<DigitRegisteredEvent>.Deregister(_digitRegisteredEventBinding);
+            EventBus<PasswordValidationResponseEvent>.Deregister(_passwordValidationResponseEventBinding);
         }
 
         private void KeycardStateStaticEvent_OnKeycardStateChanged(object sender, KeycardStateStaticEventArgs e)
@@ -80,9 +89,17 @@ namespace Sounds.Audio
             PlaySoundAtPoint(_gasLeakClip, e.GasLeakedPosition, 4f);
         }
 
-        private void HandleButtonPressedEvent(ButtonPressedEvent buttonPressedEvent)
+        private void HandleButtonPressedEvent(DigitRegisteredEvent digitRegisteredEvent)
         {
             PlaySoundWithRandomPitch(_audioSource, _buttonPressClip, 0.9f, 1f);
+        }
+
+        private void HandlePasswordValidationResponseEvent(
+            PasswordValidationResponseEvent passwordValidationResponseEvent)
+        {
+            AudioClip clip = passwordValidationResponseEvent.IsCorrect ? _keypadGrantedClip : _keypadDeniedClip;
+            
+            PlaySound(_audioSource, clip);
         }
     }
 }

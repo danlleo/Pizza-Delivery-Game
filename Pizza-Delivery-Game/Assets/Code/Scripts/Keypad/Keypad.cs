@@ -2,7 +2,6 @@ using EventBus;
 using Interfaces;
 using Misc;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Keypad
 {
@@ -10,11 +9,14 @@ namespace Keypad
     [DisallowMultipleComponent]
     public class Keypad : MonoBehaviour, IInteractable
     {
-        [FormerlySerializedAs("_buttonHover")]
+        private const string CORRECT_PASSWORD = "673225";
+        
         [Header("External References")]
         [SerializeField] private ButtonPress _buttonPress;
 
         private BoxCollider _keypadBoxCollider;
+
+        private EventBinding<PasswordValidationEvent> _passwordValidationEventBinding;
         
         private void Awake()
         {
@@ -22,6 +24,17 @@ namespace Keypad
             
             _buttonPress.enabled = false;
             _keypadBoxCollider.enabled = true;
+        }
+
+        private void OnEnable()
+        {
+            _passwordValidationEventBinding = new EventBinding<PasswordValidationEvent>(HandlePasswordValidationEvent);
+            EventBus<PasswordValidationEvent>.Register(_passwordValidationEventBinding);
+        }
+
+        private void OnDisable()
+        {
+            EventBus<PasswordValidationEvent>.Deregister(_passwordValidationEventBinding);
         }
 
         public void Interact()
@@ -38,6 +51,18 @@ namespace Keypad
         public string GetActionDescription()
         {
             return "Keypad";
+        }
+
+        private void ValidatePassword(string password)
+        {
+            bool isCorrect = password == CORRECT_PASSWORD;
+
+            EventBus<PasswordValidationResponseEvent>.Raise(new PasswordValidationResponseEvent(isCorrect));
+        }
+        
+        private void HandlePasswordValidationEvent(PasswordValidationEvent passwordValidationEvent)
+        {
+            ValidatePassword(passwordValidationEvent.Password);
         }
     }
 }

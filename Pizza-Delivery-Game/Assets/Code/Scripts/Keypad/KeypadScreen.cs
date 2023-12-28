@@ -13,7 +13,9 @@ namespace Keypad
         [Header("External references")]
         [SerializeField] private TextMeshProUGUI _keypadText;
 
-        private EventBinding<ButtonPressedEvent> _buttonPressedEventBinding;
+        private EventBinding<DigitRegisteredEvent> _digitRegisteredEventBinding;
+        private EventBinding<PasswordConfirmedEvent> _passwordConfirmedEventBinding;
+        private EventBinding<PasswordValidationResponseEvent> _passwordValidationResponseEventBinding;
         
         private void Awake()
         {
@@ -22,13 +24,22 @@ namespace Keypad
 
         private void OnEnable()
         {
-            _buttonPressedEventBinding = new EventBinding<ButtonPressedEvent>(HandleButtonPressedEventBinding);
-            EventBus<ButtonPressedEvent>.Register(_buttonPressedEventBinding);
+            _digitRegisteredEventBinding = new EventBinding<DigitRegisteredEvent>(HandleDigitRegisteredEvent);
+            EventBus<DigitRegisteredEvent>.Register(_digitRegisteredEventBinding);
+
+            _passwordConfirmedEventBinding = new EventBinding<PasswordConfirmedEvent>(HandlePasswordConfirmedEvent);
+            EventBus<PasswordConfirmedEvent>.Register(_passwordConfirmedEventBinding);
+
+            _passwordValidationResponseEventBinding =
+                new EventBinding<PasswordValidationResponseEvent>(HandlePasswordValidationResponseEvent);
+            EventBus<PasswordValidationResponseEvent>.Register(_passwordValidationResponseEventBinding);
         }
 
         private void OnDisable()
         {
-            EventBus<ButtonPressedEvent>.Deregister(_buttonPressedEventBinding);
+            EventBus<DigitRegisteredEvent>.Deregister(_digitRegisteredEventBinding);
+            EventBus<PasswordConfirmedEvent>.Deregister(_passwordConfirmedEventBinding);
+            EventBus<PasswordValidationResponseEvent>.Deregister(_passwordValidationResponseEventBinding);
         }
 
         private void ClearKeypadText()
@@ -56,10 +67,23 @@ namespace Keypad
 
             _keypadText.text += digit;
         }
-        
-        private void HandleButtonPressedEventBinding(ButtonPressedEvent buttonPressedEvent)
+
+        private void HandleDigitRegisteredEvent(DigitRegisteredEvent digitRegisteredEvent)
         {
-            AddDigitToDisplay(buttonPressedEvent.Digit);
+            AddDigitToDisplay(digitRegisteredEvent.Digit);
+        }
+
+        private void HandlePasswordConfirmedEvent(PasswordConfirmedEvent passwordConfirmedEvent)
+        {
+            EventBus<PasswordValidationEvent>.Raise(new PasswordValidationEvent(_keypadText.text));
+        }
+
+        private void HandlePasswordValidationResponseEvent(
+            PasswordValidationResponseEvent passwordValidationResponseEvent)
+        {
+            if (passwordValidationResponseEvent.IsCorrect) return;
+            
+            ClearKeypadText();
         }
     }
 }

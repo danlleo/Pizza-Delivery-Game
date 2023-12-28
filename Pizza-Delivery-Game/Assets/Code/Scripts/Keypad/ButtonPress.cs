@@ -34,7 +34,11 @@ namespace Keypad
         {
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-            if (!Physics.Raycast(ray, out RaycastHit hit)) return;
+            if (!Physics.Raycast(ray, out RaycastHit hit))
+            {
+                ClearSelectedButton();
+                return;
+            }
 
             if (!hit.collider.TryGetComponent(out IKeypadButton keypadButton))
             {

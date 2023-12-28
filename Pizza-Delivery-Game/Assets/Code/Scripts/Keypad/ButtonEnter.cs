@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DG.Tweening;
 using Enums.Keypad;
 using EventBus;
@@ -7,16 +7,12 @@ using UnityEngine;
 
 namespace Keypad
 {
-    [DisallowMultipleComponent]
-    public class ButtonNumber : MonoBehaviour, IKeypadButton
+    public class ButtonEnter : MonoBehaviour, IKeypadButton
     {
         [Header("External references")] 
         [SerializeField] private Material _defaultMaterial;
         [SerializeField] private Material _selectedMaterial;
 
-        [Header("Settings")] 
-        [SerializeField] private ButtonDigit _digit;
-        
         private MeshRenderer _meshRenderer;
 
         private Vector3 _targetPosition;
@@ -35,7 +31,7 @@ namespace Keypad
             pressSequence.Append(transform.DOLocalMove(_targetPosition, .1f));
             pressSequence.Append(transform.DOLocalMove(_defaultPosition, .1f));
 
-            EventBus<DigitRegisteredEvent>.Raise(new DigitRegisteredEvent(_digit));
+            EventBus<PasswordConfirmedEvent>.Raise(new PasswordConfirmedEvent());
         }
         
         public void SetType(ButtonType buttonType)

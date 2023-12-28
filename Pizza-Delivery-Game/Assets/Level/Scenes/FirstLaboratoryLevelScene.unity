@@ -1707,6 +1707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 8
 --- !u!1001 &199843667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2784,6 +2785,8 @@ MonoBehaviour:
   _gasHissingClip: {fileID: 8300000, guid: 36d2c47b1553e3e4da089d40bb15a269, type: 3}
   _gasLeakSpookyClip: {fileID: 8300000, guid: a7091f7b917d7e943beb06db935303c5, type: 3}
   _buttonPressClip: {fileID: 8300000, guid: f485e551317e0834cb84150de82c730d, type: 3}
+  _keypadDeniedClip: {fileID: 8300000, guid: 6badc82930e38c34891f46e1f01f63d3, type: 3}
+  _keypadGrantedClip: {fileID: 8300000, guid: 54ccf978c7886364c980d9f84ff32bd3, type: 3}
 --- !u!4 &292728670
 Transform:
   m_ObjectHideFlags: 0
@@ -3344,6 +3347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 7
 --- !u!1001 &316026011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5192,6 +5196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 5
 --- !u!1001 &512668789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6065,6 +6070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 9
 --- !u!4 &617907920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7435466893150946102, guid: ebb3c85b58baeef44825d9dcc11dc781,
@@ -7702,20 +7708,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1c3fdb86a0adcd46ab019295d74504c, type: 3}
---- !u!114 &740925913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5212895673733009964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89678557650c4e909f5e2a564a5af1ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
-  _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
 --- !u!1001 &746789316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21421,6 +21413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 4
 --- !u!114 &1758062826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21435,6 +21428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 3
 --- !u!114 &1758062827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21449,6 +21443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 2
 --- !u!114 &1758062828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21463,6 +21458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 1
 --- !u!114 &1758062829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21477,6 +21473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 0
 --- !u!1001 &1763691617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22595,6 +22592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
   _selectedMaterial: {fileID: 2100000, guid: 652d93f3b0796e347ab528bf6339b72d, type: 2}
+  _digit: 6
 --- !u!4 &1944806771 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7435466893150946102, guid: ebb3c85b58baeef44825d9dcc11dc781,
@@ -26666,8 +26664,8 @@ GameObject:
   - component: {fileID: 2303921292907810488}
   - component: {fileID: 2303921292907810489}
   - component: {fileID: 2303921292907810493}
-  - component: {fileID: 2303921292907810491}
   - component: {fileID: 2303921292907810492}
+  - component: {fileID: 2303921292907810491}
   - component: {fileID: 2303921292907810494}
   m_Layer: 6
   m_Name: Keypad
@@ -30914,7 +30912,7 @@ GameObject:
   - component: {fileID: 1206050333654456115}
   - component: {fileID: 8776701394942383031}
   - component: {fileID: 7944772037429348235}
-  - component: {fileID: 740925913}
+  - component: {fileID: 8776701394942383032}
   m_Layer: 0
   m_Name: bttnEnter
   m_TagString: Untagged
@@ -36426,6 +36424,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8776701394942383032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212895673733009964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79636a9612d38f48a59b31dda325f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultMaterial: {fileID: 2100000, guid: 30cf57df1071c9347aff000314ea227d, type: 2}
+  _selectedMaterial: {fileID: 2100000, guid: d250aecb0501b024abc9d7bf88a0d607, type: 2}
 --- !u!23 &8780415939404007149
 MeshRenderer:
   m_ObjectHideFlags: 0
