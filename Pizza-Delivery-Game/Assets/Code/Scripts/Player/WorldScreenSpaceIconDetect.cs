@@ -15,7 +15,8 @@ namespace Player
         
         [Space(5)]
         [SerializeField] private float _detectRadius;
-                
+        [SerializeField] private bool _isEnabled = true;
+        
         private Camera _camera;
         
         private void Awake()
@@ -30,6 +31,8 @@ namespace Player
         
         private void Scan()
         {
+            if (!_isEnabled) return;
+            
             Plane[] cameraPlanes = GeometryUtility.CalculateFrustumPlanes(_camera);
             Collider[] hitColliders =
                 Physics.OverlapSphere(_detectPoint.position, _detectRadius, _worldScreenSpaceIconMask);
@@ -44,9 +47,6 @@ namespace Player
             {
                 if (!hitCollider.TryGetComponent(out IWorldScreenSpaceIcon worldScreenSpaceIcon))
                 {
-                    _ui.WorldScreenSpaceIconLostEvent.Call(this,
-                        new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
-                    
                     continue;
                 }
 

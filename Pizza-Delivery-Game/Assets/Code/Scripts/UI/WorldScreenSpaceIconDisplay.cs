@@ -8,8 +8,8 @@ namespace UI
     [DisallowMultipleComponent]
     public class WorldScreenSpaceIconDisplay : MonoBehaviour
     {
-        [Header("External references")] [SerializeField]
-        private UI _ui;
+        [Header("External references")] 
+        [SerializeField] private UI _ui;
 
         [SerializeField] private Transform _container;
         [SerializeField] private ScreenSpaceIconFollowWorld _screenSpaceIconFollowWorldPrefab;
@@ -56,8 +56,9 @@ namespace UI
         {
             if (!_worldScreenSpaceIconDictionary.TryGetValue(worldScreenSpaceIcon,
                     out ScreenSpaceIconFollowWorld screenSpaceIconFollowWorld)) return;
-
+            
             Destroy(screenSpaceIconFollowWorld.gameObject);
+            
             _worldScreenSpaceIconDictionary.Remove(worldScreenSpaceIcon);
         }
 
