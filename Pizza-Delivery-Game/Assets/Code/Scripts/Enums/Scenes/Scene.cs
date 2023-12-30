@@ -8,6 +8,5 @@ namespace Enums.Scenes
         LoadingScene,
         FirstLaboratoryLevelScene,
         SecondLaboratoryLevelScene,
-        ThirdLaboratoryLevelScene,
     }
 }

@@ -11,7 +11,7 @@ using UnityEngine.InputSystem;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class InputReader : MonoBehaviour, GameInput.IPlayerActions, GameInput.IUIActions, GameInput.IPCActions, GameInput.IKeypadActions
+    public class InputReader : MonoBehaviour, GameInput.IPlayerActions, GameInput.IUIActions, GameInput.IPCActions, GameInput.IKeypadActions, GameInput.ITabletActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
@@ -36,7 +36,8 @@ namespace Misc
             _gameInput = new GameInput();
             _gameInput.Player.SetCallbacks(this);
             _gameInput.UI.SetCallbacks(this);
-            _gameInput.PC.SetCallbacks(this);            
+            _gameInput.PC.SetCallbacks(this);
+            _gameInput.Tablet.SetCallbacks(this);
             _gameInput.Keypad.SetCallbacks(this);
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
@@ -133,6 +134,8 @@ namespace Misc
         
         private void OnAnyTabletPutDown(object sender, EventArgs e)
         {
+            print("Put down");
+            
             InputAllowance.EnableInput();
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
@@ -170,8 +173,6 @@ namespace Misc
 
         public void OnFlashlight(InputAction.CallbackContext context)
         {
-            if (!InputAllowance.InputEnabled) return;
-
             switch (context.phase)
             {
                 case InputActionPhase.Started:
@@ -258,6 +259,20 @@ namespace Misc
 
         #endregion
 
+        #region ITabletActions
+
+        public void OnTabletPutDown(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    PutDownStaticEvent.Call(this);
+                    break;
+            }
+        }
+
+        #endregion
+        
         #region IKeypadActions
 
         private void HandleInteractedWithKeypadEvent(InteractedWithKeypadEvent interactedWithKeypadEvent)
@@ -270,6 +285,8 @@ namespace Misc
             switch (context.phase)
             {
                 case InputActionPhase.Started:
+                    if (!InputAllowance.InputEnabled) return;
+                    
                     EventBus<ButtonPressedEvent>.Raise(new ButtonPressedEvent());
                     break;
                 case InputActionPhase.Disabled:

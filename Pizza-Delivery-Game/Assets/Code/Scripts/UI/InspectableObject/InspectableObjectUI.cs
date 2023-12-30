@@ -20,8 +20,8 @@ namespace UI.InspectableObject
         [SerializeField] private TextMeshProUGUI _continueText;
         [SerializeField] private Reader _reader;
 
-        [Header("Settings")] [SerializeField] private float _continueTextBlinkTimeInSeconds;
-
+        [Header("Settings")] 
+        [SerializeField] private float _continueTextBlinkTimeInSeconds;
         [SerializeField] private float _objectRotationSpeed = 35f;
 
         private bool _allowedToRead;

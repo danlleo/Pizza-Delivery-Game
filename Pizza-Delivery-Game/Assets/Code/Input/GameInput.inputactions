@@ -269,7 +269,7 @@
             "id": "59b0895f-8455-4909-a51a-81538a40b295",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "TabletPutDown",
                     "type": "Button",
                     "id": "dbead56d-eda5-48c1-8ce8-2f01ea20da46",
                     "expectedControlType": "Button",
@@ -282,11 +282,11 @@
                 {
                     "name": "",
                     "id": "88264ffc-1e3f-4a09-884c-f3e948d5aedf",
-                    "path": "",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "TabletPutDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

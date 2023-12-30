@@ -1,6 +1,9 @@
+using Enums.Scenes;
 using EventBus;
 using Interfaces;
 using Misc;
+using Misc.Loader;
+using UI;
 using UnityEngine;
 
 namespace Keypad
@@ -17,6 +20,7 @@ namespace Keypad
         private BoxCollider _keypadBoxCollider;
 
         private EventBinding<PasswordValidationEvent> _passwordValidationEventBinding;
+        private EventBinding<PasswordValidationResponseEvent> _passwordValidationEventResponseEventBinding;
         
         private void Awake()
         {
@@ -30,11 +34,16 @@ namespace Keypad
         {
             _passwordValidationEventBinding = new EventBinding<PasswordValidationEvent>(HandlePasswordValidationEvent);
             EventBus<PasswordValidationEvent>.Register(_passwordValidationEventBinding);
-        }
+
+            _passwordValidationEventResponseEventBinding =
+                new EventBinding<PasswordValidationResponseEvent>(HandlePasswordValidationResponseEvent);
+            EventBus<PasswordValidationResponseEvent>.Register(_passwordValidationEventResponseEventBinding);
+        }   
 
         private void OnDisable()
         {
             EventBus<PasswordValidationEvent>.Deregister(_passwordValidationEventBinding);
+            EventBus<PasswordValidationResponseEvent>.Deregister(_passwordValidationEventResponseEventBinding);
         }
 
         public void Interact()
@@ -63,6 +72,15 @@ namespace Keypad
         private void HandlePasswordValidationEvent(PasswordValidationEvent passwordValidationEvent)
         {
             ValidatePassword(passwordValidationEvent.Password);
+        }
+
+        private void HandlePasswordValidationResponseEvent(PasswordValidationResponseEvent passwordValidationResponseEvent)
+        {
+            if (!passwordValidationResponseEvent.IsCorrect)
+                return;
+                
+            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene));
+            Destroy(this);
         }
     }
 }

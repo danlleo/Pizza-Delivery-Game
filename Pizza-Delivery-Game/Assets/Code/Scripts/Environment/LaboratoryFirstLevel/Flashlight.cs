@@ -3,7 +3,7 @@ using Interfaces;
 using Player.Inventory;
 using UnityEngine;
 
-namespace Environment.Bedroom
+namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
     public class Flashlight : MonoBehaviour, IInteractable, IInspectable

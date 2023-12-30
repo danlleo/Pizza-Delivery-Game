@@ -917,8 +917,6 @@ GameObject:
   - component: {fileID: 4793986125981619321}
   - component: {fileID: 6125330398367582732}
   - component: {fileID: 5552108210663328240}
-  - component: {fileID: 4372333259357727993}
-  - component: {fileID: 5310158299535503359}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -1130,8 +1128,6 @@ MonoBehaviour:
   InspectableObjectCloseEvent: {fileID: 0}
   ConfirmEvent: {fileID: 0}
   OnObjectiveUpdated: {fileID: 0}
-  WorldScreenSpaceIconDetectedEvent: {fileID: 0}
-  WorldScreenSpaceIconLostEvent: {fileID: 0}
 --- !u!114 &6894446411172980243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1308,30 +1304,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac59276733d54975a0fd6afb1e1dcbe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4372333259357727993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837689530654671978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19861e6775084a10b23b1b8f1e4e52cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5310158299535503359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837689530654671978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b8f58b36a624aa087440d4e9ef435a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3925852911189296028

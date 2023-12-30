@@ -291,7 +291,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             ""id"": ""59b0895f-8455-4909-a51a-81538a40b295"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""TabletPutDown"",
                     ""type"": ""Button"",
                     ""id"": ""dbead56d-eda5-48c1-8ce8-2f01ea20da46"",
                     ""expectedControlType"": ""Button"",
@@ -304,11 +304,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""88264ffc-1e3f-4a09-884c-f3e948d5aedf"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""TabletPutDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -360,7 +360,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_PC_Click = m_PC.FindAction("Click", throwIfNotFound: true);
         // Tablet
         m_Tablet = asset.FindActionMap("Tablet", throwIfNotFound: true);
-        m_Tablet_Newaction = m_Tablet.FindAction("New action", throwIfNotFound: true);
+        m_Tablet_TabletPutDown = m_Tablet.FindAction("TabletPutDown", throwIfNotFound: true);
         // Keypad
         m_Keypad = asset.FindActionMap("Keypad", throwIfNotFound: true);
         m_Keypad_ButtonPress = m_Keypad.FindAction("ButtonPress", throwIfNotFound: true);
@@ -595,12 +595,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     // Tablet
     private readonly InputActionMap m_Tablet;
     private List<ITabletActions> m_TabletActionsCallbackInterfaces = new List<ITabletActions>();
-    private readonly InputAction m_Tablet_Newaction;
+    private readonly InputAction m_Tablet_TabletPutDown;
     public struct TabletActions
     {
         private @GameInput m_Wrapper;
         public TabletActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Tablet_Newaction;
+        public InputAction @TabletPutDown => m_Wrapper.m_Tablet_TabletPutDown;
         public InputActionMap Get() { return m_Wrapper.m_Tablet; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -610,16 +610,16 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_TabletActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_TabletActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @TabletPutDown.started += instance.OnTabletPutDown;
+            @TabletPutDown.performed += instance.OnTabletPutDown;
+            @TabletPutDown.canceled += instance.OnTabletPutDown;
         }
 
         private void UnregisterCallbacks(ITabletActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @TabletPutDown.started -= instance.OnTabletPutDown;
+            @TabletPutDown.performed -= instance.OnTabletPutDown;
+            @TabletPutDown.canceled -= instance.OnTabletPutDown;
         }
 
         public void RemoveCallbacks(ITabletActions instance)
@@ -701,7 +701,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     }
     public interface ITabletActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnTabletPutDown(InputAction.CallbackContext context);
     }
     public interface IKeypadActions
     {
