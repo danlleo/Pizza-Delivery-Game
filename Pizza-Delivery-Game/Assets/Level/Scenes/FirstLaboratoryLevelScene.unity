@@ -4871,17 +4871,17 @@ PrefabInstance:
     - target: {fileID: 8530758911292480668, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.000009500949
+      value: 0.00000003579259
       objectReference: {fileID: 0}
     - target: {fileID: 8530758911292480668, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00003671646
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8530758911292480668, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00002670288
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8530758911292480668, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
@@ -4901,7 +4901,7 @@ PrefabInstance:
     - target: {fileID: 8530758911292480668, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000029802322
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21115,7 +21115,9 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 27.899994
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4372333259357727993, guid: ddd24bdb5e200284ab06417b980055e2, type: 3}
+    - {fileID: 5310158299535503359, guid: ddd24bdb5e200284ab06417b980055e2, type: 3}
     m_RemovedGameObjects:
     - {fileID: 509801630594994273, guid: ddd24bdb5e200284ab06417b980055e2, type: 3}
     m_AddedGameObjects: []
@@ -22369,7 +22371,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41afe567acf345579178faa84bf94879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ui: {fileID: 1713837658}
   _container: {fileID: 1704615738}
   _screenSpaceIconFollowWorldPrefab: {fileID: -5194794162006013525, guid: 4479c60f215b9e849ad4189b72ec3583,
     type: 3}

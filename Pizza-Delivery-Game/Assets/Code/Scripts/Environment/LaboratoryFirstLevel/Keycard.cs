@@ -3,13 +3,13 @@ using Enums.Keycards;
 using InspectableObject;
 using Interfaces;
 using Player.Inventory;
-using UI;
 using UnityEngine;
+using WorldScreenSpaceIcon;
 
 namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
-    public class Keycard : MonoBehaviour, IInteractable, IInspectable, IWorldScreenSpaceIcon
+    public class Keycard : WorldScreenSpaceIcon.WorldScreenSpaceIcon, IInteractable, IInspectable
     {
         [Header("External references")]
         [SerializeField] private InspectableObjectSO _inspectableObject;
@@ -48,9 +48,9 @@ namespace Environment.LaboratoryFirstLevel
             player.AddingItemEvent.Call(player, new AddingItemEventArgs(_inspectableObject.Item));
         }
 
-        public WorldScreenSpaceIcon GetWorldScreenSpaceIcon()
+        public override WorldScreenSpaceIconData GetWorldScreenSpaceIconData()
         {
-            return new WorldScreenSpaceIcon(transform, Vector3.zero);
+            return new WorldScreenSpaceIconData(transform, Vector3.zero);
         }
     }
 }

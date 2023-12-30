@@ -3,10 +3,11 @@ using Interfaces;
 using UI;
 using UnityEngine;
 using Player.Inventory;
+using WorldScreenSpaceIcon;
 
 namespace Environment.LaboratoryFirstLevel
 {
-    public class Wrench : MonoBehaviour, IInteractable, IWorldScreenSpaceIcon, IInspectable
+    public class Wrench : WorldScreenSpaceIcon.WorldScreenSpaceIcon, IInteractable, IInspectable
     {
         [SerializeField] private InspectableObjectSO _wrenchInspectableObject;
         
@@ -21,9 +22,9 @@ namespace Environment.LaboratoryFirstLevel
             return "Wrench";
         }
 
-        public WorldScreenSpaceIcon GetWorldScreenSpaceIcon()
+        public override WorldScreenSpaceIconData GetWorldScreenSpaceIconData()
         {
-            return new WorldScreenSpaceIcon(transform, Vector3.zero);
+            return new WorldScreenSpaceIconData(transform, Vector3.zero);
         }
 
         public void AddToInventory()

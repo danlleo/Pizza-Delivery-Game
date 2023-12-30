@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1020010896817862302}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.00000003579259, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 755997368146574876}
   - component: {fileID: 5921299844548752529}
   - component: {fileID: 589676692940274148}
+  - component: {fileID: 4378556504438040712}
   - component: {fileID: 7903500282913295232}
   - component: {fileID: 1418063800019633332}
   - component: {fileID: 3624578203164401176}
@@ -285,6 +286,7 @@ GameObject:
   - component: {fileID: 6591719902434433139}
   - component: {fileID: 8470514689133613516}
   - component: {fileID: 8587969999226990447}
+  - component: {fileID: 3501078519673154868}
   - component: {fileID: 8049610283373172068}
   - component: {fileID: 8138282122625772536}
   - component: {fileID: 1828364634665443464}
@@ -293,8 +295,6 @@ GameObject:
   - component: {fileID: 604388056162124406}
   - component: {fileID: 1907360469936217690}
   - component: {fileID: 167387503132259744}
-  - component: {fileID: 4378556504438040712}
-  - component: {fileID: 3501078519673154868}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -373,6 +373,29 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!136 &4378556504438040712
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173784742728827568}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.0265782
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.48393905, z: 0}
 --- !u!82 &7903500282913295232
 AudioSource:
   m_ObjectHideFlags: 0
@@ -711,6 +734,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1418063800019633332}
+--- !u!114 &3501078519673154868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173784742728827568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703e351824a14f20882a7dae26a15f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detectPoint: {fileID: 1619989716135326758}
+  _worldScreenSpaceIconMask:
+    serializedVersion: 2
+    m_Bits: 2112
+  _detectRadius: 5
+  _isEnabled: 1
 --- !u!114 &8049610283373172068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,48 +848,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deccd7c7365b4d8d907f61a5b7ff1003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &4378556504438040712
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4173784742728827568}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.0265782
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.48393905, z: 0}
---- !u!114 &3501078519673154868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4173784742728827568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 703e351824a14f20882a7dae26a15f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ui: {fileID: 0}
-  _detectPoint: {fileID: 1619989716135326758}
-  _worldScreenSpaceIconMask:
-    serializedVersion: 2
-    m_Bits: 2048
-  _detectDistance: 0
-  _detectRadius: 0
 --- !u!1 &4572496924224856881
 GameObject:
   m_ObjectHideFlags: 0

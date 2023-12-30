@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace UI
+namespace WorldScreenSpaceIcon
 {
-    public struct WorldScreenSpaceIcon
+    public struct WorldScreenSpaceIconData
     {
         public readonly Transform LookAtTarget;
         public Vector3 Offset;
 
-        public WorldScreenSpaceIcon(Transform lookAtTarget, Vector3 offset)
+        public WorldScreenSpaceIconData(Transform lookAtTarget, Vector3 offset)
         {
             LookAtTarget = lookAtTarget;
             Offset = offset;

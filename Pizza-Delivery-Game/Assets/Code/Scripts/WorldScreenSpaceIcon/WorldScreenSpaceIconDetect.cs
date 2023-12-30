@@ -1,85 +1,76 @@
-﻿using Interfaces;
-using UI;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Player
+namespace WorldScreenSpaceIcon
 {
     public class WorldScreenSpaceIconDetect : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private UI.UI _ui;
         [SerializeField] private Transform _detectPoint;
-        
-        [Header("Settings")]
+
+        [Header("Settings")] 
         [SerializeField] private LayerMask _worldScreenSpaceIconMask;
-        
-        [Space(5)]
+
+        [Space(5)] 
         [SerializeField] private float _detectRadius;
         [SerializeField] private bool _isEnabled = true;
-        
+
         private Camera _camera;
-        
+
         private void Awake()
         {
             _camera = Camera.main;
         }
-        
+
         private void Update()
         {
             Scan();
         }
-        
+
         private void Scan()
         {
             if (!_isEnabled) return;
-            
+
             Plane[] cameraPlanes = GeometryUtility.CalculateFrustumPlanes(_camera);
             Collider[] hitColliders =
                 Physics.OverlapSphere(_detectPoint.position, _detectRadius, _worldScreenSpaceIconMask);
 
             if (hitColliders.Length == 0)
             {
-                _ui.WorldScreenSpaceIconLostAllEvent.Call(this);
+                this.CallWorldScreenSpaceIconLostAllStaticEvent();
                 return;
             }
-            
+
             foreach (Collider hitCollider in hitColliders)
             {
-                if (!hitCollider.TryGetComponent(out IWorldScreenSpaceIcon worldScreenSpaceIcon))
-                {
-                    continue;
-                }
+                if (!hitCollider.TryGetComponent(out WorldScreenSpaceIcon worldScreenSpaceIcon)) continue;
 
                 bool isInView = GeometryUtility.TestPlanesAABB(cameraPlanes, hitCollider.bounds);
 
                 if (!isInView)
                 {
-                    _ui.WorldScreenSpaceIconLostEvent.Call(this,
-                        new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
+                    worldScreenSpaceIcon.CallWorldScreenSpaceIconLostStaticEvent();
 
                     continue;
                 }
 
                 Vector3 directionToCollider = (hitCollider.transform.position - _detectPoint.position).normalized;
 
-                if (!Physics.Raycast(_detectPoint.position, directionToCollider, out RaycastHit raycastHit, float.MaxValue))
+                if (!Physics.Raycast(_detectPoint.position, directionToCollider, out RaycastHit raycastHit,
+                        float.MaxValue))
                 {
-                    _ui.WorldScreenSpaceIconLostEvent.Call(this,
-                        new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
+                    worldScreenSpaceIcon.CallWorldScreenSpaceIconLostStaticEvent();
 
                     continue;
                 }
 
-                if (!raycastHit.collider.TryGetComponent(out IWorldScreenSpaceIcon _))
+                if (!raycastHit.collider.TryGetComponent(out WorldScreenSpaceIcon _))
                 {
-                    _ui.WorldScreenSpaceIconLostEvent.Call(this,
-                        new WorldScreenSpaceIconLostEventArgs(worldScreenSpaceIcon));
+                    worldScreenSpaceIcon.CallWorldScreenSpaceIconLostStaticEvent();
 
                     continue;
                 }
-                    
-                _ui.WorldScreenSpaceIconDetectedEvent.Call(this,
-                    new WorldScreenSpaceIconDetectedEventArgs(worldScreenSpaceIcon));
+
+                worldScreenSpaceIcon.CallWorldScreenSpaceIconDetectedStaticEvent();
             }
         }
     }
