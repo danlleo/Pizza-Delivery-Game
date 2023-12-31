@@ -12,7 +12,7 @@ namespace Keypad
     [DisallowMultipleComponent]
     public class Keypad : MonoBehaviour, IInteractable
     {
-        private const string CORRECT_PASSWORD = "673225";
+        private const string CORRECT_PASSWORD = "421178";
         
         [Header("External References")]
         [SerializeField] private ButtonPress _buttonPress;
@@ -78,8 +78,10 @@ namespace Keypad
         {
             if (!passwordValidationResponseEvent.IsCorrect)
                 return;
-                
-            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene));
+
+            Crossfade.Instance.FadeIn(InputAllowance.DisableInput,
+                () => Loader.Load(Scene.SecondLaboratoryLevelScene));
+            
             Destroy(this);
         }
     }

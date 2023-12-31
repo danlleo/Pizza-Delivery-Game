@@ -50,6 +50,7 @@ namespace Environment.LaboratoryFirstLevel
         {
             _boxCollider.Disable();
 
+            InputAllowance.DisableInput();
             PickedUpStaticEvent.Call(this);
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
             
@@ -75,8 +76,8 @@ namespace Environment.LaboratoryFirstLevel
         {
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(true));
             
-            transform.DOKill();
             transform.SetParent(null);
+            transform.DOKill();
             transform.DOMove(_initialPosition, _moveTimeInSeconds).OnComplete(() => _boxCollider.Enable());
             transform.DORotate(_initialRotation.eulerAngles, _rotationTimeInSeconds);
         }

@@ -20,5 +20,19 @@ namespace Utilities
 
             return outColor;
         }
+        
+        public static void RemapTransform(float iMin, float iMax, Transform oMin, Transform oMax, float value, Transform outputTransform)
+        {
+            float t = Mathf.InverseLerp(iMin, iMax, value);
+
+            // Interpolate position
+            outputTransform.position = Vector3.Lerp(oMin.position, oMax.position, t);
+
+            // Interpolate rotation
+            outputTransform.rotation = Quaternion.Lerp(oMin.rotation, oMax.rotation, t);
+
+            // Interpolate scale
+            outputTransform.localScale = Vector3.Lerp(oMin.localScale, oMax.localScale, t);
+        }
     }
 }

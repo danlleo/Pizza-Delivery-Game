@@ -285,8 +285,6 @@ namespace Misc
             switch (context.phase)
             {
                 case InputActionPhase.Started:
-                    if (!InputAllowance.InputEnabled) return;
-                    
                     EventBus<ButtonPressedEvent>.Raise(new ButtonPressedEvent());
                     break;
                 case InputActionPhase.Disabled:
