@@ -40,14 +40,14 @@ namespace Sounds
             audioSource.Stop();
         }
         
-        protected void PlaySoundWithRandomPitch(AudioSource audioSource, AudioClip audioClip, float minPitch,
+        public static void PlaySoundWithRandomPitch(AudioSource audioSource, AudioClip audioClip, float minPitch,
             float maxPitch, float volume = 1f)
         {
             audioSource.pitch = Random.Range(minPitch, maxPitch);
             audioSource.PlayOneShot(audioClip, volume);
         }
         
-        protected void PlaySoundWithRandomPitch(AudioSource audioSource, AudioClip[] audioClips, float minPitch,
+        public static void PlaySoundWithRandomPitch(AudioSource audioSource, AudioClip[] audioClips, float minPitch,
             float maxPitch, float volume = 1f)
         {
             audioSource.pitch = Random.Range(minPitch, maxPitch);

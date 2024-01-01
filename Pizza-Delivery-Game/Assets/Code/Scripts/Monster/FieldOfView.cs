@@ -25,7 +25,7 @@ namespace Monster
         private void Start()
         {
             _monster = GetComponent<Monster>();
-            PlayerGameObject = Player.Player.Instance.gameObject;
+            // PlayerGameObject = Player.Player.Instance.gameObject;
             StartCoroutine(FOVRoutine());
         }
 
