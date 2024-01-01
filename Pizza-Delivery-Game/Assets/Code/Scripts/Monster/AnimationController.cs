@@ -33,8 +33,6 @@ namespace Monster
 
         private void StartedPatrolling_Event(object sender, EventArgs e)
         {
-            print("Patrolling");
-            
             _animator.SetBool(AnimationParams.IsWalking, true);
         }
 
