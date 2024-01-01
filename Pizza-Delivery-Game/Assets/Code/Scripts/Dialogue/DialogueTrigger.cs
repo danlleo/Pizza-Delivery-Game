@@ -9,7 +9,7 @@ namespace Dialogue
     {
         protected abstract UI.UI UI { get; }
         
-        public void Invoke(DialogueSO dialogue)
+        public void InvokeDialogue(DialogueSO dialogue)
             => UI.DialogueOpeningEvent.Call(UI, new DialogueOpeningEventArgs(dialogue));
     }
 }

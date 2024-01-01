@@ -1,8 +1,11 @@
+using System;
 using Enums.Scenes;
 using EventBus;
 using Interfaces;
 using Misc;
 using Misc.Loader;
+using Player.Inventory;
+using Tablet;
 using UI;
 using UnityEngine;
 
@@ -12,15 +15,16 @@ namespace Keypad
     [DisallowMultipleComponent]
     public class Keypad : MonoBehaviour, IInteractable
     {
-        private const string CORRECT_PASSWORD = "421178";
-        
         [Header("External References")]
         [SerializeField] private ButtonPress _buttonPress;
-
+        [SerializeField] private ItemSO _flashLightItemSO;
+        
         private BoxCollider _keypadBoxCollider;
 
         private EventBinding<PasswordValidationEvent> _passwordValidationEventBinding;
         private EventBinding<PasswordValidationResponseEvent> _passwordValidationEventResponseEventBinding;
+
+        private bool _playerKnowsPassword;
         
         private void Awake()
         {
@@ -32,22 +36,41 @@ namespace Keypad
 
         private void OnEnable()
         {
+            InteractedWithTabletStaticEvent.OnAnyInteractedWithTablet += OnAnyInteractedWithTablet;
+            
             _passwordValidationEventBinding = new EventBinding<PasswordValidationEvent>(HandlePasswordValidationEvent);
             EventBus<PasswordValidationEvent>.Register(_passwordValidationEventBinding);
 
             _passwordValidationEventResponseEventBinding =
                 new EventBinding<PasswordValidationResponseEvent>(HandlePasswordValidationResponseEvent);
             EventBus<PasswordValidationResponseEvent>.Register(_passwordValidationEventResponseEventBinding);
-        }   
+        }
 
         private void OnDisable()
         {
+            InteractedWithTabletStaticEvent.OnAnyInteractedWithTablet -= OnAnyInteractedWithTablet;
+            
             EventBus<PasswordValidationEvent>.Deregister(_passwordValidationEventBinding);
             EventBus<PasswordValidationResponseEvent>.Deregister(_passwordValidationEventResponseEventBinding);
         }
 
         public void Interact()
         {
+            if (!_playerKnowsPassword)
+            {
+                PasswordUnknownStaticEvent.Call(this);
+                return;
+            }
+
+            if (!Player.Player.Instance.TryGetComponent(out Inventory inventory))
+                throw new Exception("Didn't get the inventory component from the player");
+
+            if (!inventory.HasItem(_flashLightItemSO))
+            {
+                this.CallNoFlashlightStaticEvent();
+                return;
+            }
+            
             InputAllowance.DisableInput();
             EventBus<InteractedWithKeypadEvent>.Raise(new InteractedWithKeypadEvent());
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
@@ -62,9 +85,12 @@ namespace Keypad
             return "Keypad";
         }
 
+        private void SetPlayerKnowsPassword()
+            => _playerKnowsPassword = true;
+        
         private void ValidatePassword(string password)
         {
-            bool isCorrect = password == CORRECT_PASSWORD;
+            bool isCorrect = password == Password.CorrectPassword;
 
             EventBus<PasswordValidationResponseEvent>.Raise(new PasswordValidationResponseEvent(isCorrect));
         }
@@ -83,6 +109,11 @@ namespace Keypad
                 () => Loader.Load(Scene.SecondLaboratoryLevelScene));
             
             Destroy(this);
+        }
+        
+        private void OnAnyInteractedWithTablet(object sender, EventArgs e)
+        {
+            SetPlayerKnowsPassword();
         }
     }
 }

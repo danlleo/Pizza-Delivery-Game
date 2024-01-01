@@ -24,7 +24,7 @@ namespace Dialogue.DialogueTriggers
 
         private void StartedTalking_Event(object sender, EventArgs e)
         {
-            Invoke(_scientistGreetingsDialogueSO);
+            InvokeDialogue(_scientistGreetingsDialogueSO);
         }
     }
 }

@@ -54,6 +54,8 @@ namespace Environment.LaboratoryFirstLevel
             PickedUpStaticEvent.Call(this);
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
             
+            this.CallInteractedWithTabletStaticEvent();
+            
             if (Camera.main != null) 
                 transform.SetParent(Camera.main.transform);
             

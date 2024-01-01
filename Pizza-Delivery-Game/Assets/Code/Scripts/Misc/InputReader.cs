@@ -268,6 +268,16 @@ namespace Misc
                 case InputActionPhase.Started:
                     PutDownStaticEvent.Call(this);
                     break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Performed:
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

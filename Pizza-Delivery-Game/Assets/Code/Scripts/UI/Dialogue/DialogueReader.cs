@@ -9,24 +9,28 @@ namespace UI.Dialogue
 {
     [RequireComponent(typeof(AudioSource))]
     [DisallowMultipleComponent]
-    public class Reader : MonoBehaviour
+    public class DialogueReader : MonoBehaviour
     {
-        [Header("External references")] [SerializeField]
-        private GameObject _dialogueContainer;
+        [Header("External references")] 
+        [SerializeField] private GameObject _dialogueContainer;
 
         [SerializeField] private UI _ui;
         [SerializeField] private TextMeshProUGUI _dialogueText;
 
-        [Header("Settings")] [SerializeField] private float _waitTimeToMoveToNextLineInSeconds;
+        [Header("Settings")] 
+        [SerializeField] private float _waitTimeToMoveToNextLineInSeconds;
 
-        [Space(5)] [SerializeField] [Range(0f, 0.35f)]
-        private float _characterTimeToPrintInSeconds;
-
+        [Space(5)] 
+        [SerializeField] [Range(0f, 0.35f)] private float _characterTimeToPrintInSeconds;
+        
         private AudioSource _audioSource;
 
-        private bool _isReading;
+        private DialogueSO _currentDialogue;
+        private Story _currentStory;
 
-        private Story _story;
+        private Coroutine _displayTextRoutine;
+        
+        private bool _isReading;
 
         private void Awake()
         {
@@ -35,13 +39,22 @@ namespace UI.Dialogue
 
         public void ReadDialogue(DialogueSO dialogue)
         {
-            if (_isReading) return;
+            if (_currentDialogue == dialogue)
+                return;
 
+            if (_displayTextRoutine != null)
+            {
+                StopCoroutine(_displayTextRoutine);
+                _displayTextRoutine = null;
+            }
+            
             _isReading = true;
-            _story = new Story(dialogue.DialogueText.text);
+            _currentDialogue = dialogue;
+            _currentStory = new Story(dialogue.DialogueText.text);
 
             ShowDialogueContainer();
-            StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd, dialogue.Configuration));
+           
+            _displayTextRoutine = StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd, dialogue.Configuration));
         }
 
         private IEnumerator DisplayTextRoutine(UnityEvent onComplete, ConfigurationSO configuration)
@@ -50,7 +63,7 @@ namespace UI.Dialogue
 
             _audioSource.volume = configuration.Volume;
 
-            string line = _story.Continue().Trim();
+            string line = _currentStory.Continue().Trim();
 
             var characterCount = 0;
 
@@ -69,7 +82,7 @@ namespace UI.Dialogue
                 yield return new WaitForSeconds(_characterTimeToPrintInSeconds);
             }
 
-            if (_story.canContinue)
+            if (_currentStory.canContinue)
             {
                 yield return new WaitForSeconds(_waitTimeToMoveToNextLineInSeconds);
                 StartCoroutine(DisplayTextRoutine(onComplete, configuration));
@@ -77,7 +90,8 @@ namespace UI.Dialogue
             else
             {
                 _isReading = false;
-
+                _currentDialogue = null;
+                
                 yield return new WaitForSeconds(_waitTimeToMoveToNextLineInSeconds);
 
                 _ui.DialogueClosingEvent.Call(_ui);

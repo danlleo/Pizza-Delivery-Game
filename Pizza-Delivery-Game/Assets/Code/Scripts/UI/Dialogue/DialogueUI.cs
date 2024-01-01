@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI.Dialogue
 {
@@ -10,7 +11,7 @@ namespace UI.Dialogue
         private GameObject _dialogueUI;
 
         [SerializeField] private UI _ui;
-        [SerializeField] private Reader _reader;
+        [FormerlySerializedAs("_reader")] [SerializeField] private DialogueReader _dialogueReader;
 
         private void Awake()
         {
@@ -32,7 +33,7 @@ namespace UI.Dialogue
         private void DialogueOpening_Event(object sender, DialogueOpeningEventArgs e)
         {
             ShowUI();
-            _reader.ReadDialogue(e.Dialogue);
+            _dialogueReader.ReadDialogue(e.Dialogue);
         }
 
         private void DialogueClosing_Event(object sender, EventArgs e)

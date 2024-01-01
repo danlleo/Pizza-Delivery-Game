@@ -23,7 +23,7 @@ namespace Dialogue.DialogueTriggers
 
         private void StoppedUsingPCStaticEvent_OnEnded(object sender, EventArgs e)
         {
-            Invoke(_sentApplicationDialogueSO);
+            InvokeDialogue(_sentApplicationDialogueSO);
         }
     }
 }

@@ -1,15 +1,23 @@
+using System;
 using Environment.LaboratoryFirstLevel;
 using EventBus;
+using Keypad;
 using UnityEngine;
 
 namespace Dialogue.DialogueTriggers
 {
     public class LaboratoryFirstLevel : DialogueTrigger
     {
+        [Header("External references")]
         [SerializeField] private UI.UI _ui;
+        
+        [Header("Configuration")]
         [SerializeField] private DialogueSO _noKeycardDialogueSO;
         [SerializeField] private DialogueSO _noWrenchDialogueSO;
         [SerializeField] private DialogueSO _fixedPipesDialogueSO;
+        [SerializeField] private DialogueSO _passwordUnknownDialogueSO;
+        [SerializeField] private DialogueSO _fireExtinguisherDialogueSO;
+        [SerializeField] private DialogueSO _noFlashlightDialogueSO;
         
         protected override UI.UI UI => _ui;
 
@@ -18,6 +26,9 @@ namespace Dialogue.DialogueTriggers
         private void OnEnable()
         {
             KeycardStateStaticEvent.OnKeycardStateChanged += OnAnyKeycardStateChanged;
+            PasswordUnknownStaticEvent.OnAnyPasswordUnknown += OnAnyPasswordUnknown;
+            InteractedWithFireExtinguisherStaticEvent.OnAnyInteractedWithFireExtinguisher += OnAnyInteractedWithFireExtinguisher;
+            NoFlashlightStaticEvent.OnAnyNoFlashlight += OnAnyNoFlashlight;
 
             _noWrenchEventBinding = new EventBinding<FixPipesEvent>(Player_OnPipeFix);
             EventBus<FixPipesEvent>.Register(_noWrenchEventBinding);
@@ -26,25 +37,44 @@ namespace Dialogue.DialogueTriggers
         private void OnDisable()
         {
             KeycardStateStaticEvent.OnKeycardStateChanged -= OnAnyKeycardStateChanged;
+            PasswordUnknownStaticEvent.OnAnyPasswordUnknown -= OnAnyPasswordUnknown;
+            InteractedWithFireExtinguisherStaticEvent.OnAnyInteractedWithFireExtinguisher -= OnAnyInteractedWithFireExtinguisher;
+            NoFlashlightStaticEvent.OnAnyNoFlashlight -= OnAnyNoFlashlight;
+            
             EventBus<FixPipesEvent>.Deregister(_noWrenchEventBinding);
         }
 
+        private void OnAnyNoFlashlight(object sender, EventArgs e)
+        {
+            InvokeDialogue(_noFlashlightDialogueSO);
+        }
+        
+        private void OnAnyInteractedWithFireExtinguisher(object sender, EventArgs e)
+        {
+            InvokeDialogue(_fireExtinguisherDialogueSO);
+        }
+        
         private void Player_OnPipeFix(FixPipesEvent fixPipesEvent)
         {
             if (!fixPipesEvent.HasFixed)
             {
-                Invoke(_noWrenchDialogueSO);
+                InvokeDialogue(_noWrenchDialogueSO);
                 return;
             }
             
-            Invoke(_fixedPipesDialogueSO);
+            InvokeDialogue(_fixedPipesDialogueSO);
         }
 
         private void OnAnyKeycardStateChanged(object sender, KeycardStateStaticEventArgs e)
         {
             if (e.AccessGranted) return;
             
-            Invoke(_noKeycardDialogueSO);
+            InvokeDialogue(_noKeycardDialogueSO);
+        }
+        
+        private void OnAnyPasswordUnknown(object sender, EventArgs e)
+        {
+            InvokeDialogue(_passwordUnknownDialogueSO);
         }
     }
 }
