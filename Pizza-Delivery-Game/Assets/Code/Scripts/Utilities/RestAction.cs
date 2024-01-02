@@ -28,7 +28,7 @@ namespace Utilities
             _destroyCancellationToken = owner.destroyCancellationToken;
         }
 
-        public void PerformChain()
+        public void Execute()
         {
             Task.Run(async () =>
             {
@@ -37,16 +37,16 @@ namespace Utilities
                     await Task.Delay((int)Mathf.Round(_delayTimeInSeconds * 1000f), _destroyCancellationToken);
                     _action?.Invoke();
 
-                    _nextAction?.PerformChain();
+                    _nextAction?.Execute();
                 }
                 catch (TaskCanceledException)
                 {
                     
                 }
-            });
+            }, _destroyCancellationToken);
         }
 
-        public RestAction Continue(Action action, float delayTimeInSeconds)
+        public RestAction AddChain(Action action, float delayTimeInSeconds = 0f)
         {
             _nextAction = new RestAction(_owner, action, delayTimeInSeconds);
             return _nextAction;
