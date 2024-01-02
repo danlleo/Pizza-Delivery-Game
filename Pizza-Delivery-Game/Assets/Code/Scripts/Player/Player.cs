@@ -47,7 +47,8 @@ namespace Player
             AddingItemEvent = GetComponent<AddingItemEvent>();
             RemovingItemEvent = GetComponent<RemovingItemEvent>();
             SprintStateChangedEvent = GetComponent<SprintStateChangedEvent>();
-            
+
+            // Change it in the future.
             SetExploringState();
         }
 
