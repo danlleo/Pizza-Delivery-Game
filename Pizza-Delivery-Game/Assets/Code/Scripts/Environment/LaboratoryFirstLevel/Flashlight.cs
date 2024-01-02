@@ -8,6 +8,7 @@ namespace Environment.LaboratoryFirstLevel
     [DisallowMultipleComponent]
     public class Flashlight : MonoBehaviour, IInteractable, IInspectable
     {
+        [Header("External references")]
         [SerializeField] private InspectableObjectSO _inspectableObject;
         
         public void Interact()
