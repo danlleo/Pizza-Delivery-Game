@@ -31,6 +31,9 @@ namespace Sounds.Audio
         [SerializeField] private AudioClip _pickupClip;
         [SerializeField] private AudioClip _putdownClip;
         
+        [Space(5)]
+        [SerializeField] private AudioClip _screamerClip;
+        
         private AudioSource _audioSource;
         
         private EventBinding<DigitRegisteredEvent> _digitRegisteredEventBinding;
@@ -49,6 +52,7 @@ namespace Sounds.Audio
             GasLeakedStaticEvent.OnAnyGasLeaked += OnAnyGasLeaked;
             PickedUpStaticEvent.OnTabletPickedUp += OnAnyTabletPickedUp;
             PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
+            TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer += OnAnyTriggeredScreamer;
 
             _digitRegisteredEventBinding = new EventBinding<DigitRegisteredEvent>(HandleButtonPressedEvent);
             EventBus<DigitRegisteredEvent>.Register(_digitRegisteredEventBinding);
@@ -66,7 +70,8 @@ namespace Sounds.Audio
             GasLeakedStaticEvent.OnAnyGasLeaked -= OnAnyGasLeaked;
             PickedUpStaticEvent.OnTabletPickedUp -= OnAnyTabletPickedUp;
             PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
-
+            TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer -= OnAnyTriggeredScreamer;
+            
             EventBus<DigitRegisteredEvent>.Deregister(_digitRegisteredEventBinding);
             EventBus<PasswordValidationResponseEvent>.Deregister(_passwordValidationResponseEventBinding);
         }
@@ -119,6 +124,11 @@ namespace Sounds.Audio
         private void OnAnyTabletPutDown(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _putdownClip);
+        }
+        
+        private void OnAnyTriggeredScreamer(object sender, EventArgs e)
+        {
+            PlaySound(_audioSource, _screamerClip);
         }
     }
 }

@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c23fc832be89447881740b2b81ece9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _screamerCanvas: {fileID: 9213934227029185111, guid: 93ee286995813d44f9250edd62a242a5,
+    type: 3}

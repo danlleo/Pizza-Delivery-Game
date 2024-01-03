@@ -46,8 +46,8 @@ namespace Sounds
             audioSource.pitch = Random.Range(minPitch, maxPitch);
             audioSource.PlayOneShot(audioClip, volume);
         }
-        
-        public static void PlaySoundWithRandomPitch(AudioSource audioSource, AudioClip[] audioClips, float minPitch,
+
+        protected static void PlaySoundWithRandomPitch(AudioSource audioSource, AudioClip[] audioClips, float minPitch,
             float maxPitch, float volume = 1f)
         {
             audioSource.pitch = Random.Range(minPitch, maxPitch);

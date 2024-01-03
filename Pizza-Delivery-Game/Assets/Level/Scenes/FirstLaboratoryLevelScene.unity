@@ -2789,6 +2789,7 @@ MonoBehaviour:
   _keypadGrantedClip: {fileID: 8300000, guid: 54ccf978c7886364c980d9f84ff32bd3, type: 3}
   _pickupClip: {fileID: 8300000, guid: 8c4f81859b67678469f822a2420ab322, type: 3}
   _putdownClip: {fileID: 8300000, guid: 7ae77a069347b504fb226738a374bc84, type: 3}
+  _screamerClip: {fileID: 8300000, guid: ef50f6fb0ee11f844a2e77bf4b059383, type: 3}
 --- !u!4 &292728670
 Transform:
   m_ObjectHideFlags: 0
