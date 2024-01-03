@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Objective
+﻿namespace Objective
 {
     public class Objective
     {

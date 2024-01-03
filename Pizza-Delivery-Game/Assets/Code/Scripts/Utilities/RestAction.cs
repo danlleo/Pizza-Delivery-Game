@@ -43,6 +43,10 @@ namespace Utilities
                 {
                     
                 }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Exception in RestAction: " + ex.Message);
+                }
             }, _destroyCancellationToken);
         }
 

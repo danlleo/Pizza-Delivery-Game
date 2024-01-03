@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Dialogue
 {
@@ -10,8 +9,7 @@ namespace Dialogue
 
         public void Invoke()
         {
-            DialogueAction dialogueAction = Instantiate(TargetAction);
-            SceneManager.MoveGameObjectToScene(dialogueAction.gameObject, SceneManager.GetActiveScene());
+            Instantiate(TargetAction);
         }
     }
 }

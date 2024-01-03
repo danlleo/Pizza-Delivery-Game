@@ -11,8 +11,10 @@ namespace Dialogue.ConcreteActions
         [Header("External references")]
         [SerializeField] private OneHourLaterCanvas _oneHourLaterCanvas;
         
-        public override void Perform()
+        protected override void Perform()
         {
+            print("Maidanutik");
+            
             Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () =>
             {
                 StartCoroutine(WaitSpecificTimeBeforeDoorRingRoutine());

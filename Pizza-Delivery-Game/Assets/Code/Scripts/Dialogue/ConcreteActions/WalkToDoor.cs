@@ -4,7 +4,7 @@ namespace Dialogue.ConcreteActions
 {
     public class WalkToDoor : DialogueAction
     {
-        public override void Perform()
+        protected override void Perform()
         {
             FinishedTalkingStaticEvent.Call(this);
         }

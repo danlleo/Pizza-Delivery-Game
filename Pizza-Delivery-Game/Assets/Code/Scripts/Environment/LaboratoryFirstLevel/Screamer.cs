@@ -8,6 +8,11 @@ namespace Environment.LaboratoryFirstLevel
     [DisallowMultipleComponent]
     public class Screamer : DialogueAction
     {
+        protected override void Perform()
+        {
+            Test();
+        }
+        
         private void Test()
         {
             var spookRestAction = new RestAction(this);
@@ -15,24 +20,15 @@ namespace Environment.LaboratoryFirstLevel
             spookRestAction
                 .AddChain(() =>
                 {
-                    InputAllowance.DisableInput();
-                    
-                    print(Player.Player.Instance);
-                    
-                    CrosshairDisplayStateChangedStaticEvent.Call(Player.Player.Instance,
+                    CrosshairDisplayStateChangedStaticEvent.Call(this,
                         new CrosshairDisplayStateChangedEventArgs(false));
-                })
-                .AddChain(() =>
-                {
-                    print("Test display");
+                    InputAllowance.DisableInput();
+
+                    print("It should work, bitch");
+
                 });
 
             spookRestAction.Execute();
-        }
-
-        public override void Perform()
-        {
-            Test();
         }
     }
 }

@@ -14,19 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _configurationSO: {fileID: 11400000, guid: 81983b4abbf888a4597acf0ef20bed5e, type: 2}
   _dialogueText: {fileID: 4900000, guid: 104d401a95e028c44ae316143edf52ec, type: 3}
-  OnDialogueEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6214947307359788043, guid: 77e2648233d5b6f4b93dcf884540a65c,
-          type: 3}
-        m_TargetAssemblyTypeName: Dialogue.Onread.Test, Assembly-CSharp
-        m_MethodName: Invoke
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  OnDialogueEnd: {fileID: 11400000, guid: 38bdbcfd8e66fdb439a9339635c35626, type: 2}

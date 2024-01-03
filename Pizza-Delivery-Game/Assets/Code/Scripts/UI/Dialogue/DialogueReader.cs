@@ -3,7 +3,6 @@ using Dialogue;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace UI.Dialogue
 {
@@ -26,7 +25,6 @@ namespace UI.Dialogue
         private AudioSource _audioSource;
 
         private DialogueSO _currentDialogue;
-        private ActionHolder _onReadAction;
         private Story _currentStory;
 
         private Coroutine _displayTextRoutine;
@@ -49,20 +47,17 @@ namespace UI.Dialogue
                 _displayTextRoutine = null;
             }
             
-            ClearOnReadAction();
-            
             _isReading = true;
             _currentDialogue = dialogue;
             _currentStory = new Story(dialogue.DialogueText.text);
-            _onReadAction = _currentDialogue.OnDialogueEnd;
 
             ShowDialogueContainer();
 
             _displayTextRoutine =
-                StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd.TargetAction, dialogue.Configuration));
+                StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd, dialogue.Configuration));
         }
 
-        private IEnumerator DisplayTextRoutine(DialogueAction onComplete, ConfigurationSO configuration)
+        private IEnumerator DisplayTextRoutine(ActionHolder onComplete, ConfigurationSO configuration)
         {
             ClearDialogueText();
             
@@ -101,8 +96,8 @@ namespace UI.Dialogue
 
                 _ui.DialogueClosingEvent.Call(_ui);
                 
-                if (_onReadAction.TargetAction != null)
-                    _onReadAction.TargetAction.Perform();
+                if (onComplete != null)
+                    onComplete.Invoke();
                     
                 HideDialogueContainer();
             }
@@ -156,12 +151,6 @@ namespace UI.Dialogue
         {
             _dialogueText.text = "";
         }
-
-        private void ClearOnReadAction()
-        {
-            _onReadAction = null;
-        }
-        
         private void PrintTextCharacter(char character)
         {
             _dialogueText.text += character;
