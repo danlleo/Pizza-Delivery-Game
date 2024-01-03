@@ -26,6 +26,7 @@ namespace UI.Dialogue
         private AudioSource _audioSource;
 
         private DialogueSO _currentDialogue;
+        private ActionHolder _onReadAction;
         private Story _currentStory;
 
         private Coroutine _displayTextRoutine;
@@ -48,25 +49,29 @@ namespace UI.Dialogue
                 _displayTextRoutine = null;
             }
             
+            ClearOnReadAction();
+            
             _isReading = true;
             _currentDialogue = dialogue;
             _currentStory = new Story(dialogue.DialogueText.text);
+            _onReadAction = _currentDialogue.OnDialogueEnd;
 
             ShowDialogueContainer();
-           
-            _displayTextRoutine = StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd, dialogue.Configuration));
+
+            _displayTextRoutine =
+                StartCoroutine(DisplayTextRoutine(dialogue.OnDialogueEnd.TargetAction, dialogue.Configuration));
         }
 
-        private IEnumerator DisplayTextRoutine(UnityEvent onComplete, ConfigurationSO configuration)
+        private IEnumerator DisplayTextRoutine(DialogueAction onComplete, ConfigurationSO configuration)
         {
             ClearDialogueText();
-
+            
             _audioSource.volume = configuration.Volume;
 
             string line = _currentStory.Continue().Trim();
 
             var characterCount = 0;
-
+            
             while (line.Length >= 1)
             {
                 char textCharacter = line[0];
@@ -95,7 +100,10 @@ namespace UI.Dialogue
                 yield return new WaitForSeconds(_waitTimeToMoveToNextLineInSeconds);
 
                 _ui.DialogueClosingEvent.Call(_ui);
-                onComplete?.Invoke();
+                
+                if (_onReadAction.TargetAction != null)
+                    _onReadAction.TargetAction.Perform();
+                    
                 HideDialogueContainer();
             }
         }
@@ -149,6 +157,11 @@ namespace UI.Dialogue
             _dialogueText.text = "";
         }
 
+        private void ClearOnReadAction()
+        {
+            _onReadAction = null;
+        }
+        
         private void PrintTextCharacter(char character)
         {
             _dialogueText.text += character;

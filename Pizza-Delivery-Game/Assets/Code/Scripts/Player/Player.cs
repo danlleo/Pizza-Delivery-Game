@@ -18,7 +18,7 @@ namespace Player
     [RequireComponent(typeof(RemovingItemEvent))]
     [RequireComponent(typeof(SprintStateChangedEvent))]
     [DisallowMultipleComponent]
-    public class Player : Singleton<Player>
+    public sealed class Player : Singleton<Player>
     {
         [Header("External references")]
         [SerializeField] private UI.UI _ui;

@@ -16,7 +16,7 @@ namespace Monster
     [RequireComponent(typeof(StartedPatrollingEvent))]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Monster : MonoBehaviour
+    public sealed class Monster : MonoBehaviour
     {
         [HideInInspector] public StartedChasingEvent StartedChasingEvent;
         [HideInInspector] public StoppedChasingEvent StoppedChasingEvent;

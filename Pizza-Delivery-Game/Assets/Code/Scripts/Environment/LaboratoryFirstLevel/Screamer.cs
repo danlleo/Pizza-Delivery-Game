@@ -1,3 +1,4 @@
+using Dialogue;
 using Misc;
 using UnityEngine;
 using Utilities;
@@ -5,11 +6,9 @@ using Utilities;
 namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
-    public class Screamer : MonoBehaviour
+    public class Screamer : DialogueAction
     {
-        [SerializeField] private Canvas _screamerCanvas;
-        
-        public void Spook()
+        private void Test()
         {
             var spookRestAction = new RestAction(this);
 
@@ -17,15 +16,23 @@ namespace Environment.LaboratoryFirstLevel
                 .AddChain(() =>
                 {
                     InputAllowance.DisableInput();
+                    
+                    print(Player.Player.Instance);
+                    
                     CrosshairDisplayStateChangedStaticEvent.Call(Player.Player.Instance,
                         new CrosshairDisplayStateChangedEventArgs(false));
-                }, 2f)
+                })
                 .AddChain(() =>
                 {
                     print("Test display");
                 });
-            
+
             spookRestAction.Execute();
+        }
+
+        public override void Perform()
+        {
+            Test();
         }
     }
 }

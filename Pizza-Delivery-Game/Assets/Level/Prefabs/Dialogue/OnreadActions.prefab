@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6214947307359788043}
   - component: {fileID: 7082124262053088085}
   - component: {fileID: 6144255622056726116}
-  - component: {fileID: 13184281119098164}
   m_Layer: 0
   m_Name: OnreadActions
   m_TagString: Untagged
@@ -73,17 +72,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c82c16500591d949af1aab783d2e4ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &13184281119098164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 415738158138883162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c23fc832be89447881740b2b81ece9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _screamerCanvas: {fileID: 7460757865390828083, guid: 53b06c587d2adcb4ba0b5d0d1d5bc60d,
-    type: 3}

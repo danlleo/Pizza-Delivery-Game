@@ -14,19 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _configurationSO: {fileID: 11400000, guid: e6efa4ba83805104796659fed01c1cfc, type: 2}
   _dialogueText: {fileID: 4900000, guid: 19489578a01abba46b9960f301be1a5e, type: 3}
-  OnDialogueEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 13184281119098164, guid: 77e2648233d5b6f4b93dcf884540a65c,
-          type: 3}
-        m_TargetAssemblyTypeName: Environment.LaboratoryFirstLevel.Screamer, Assembly-CSharp
-        m_MethodName: Spook
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  OnDialogueEnd: {fileID: 11400000, guid: 2e8c9665acddbbe42910c01f16e63ebc, type: 2}

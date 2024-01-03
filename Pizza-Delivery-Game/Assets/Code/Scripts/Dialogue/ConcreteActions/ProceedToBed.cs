@@ -8,6 +8,7 @@ namespace Dialogue.ConcreteActions
 {
     public class ProceedToBed : DialogueAction
     {
+        [Header("External references")]
         [SerializeField] private OneHourLaterCanvas _oneHourLaterCanvas;
         
         public override void Perform()

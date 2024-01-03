@@ -4789,6 +4789,11 @@ PrefabInstance:
       propertyPath: m_Priority
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2586656770094655524, guid: 530d746b804020948a76e48f66d7973c,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 62.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3254224848900657090, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
       propertyPath: _ui
@@ -4862,7 +4867,7 @@ PrefabInstance:
     - target: {fileID: 5047099707145332367, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
       propertyPath: field of view
-      value: 60
+      value: 62.5
       objectReference: {fileID: 0}
     - target: {fileID: 8496942717411593408, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}

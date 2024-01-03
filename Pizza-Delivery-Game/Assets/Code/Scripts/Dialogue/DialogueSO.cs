@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Dialogue
 {
@@ -10,7 +9,7 @@ namespace Dialogue
         [SerializeField] private TextAsset _dialogueText;
 
         public ConfigurationSO Configuration => _configurationSO;
+        public ActionHolder OnDialogueEnd;
         public TextAsset DialogueText => _dialogueText;
-        public UnityEvent OnDialogueEnd;
     }
 }
