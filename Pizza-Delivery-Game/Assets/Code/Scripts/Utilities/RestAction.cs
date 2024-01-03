@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Misc;
 using UnityEngine;
 
 namespace Utilities
@@ -18,6 +19,11 @@ namespace Utilities
         public RestAction(MonoBehaviour owner)
         {
             _owner = owner;
+            
+            if (_owner.GetComponent<UnityMainThread>() == null)
+            {
+                _owner.gameObject.AddComponent<UnityMainThread>();
+            }
         }
         
         private RestAction(MonoBehaviour owner, Action action, float delayTimeInSeconds)
@@ -35,13 +41,12 @@ namespace Utilities
                 try
                 {
                     await Task.Delay((int)Mathf.Round(_delayTimeInSeconds * 1000f), _destroyCancellationToken);
-                    _action?.Invoke();
-
+                    UnityMainThread.Instance.AddJob(() => _action?.Invoke());
                     _nextAction?.Execute();
                 }
-                catch (TaskCanceledException)
+                catch (TaskCanceledException ex)
                 {
-                    
+                    Debug.LogError("Exception in TaskCanceledException: " + ex.Message);
                 }
                 catch (Exception ex)
                 {

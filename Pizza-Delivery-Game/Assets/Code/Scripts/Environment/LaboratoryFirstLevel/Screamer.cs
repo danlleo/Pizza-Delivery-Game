@@ -23,11 +23,12 @@ namespace Environment.LaboratoryFirstLevel
                     CrosshairDisplayStateChangedStaticEvent.Call(this,
                         new CrosshairDisplayStateChangedEventArgs(false));
                     InputAllowance.DisableInput();
-
-                    print("It should work, bitch");
-
+                })
+                .AddChain(() =>
+                {
+                    print("Second test action");
                 });
-
+            
             spookRestAction.Execute();
         }
     }
