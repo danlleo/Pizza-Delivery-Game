@@ -20,5 +20,7 @@ namespace Misc
                 return s_instance;
             }
         }
+
+        public Door.Door TestDoor;
     }
 }

@@ -51,7 +51,7 @@ namespace Player
             // Change it in the future.
             SetExploringState();
         }
-
+        
         private void OnEnable()
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
