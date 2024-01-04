@@ -27,5 +27,10 @@ namespace Monster.StateMachine
         {
             return new RoamState(_monster, _stateMachine);
         }
+
+        public State Investigate()
+        {
+            return new InvestigateState(_monster, _stateMachine);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Environment.LaboratorySecondLevel;
 using UnityEngine;
 
 namespace Monster.StateMachine.ConcreteStates
@@ -36,11 +37,13 @@ namespace Monster.StateMachine.ConcreteStates
         public override void SubscribeToEvents()
         {
             _monster.DetectedTargetEvent.Event += DetectedTarget_Event;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster += OnAnyAttractedMonster;
         }
-        
+
         public override void UnsubscribeFromEvents()
         {
             _monster.DetectedTargetEvent.Event -= DetectedTarget_Event;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster -= OnAnyAttractedMonster;
         }
 
         public override void FrameUpdate()
@@ -81,6 +84,11 @@ namespace Monster.StateMachine.ConcreteStates
         private void DetectedTarget_Event(object sender, EventArgs e)
         {
             _stateMachine.ChangeState(_monster.StateFactory.Chase());
+        }
+        
+        private void OnAnyAttractedMonster(object sender, AttractedMonsterEventArgs attractedMonsterEventArgs)
+        {
+            _stateMachine.ChangeState(_monster.StateFactory.Investigate());
         }
 
         #endregion

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Environment.LaboratorySecondLevel;
 using Monster.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,11 +27,13 @@ namespace Monster
         
         public StateMachine.StateMachine StateMachine { get; set; }
         public StateFactory StateFactory;
-
+        
         public NavMeshAgent NavMeshAgent { get; private set; }
         public FieldOfView FieldOfView { get; private set; }
         public IEnumerable<Transform> PatrolPointList => new ReadOnlyCollection<Transform>(_patrolPointList);
 
+        public Vector3 InvestigatePosition { get; private set; }
+        
         [Header("External references")] 
         [SerializeField] private List<Transform> _patrolPointList = new();
         
@@ -64,14 +67,21 @@ namespace Monster
         {
             StartedChasingEvent.Event += StartedChasing_Event;
             StoppedChasingEvent.Event += StoppedChasing_Event;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster += OnAnyAtractedMonster;
         }
-
+        
         private void OnDisable()
         {
             StartedChasingEvent.Event -= StartedChasing_Event;
             StoppedChasingEvent.Event -= StoppedChasing_Event;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster -= OnAnyAtractedMonster;
         }
 
+        private void Update()
+        {
+            StateMachine.CurrentState.FrameUpdate();
+        }
+        
         private void StartedChasing_Event(object sender, EventArgs e)
         {
             NavMeshAgent.speed = _runningSpeed;
@@ -81,10 +91,10 @@ namespace Monster
         {
             NavMeshAgent.speed = _walkingSpeed;
         }
-
-        private void Update()
+        
+        private void OnAnyAtractedMonster(object sender, AttractedMonsterEventArgs e)
         {
-            StateMachine.CurrentState.FrameUpdate();
+            InvestigatePosition = e.AttractedPosition;
         }
     }
 }

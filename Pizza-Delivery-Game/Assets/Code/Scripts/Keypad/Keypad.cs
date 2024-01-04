@@ -1,5 +1,6 @@
 using System;
 using Enums.Scenes;
+using Environment.LaboratoryFirstLevel;
 using EventBus;
 using Interfaces;
 using Misc;
@@ -25,6 +26,7 @@ namespace Keypad
         private EventBinding<PasswordValidationResponseEvent> _passwordValidationEventResponseEventBinding;
 
         private bool _playerKnowsPassword;
+        private bool _isAvailable;
         
         private void Awake()
         {
@@ -37,6 +39,8 @@ namespace Keypad
         private void OnEnable()
         {
             InteractedWithTabletStaticEvent.OnAnyInteractedWithTablet += OnAnyInteractedWithTablet;
+            InspectedForbiddenStaticEvent.OnAnyInspectedForbidden += InspectedForbidden;
+            TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer += OnAnyTriggeredScreamer;
             
             _passwordValidationEventBinding = new EventBinding<PasswordValidationEvent>(HandlePasswordValidationEvent);
             EventBus<PasswordValidationEvent>.Register(_passwordValidationEventBinding);
@@ -46,9 +50,13 @@ namespace Keypad
             EventBus<PasswordValidationResponseEvent>.Register(_passwordValidationEventResponseEventBinding);
         }
 
+        
+
         private void OnDisable()
         {
             InteractedWithTabletStaticEvent.OnAnyInteractedWithTablet -= OnAnyInteractedWithTablet;
+            InspectedForbiddenStaticEvent.OnAnyInspectedForbidden -= InspectedForbidden;
+            TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer -= OnAnyTriggeredScreamer;
             
             EventBus<PasswordValidationEvent>.Deregister(_passwordValidationEventBinding);
             EventBus<PasswordValidationResponseEvent>.Deregister(_passwordValidationEventResponseEventBinding);
@@ -56,6 +64,8 @@ namespace Keypad
 
         public void Interact()
         {
+            if (!_isAvailable) return;
+            
             if (!_playerKnowsPassword)
             {
                 PasswordUnknownStaticEvent.Call(this);
@@ -114,6 +124,16 @@ namespace Keypad
         private void OnAnyInteractedWithTablet(object sender, EventArgs e)
         {
             SetPlayerKnowsPassword();
+        }
+        
+        private void InspectedForbidden(object sender, EventArgs e)
+        {
+            _isAvailable = false;
+        }
+        
+        private void OnAnyTriggeredScreamer(object sender, EventArgs e)
+        {
+            _isAvailable = true;
         }
     }
 }
