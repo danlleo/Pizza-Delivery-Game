@@ -551,7 +551,7 @@ MonoBehaviour:
     m_Bits: 128
   _groundDetectRadius: 0.25
   _moveSpeed: 3.5
-  _sprintSpeed: 7
+  _sprintSpeed: 7.5
   _delayTimeToMakeSprintAvailableInSeconds: 2
   _standingHeight: 2
   _crouchingHeight: 1
@@ -561,8 +561,8 @@ MonoBehaviour:
   _timeToTransitionToCrouchInSeconds: 0.165
   _maxStaminaPercent: 100
   _staminaRecoverDelayInSeconds: 1.5
-  _staminaDecreaseRate: 0.1
-  _staminaRecoverRate: 0.25
+  _staminaDecreaseRate: 0.025
+  _staminaRecoverRate: 0.3
   _transitionBetweenMovementSpeedInSeconds: 0.725
   _walkingFootstepTimeInSeconds: 0.625
   _sprintingFootstepTimeInSeconds: 0.3325
@@ -707,7 +707,7 @@ MonoBehaviour:
   _playerAudio: {fileID: 6591719902434433139}
   _lightSourcePrefab: {fileID: 9057668252911292219, guid: c584f7d5680ebef46a9aac9d41d1aed0,
     type: 3}
-  _flashlightFollowSpeed: 4
+  _flashlightFollowSpeed: 6
   _lightFadingTimeInSeconds: 0.125
   _chanceToBeginFlickering: 60
   _maxFlickeringCount: 3

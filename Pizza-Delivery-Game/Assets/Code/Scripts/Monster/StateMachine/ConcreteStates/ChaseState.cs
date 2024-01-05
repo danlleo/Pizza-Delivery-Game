@@ -7,7 +7,7 @@ namespace Monster.StateMachine.ConcreteStates
 {
     public class ChaseState : State
     {
-        private const float TIME_TO_LOSE_TARGET_IN_SECONDS = 2f;
+        private const float TIME_TO_LOSE_TARGET_IN_SECONDS = 4f;
         
         private readonly Monster _monster;
         private readonly StateMachine _stateMachine;
@@ -19,20 +19,21 @@ namespace Monster.StateMachine.ConcreteStates
 
         private Coroutine _loosingTargetRoutine;
 
-        private float _stoppingDistance = 5f;
+        private float _stoppingDistance = 1f;
         private float _timer;
         
         public ChaseState(Monster monster, StateMachine stateMachine) : base(monster, stateMachine)
         {
             _monster = monster;
             _stateMachine = stateMachine;
-            _transform = monster.transform;
             _navMeshAgent = monster.NavMeshAgent;
         }
 
         public override void EnterState()
         {
             _monster.StartedChasingEvent.Call(_monster);
+            _monster.CallBeganChaseStaticEvent();
+            _transform = _monster.transform;
             _targetTransform = Player.Player.Instance.transform;
         }
 
@@ -50,12 +51,21 @@ namespace Monster.StateMachine.ConcreteStates
 
         public override void FrameUpdate()
         {
+            Debug.Log($"Distance: {Vector3.Distance(_transform.position, _targetTransform.position)}");
+            
             if (Vector3.Distance(_transform.position, _targetTransform.position) > _stoppingDistance)
                 _navMeshAgent.SetDestination(_targetTransform.position);
+            else
+            {
+                _navMeshAgent.ResetPath();
+                _navMeshAgent.isStopped = true;
+                _monster.StateMachine.ChangeState(_monster.StateFactory.Idle());
+            }
         }
 
         public override void ExitState()
         {
+            _monster.CallStoppedChaseStaticEvent();
             _monster.StoppedChasingEvent.Call(_monster);
         }
         

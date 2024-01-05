@@ -7,7 +7,7 @@ namespace Sounds.Audio
     [DisallowMultipleComponent]
     public class MonsterAudio : AudioPlayer
     {
-        [SerializeField] private AudioClip _chaseClip;
+        [SerializeField] private AudioClip _chaseBeganClip;
         
         private Monster.Monster _monster;
         private AudioSource _audioSource;
@@ -30,7 +30,7 @@ namespace Sounds.Audio
 
         private void StartedChasing_Event(object sender, EventArgs e)
         {
-            PlaySound(_audioSource, _chaseClip, 1f);
+            PlaySound(_audioSource, _chaseBeganClip, 3f);
         }
     }
 }

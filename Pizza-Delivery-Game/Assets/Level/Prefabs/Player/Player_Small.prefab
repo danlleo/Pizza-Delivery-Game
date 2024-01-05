@@ -109,6 +109,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Small
       objectReference: {fileID: 0}
+    - target: {fileID: 5253437735211751402, guid: 4a9a42d70f1c78a4abb6e00a2dd72464,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4378556504438040712, guid: 4a9a42d70f1c78a4abb6e00a2dd72464, type: 3}
     m_RemovedGameObjects: []

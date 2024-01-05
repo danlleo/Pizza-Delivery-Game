@@ -2162,6 +2162,7 @@ GameObject:
   - component: {fileID: 565167194572208012}
   - component: {fileID: 8472241667752754330}
   - component: {fileID: 667044388585407909}
+  - component: {fileID: 2571240397581539923}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -2270,7 +2271,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2462,7 +2463,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _walkingSpeed: 1
-  _runningSpeed: 4
+  _runningSpeed: 1.65
 --- !u!114 &8472241667752754330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2493,6 +2494,19 @@ MonoBehaviour:
   _rockSurfaceClip: {fileID: 8300000, guid: 1f0199a4c6005ec4abbb302f71bc036d, type: 3}
   _grassSurfaceClip: {fileID: 8300000, guid: fc32c6fd07980144996b811e5d1f2971, type: 3}
   _distanceSurfaceCheck: 1
+--- !u!114 &2571240397581539923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8710919085391389272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d182e90733f421241be318d97767ea86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chaseBeganClip: {fileID: 8300000, guid: a62cc6abc3f955e48b1bae20a1939db7, type: 3}
 --- !u!1 &8834374215578837955
 GameObject:
   m_ObjectHideFlags: 0

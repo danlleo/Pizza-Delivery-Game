@@ -35,16 +35,16 @@ namespace Monster
             switch (hit.collider.tag)
             {
                 case "Wood":
-                    AudioPlayer.PlaySoundWithRandomPitch(_audioSource, _woodSurfaceClip, 0.8f, 1f);
+                    AudioPlayer.PlaySoundWithRandomPitch(_audioSource, _woodSurfaceClip, 0.8f, 1f, 3f);
                     break;
                 case "Metal":
-                    AudioPlayer.PlaySoundWithRandomPitch(_audioSource, _metalSurfaceClip, 0.8f, 1f);
+                    AudioPlayer.PlaySoundWithRandomPitch(_audioSource, _metalSurfaceClip, 0.8f, 1f, 3f);
                     break;
                 case "Rock":
-                    AudioPlayer.PlaySoundWithRandomPitch(_audioSource, _rockSurfaceClip, 0.8f, 1f);
+                    AudioPlayer.PlaySoundWithRandomPitch(_audioSource, _rockSurfaceClip, 0.8f, 1f, 3f);
                     break;
                 case "Grass":
-                    AudioPlayer.PlaySoundWithRandomPitch(_audioSource, _grassSurfaceClip, 0.8f, 1f);
+                    AudioPlayer.PlaySoundWithRandomPitch(_audioSource, _grassSurfaceClip, 0.8f, 1f, 3f);
                     break;
             }
         }
