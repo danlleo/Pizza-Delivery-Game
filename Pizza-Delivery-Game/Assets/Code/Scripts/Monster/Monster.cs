@@ -67,14 +67,14 @@ namespace Monster
         {
             StartedChasingEvent.Event += StartedChasing_Event;
             StoppedChasingEvent.Event += StoppedChasing_Event;
-            AttractedMonsterStaticEvent.OnAnyAttractedMonster += OnAnyAtractedMonster;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster += Monster_OnAnyAttractedMonster;
         }
         
         private void OnDisable()
         {
             StartedChasingEvent.Event -= StartedChasing_Event;
             StoppedChasingEvent.Event -= StoppedChasing_Event;
-            AttractedMonsterStaticEvent.OnAnyAttractedMonster -= OnAnyAtractedMonster;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster -= Monster_OnAnyAttractedMonster;
         }
 
         private void Update()
@@ -92,7 +92,7 @@ namespace Monster
             NavMeshAgent.speed = _walkingSpeed;
         }
         
-        private void OnAnyAtractedMonster(object sender, AttractedMonsterEventArgs e)
+        private void Monster_OnAnyAttractedMonster(object sender, AttractedMonsterEventArgs e)
         {
             InvestigatePosition = e.AttractedPosition;
         }

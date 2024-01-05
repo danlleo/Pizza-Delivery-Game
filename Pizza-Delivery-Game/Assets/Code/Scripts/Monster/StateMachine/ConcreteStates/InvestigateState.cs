@@ -12,6 +12,8 @@ namespace Monster.StateMachine.ConcreteStates
         private Vector3 _investigatePosition;
         
         private float _stoppingDistance = 1f;
+
+        private bool _hasDetectedPlayer;
         
         public InvestigateState(Monster monster, StateMachine stateMachine) : base(monster, stateMachine)
         {
@@ -23,6 +25,8 @@ namespace Monster.StateMachine.ConcreteStates
         {
             _investigatePosition = _monster.InvestigatePosition;
             _monsterTransform = _monster.transform;
+            
+            _monster.CallMonsterStartedInvestigatingStaticEvent();
         }
 
         public override void SubscribeToEvents()
@@ -39,7 +43,13 @@ namespace Monster.StateMachine.ConcreteStates
         {
             MoveToPoint(_investigatePosition);
         }
-        
+
+        public override void ExitState()
+        {
+            if (_hasDetectedPlayer) return;
+            _monster.CallMonsterStoppedInvestigatingStaticEvent();
+        }
+
         private void MoveToPoint(Vector3 point)
         {
             _monster.NavMeshAgent.SetDestination(point);
@@ -54,6 +64,7 @@ namespace Monster.StateMachine.ConcreteStates
 
         private void DetectedTarget_Event(object sender, EventArgs e)
         {
+            _hasDetectedPlayer = true;
             _stateMachine.ChangeState(_monster.StateFactory.Chase());
         }
 

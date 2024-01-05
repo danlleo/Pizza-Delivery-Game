@@ -44,7 +44,7 @@ namespace Sounds.Audio
         {
             if (!_canPlayAttractedMonsterClip) return;
 
-            PlaySound(_audioSource, _attractedMonsterClip);
+            PlaySound(_audioSource, _attractedMonsterClip, .35f);
             StartCoroutine(CooldownTimerRoutine());
         }
         

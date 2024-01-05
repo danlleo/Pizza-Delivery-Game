@@ -2462,8 +2462,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _walkingSpeed: 1
-  _runningSpeed: 1.65
+  _walkingSpeed: 0.1
+  _runningSpeed: 0.225
 --- !u!114 &8472241667752754330
 MonoBehaviour:
   m_ObjectHideFlags: 0
