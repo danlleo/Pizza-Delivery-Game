@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Environment.LaboratorySecondLevel;
 using Monster;
 using UnityEngine;
@@ -23,34 +22,47 @@ namespace Sounds.Audio
 
         private void OnEnable()
         {
-            AttractedMonsterStaticEvent.OnAnyAttractedMonster += OnAnyAttractedMonster;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster += Monster_OnAnyAttractedMonster;
             BeganChaseStaticEvent.OnAnyBeganChase += Monster_OnAnyBeganChase;
+            StoppedChaseStaticEvent.OnAnyStoppedChaseStaticEvent += OnAnyStoppedChaseStaticEvent;
+            MonsterStartedInvestigatingStaticEvent.OnAnyMonsterStartedInvestigating += Monster_OnAnyMonsterStartedInvestigating;
+            MonsterStoppedInvestigatingStaticEvent.OnAnyMonsterStoppedInvestigating += Monster_OnAnyMonsterStoppedInvestigating;
         }
 
         private void OnDisable()
         {
-            AttractedMonsterStaticEvent.OnAnyAttractedMonster -= OnAnyAttractedMonster;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster -= Monster_OnAnyAttractedMonster;
             BeganChaseStaticEvent.OnAnyBeganChase -= Monster_OnAnyBeganChase;
+            StoppedChaseStaticEvent.OnAnyStoppedChaseStaticEvent -= OnAnyStoppedChaseStaticEvent;
+            MonsterStartedInvestigatingStaticEvent.OnAnyMonsterStartedInvestigating -= Monster_OnAnyMonsterStartedInvestigating;
+            MonsterStoppedInvestigatingStaticEvent.OnAnyMonsterStoppedInvestigating -= Monster_OnAnyMonsterStoppedInvestigating;
         }
 
-        private IEnumerator CooldownTimerRoutine()
-        {
-            _canPlayAttractedMonsterClip = false;
-            yield return new WaitForSeconds(_attractedMonsterClip.length);
-            _canPlayAttractedMonsterClip = true;
-        }
-        
-        private void OnAnyAttractedMonster(object sender, AttractedMonsterEventArgs e)
+        private void Monster_OnAnyAttractedMonster(object sender, AttractedMonsterEventArgs e)
         {
             if (!_canPlayAttractedMonsterClip) return;
-
+            
             PlaySound(_audioSource, _attractedMonsterClip, .35f);
-            StartCoroutine(CooldownTimerRoutine());
         }
         
         private void Monster_OnAnyBeganChase(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _beganChangeClip);
+        }
+        
+        private void Monster_OnAnyMonsterStoppedInvestigating(object sender, MonsterStoppedInvestigatingEventArgs e)
+        {
+            _canPlayAttractedMonsterClip = !e.HasDetectedPlayer;
+        }
+
+        private void Monster_OnAnyMonsterStartedInvestigating(object sender, EventArgs e)
+        {
+            _canPlayAttractedMonsterClip = false;
+        }
+        
+        private void OnAnyStoppedChaseStaticEvent(object sender, EventArgs e)
+        {
+            _canPlayAttractedMonsterClip = true;
         }
     }
 }

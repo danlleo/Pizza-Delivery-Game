@@ -33,14 +33,14 @@ namespace Monster
         public IEnumerable<Transform> PatrolPointList => new ReadOnlyCollection<Transform>(_patrolPointList);
 
         public Vector3 InvestigatePosition { get; private set; }
-        
+
         [Header("External references")] 
         [SerializeField] private List<Transform> _patrolPointList = new();
         
         [Header("Settings")]
         [SerializeField] private float _walkingSpeed;
         [SerializeField] private float _runningSpeed;
-        
+
         private void Awake()
         {
             NavMeshAgent = GetComponent<NavMeshAgent>();

@@ -1,4 +1,5 @@
 ﻿using System;
+using Environment.LaboratorySecondLevel;
 using UnityEngine;
 
 namespace Monster.StateMachine.ConcreteStates
@@ -32,11 +33,13 @@ namespace Monster.StateMachine.ConcreteStates
         public override void SubscribeToEvents()
         {
             _monster.DetectedTargetEvent.Event += DetectedTarget_Event;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster += OnAnyAttractedMonster;
         }
 
         public override void UnsubscribeFromEvents()
         {
             _monster.DetectedTargetEvent.Event -= DetectedTarget_Event;
+            AttractedMonsterStaticEvent.OnAnyAttractedMonster -= OnAnyAttractedMonster;
         }
         
         public override void FrameUpdate()
@@ -46,8 +49,8 @@ namespace Monster.StateMachine.ConcreteStates
 
         public override void ExitState()
         {
-            if (_hasDetectedPlayer) return;
-            _monster.CallMonsterStoppedInvestigatingStaticEvent();
+            _monster.CallMonsterStoppedInvestigatingStaticEvent(
+                new MonsterStoppedInvestigatingEventArgs(_hasDetectedPlayer));
         }
 
         private void MoveToPoint(Vector3 point)
@@ -66,6 +69,11 @@ namespace Monster.StateMachine.ConcreteStates
         {
             _hasDetectedPlayer = true;
             _stateMachine.ChangeState(_monster.StateFactory.Chase());
+        }
+        
+        private void OnAnyAttractedMonster(object sender, AttractedMonsterEventArgs e)
+        {
+            _investigatePosition = e.AttractedPosition;
         }
 
         #endregion

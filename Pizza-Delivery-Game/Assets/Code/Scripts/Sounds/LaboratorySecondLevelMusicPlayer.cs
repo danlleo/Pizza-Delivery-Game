@@ -72,8 +72,9 @@ namespace Sounds
             TransitionTo(_investigatingAmbientClip);
         }
         
-        private void Monster_OnAnyMonsterStoppedInvestigating(object sender, EventArgs e)
+        private void Monster_OnAnyMonsterStoppedInvestigating(object sender, MonsterStoppedInvestigatingEventArgs e)
         {
+            if (e.HasDetectedPlayer) return;
             TransitionTo(_roamingAmbientClip);
         }
     }
