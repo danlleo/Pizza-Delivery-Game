@@ -30,12 +30,16 @@ namespace Objective
             _objectiveRegistry.Delete();
         }
 
-        protected void FinishObjective()
+        protected void FinishObjective(ObjectiveSO objective)
         {
-            if (_objectiveRegistry.TryGetCurrentObjective(out Objective objective))
-            {
-                objective.Finish();
-            }
+            if (objective == null)
+                throw new Exception("Objective is null");
+
+            if (!_objectiveRegistry.TryGetCurrentObjective(out Objective currentObjective))
+                return;
+            
+            if (currentObjective.GetObjectiveSO().ID == objective.ID)
+                currentObjective.Finish();
         }
     }
 }

@@ -3864,7 +3864,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 45400638a56be7a4ea9c7e920d8410b6, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -4048,6 +4048,8 @@ MonoBehaviour:
   _objectiveList:
   - {fileID: 11400000, guid: 954908e2b606a994e8c2371d63932867, type: 2}
   - {fileID: 11400000, guid: 78f10c0d6601d314c80a8f9e828e0a7e, type: 2}
+  _usePCObjective: {fileID: 11400000, guid: 954908e2b606a994e8c2371d63932867, type: 2}
+  _openDoorObjective: {fileID: 11400000, guid: 78f10c0d6601d314c80a8f9e828e0a7e, type: 2}
 --- !u!1 &1083243438
 GameObject:
   m_ObjectHideFlags: 0
