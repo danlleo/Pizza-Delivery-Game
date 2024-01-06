@@ -10,9 +10,6 @@ namespace UI.MainMenu
     {
         [SerializeField] private UIDocument _uiDocument;
         [SerializeField] private StyleSheet _styleSheet;
-
-        public static event Action<float> OnScaleChanged;
-        public static event Action OnSpinClicked;
         
         private void Start()
         {
@@ -34,25 +31,32 @@ namespace UI.MainMenu
             root.styleSheets.Add(_styleSheet);
 
             VisualElement container = Create("container");
-            VisualElement viewBox = Create("view-box", "bordered-box");
-            container.Add(viewBox);
 
+            VisualElement header = Create("header");
+            container.Add(header);
 
-            VisualElement controlBox = Create("control-box", "bordered-box");
-            container.Add(controlBox);
+            var gameName = Create<Label>();
+            gameName.text = "Night Pizza Delivery";
+            header.Add(gameName);
 
-            var spinBtn = Create<Button>();
-            spinBtn.text = "Spin";
-            spinBtn.clicked += OnSpinClicked;
+            VisualElement buttonGroup = Create("btn-group");
+            container.Add(buttonGroup);
+
+            var newGameButton = Create<Button>("btn");
+            newGameButton.text = "New Game";
+            buttonGroup.Add(newGameButton);
+
+            var optionButton = Create<Button>("btn");
+            optionButton.text = "Options";
+            buttonGroup.Add(optionButton);
+
+            var creditsButton = Create<Button>("btn");
+            creditsButton.text = "Credits";
+            buttonGroup.Add(creditsButton);
             
-            controlBox.Add(spinBtn);
-
-            var scaleSlider = Create<Slider>();
-            scaleSlider.lowValue = 0.5f;
-            scaleSlider.highValue = 2f;
-            scaleSlider.value = 1f;
-            scaleSlider.RegisterValueChangedCallback(v => OnScaleChanged?.Invoke(v.newValue));
-            controlBox.Add(scaleSlider);
+            var quitGameButton = Create<Button>("btn");
+            quitGameButton.text = "Quit";
+            buttonGroup.Add(quitGameButton);
             
             root.Add(container);
         }
