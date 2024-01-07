@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Environment.LaboratoryFirstLevel
@@ -11,18 +12,43 @@ namespace Environment.LaboratoryFirstLevel
         [Header("Settings")]
         [SerializeField] private float _minIntensity;
         [SerializeField] private float _maxIntensity = 1f;
-        [SerializeField] private float _flickeringDurationInSeconds = 0.1f;
-
+        [FormerlySerializedAs("_flickeringDurationInSeconds")] [SerializeField] private float _minFlickeringDurationInSeconds = 0.1f;
+        [SerializeField] private float _maxFlickeringDurationInSeconds = 0.1f;
+        
+        private float _randomTime;
         private float _timer;
+
+        private void Awake()
+        {
+            SetRandomTime();
+        }
 
         private void Update()
         {
-            _timer += Time.deltaTime;
-
-            if (!(_timer >= _flickeringDurationInSeconds)) return;
-        
-            _timer = 0f;
-            _lightSource.intensity = Random.Range(_minIntensity, _maxIntensity);
+            Flick();
         }
+
+        private void Flick()
+        {
+            IncreaseTimer();
+
+            if (!(_timer >= _randomTime)) return;
+            
+            ResetTimer();
+            SetRandomTime();
+            SetLightSourceIntensity();
+        }
+
+        private void SetLightSourceIntensity()
+            => _lightSource.intensity = Random.Range(_minIntensity, _maxIntensity);
+        
+        private void SetRandomTime()
+            => _randomTime = Random.Range(_minFlickeringDurationInSeconds, _maxFlickeringDurationInSeconds);
+        
+        private void IncreaseTimer()
+            => _timer += Time.deltaTime;
+        
+        private void ResetTimer()
+            => _timer = 0f;
     }
 }

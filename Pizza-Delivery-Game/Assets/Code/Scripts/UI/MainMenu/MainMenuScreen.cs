@@ -6,10 +6,15 @@ using UnityEngine.UIElements;
 namespace UI.MainMenu
 {
     [DisallowMultipleComponent]
-    public class MainMenuScreen : MonoBehaviour
+    public sealed class MainMenuScreen : MonoBehaviour
     {
         [SerializeField] private UIDocument _uiDocument;
         [SerializeField] private StyleSheet _styleSheet;
+
+        public static Action OnAnyNewGameButtonClicked;
+        public static Action OnAnyOptionsButtonClicked;
+        public static Action OnAnyCreditsButtonClicked;
+        public static Action OnAnyQuitButtonClicked;
         
         private void Start()
         {
@@ -21,6 +26,13 @@ namespace UI.MainMenu
             if (Application.isPlaying) return;
             StartCoroutine(Generate());
         }
+
+        private void OnEnable()
+        {
+            
+        }
+
+        #region UI Creation
 
         private IEnumerator Generate()
         {
@@ -43,20 +55,27 @@ namespace UI.MainMenu
             container.Add(buttonGroup);
 
             var newGameButton = Create<Button>("btn");
+            newGameButton.clicked += OnAnyNewGameButtonClicked;
             newGameButton.text = "New Game";
             buttonGroup.Add(newGameButton);
 
             var optionButton = Create<Button>("btn");
+            optionButton.clicked += OnAnyOptionsButtonClicked;
             optionButton.text = "Options";
             buttonGroup.Add(optionButton);
 
             var creditsButton = Create<Button>("btn");
+            creditsButton.clicked += OnAnyCreditsButtonClicked;
             creditsButton.text = "Credits";
             buttonGroup.Add(creditsButton);
             
             var quitGameButton = Create<Button>("btn");
+            quitGameButton.clicked += OnAnyQuitButtonClicked;
             quitGameButton.text = "Quit";
             buttonGroup.Add(quitGameButton);
+
+            var popupWindow = Create<PopupWindow>();
+            root.Add(popupWindow);
             
             root.Add(container);
         }
@@ -77,5 +96,7 @@ namespace UI.MainMenu
             
             return element;
         }
+
+        #endregion
     }
 }

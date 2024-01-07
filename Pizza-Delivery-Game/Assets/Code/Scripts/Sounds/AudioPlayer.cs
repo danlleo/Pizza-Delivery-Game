@@ -7,7 +7,7 @@ namespace Sounds
     public abstract class AudioPlayer : MonoBehaviour
     {
         private const float DEFAULT_PITCH_VALUE = 1f;
-
+        
         protected void PlaySound(AudioSource audioSource, AudioClip audioClip, float volume = 1f)
         {
             audioSource.pitch = DEFAULT_PITCH_VALUE;

@@ -1,0 +1,69 @@
+* {
+    margin: 0;
+    padding: 0;
+    -unity-font-definition: url("/Assets/Art/Fonts/retganon.ttf");
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header {
+    width: 100%;
+    height: 350px;
+    display: flex;
+}
+
+.header Label {
+    -unity-font-style: bold;
+    font-size: 70px;
+    color: #b70101;
+    text-shadow:
+            4px 4px 1px #300000,
+            4px 6px 1px #400000,
+            4px 8px 1px #500000,
+            4px 10px 1px #600000,
+            4px 12px 1px #700000,
+            4px 14px 1px #800000,
+            4px 16px 1px #900000,
+            4px 18px 1px #A00000,
+            4px 20px 1px #B00000,
+            4px 22px 1px #C00000,
+            4px 24px 1px #D00000,
+            4px 26px 1px #E00000,
+            4px 28px 1px #F00000,
+            4px 30px 1px #FA0000,
+            4px 32px 1px #FB0000,
+            4px 34px 1px #FC0000,
+            4px 36px 1px #FD0000,
+            4px 38px 1px #FE0000,
+            4px 40px 2px #FF0000;
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.btn-group .btn {
+    margin-bottom: 30px;
+    border-radius: 10px;
+    font-size: 60px;
+    color: white;
+    background-color: rgba(0,0,0,0);
+    padding: 10px;
+    transition-duration: .125s;
+    border-width: 0;
+    -unity-text-align: middle-left;
+}
+
+.btn-group .btn:hover{
+    color: orange;
+    translate: 16px 0;
+}
