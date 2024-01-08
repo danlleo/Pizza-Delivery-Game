@@ -1,16 +1,17 @@
+using ServiceLocator;
 using UI.Crossfade;
 using UnityEngine;
 
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class GameInitializer : MonoBehaviour
+    public class GameInitializer : MonoBehaviour, IRegistrar
     {
         [SerializeField] private Crossfade _crossfade;
         
-        private void Start()
+        private void Awake()
         {
-            ServiceLocator.ServiceLocator.RegisterCrossfadeService(_crossfade);
+            this.RegisterCrossfadeService(_crossfade);
         }
     }
 }
