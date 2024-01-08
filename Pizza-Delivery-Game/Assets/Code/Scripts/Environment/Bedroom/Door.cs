@@ -5,7 +5,6 @@ using Interfaces;
 using Misc;
 using Misc.Loader;
 using Sounds.Audio;
-using UI;
 using UnityEngine;
 
 namespace Environment.Bedroom
@@ -38,7 +37,8 @@ namespace Environment.Bedroom
 
         public void Interact()
         {
-            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene));
+            ServiceLocator.ServiceLocator.GetCrossfadeService()
+                .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene));
             _bedroomAudio.PlayDoorOpenSound();
             OpenedDoorStaticEvent.Call(this);
             SaveStaticEvent.CallSaveEvent(this);

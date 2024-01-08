@@ -8,6 +8,25 @@
 }
 
 .popup-window {
-    width: 100px;
-    height: 100px;
+    width: 400px;
+    height: 285px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.popup-window-header {
+    height: 40px;
+    width: 100%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-window-header-btn-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }

@@ -1,3 +1,6 @@
+using Enums.Scenes;
+using Misc;
+using Misc.Loader;
 using UnityEngine;
 
 namespace UI.MainMenu
@@ -23,7 +26,8 @@ namespace UI.MainMenu
 
         private void MainMenuScreen_OnAnyNewGameButtonClicked()
         {
-            
+            ServiceLocator.ServiceLocator.GetCrossfadeService()
+                .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BedroomScene));
         }
         
         private void MainMenuScreen_OnAnyOptionsButtonClicked()

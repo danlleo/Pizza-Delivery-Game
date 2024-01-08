@@ -15,7 +15,7 @@ namespace Dialogue.ConcreteActions
         {
             print("Maidanutik");
             
-            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () =>
+            ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput, () =>
             {
                 StartCoroutine(WaitSpecificTimeBeforeDoorRingRoutine());
             });
@@ -29,7 +29,7 @@ namespace Dialogue.ConcreteActions
             
             yield return new WaitForSeconds(4f);
             
-            Crossfade.Instance.FadeOut(() => {}, () =>
+            ServiceLocator.ServiceLocator.GetCrossfadeService().FadeOut(() => {}, () =>
             {
                 InputAllowance.EnableInput();
                 WokeUpStaticEvent.Call(Player.Player.Instance);

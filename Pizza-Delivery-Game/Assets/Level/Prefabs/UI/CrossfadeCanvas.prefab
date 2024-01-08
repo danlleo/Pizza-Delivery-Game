@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1417891375574108867}
   - component: {fileID: 3084282918470775800}
   - component: {fileID: 7489746030241045306}
-  - component: {fileID: 4680607070146244097}
   m_Layer: 5
   m_Name: Crossfade
   m_TagString: Untagged
@@ -103,20 +102,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4680607070146244097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020717387589797513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f280ba68d3612814e9ce7773beb6bccd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 3415331483125466393}
-  _crossfadeTime: 1.5
 --- !u!1 &3876863396468805183
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +186,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3876863396468805183}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -253,6 +238,7 @@ GameObject:
   - component: {fileID: 8481394600975880451}
   - component: {fileID: 139731218442590877}
   - component: {fileID: 7867741644754197688}
+  - component: {fileID: 3247858790379320299}
   m_Layer: 5
   m_Name: CrossfadeCanvas
   m_TagString: Untagged
@@ -301,7 +287,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &139731218442590877
 MonoBehaviour:
@@ -343,3 +329,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3247858790379320299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5342936229727274029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f280ba68d3612814e9ce7773beb6bccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 3415331483125466393}
+  _crossfadeUI: {fileID: 4795074055302112716}
+  _crossfadeTime: 1.5

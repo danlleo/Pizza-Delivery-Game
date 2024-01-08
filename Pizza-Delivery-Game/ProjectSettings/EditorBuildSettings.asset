@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Level/Scenes/FirstLaboratoryLevelScene.unity
     guid: 3da35f4f18b58c240a1585ce643bf6b9
   - enabled: 1
-    path: Assets/Level/Scenes/UpdatedBedroomScene.unity
+    path: Assets/Level/Scenes/BedroomScene.unity
     guid: 1b880c2407408fb40b786580ebb77d74
   - enabled: 1
     path: Assets/Level/Scenes/SecondLaboratoryLevelScene.unity

@@ -7,7 +7,7 @@ using Misc;
 using Misc.Loader;
 using Player.Inventory;
 using Tablet;
-using UI;
+using UI.Crossfade;
 using UnityEngine;
 
 namespace Keypad
@@ -115,7 +115,7 @@ namespace Keypad
             if (!passwordValidationResponseEvent.IsCorrect)
                 return;
 
-            Crossfade.Instance.FadeIn(InputAllowance.DisableInput,
+            ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput,
                 () => Loader.Load(Scene.SecondLaboratoryLevelScene));
             
             Destroy(this);

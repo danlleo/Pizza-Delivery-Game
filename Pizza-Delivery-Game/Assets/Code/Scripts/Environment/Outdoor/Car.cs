@@ -4,7 +4,6 @@ using Interfaces;
 using Misc;
 using Misc.Loader;
 using Scientist;
-using UI;
 using UnityEngine;
 
 namespace Environment.Outdoor
@@ -37,7 +36,8 @@ namespace Environment.Outdoor
 
         public void Interact()
         {
-            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.LaboratoryEntryScene));
+            ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput,
+                () => Loader.Load(Scene.LaboratoryEntryScene));
             Destroy(this);
         }
 

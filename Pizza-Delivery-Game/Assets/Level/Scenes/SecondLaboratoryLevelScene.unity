@@ -5433,7 +5433,8 @@ MonoBehaviour:
   _lightSource: {fileID: 40452776}
   _minIntensity: 9
   _maxIntensity: 12
-  _flickeringDurationInSeconds: 0.1
+  _minFlickeringDurationInSeconds: 0.1
+  _maxFlickeringDurationInSeconds: 0.1
 --- !u!1001 &285984763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30381,7 +30382,8 @@ MonoBehaviour:
   _lightSource: {fileID: 291621727965365487}
   _minIntensity: 6
   _maxIntensity: 8
-  _flickeringDurationInSeconds: 0.1
+  _minFlickeringDurationInSeconds: 0.1
+  _maxFlickeringDurationInSeconds: 0.1
 --- !u!1001 &1855151237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31407,6 +31409,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1894006674}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1894706497
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917057330405965895, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7711532442976343110, guid: aeb5c357a6084fd4aa5a681557147e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: GameInitializer
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aeb5c357a6084fd4aa5a681557147e3f, type: 3}
 --- !u!1001 &1903743145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39921,7 +39991,8 @@ MonoBehaviour:
   _lightSource: {fileID: 291621729471217980}
   _minIntensity: 8
   _maxIntensity: 10
-  _flickeringDurationInSeconds: 0.1
+  _minFlickeringDurationInSeconds: 0.1
+  _maxFlickeringDurationInSeconds: 0.1
 --- !u!4 &7125589775821717836
 Transform:
   m_ObjectHideFlags: 0
@@ -40074,7 +40145,8 @@ MonoBehaviour:
   _lightSource: {fileID: 3180807762044498990}
   _minIntensity: 0.5
   _maxIntensity: 1
-  _flickeringDurationInSeconds: 0.1
+  _minFlickeringDurationInSeconds: 0.1
+  _maxFlickeringDurationInSeconds: 0.1
 --- !u!4 &7435466894477061218
 Transform:
   m_ObjectHideFlags: 0
@@ -40496,3 +40568,4 @@ SceneRoots:
   - {fileID: 126798532}
   - {fileID: 1888767267}
   - {fileID: 437960579}
+  - {fileID: 1894706497}

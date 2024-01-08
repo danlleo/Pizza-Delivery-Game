@@ -3,7 +3,6 @@ using Enums.Scenes;
 using Interfaces;
 using Misc;
 using Misc.Loader;
-using UI;
 using UnityEngine;
 
 namespace Environment.LaboratoryEntry
@@ -35,7 +34,8 @@ namespace Environment.LaboratoryEntry
 
         public void Interact()
         {
-            Crossfade.Instance.FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.FirstLaboratoryLevelScene));
+            ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput,
+                () => Loader.Load(Scene.FirstLaboratoryLevelScene));
             Destroy(this);
         }
 

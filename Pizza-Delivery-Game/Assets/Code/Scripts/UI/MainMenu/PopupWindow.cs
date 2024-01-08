@@ -11,6 +11,8 @@ namespace UI.MainMenu
         private const string STYLE_RESOURCE = "UIToolkit/PopupWindowStylesheet";
         private const string USS_POPUP = "popup-window";
         private const string USS_POPUP_CONTAINER = "popup-container";
+        private const string USS_POPUP_HEADER = "popup-window-header";
+        private const string USS_POPUP_HEADER_BTN_GROUP = "popup-window-header-btn-group";
         
         public PopupWindow()
         {
@@ -20,6 +22,22 @@ namespace UI.MainMenu
             VisualElement window = Create();
             window.AddToClassList(USS_POPUP);
             hierarchy.Add(window);
+
+            VisualElement windowHeader = Create();
+            windowHeader.AddToClassList(USS_POPUP_HEADER);
+            window.Add(windowHeader);
+
+            VisualElement windowHeaderBtnGroup = Create();
+            windowHeaderBtnGroup.AddToClassList(USS_POPUP_HEADER_BTN_GROUP);
+            window.Add(windowHeaderBtnGroup);
+
+            var confirmButton = Create<Button>();
+            confirmButton.text = "Confirm";
+            windowHeaderBtnGroup.Add(confirmButton);
+            
+            var cancelButton = Create<Button>();
+            cancelButton.text = "Cancel";
+            windowHeaderBtnGroup.Add(cancelButton);
         }
         
         private VisualElement Create(params string[] classNames)
