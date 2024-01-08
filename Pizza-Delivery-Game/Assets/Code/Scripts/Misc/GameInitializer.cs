@@ -5,8 +5,9 @@ using UnityEngine;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class GameInitializer : MonoBehaviour, IRegistrar
+    public class GameInitializer : MonoBehaviour, IServiceRegistrar
     {
+        [Header("External references")]
         [SerializeField] private Crossfade _crossfade;
         
         private void Awake()

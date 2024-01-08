@@ -6,7 +6,7 @@ namespace ServiceLocator
     {
         private static ICrossfadeService s_crossfadeService;
 
-        public static void RegisterCrossfadeService(this IRegistrar _, ICrossfadeService crossfadeService)
+        public static void RegisterCrossfadeService(this IServiceRegistrar _, ICrossfadeService crossfadeService)
             => s_crossfadeService = crossfadeService;
 
         public static ICrossfadeService GetCrossfadeService()
