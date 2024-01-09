@@ -16,6 +16,8 @@ namespace UI.MainMenu
         public static Action OnAnyCreditsButtonClicked;
         public static Action OnAnyQuitButtonClicked;
 
+        public static Action OnAnyButtonSelected;
+
         private void Start()
         {
             StartCoroutine(Generate());
@@ -82,6 +84,11 @@ namespace UI.MainMenu
             root.Add(container);
             
             FocusFirstElement();
+            
+            newGameButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+            optionButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+            creditsButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+            quitGameButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
         }
 
         private VisualElement Create(params string[] classNames)
