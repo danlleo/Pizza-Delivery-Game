@@ -13,6 +13,7 @@ namespace Misc
         private void Awake()
         {
             this.RegisterCrossfadeService(_crossfade);
+            this.RegisterCursorLockStateService(new CursorLockState.CursorLockState(true));
         }
     }
 }

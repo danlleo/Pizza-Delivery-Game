@@ -27,6 +27,10 @@ namespace UI.MainMenu
             windowHeader.AddToClassList(USS_POPUP_HEADER);
             window.Add(windowHeader);
 
+            var message = Create<Label>();
+            message.text = "Are you sure?";
+            windowHeader.Add(message);
+            
             VisualElement windowHeaderBtnGroup = Create();
             windowHeaderBtnGroup.AddToClassList(USS_POPUP_HEADER_BTN_GROUP);
             window.Add(windowHeaderBtnGroup);

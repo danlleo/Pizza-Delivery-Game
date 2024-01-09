@@ -15,21 +15,22 @@ namespace UI.MainMenu
         public static Action OnAnyOptionsButtonClicked;
         public static Action OnAnyCreditsButtonClicked;
         public static Action OnAnyQuitButtonClicked;
-        
+
         private void Start()
         {
             StartCoroutine(Generate());
         }
-
+        
         private void OnValidate()
         {
             if (Application.isPlaying) return;
             StartCoroutine(Generate());
         }
-
-        private void OnEnable()
+        
+        private void FocusFirstElement()
         {
-            
+            _uiDocument.rootVisualElement.
+                Q<Button>("new-game-button").Focus();
         }
 
         #region UI Creation
@@ -37,47 +38,50 @@ namespace UI.MainMenu
         private IEnumerator Generate()
         {
             yield return null;
-            
+
             VisualElement root = _uiDocument.rootVisualElement;
             root.Clear();
             root.styleSheets.Add(_styleSheet);
 
             VisualElement container = Create("container");
 
-            VisualElement header = Create("header");
-            container.Add(header);
+            VisualElement gameContainer = Create("game-container");
+            container.Add(gameContainer);
 
             var gameName = Create<Label>();
             gameName.text = "Night Pizza Delivery";
-            header.Add(gameName);
-
+            gameContainer.Add(gameName);
+            
             VisualElement buttonGroup = Create("btn-group");
-            container.Add(buttonGroup);
+            gameContainer.Add(buttonGroup);
 
             var newGameButton = Create<Button>("btn");
             newGameButton.clicked += OnAnyNewGameButtonClicked;
-            newGameButton.text = "New Game";
+            newGameButton.text = "NEW GAME";
+            newGameButton.name = "new-game-button";
             buttonGroup.Add(newGameButton);
-
+            
             var optionButton = Create<Button>("btn");
             optionButton.clicked += OnAnyOptionsButtonClicked;
-            optionButton.text = "Options";
+            optionButton.text = "SETTINGS";
             buttonGroup.Add(optionButton);
 
             var creditsButton = Create<Button>("btn");
             creditsButton.clicked += OnAnyCreditsButtonClicked;
-            creditsButton.text = "Credits";
+            creditsButton.text = "CREDITS";
             buttonGroup.Add(creditsButton);
             
             var quitGameButton = Create<Button>("btn");
             quitGameButton.clicked += OnAnyQuitButtonClicked;
-            quitGameButton.text = "Quit";
+            quitGameButton.text = "QUIT";
             buttonGroup.Add(quitGameButton);
-
-            var popupWindow = Create<PopupWindow>();
-            root.Add(popupWindow);
+            
+            // var popupWindow = Create<PopupWindow>();
+            // root.Add(popupWindow);
             
             root.Add(container);
+            
+            FocusFirstElement();
         }
 
         private VisualElement Create(params string[] classNames)

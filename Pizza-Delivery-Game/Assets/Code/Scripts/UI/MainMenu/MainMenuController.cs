@@ -8,6 +8,8 @@ namespace UI.MainMenu
     [DisallowMultipleComponent]
     public class MainMenuController : MonoBehaviour
     {
+        private bool _newGameStarted;
+        
         private void OnEnable()
         {
             MainMenuScreen.OnAnyNewGameButtonClicked += MainMenuScreen_OnAnyNewGameButtonClicked;
@@ -26,8 +28,12 @@ namespace UI.MainMenu
 
         private void MainMenuScreen_OnAnyNewGameButtonClicked()
         {
+            if (_newGameStarted) return;
+            
             ServiceLocator.ServiceLocator.GetCrossfadeService()
                 .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BedroomScene));
+
+            _newGameStarted = true;
         }
         
         private void MainMenuScreen_OnAnyOptionsButtonClicked()

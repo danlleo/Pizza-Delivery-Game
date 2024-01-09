@@ -7,7 +7,6 @@ using Misc;
 using Misc.Loader;
 using Player.Inventory;
 using Tablet;
-using UI.Crossfade;
 using UnityEngine;
 
 namespace Keypad
@@ -34,12 +33,13 @@ namespace Keypad
             
             _buttonPress.enabled = false;
             _keypadBoxCollider.enabled = true;
+            _isAvailable = true;
         }
 
         private void OnEnable()
         {
             InteractedWithTabletStaticEvent.OnAnyInteractedWithTablet += OnAnyInteractedWithTablet;
-            InspectedForbiddenStaticEvent.OnAnyInspectedForbidden += InspectedForbidden;
+            InspectedForbiddenStaticEvent.OnAnyInspectedForbidden += OnAnyInspectedForbidden;
             TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer += OnAnyTriggeredScreamer;
             
             _passwordValidationEventBinding = new EventBinding<PasswordValidationEvent>(HandlePasswordValidationEvent);
@@ -50,12 +50,10 @@ namespace Keypad
             EventBus<PasswordValidationResponseEvent>.Register(_passwordValidationEventResponseEventBinding);
         }
 
-        
-
         private void OnDisable()
         {
             InteractedWithTabletStaticEvent.OnAnyInteractedWithTablet -= OnAnyInteractedWithTablet;
-            InspectedForbiddenStaticEvent.OnAnyInspectedForbidden -= InspectedForbidden;
+            InspectedForbiddenStaticEvent.OnAnyInspectedForbidden -= OnAnyInspectedForbidden;
             TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer -= OnAnyTriggeredScreamer;
             
             EventBus<PasswordValidationEvent>.Deregister(_passwordValidationEventBinding);
@@ -84,7 +82,7 @@ namespace Keypad
             InputAllowance.DisableInput();
             EventBus<InteractedWithKeypadEvent>.Raise(new InteractedWithKeypadEvent());
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
-            CursorLockStateChangedStaticEvent.Call(this, new CursorLockStateChangedStaticEventArgs(false));
+            ServiceLocator.ServiceLocator.GetCursorLockService().UnlockCursor();
 
             _buttonPress.enabled = true;
             _keypadBoxCollider.enabled = false;
@@ -126,7 +124,7 @@ namespace Keypad
             SetPlayerKnowsPassword();
         }
         
-        private void InspectedForbidden(object sender, EventArgs e)
+        private void OnAnyInspectedForbidden(object sender, EventArgs e)
         {
             _isAvailable = false;
         }
