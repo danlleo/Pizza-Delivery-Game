@@ -430,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1095425305}
   - component: {fileID: 1095425306}
+  - component: {fileID: 1095425307}
   m_Layer: 0
   m_Name: MusicPlayer
   m_TagString: Untagged
@@ -548,6 +549,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1095425307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095425304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1465d4f9e99aa1b488ee43cbae06901c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1367635485
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,6 +658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buttonPressClip: {fileID: 8300000, guid: a3fb29ba0e11b7541b6e6ae76a06adbb, type: 3}
   _buttonFocusClip: {fileID: 8300000, guid: 65108741c9336fb4898b924e6a039dec, type: 3}
+  _newGameStartClip: {fileID: 8300000, guid: 8e8c1be346b413146a788f7a2d5d7f6f, type: 3}
 --- !u!4 &1471481569
 Transform:
   m_ObjectHideFlags: 0

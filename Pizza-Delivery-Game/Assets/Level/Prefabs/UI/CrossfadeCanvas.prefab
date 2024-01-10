@@ -343,4 +343,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 3415331483125466393}
   _crossfadeUI: {fileID: 4795074055302112716}
-  _crossfadeTime: 1.5
+  _crossfadeTime: 3

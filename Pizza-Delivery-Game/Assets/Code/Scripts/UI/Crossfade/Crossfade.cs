@@ -12,7 +12,7 @@ namespace UI.Crossfade
         [SerializeField] private GameObject _crossfadeUI;
         
         [Header("Settings")] 
-        [SerializeField] [Range(0f, 3f)] private float _crossfadeTime = 1.5f;
+        [SerializeField] [Range(0f, 3f)] private float _crossfadeTime = 1.8f;
 
         private void Awake()
         {

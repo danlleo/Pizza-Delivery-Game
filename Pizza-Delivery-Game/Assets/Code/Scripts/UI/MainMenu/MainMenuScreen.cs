@@ -21,6 +21,8 @@ namespace UI.MainMenu
         public static Action OnAnyQuitButtonClicked;
 
         public static Action OnAnyButtonSelected;
+
+        public static Action OnAnyNewGameStarted;
         
         private void OnEnable()
         {
@@ -77,6 +79,7 @@ namespace UI.MainMenu
             CreatePopupWindow("ARE YOU SURE YOU WANT TO START A NEW GAME?", "You don't know how this journey will end.",
                 () =>
                 {
+                    OnAnyNewGameStarted?.Invoke();
                     _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
                     DisableMainMenuButtonsFocus();
                     ServiceLocator.ServiceLocator.GetCrossfadeService()

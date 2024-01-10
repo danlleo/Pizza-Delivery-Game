@@ -9,6 +9,9 @@ namespace Sounds.Audio
         [SerializeField] private AudioClip _buttonPressClip;
         [SerializeField] private AudioClip _buttonFocusClip;
         
+        [Space(5)]
+        [SerializeField] private AudioClip _newGameStartClip;
+        
         private AudioSource _audioSource;
 
         private void Awake()
@@ -23,6 +26,7 @@ namespace Sounds.Audio
             MainMenuScreen.OnAnyCreditsButtonClicked += MainMenuScreen_OnAnyCreditsButtonClicked;
             MainMenuScreen.OnAnyQuitButtonClicked += MainMenuScreen_OnAnyQuitButtonClicked;
             MainMenuScreen.OnAnyButtonSelected += MainMenuScreen_OnAnyButtonSelected;
+            MainMenuScreen.OnAnyNewGameStarted += MainMenuScreen_OnAnyNewGameStarted;
             PopupWindow.OnAnyButtonSelected += PopupWindow_OnAnyButtonSelected;
             PopupWindow.OnAnyButtonClicked += PopupWindow_OnAnyButtonClicked;
             CreditsWindow.OnAnyButtonClicked += CreditsWindow_OnAnyButtonClicked;
@@ -35,11 +39,17 @@ namespace Sounds.Audio
             MainMenuScreen.OnAnyCreditsButtonClicked -= MainMenuScreen_OnAnyCreditsButtonClicked;
             MainMenuScreen.OnAnyQuitButtonClicked -= MainMenuScreen_OnAnyQuitButtonClicked;
             MainMenuScreen.OnAnyButtonSelected -= MainMenuScreen_OnAnyButtonSelected;
+            MainMenuScreen.OnAnyNewGameStarted -= MainMenuScreen_OnAnyNewGameStarted;
             PopupWindow.OnAnyButtonSelected -= PopupWindow_OnAnyButtonSelected;
             PopupWindow.OnAnyButtonClicked -= PopupWindow_OnAnyButtonClicked;
             CreditsWindow.OnAnyButtonClicked -= CreditsWindow_OnAnyButtonClicked;
         }
 
+        private void MainMenuScreen_OnAnyNewGameStarted()
+        {
+            PlaySound(_audioSource, _newGameStartClip, 0.7f);
+        }
+        
         private void CreditsWindow_OnAnyButtonClicked()
         {
             PlaySound(_audioSource, _buttonPressClip, 0.7f);
