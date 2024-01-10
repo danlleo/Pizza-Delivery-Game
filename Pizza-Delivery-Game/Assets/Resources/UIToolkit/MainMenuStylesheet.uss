@@ -24,7 +24,7 @@
 .game-container Label {
     -unity-font-style: bold;
     font-size: 80px;
-    color: goldenrod;
+    color: #d7ac4a;
     text-shadow:
             4px 4px 1px #300000,
             4px 6px 1px #400000,

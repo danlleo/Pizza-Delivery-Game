@@ -1,6 +1,4 @@
-using Enums.Scenes;
-using Misc;
-using Misc.Loader;
+using System;
 using UnityEngine;
 
 namespace UI.MainMenu
@@ -8,7 +6,11 @@ namespace UI.MainMenu
     [DisallowMultipleComponent]
     public class MainMenuController : MonoBehaviour
     {
-        private bool _newGameStarted;
+        public static Action OnAnyTriedNewGame;
+        public static Action OnAnyOptionsOpen;
+        public static Action OnAnyCreditsOpen;
+        public static Action OnAnyTryQuit;
+
         
         private void OnEnable()
         {
@@ -28,27 +30,22 @@ namespace UI.MainMenu
 
         private void MainMenuScreen_OnAnyNewGameButtonClicked()
         {
-            if (_newGameStarted) return;
-            
-            ServiceLocator.ServiceLocator.GetCrossfadeService()
-                .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BedroomScene));
-
-            _newGameStarted = true;
+            OnAnyTriedNewGame?.Invoke();
         }
         
         private void MainMenuScreen_OnAnyOptionsButtonClicked()
         {
-            
+            OnAnyOptionsOpen?.Invoke();
         }
         
         private void MainMenuScreen_OnAnyCreditsButtonClicked()
         {
-            
+            OnAnyCreditsOpen?.Invoke();
         }
         
         private void MainMenuScreen_OnAnyQuitButtonClicked()
         {
-            
+            OnAnyTryQuit?.Invoke();
         }
     }
 }

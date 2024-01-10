@@ -5,34 +5,62 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgba(0,0,0,0.9);
 }
 
 .popup-window {
-    width: 400px;
-    height: 285px;
-    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .popup-window-header {
-    height: 40px;
     width: 100%;
-    background-color: red;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-width: 4px;
+    border-color: #d7ac4a;
+    padding: 30px 20px;
+    color: #d7ac4a;
+    margin-bottom: 30px;
 }
 
-.popup-window-header Label {
-    color: white;
+.popup-window-header .message-title {
     -unity-font-style: bold;
-    font-size: 24px;
+    font-size: 36px;
+    margin-bottom: 25px;
+}
+
+.popup-window-header .message-main {
+    font-size: 30px;
 }
 
 .popup-window-header-btn-group {
-    width: 100%;
+    width: 55%;
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+}
+
+.popup-window-header-btn-group Button {
+    width: 125px;
+    height: 30px;
+    font-size: 22px;
+    border-width: 2px;
+    background-color: rgba(0,0,0,0);
+    border-color: #d7ac4a;
+    color: #d7ac4a;
+    padding: 5px;
+    margin: 10px;
+    transition-duration: .1s;
+}
+
+.popup-window-header-btn-group Button:focus 
+{
+    background-color: #d7ac4a;
+    color: black;
 }
