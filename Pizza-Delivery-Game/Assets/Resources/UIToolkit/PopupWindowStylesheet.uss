@@ -20,8 +20,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-width: 4px;
-    border-color: #d7ac4a;
     padding: 30px 20px;
     color: #d7ac4a;
     margin-bottom: 30px;
@@ -35,6 +33,7 @@
 
 .popup-window-header .message-main {
     font-size: 30px;
+    color: #fff;
 }
 
 .popup-window-header-btn-group {

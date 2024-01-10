@@ -1,5 +1,5 @@
 using System;
-using UnityEngine;
+using Misc;
 using UnityEngine.UIElements;
 
 namespace UI.MainMenu
@@ -45,7 +45,6 @@ namespace UI.MainMenu
             }
         }
         
-        private const string STYLE_RESOURCE = "UIToolkit/PopupWindowStylesheet";
         private const string USS_POPUP = "popup-window";
         private const string USS_POPUP_CONTAINER = "popup-container";
         private const string USS_POPUP_HEADER = "popup-window-header";
@@ -53,15 +52,13 @@ namespace UI.MainMenu
         
         public PopupWindow()
         {
-            styleSheets.Add(Resources.Load<StyleSheet>(STYLE_RESOURCE));
+            styleSheets.Add(GameResources.Retrieve.PopupWindowStylesheet);
             AddToClassList(USS_POPUP_CONTAINER);
             
-            VisualElement window = Create();
-            window.AddToClassList(USS_POPUP);
+            VisualElement window = Create(USS_POPUP);
             hierarchy.Add(window);
 
-            VisualElement windowHeader = Create();
-            windowHeader.AddToClassList(USS_POPUP_HEADER);
+            VisualElement windowHeader = Create(USS_POPUP_HEADER);
             window.Add(windowHeader);
 
             _messageTitle = Create<Label>("message-title");
@@ -72,8 +69,7 @@ namespace UI.MainMenu
             _messageMain.text = Message;
             windowHeader.Add(_messageMain);
             
-            VisualElement windowHeaderBtnGroup = Create();
-            windowHeaderBtnGroup.AddToClassList(USS_POPUP_HEADER_BTN_GROUP);
+            VisualElement windowHeaderBtnGroup = Create(USS_POPUP_HEADER_BTN_GROUP);
             window.Add(windowHeaderBtnGroup);
 
             var confirmButton = Create<Button>();

@@ -13,8 +13,6 @@ namespace Dialogue.ConcreteActions
         
         protected override void Perform()
         {
-            print("Maidanutik");
-            
             ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput, () =>
             {
                 StartCoroutine(WaitSpecificTimeBeforeDoorRingRoutine());

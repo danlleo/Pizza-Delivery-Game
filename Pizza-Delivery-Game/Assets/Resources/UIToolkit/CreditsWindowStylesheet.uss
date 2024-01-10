@@ -1,0 +1,63 @@
+.container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.window {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .title {
+    font-size: 50px;
+    color: #d7ac4a;
+}
+
+.main {
+    display: flex;
+}
+
+.main .semi {
+    color: #fff;
+    -unity-font-style: bold;
+    font-size: 26px;
+    margin: 20px 0 10px 0;
+    white-space: normal;
+}
+
+.main .message {
+    color: #fff;
+    font-size: 22px;
+    white-space: normal;
+}
+
+.confirm-button {
+    width: 125px;
+    height: 30px;
+    font-size: 22px;
+    border-width: 2px;
+    background-color: rgba(0,0,0,0);
+    border-color: #d7ac4a;
+    color: #d7ac4a;
+    padding: 5px;
+    transition-duration: .1s;
+    margin-top: 40px;
+    align-self: flex-end;
+}
+
+.confirm-button:focus {
+    background-color: #d7ac4a;
+    color: black;
+}

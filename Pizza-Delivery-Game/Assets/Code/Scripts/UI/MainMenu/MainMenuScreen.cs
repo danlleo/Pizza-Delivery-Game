@@ -64,7 +64,7 @@ namespace UI.MainMenu
 
         private void MainMenuController_OnAnyCreditsButtonClicked()
         {
-            throw new NotImplementedException();
+            CreateCreditsWindow();
         }
 
         private void MainMenuController_OnAnyOptionsButtonClicked()
@@ -77,6 +77,7 @@ namespace UI.MainMenu
             CreatePopupWindow("ARE YOU SURE YOU WANT TO START A NEW GAME?", "You don't know how this journey will end.",
                 () =>
                 {
+                    _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
                     DisableMainMenuButtonsFocus();
                     ServiceLocator.ServiceLocator.GetCrossfadeService()
                         .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BedroomScene));
@@ -144,6 +145,11 @@ namespace UI.MainMenu
             quitGameButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
         }
 
+        private void FocusOnConfirmButtonInCreditsWindow()
+        {
+            _uiDocument.rootVisualElement.Q<Button>("confirm-btn").Focus();
+        }
+        
         private void FocusOnCancelButtonInModalWindow()
         {
             _uiDocument.rootVisualElement.Q<Button>("cancel-button").Focus();
@@ -177,6 +183,25 @@ namespace UI.MainMenu
             }
         }
 
+        private void CreateCreditsWindow()
+        {
+            DisableMainMenuButtonsFocus();
+            
+            var creditsWindow = Create<CreditsWindow>();
+            creditsWindow.OnConfirm = () =>
+            {
+                _uiDocument.rootVisualElement.Q<CreditsWindow>().RemoveFromHierarchy();
+                EnableMainMenuButtonsFocus();
+                FocusOnFirstButtonInMainMenuScreenGroup();
+            };
+            _uiDocument.rootVisualElement.Add(creditsWindow);
+            
+            creditsWindow.RegisterCallback<FocusEvent>(_ => DisableMainMenuButtonsFocus());
+            creditsWindow.RegisterCallback<FocusEvent>(_ => EnableMainMenuButtonsFocus());
+
+            FocusOnConfirmButtonInCreditsWindow();
+        }
+        
         private void CreatePopupWindow(string titleMessage, string bodyMessage, Action onConfirm, Action onDecline)
         {
             DisableMainMenuButtonsFocus();

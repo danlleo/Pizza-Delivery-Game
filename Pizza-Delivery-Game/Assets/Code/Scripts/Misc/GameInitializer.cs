@@ -7,11 +7,12 @@ namespace Misc
     [DisallowMultipleComponent]
     public class GameInitializer : MonoBehaviour, IServiceRegistrar
     {
-        [Header("External references")]
-        [SerializeField] private Crossfade _crossfade;
+        private Crossfade _crossfade;
         
         private void Awake()
         {
+            _crossfade = Instantiate(GameResources.Retrieve.CrossfadePrefab);
+            
             this.RegisterCrossfadeService(_crossfade);
             this.RegisterCursorLockStateService(new CursorLockState.CursorLockState(true));
         }

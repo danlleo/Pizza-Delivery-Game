@@ -44,5 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39889a108eecd254b84bc1210e259266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestDoor: {fileID: 4316849992861030099, guid: 71b9b46111ef00c43af7c72dcfec80dd,
+  CrossfadePrefab: {fileID: 3247858790379320299, guid: 4326d5bcf21b0894db0c57a78786a33e,
+    type: 3}
+  PopupWindowStylesheet: {fileID: 7433441132597879392, guid: 8144c88c00a7f4c408eb361e8027502d,
+    type: 3}
+  CreditsWindowStylesheet: {fileID: 7433441132597879392, guid: f3c45f66dc0468d46ba6de7c7922bfb3,
     type: 3}

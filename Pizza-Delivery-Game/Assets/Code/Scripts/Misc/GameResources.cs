@@ -1,4 +1,6 @@
+using UI.Crossfade;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Misc
 {
@@ -7,7 +9,7 @@ namespace Misc
     {
         private static GameResources s_instance;
 
-        public static GameResources Instance
+        public static GameResources Retrieve
         {
             // We get data from a prefab
             // With this we can easily share data between scenes, cause everything is located in resource folder
@@ -21,6 +23,9 @@ namespace Misc
             }
         }
 
-        public Door.Door TestDoor;
+        public Crossfade CrossfadePrefab;
+        
+        public StyleSheet PopupWindowStylesheet;
+        public StyleSheet CreditsWindowStylesheet;
     }
 }
