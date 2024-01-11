@@ -27,5 +27,6 @@ namespace Misc
         
         public StyleSheet PopupWindowStylesheet;
         public StyleSheet CreditsWindowStylesheet;
+        public StyleSheet SettingsWindowStylesheet;
     }
 }

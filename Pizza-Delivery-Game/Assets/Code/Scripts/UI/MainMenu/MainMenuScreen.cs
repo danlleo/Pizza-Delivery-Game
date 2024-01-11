@@ -71,7 +71,18 @@ namespace UI.MainMenu
 
         private void MainMenuController_OnAnyOptionsButtonClicked()
         {
-            throw new NotImplementedException();
+            CreateSettingsWindow(() =>
+            {
+                _uiDocument.rootVisualElement.Q<SettingsWindow>().RemoveFromHierarchy();
+                EnableMainMenuButtonsFocus();
+                FocusOnFirstButtonInMainMenuScreenGroup();
+            },
+            () =>
+            {
+                _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
+                EnableMainMenuButtonsFocus();
+                FocusOnFirstButtonInMainMenuScreenGroup();
+            });
         }
 
         private void MainMenuController_OnAnyNewGameButtonClicked()
@@ -83,7 +94,7 @@ namespace UI.MainMenu
                     _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
                     DisableMainMenuButtonsFocus();
                     ServiceLocator.ServiceLocator.GetCrossfadeService()
-                        .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BedroomScene));
+                        .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BedroomScene), 3.2f);
                 },
                 () =>
                 {
@@ -148,6 +159,35 @@ namespace UI.MainMenu
             quitGameButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
         }
 
+        private void RegisterFocusCallbacks(VisualElement container)
+        {
+            List<Button> buttons = container.Query<Button>().ToList();
+            
+            foreach (Button button in buttons)
+            {
+                button.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+            }
+
+            List<Toggle> toggles = container.Query<Toggle>().ToList();
+            
+            foreach (Toggle toggle in toggles)
+            {
+                toggle.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+            }
+
+            List<Slider> sliders = container.Query<Slider>().ToList();
+            
+            foreach (Slider slider in sliders)
+            {
+                slider.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+            }
+        }
+        
+        private void FocusOnSliderInSettingsWindow()
+        {
+            _uiDocument.rootVisualElement.Q<Slider>("mouse-sensitivity-slider").Focus();
+        }
+        
         private void FocusOnConfirmButtonInCreditsWindow()
         {
             _uiDocument.rootVisualElement.Q<Button>("confirm-btn").Focus();
@@ -186,6 +226,24 @@ namespace UI.MainMenu
             }
         }
 
+        private void CreateSettingsWindow(Action onConfirm, Action onCancel)
+        {
+            DisableMainMenuButtonsFocus();
+         
+            var settingsWindow = Create<SettingsWindow>();
+            settingsWindow.OnConfirm = onConfirm;
+            settingsWindow.OnCancel = onCancel;
+            
+            _uiDocument.rootVisualElement.Add(settingsWindow);
+
+            settingsWindow.RegisterCallback<FocusEvent>(_ => DisableMainMenuButtonsFocus());
+            settingsWindow.RegisterCallback<FocusEvent>(_ => EnableMainMenuButtonsFocus());
+            
+            FocusOnSliderInSettingsWindow();
+
+            RegisterFocusCallbacks(settingsWindow);
+        }
+        
         private void CreateCreditsWindow()
         {
             DisableMainMenuButtonsFocus();

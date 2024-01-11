@@ -6,6 +6,7 @@ using Misc;
 using Misc.Loader;
 using Sounds.Audio;
 using UnityEngine;
+using Utilities;
 
 namespace Environment.Bedroom
 {
@@ -14,15 +15,17 @@ namespace Environment.Bedroom
     [DisallowMultipleComponent]
     public class Door : MonoBehaviour, IInteractable
     {
+        [Header("External references")]
         [SerializeField] private BedroomAudio _bedroomAudio;
-
-        private BoxCollider _boxCollider;
+        [SerializeField] private BoxCollider _blockCollider;
+        
+        private BoxCollider _interactableCollider;
 
         private void Awake()
         {
-            _boxCollider = GetComponent<BoxCollider>();
+            _interactableCollider = GetComponent<BoxCollider>();
             
-            DisableDoorCollider();
+            DisableDoorInteractCollider();
         }
 
         private void OnEnable()
@@ -38,7 +41,7 @@ namespace Environment.Bedroom
         public void Interact()
         {
             ServiceLocator.ServiceLocator.GetCrossfadeService()
-                .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene));
+                .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene), 1.5f);
            
             _bedroomAudio.PlayDoorOpenSound();
             OpenedDoorStaticEvent.Call(this);
@@ -51,15 +54,19 @@ namespace Environment.Bedroom
             return "Leave";
         }
 
-        private void EnableDoorCollider()
-            => _boxCollider.enabled = true;
+        private void EnableDoorInteractCollider()
+            => _interactableCollider.Enable();
 
-        private void DisableDoorCollider()
-            => _boxCollider.enabled = false;
+        private void DisableDoorInteractCollider()
+            => _interactableCollider.Disable();
+
+        private void DisableDoorBlockCollider()
+            => _blockCollider.Disable();
         
         private void WokeUpStaticEvent_OnWokeUp(object sender, EventArgs e)
         {
-            EnableDoorCollider();
+            EnableDoorInteractCollider();
+            DisableDoorBlockCollider();
         }
     }
 }

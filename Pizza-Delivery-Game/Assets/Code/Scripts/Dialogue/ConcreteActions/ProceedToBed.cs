@@ -16,7 +16,7 @@ namespace Dialogue.ConcreteActions
             ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput, () =>
             {
                 StartCoroutine(WaitSpecificTimeBeforeDoorRingRoutine());
-            });
+            }, 1.2f);
         }
 
         private IEnumerator WaitSpecificTimeBeforeDoorRingRoutine()
@@ -32,7 +32,7 @@ namespace Dialogue.ConcreteActions
                 InputAllowance.EnableInput();
                 WokeUpStaticEvent.Call(Player.Player.Instance);
                 CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(true));
-            });
+            }, 1.2f);
         }
     }
 }

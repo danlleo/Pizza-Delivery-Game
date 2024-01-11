@@ -37,7 +37,7 @@ namespace Environment.Outdoor
         public void Interact()
         {
             ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput,
-                () => Loader.Load(Scene.LaboratoryEntryScene));
+                () => Loader.Load(Scene.LaboratoryEntryScene), 1.5f);
             Destroy(this);
         }
 

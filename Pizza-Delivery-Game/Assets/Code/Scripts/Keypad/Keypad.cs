@@ -114,7 +114,7 @@ namespace Keypad
                 return;
 
             ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput,
-                () => Loader.Load(Scene.SecondLaboratoryLevelScene));
+                () => Loader.Load(Scene.SecondLaboratoryLevelScene), 1.5f);
             
             Destroy(this);
         }

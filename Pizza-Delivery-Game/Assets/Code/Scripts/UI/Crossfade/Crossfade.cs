@@ -11,9 +11,6 @@ namespace UI.Crossfade
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private GameObject _crossfadeUI;
         
-        [Header("Settings")] 
-        [SerializeField] [Range(0f, 3f)] private float _crossfadeTime = 1.8f;
-
         private void Awake()
         {
             DisableUI();
@@ -27,23 +24,23 @@ namespace UI.Crossfade
         
         #region FadeIn
 
-        public void FadeIn()
+        public void FadeIn(float duration)
         {
-            _canvasGroup.DOFade(1f, _crossfadeTime);
+            _canvasGroup.DOFade(1f, duration);
         }
 
-        public void FadeIn(Action onStart)
+        public void FadeIn(Action onStart, float duration)
         {
             EnableUI();
 
-            _canvasGroup.DOFade(1f, _crossfadeTime).OnStart(() => onStart?.Invoke());
+            _canvasGroup.DOFade(1f, duration).OnStart(() => onStart?.Invoke());
         }
 
-        public void FadeIn(Action onStart, Action onComplete)
+        public void FadeIn(Action onStart, Action onComplete, float duration)
         {
             EnableUI();
 
-            _canvasGroup.DOFade(1f, _crossfadeTime).OnStart(() => onStart?.Invoke())
+            _canvasGroup.DOFade(1f, duration).OnStart(() => onStart?.Invoke())
                 .OnComplete(() => onComplete?.Invoke());
         }
 
@@ -51,25 +48,25 @@ namespace UI.Crossfade
 
         #region FadeOut
 
-        public void FadeOut()
+        public void FadeOut(float duration)
         {
             EnableUI();
 
-            _canvasGroup.DOFade(0f, _crossfadeTime).OnComplete(DisableUI);
+            _canvasGroup.DOFade(0f, duration).OnComplete(DisableUI);
         }
 
-        public void FadeOut(Action onStart)
+        public void FadeOut(Action onStart, float duration)
         {
             EnableUI();
 
-            _canvasGroup.DOFade(0f, _crossfadeTime).OnStart(() => onStart?.Invoke()).OnComplete(DisableUI);
+            _canvasGroup.DOFade(0f, duration).OnStart(() => onStart?.Invoke()).OnComplete(DisableUI);
         }
 
-        public void FadeOut(Action onStart, Action onComplete)
+        public void FadeOut(Action onStart, Action onComplete, float duration)
         {
             EnableUI();
 
-            _canvasGroup.DOFade(0f, _crossfadeTime).OnStart(() => onStart?.Invoke())
+            _canvasGroup.DOFade(0f, duration).OnStart(() => onStart?.Invoke())
                 .OnComplete(() =>
                 {
                     onComplete?.Invoke();

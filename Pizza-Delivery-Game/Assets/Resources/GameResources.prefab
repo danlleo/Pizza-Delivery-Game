@@ -50,3 +50,5 @@ MonoBehaviour:
     type: 3}
   CreditsWindowStylesheet: {fileID: 7433441132597879392, guid: f3c45f66dc0468d46ba6de7c7922bfb3,
     type: 3}
+  SettingsWindowStylesheet: {fileID: 7433441132597879392, guid: 0575a35dcdf2ed54ea82495e796bf322,
+    type: 3}

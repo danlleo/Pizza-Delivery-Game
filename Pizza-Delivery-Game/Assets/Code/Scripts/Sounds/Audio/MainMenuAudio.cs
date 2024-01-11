@@ -30,6 +30,7 @@ namespace Sounds.Audio
             PopupWindow.OnAnyButtonSelected += PopupWindow_OnAnyButtonSelected;
             PopupWindow.OnAnyButtonClicked += PopupWindow_OnAnyButtonClicked;
             CreditsWindow.OnAnyButtonClicked += CreditsWindow_OnAnyButtonClicked;
+            SettingsWindow.OnAnyButtonClicked += SettingsWindow_OnAnyButtonClicked;
         }
 
         private void OnDisable()
@@ -43,8 +44,14 @@ namespace Sounds.Audio
             PopupWindow.OnAnyButtonSelected -= PopupWindow_OnAnyButtonSelected;
             PopupWindow.OnAnyButtonClicked -= PopupWindow_OnAnyButtonClicked;
             CreditsWindow.OnAnyButtonClicked -= CreditsWindow_OnAnyButtonClicked;
+            SettingsWindow.OnAnyButtonClicked -= SettingsWindow_OnAnyButtonClicked;
         }
 
+        private void SettingsWindow_OnAnyButtonClicked()
+        {
+            PlaySound(_audioSource, _buttonPressClip, 0.7f);
+        }
+        
         private void MainMenuScreen_OnAnyNewGameStarted()
         {
             PlaySound(_audioSource, _newGameStartClip, 0.7f);

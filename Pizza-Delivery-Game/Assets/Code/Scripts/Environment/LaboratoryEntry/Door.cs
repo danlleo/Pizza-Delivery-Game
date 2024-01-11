@@ -35,7 +35,7 @@ namespace Environment.LaboratoryEntry
         public void Interact()
         {
             ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput,
-                () => Loader.Load(Scene.FirstLaboratoryLevelScene));
+                () => Loader.Load(Scene.FirstLaboratoryLevelScene), 1.5f);
             Destroy(this);
         }
 
