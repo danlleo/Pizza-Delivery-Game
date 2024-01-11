@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CrossfadePrefab: {fileID: 3247858790379320299, guid: 4326d5bcf21b0894db0c57a78786a33e,
     type: 3}
+  StoryComicsTextPrefab: {fileID: 6368164793026465901, guid: fc2dbb0d98e297b4491856275fabc1f4,
+    type: 3}
   PopupWindowStylesheet: {fileID: 7433441132597879392, guid: 8144c88c00a7f4c408eb361e8027502d,
     type: 3}
   CreditsWindowStylesheet: {fileID: 7433441132597879392, guid: f3c45f66dc0468d46ba6de7c7922bfb3,

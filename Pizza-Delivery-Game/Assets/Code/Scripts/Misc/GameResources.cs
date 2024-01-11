@@ -1,3 +1,4 @@
+using StoryComics;
 using UI.Crossfade;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -23,8 +24,13 @@ namespace Misc
             }
         }
 
+        [Space(10)]
         public Crossfade CrossfadePrefab;
+
+        [Space(10)] 
+        public StoryComicsText StoryComicsTextPrefab;
         
+        [Space(10)]
         public StyleSheet PopupWindowStylesheet;
         public StyleSheet CreditsWindowStylesheet;
         public StyleSheet SettingsWindowStylesheet;

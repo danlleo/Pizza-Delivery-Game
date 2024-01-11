@@ -79,7 +79,7 @@ namespace UI.MainMenu
             },
             () =>
             {
-                _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
+                _uiDocument.rootVisualElement.Q<SettingsWindow>().RemoveFromHierarchy();
                 EnableMainMenuButtonsFocus();
                 FocusOnFirstButtonInMainMenuScreenGroup();
             });
