@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d729baaeb3cf1134cb751744b3454177, type: 3}
   m_Name: Slide_Test
   m_EditorClassIdentifier: 
-  SlideItemList:
-  - Text: It's all began unexptectedly...
+  _slideItemList:
+  - Text: Item 1 test
     TimeToDisplayInSeconds: 1
     Clip: {fileID: 0}
-  - Text: Turn around...
-    TimeToDisplayInSeconds: 0.25
+  - Text: Item 2 test
+    TimeToDisplayInSeconds: 1.5
     Clip: {fileID: 0}
-  - Text: Now You see it
-    TimeToDisplayInSeconds: 1
-    Clip: {fileID: 0}
+  _timeToTransitionToAnotherSlide: 1

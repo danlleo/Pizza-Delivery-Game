@@ -6,6 +6,8 @@ namespace StoryComics
     [CreateAssetMenu(fileName = "StoryComics_", menuName = "Scriptable Objects/StoryComics/Story")]
     public class StoryComicsSO : ScriptableObject
     {
-        public List<SlideSO> SlideList;
+        [SerializeField] private List<SlideSO> _slideList;
+        
+        public IReadOnlyList<SlideSO> SlideList => _slideList;
     }
 }

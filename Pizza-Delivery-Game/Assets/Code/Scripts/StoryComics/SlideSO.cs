@@ -6,8 +6,11 @@ namespace StoryComics
 	[CreateAssetMenu(fileName = "Slide_", menuName = "Scriptable Objects/StoryComics/Slide")]
 	public class SlideSO : ScriptableObject
 	{
-		public List<SlideItem> SlideItemList;
-		[Range(0f, 2f)] public float TimeToTransitionToAnotherTime;
+		[SerializeField] private List<SlideItem> _slideItemList;
+		[SerializeField, Range(0f, 2f)] private float _timeToTransitionToAnotherSlide;
+		
+		public IReadOnlyList<SlideItem> SlideItemList => _slideItemList;
+		public float TimeToTransitionToAnotherSlide => _timeToTransitionToAnotherSlide;
 	}
 }
 
