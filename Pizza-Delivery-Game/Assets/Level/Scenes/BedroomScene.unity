@@ -3830,6 +3830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1032858309}
   - component: {fileID: 1032858310}
+  - component: {fileID: 1032858311}
   m_Layer: 0
   m_Name: MusicPlayer
   m_TagString: Untagged
@@ -3862,8 +3863,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 45400638a56be7a4ea9c7e920d8410b6, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 0.05
   m_Pitch: 1
   Loop: 1
@@ -3948,6 +3949,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1032858311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032858308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef16629cb185194ab80ff9bc9227872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ambientMusicClip: {fileID: 8300000, guid: 45400638a56be7a4ea9c7e920d8410b6, type: 3}
+  _defaultVolume: 0.05
+  _fadeDurationInSeconds: 1.5
+  _delayMusicPlayTimeInSeconds: 1
 --- !u!1 &1044534956
 GameObject:
   m_ObjectHideFlags: 0
@@ -8350,6 +8367,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4054910356430913470, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054910356430913470, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054910356430913470, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572202348158859592, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572202348158859592, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8135827518465784172, guid: d0dd9d2c776864d49aacd0c7fdf27503,
         type: 3}
       propertyPath: m_Name
