@@ -9,23 +9,12 @@ namespace UI.GamePause
     [DisallowMultipleComponent]
     public sealed class GamePauseScreen : MonoBehaviour
     {
-        public static Action OnAnyResumeButtonClicked;
         public static Action OnAnyButtonSelected;
+        public static Action OnAnyButtonPressed;
         
         [SerializeField] private UIDocument _uiDocument;
         [SerializeField] private StyleSheet _styleSheet;
-
-        // private void Start()
-        // {
-        //     StartCoroutine(GenerateUIRoutine());
-        // }
-        //
-        // private void OnValidate()
-        // {
-        //     if (Application.isPlaying) return;
-        //     StartCoroutine(GenerateUIRoutine());
-        // }
-
+        
         private void OnEnable()
         {
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
@@ -77,19 +66,35 @@ namespace UI.GamePause
             var resumeButton = Create<Button>();
             resumeButton.text = "RESUME";
             resumeButton.name = "resume-button";
-            resumeButton.clicked += OnAnyResumeButtonClicked;
+            resumeButton.clicked += () =>
+            {
+                OnAnyButtonPressed?.Invoke();
+                TimeControl.OnAnyGameUnpaused.Call(this);
+            };
             mainContentButtonsContainer.Add(resumeButton);
             
             var optionsButton = Create<Button>();
             optionsButton.text = "OPTIONS";
+            optionsButton.clicked += () =>
+            {
+                OnAnyButtonPressed?.Invoke();
+            };
             mainContentButtonsContainer.Add(optionsButton);
             
             var mainMenuButton = Create<Button>();
             mainMenuButton.text = "MAIN MENU";
+            mainMenuButton.clicked += () =>
+            {
+                OnAnyButtonPressed?.Invoke();
+            };
             mainContentButtonsContainer.Add(mainMenuButton);
             
             var desktopButton = Create<Button>();
             desktopButton.text = "DESKTOP";
+            desktopButton.clicked += () =>
+            {
+                OnAnyButtonPressed?.Invoke();
+            };
             mainContentButtonsContainer.Add(desktopButton);
             
             root.Add(container);

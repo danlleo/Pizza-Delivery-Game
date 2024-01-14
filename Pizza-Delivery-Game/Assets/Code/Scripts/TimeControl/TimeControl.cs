@@ -1,5 +1,4 @@
 using System;
-using UI.GamePause;
 using UnityEngine;
 
 namespace TimeControl
@@ -11,14 +10,12 @@ namespace TimeControl
         {
             global::TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
             global::TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
-            GamePauseScreen.OnAnyResumeButtonClicked += OnAnyResumeButtonClicked;
         }
 
         private void OnDisable()
         {
             global::TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
             global::TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
-            GamePauseScreen.OnAnyResumeButtonClicked -= OnAnyResumeButtonClicked;
         }
 
         private void Pause()
@@ -34,13 +31,6 @@ namespace TimeControl
         
         private void OnAnyGameUnpaused(object sender, EventArgs e)
         {
-            Unpause();
-        }
-        
-        private void OnAnyResumeButtonClicked()
-        {
-            print("It should work");
-            
             Unpause();
         }
     }

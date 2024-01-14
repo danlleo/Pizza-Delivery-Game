@@ -4,7 +4,6 @@ using EventBus;
 using Keypad;
 using Player;
 using Tablet;
-using TimeControl;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -59,13 +58,15 @@ namespace Misc
             StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEvent_OnEnded;
             PickedUpStaticEvent.OnTabletPickedUp += OnAnyTabletPickedUp;
             PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
-
+            TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
+            
             _interactedWithKeypadEventBinding =
                 new EventBinding<InteractedWithKeypadEvent>(HandleInteractedWithKeypadEvent);
 
             EventBus<InteractedWithKeypadEvent>.Register(_interactedWithKeypadEventBinding);
         }
-
+        
         private void OnDisable()
         {
             _gameInput.Disable();
@@ -144,6 +145,20 @@ namespace Misc
         private void OnAnyTabletPutDown(object sender, EventArgs e)
         {
             InputAllowance.EnableInput();
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
+        }
+
+        #endregion
+
+        #region TimeControlEvents
+
+        private void OnAnyGamePaused(object sender, EventArgs e)
+        {
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.PauseMenu));
+        }
+
+        private void OnAnyGameUnpaused(object sender, EventArgs e)
+        {
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
 
@@ -231,8 +246,7 @@ namespace Misc
             switch (context.phase)
             {
                 case InputActionPhase.Performed:
-                    OnAnyGamePaused.Call(this);
-                    _gameInput.SetDefaultActionMap(nameof(_gameInput.PauseMenu));
+                    TimeControl.OnAnyGamePaused.Call(this);
                     break;
             }
         }
@@ -343,8 +357,7 @@ namespace Misc
                 case InputActionPhase.Started:
                     break;
                 case InputActionPhase.Performed:
-                    OnAnyGameUnpaused.Call(this);
-                    _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
+                    TimeControl.OnAnyGameUnpaused.Call(this);
                     break;
                 case InputActionPhase.Canceled:
                     break;

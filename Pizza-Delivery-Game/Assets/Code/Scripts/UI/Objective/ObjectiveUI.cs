@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using Objective;
 using TMPro;
@@ -8,14 +9,15 @@ namespace UI.Objective
     [DisallowMultipleComponent]
     public class ObjectiveUI : MonoBehaviour
     {
-        [Header("External references")] [SerializeField]
-        private UI _ui;
+        [Header("External references")] 
+        [SerializeField] private UI _ui;
 
         [SerializeField] private GameObject _objectiveUI;
         [SerializeField] private RectTransform _objectRectWindow;
         [SerializeField] private TextMeshProUGUI _objectiveText;
 
-        [Header("Settings")] [SerializeField] private float _objectiveWindowSlideTimeInSeconds = .335f;
+        [Header("Settings")] 
+        [SerializeField] private float _objectiveWindowSlideTimeInSeconds = .335f;
 
         [SerializeField] private Vector2 _openedObjectiveWindowRectPosition;
         [SerializeField] private Vector2 _closedObjectiveWindowRectPosition;
@@ -31,8 +33,10 @@ namespace UI.Objective
             FirstObjectiveSetStaticEvent.OnFirstObjectiveSet += OnFirstObjectiveSet;
             ObjectiveFinishedStaticEvent.OnObjectiveFinished += OnObjectiveFinished;
             ToggleObjectiveWindowStaticEvent.OnObjectiveWindowToggleChanged += OnObjectiveWindowToggleChanged;
+            TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
         }
-
+        
         private void OnDisable()
         {
             FirstObjectiveSetStaticEvent.OnFirstObjectiveSet -= OnFirstObjectiveSet;
@@ -71,6 +75,16 @@ namespace UI.Objective
             _objectiveUI.SetActive(false);
         }
 
+        private void OnAnyGamePaused(object sender, EventArgs e)
+        {
+            HideUI();
+        }
+        
+        private void OnAnyGameUnpaused(object sender, EventArgs e)
+        {
+            ShowUI();
+        }
+        
         private void OnObjectiveWindowToggleChanged(object sender, ToggleObjectiveWindowStaticEventArgs e)
         {
             if (e.IsOpen)
