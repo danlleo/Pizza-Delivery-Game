@@ -68,7 +68,3 @@
 .btn-group .btn:focus {
     color: #d7ac4a;
 }
-
-.btn-group .btn:hover {
-    color: #d7ac4a;
-}

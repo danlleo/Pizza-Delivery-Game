@@ -6,6 +6,7 @@ using Misc;
 using Misc.Loader;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Utilities.VisualElementCreationTool;
 
 namespace UI.MainMenu
 {
@@ -37,18 +38,12 @@ namespace UI.MainMenu
             MainMenuController.OnAnyTriedNewGame -= MainMenuController_OnAnyNewGameButtonClicked;
             MainMenuController.OnAnyOptionsOpen -= MainMenuController_OnAnyOptionsButtonClicked;
             MainMenuController.OnAnyCreditsOpen -= MainMenuController_OnAnyCreditsButtonClicked;
-            MainMenuController.OnAnyTryQuit -= MainMenuController_OnAnyQuitButtonClicked;
+            MainMenuController.OnAnyTryQuit -= MainMenuController_OnAnyQuitButtonClicked;   
         }
         
         private void Start()
         {
-            StartCoroutine(Generate());
-        }
-        
-        private void OnValidate()
-        {
-            if (Application.isPlaying) return;
-            StartCoroutine(Generate());
+            StartCoroutine(GenerateUIRoutine());
         }
 
         #region Events
@@ -108,7 +103,7 @@ namespace UI.MainMenu
         
         #region UI Creation
 
-        private IEnumerator Generate()
+        private IEnumerator GenerateUIRoutine()
         {
             yield return null;
 
@@ -117,7 +112,7 @@ namespace UI.MainMenu
             root.styleSheets.Add(_styleSheet);
 
             VisualElement container = Create("container");
-
+            
             VisualElement gameContainer = Create("game-container");
             container.Add(gameContainer);
 
@@ -281,23 +276,6 @@ namespace UI.MainMenu
             popupWindow.RegisterCallback<BlurEvent>(_ => EnableMainMenuButtonsFocus());
             
             FocusOnCancelButtonInModalWindow();
-        }
-        
-        private VisualElement Create(params string[] classNames)
-        {
-            return Create<VisualElement>(classNames);
-        }
-
-        private T Create<T>(params string[] classNames) where T : VisualElement, new()
-        {
-            var element = new T();
-
-            foreach (string className in classNames)
-            {
-                element.AddToClassList(className);
-            }
-            
-            return element;
         }
 
         #endregion

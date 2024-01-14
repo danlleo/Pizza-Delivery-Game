@@ -56,6 +56,8 @@ namespace Player
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
             _ui.InspectableObjectCloseEvent.Event += InspectableObjectClose_Event;
+            
+            // TODO: GET RID OF THIS SHIT
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
             WokeUpStaticEvent.OnWokeUp += WokeUpStaticEvent_OnWokeUp;
         }
@@ -64,6 +66,8 @@ namespace Player
         {
             _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
             _ui.InspectableObjectCloseEvent.Event -= InspectableObjectClose_Event;
+            
+            // TODO: GET RID OF THIS SHIT
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
             WokeUpStaticEvent.OnWokeUp -= WokeUpStaticEvent_OnWokeUp;
         }

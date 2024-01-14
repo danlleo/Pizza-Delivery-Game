@@ -1,3 +1,4 @@
+using System;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +8,16 @@ namespace UI
     [DisallowMultipleComponent]
     public class Crosshair : MonoBehaviour
     {
-        [Header("External references")] [SerializeField]
-        private Image _crosshairImage;
+        [Header("External references")] 
+        [SerializeField] private Image _crosshairImage;
 
-        [Header("Settings")] [SerializeField] private Sprite _defaultCrosshairSprite;
+        [Header("Settings")] 
+        [SerializeField] private Sprite _defaultCrosshairSprite;
 
         [SerializeField] private Vector2 _defaultCrosshairSize;
 
-        [Space(5)] [SerializeField] private Sprite _interactCrosshairSprite;
+        [Space(5)] 
+        [SerializeField] private Sprite _interactCrosshairSprite;
 
         [SerializeField] private Vector2 _interactCrosshairSize;
 
@@ -24,24 +27,23 @@ namespace UI
         {
             _player = Player.Player.Instance;
             _player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
+            TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
         }
 
         private void OnDisable()
         {
             _player.HoveringOverInteractableEvent.Event -= HoveringOverInteractable_Event;
+            TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
         }
 
-        private void HoveringOverInteractable_Event(object sender, HoveringOverInteractableEventArgs e)
-        {
-            if (e.IsInteracting)
-            {
-                SetInteractCrosshair();
-                return;
-            }
-
-            SetDefaultCrosshair();
-        }
-
+        private void ShowCrosshair()
+            => _crosshairImage.enabled = true;
+        
+        private void HideCrosshair()
+            => _crosshairImage.enabled = false;
+        
         private void SetDefaultCrosshair()
         {
             _crosshairImage.sprite = _defaultCrosshairSprite;
@@ -52,6 +54,27 @@ namespace UI
         {
             _crosshairImage.sprite = _interactCrosshairSprite;
             _crosshairImage.rectTransform.sizeDelta = _interactCrosshairSize;
+        }
+        
+        private void HoveringOverInteractable_Event(object sender, HoveringOverInteractableEventArgs e)
+        {
+            if (e.IsInteracting)
+            {
+                SetInteractCrosshair();
+                return;
+            }
+
+            SetDefaultCrosshair();
+        }
+        
+        private void OnAnyGameUnpaused(object sender, EventArgs e)
+        {
+            ShowCrosshair();
+        }
+
+        private void OnAnyGamePaused(object sender, EventArgs e)
+        {
+            HideCrosshair();
         }
     }
 }

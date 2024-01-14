@@ -1,6 +1,7 @@
 using System;
 using Misc;
 using UnityEngine.UIElements;
+using static Utilities.VisualElementCreationTool;
 
 namespace UI.MainMenu
 {
@@ -72,23 +73,6 @@ namespace UI.MainMenu
         private void CheckBoxCallback(ChangeEvent<bool> evt)
         {
             OnAnyButtonClicked?.Invoke();
-        }
-
-        private VisualElement Create(params string[] classNames)
-        {
-            return Create<VisualElement>(classNames);
-        }
-
-        private T Create<T>(params string[] classNames) where T : VisualElement, new()
-        {
-            var element = new T();
-
-            foreach (string className in classNames)
-            {
-                element.AddToClassList(className);
-            }
-            
-            return element;
         }
     }
 }
