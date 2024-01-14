@@ -10,14 +10,16 @@ namespace Objective.Locations
     public class BedroomObjectives : ObjectiveManager
     {
         [Header("Initial list")]
+        [SerializeField] private float _creationDelayTimeInSeconds;
         [Tooltip("Order in which objectives will be set")]
         [SerializeField] private List<ObjectiveSO> _objectiveList;
-
+        
         [Header("Objectives")] 
         [SerializeField] private ObjectiveSO _usePCObjective;
         [SerializeField] private ObjectiveSO _openDoorObjective;
         
         protected override List<ObjectiveSO> ObjectiveList => _objectiveList;
+        protected override float CreationDelayTimeInSeconds => _creationDelayTimeInSeconds;
 
         private void OnEnable()
         {

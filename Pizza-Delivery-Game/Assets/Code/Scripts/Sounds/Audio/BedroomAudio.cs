@@ -13,11 +13,12 @@ namespace Sounds.Audio
         
         [Header("Settings")]
         [SerializeField] private AudioClip _doorOpen;
-        [SerializeField] private AudioClip _switchOnSound;
-        [SerializeField] private AudioClip _lampSwitchSound;
         [SerializeField] private AudioClip _chairPullClip;
         [SerializeField] private AudioClip _clickClip;
         [SerializeField] private AudioClip _doorbellClip;
+        [Space(5)]
+        [SerializeField] private AudioClip _gamePauseClip; 
+        [SerializeField] private AudioClip _gameUnpauseClip;
 
         private void Awake()
         {
@@ -28,12 +29,26 @@ namespace Sounds.Audio
         {
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
             ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
+            TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
         }
         
         private void OnDisable()
         {
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
             ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
+            TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
+        }
+        
+        private void OnAnyGamePaused(object sender, EventArgs e)
+        {
+            PlaySound(_audioSource, _gamePauseClip);
+        }
+        
+        private void OnAnyGameUnpaused(object sender, EventArgs e)
+        {
+            PlaySound(_audioSource, _gameUnpauseClip);
         }
         
         private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
@@ -50,17 +65,7 @@ namespace Sounds.Audio
         {
             PlaySound(_audioSource, _doorOpen);
         }
-
-        public void PlayRoomLightSwitchSound()
-        {
-            PlaySound(_audioSource, _switchOnSound);
-        }
-
-        public void PlayLampLightSwitchSound()
-        {
-            PlaySound(_audioSource, _lampSwitchSound);
-        }
-
+        
         public void PlayDoorBellSound()
         {
             PlaySoundAtPoint(_doorbellClip, Vector3.zero);

@@ -701,7 +701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -733,7 +733,7 @@ MonoBehaviour:
   _crosshairImage: {fileID: 4164928613521283241}
   _defaultCrosshairSprite: {fileID: 21300000, guid: 01daba06fd1c3104b89889dbdcdcdb92,
     type: 3}
-  _defaultCrosshairSize: {x: 10, y: 10}
+  _defaultCrosshairSize: {x: 25, y: 25}
   _interactCrosshairSprite: {fileID: 21300000, guid: 46121c9ee4fcfd342aadd1bed22536a0,
     type: 3}
   _interactCrosshairSize: {x: 50, y: 50}
@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogueUI: {fileID: 803260812357188294}
   _ui: {fileID: 965229083523558271}
-  _reader: {fileID: 8956761385963548498}
+  _dialogueReader: {fileID: 8956761385963548498}
 --- !u!114 &4933541167557079172
 MonoBehaviour:
   m_ObjectHideFlags: 0

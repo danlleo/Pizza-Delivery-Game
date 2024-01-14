@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "2702a42d-c6a4-4d13-9aad-6e6f562615c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -205,6 +214,17 @@
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "273cf526-195d-488c-b34b-ba76adc50f0c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -315,6 +335,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "ButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PauseMenu",
+            "id": "230b78be-6c29-4c6e-a529-2ce578b4cdc2",
+            "actions": [
+                {
+                    "name": "Unpause",
+                    "type": "Button",
+                    "id": "812efe10-f39d-427a-a970-55efac663973",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c1f182bc-37f0-4cf4-8053-3a788bcbf467",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unpause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

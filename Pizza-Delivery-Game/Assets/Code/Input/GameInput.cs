@@ -71,6 +71,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""2702a42d-c6a4-4d13-9aad-6e6f562615c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""273cf526-195d-488c-b34b-ba76adc50f0c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -341,6 +361,34 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PauseMenu"",
+            ""id"": ""230b78be-6c29-4c6e-a529-2ce578b4cdc2"",
+            ""actions"": [
+                {
+                    ""name"": ""Unpause"",
+                    ""type"": ""Button"",
+                    ""id"": ""812efe10-f39d-427a-a970-55efac663973"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c1f182bc-37f0-4cf4-8053-3a788bcbf467"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -352,6 +400,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player_Flashlight = m_Player.FindAction("Flashlight", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -364,6 +413,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // Keypad
         m_Keypad = asset.FindActionMap("Keypad", throwIfNotFound: true);
         m_Keypad_ButtonPress = m_Keypad.FindAction("ButtonPress", throwIfNotFound: true);
+        // PauseMenu
+        m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
+        m_PauseMenu_Unpause = m_PauseMenu.FindAction("Unpause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -430,6 +482,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Flashlight;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Crouch;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @GameInput m_Wrapper;
@@ -439,6 +492,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Flashlight => m_Wrapper.m_Player_Flashlight;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -463,6 +517,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -482,6 +539,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -683,6 +743,52 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public KeypadActions @Keypad => new KeypadActions(this);
+
+    // PauseMenu
+    private readonly InputActionMap m_PauseMenu;
+    private List<IPauseMenuActions> m_PauseMenuActionsCallbackInterfaces = new List<IPauseMenuActions>();
+    private readonly InputAction m_PauseMenu_Unpause;
+    public struct PauseMenuActions
+    {
+        private @GameInput m_Wrapper;
+        public PauseMenuActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Unpause => m_Wrapper.m_PauseMenu_Unpause;
+        public InputActionMap Get() { return m_Wrapper.m_PauseMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PauseMenuActions set) { return set.Get(); }
+        public void AddCallbacks(IPauseMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Add(instance);
+            @Unpause.started += instance.OnUnpause;
+            @Unpause.performed += instance.OnUnpause;
+            @Unpause.canceled += instance.OnUnpause;
+        }
+
+        private void UnregisterCallbacks(IPauseMenuActions instance)
+        {
+            @Unpause.started -= instance.OnUnpause;
+            @Unpause.performed -= instance.OnUnpause;
+            @Unpause.canceled -= instance.OnUnpause;
+        }
+
+        public void RemoveCallbacks(IPauseMenuActions instance)
+        {
+            if (m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPauseMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PauseMenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -690,6 +796,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnFlashlight(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -706,5 +813,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     public interface IKeypadActions
     {
         void OnButtonPress(InputAction.CallbackContext context);
+    }
+    public interface IPauseMenuActions
+    {
+        void OnUnpause(InputAction.CallbackContext context);
     }
 }

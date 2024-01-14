@@ -4,6 +4,7 @@ using EventBus;
 using Keypad;
 using Player;
 using Tablet;
+using TimeControl;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,7 +12,14 @@ using UnityEngine.InputSystem;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class InputReader : MonoBehaviour, GameInput.IPlayerActions, GameInput.IUIActions, GameInput.IPCActions, GameInput.IKeypadActions, GameInput.ITabletActions
+    public class InputReader : 
+        MonoBehaviour, 
+        GameInput.IPlayerActions,
+        GameInput.IUIActions,
+        GameInput.IPCActions, 
+        GameInput.IKeypadActions, 
+        GameInput.ITabletActions, 
+        GameInput.IPauseMenuActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
@@ -39,6 +47,7 @@ namespace Misc
             _gameInput.PC.SetCallbacks(this);
             _gameInput.Tablet.SetCallbacks(this);
             _gameInput.Keypad.SetCallbacks(this);
+            _gameInput.PauseMenu.SetCallbacks(this);
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
         
@@ -134,8 +143,6 @@ namespace Misc
         
         private void OnAnyTabletPutDown(object sender, EventArgs e)
         {
-            print("Put down");
-            
             InputAllowance.EnableInput();
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
@@ -215,6 +222,17 @@ namespace Misc
                 case InputActionPhase.Canceled:
                     _crouchButtonHeld = false;
                     _movement.EndCrouch();
+                    break;
+            }
+        }
+
+        public void OnPause(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Performed:
+                    OnAnyGamePaused.Call(this);
+                    _gameInput.SetDefaultActionMap(nameof(_gameInput.PauseMenu));
                     break;
             }
         }
@@ -302,6 +320,31 @@ namespace Misc
                 case InputActionPhase.Waiting:
                     break;
                 case InputActionPhase.Performed:
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        #endregion
+
+        #region IPauseMenuActions
+
+        public void OnUnpause(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Started:
+                    break;
+                case InputActionPhase.Performed:
+                    OnAnyGameUnpaused.Call(this);
+                    _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
                     break;
                 case InputActionPhase.Canceled:
                     break;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,17 +9,20 @@ namespace Objective
     public abstract class ObjectiveManager : MonoBehaviour
     {
         protected abstract List<ObjectiveSO> ObjectiveList { get; }
-
+        protected abstract float CreationDelayTimeInSeconds { get; }
+        
         private ObjectiveRegistry _objectiveRegistry;
         
-        private void Start()
+        private IEnumerator Start()
         {
+            yield return new WaitForSeconds(CreationDelayTimeInSeconds);
+            
             if (ObjectiveList == null)
                 throw new Exception("Objective list isn't initialized");
                 
             if (ObjectiveList.Count == 0)
                 throw new Exception("Objective list is empty!");
-
+            
             _objectiveRegistry = ObjectiveRegistry.Create(ObjectiveList);
         }
 
@@ -27,7 +31,7 @@ namespace Objective
             if (ObjectiveList == null)
                 throw new Exception("Objective list isn't initialized");
             
-            _objectiveRegistry.Delete();
+            _objectiveRegistry?.Delete();
         }
 
         protected void FinishObjective(ObjectiveSO objective)

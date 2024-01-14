@@ -37,12 +37,16 @@ namespace Sounds
         {
             StoppedUsingPCStaticEvent.OnEnded += OnAnyStoppedUsingPC;
             WokeUpStaticEvent.OnWokeUp += OnAnyWokeUp;
+            TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
         }
-
+        
         private void OnDisable()
         {
             StoppedUsingPCStaticEvent.OnEnded -= OnAnyStoppedUsingPC;
             WokeUpStaticEvent.OnWokeUp -= OnAnyWokeUp;
+            TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
         }
 
         private void FadeIn()
@@ -51,26 +55,55 @@ namespace Sounds
                 _audioSource.Play();
             
             _audioSource.DOKill();
-            _audioSource.DOFade(_defaultVolume, _fadeDurationInSeconds);
+            _audioSource.DOFade(_defaultVolume, _fadeDurationInSeconds).SetUpdate(this);
         }
 
-        private void FadeOut()
+        private void FadeIn(float durationInSeconds)
+        {
+            if (!_audioSource.isPlaying)
+                _audioSource.Play();
+            
+            _audioSource.DOKill();
+            _audioSource.DOFade(_defaultVolume, durationInSeconds).SetUpdate(this);
+        }
+        
+        private void FadeOut(bool pause)
         {
             if (!_audioSource.isPlaying)
                 _audioSource.Play();
                 
             _audioSource.DOKill();
-            _audioSource.DOFade(0f, _fadeDurationInSeconds);
+            _audioSource.DOFade(0f, _fadeDurationInSeconds).SetUpdate(this)
+                .OnComplete(pause ? _audioSource.Stop : null);
+        }
+        
+        private void FadeOut(bool pause, float durationInSeconds)
+        {
+            if (!_audioSource.isPlaying)
+                _audioSource.Play();
+                
+            _audioSource.DOKill();
+            _audioSource.DOFade(0f, durationInSeconds).SetUpdate(this).OnComplete(pause ? _audioSource.Stop : null);
         }
         
         private void OnAnyStoppedUsingPC(object sender, EventArgs e)
         {
-            FadeOut();
+            FadeOut(false);
         }
         
         private void OnAnyWokeUp(object sender, EventArgs e)
         {
             FadeIn();
+        }
+        
+        private void OnAnyGamePaused(object sender, EventArgs e)
+        {
+            FadeOut(true, .35f);
+        }
+
+        private void OnAnyGameUnpaused(object sender, EventArgs e)
+        {
+            FadeIn(.35f);
         }
     }
 }
