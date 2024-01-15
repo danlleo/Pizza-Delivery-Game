@@ -2,7 +2,7 @@ namespace Enums.Scenes
 {
     public enum Scene
     {
-        MainManuScene,
+        MainMenuScene,
         BedroomScene,
         OutdoorScene,
         LaboratoryEntryScene,

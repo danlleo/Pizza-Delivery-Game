@@ -1,6 +1,7 @@
 using UI.Dialogue;
 using UI.InspectableObject;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI
 {
@@ -10,7 +11,7 @@ namespace UI
     [RequireComponent(typeof(InspectableObjectOpeningEvent))]
     [RequireComponent(typeof(InspectableObjectClosingEvent))]
     [RequireComponent(typeof(InspectableObjectCloseEvent))]
-    [RequireComponent(typeof(ConfirmEvent))]
+    [RequireComponent(typeof(InspectableObjectConfirmEvent))]
     [RequireComponent(typeof(OnObjectiveUpdated))]
     [DisallowMultipleComponent]
     public class UI : MonoBehaviour
@@ -23,7 +24,7 @@ namespace UI
         [HideInInspector] public InspectableObjectClosingEvent InspectableObjectClosingEvent;
         [HideInInspector] public InspectableObjectCloseEvent InspectableObjectCloseEvent;
 
-        [HideInInspector] public ConfirmEvent ConfirmEvent;
+        [FormerlySerializedAs("ConfirmEvent")] [HideInInspector] public InspectableObjectConfirmEvent _inspectableObjectConfirmEvent;
 
         [HideInInspector] public OnObjectiveUpdated OnObjectiveUpdated;
         
@@ -37,7 +38,7 @@ namespace UI
             InspectableObjectClosingEvent = GetComponent<InspectableObjectClosingEvent>();
             InspectableObjectCloseEvent = GetComponent<InspectableObjectCloseEvent>();
 
-            ConfirmEvent = GetComponent<ConfirmEvent>();
+            _inspectableObjectConfirmEvent = GetComponent<InspectableObjectConfirmEvent>();
 
             OnObjectiveUpdated = GetComponent<OnObjectiveUpdated>();
         }

@@ -16,9 +16,6 @@ namespace Sounds.Audio
         [SerializeField] private AudioClip _chairPullClip;
         [SerializeField] private AudioClip _clickClip;
         [SerializeField] private AudioClip _doorbellClip;
-        [Space(5)]
-        [SerializeField] private AudioClip _gamePauseClip; 
-        [SerializeField] private AudioClip _gameUnpauseClip;
 
         private void Awake()
         {
@@ -29,26 +26,12 @@ namespace Sounds.Audio
         {
             StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
             ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
-            TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
-            TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
         }
         
         private void OnDisable()
         {
             StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
             ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
-            TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
-            TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
-        }
-        
-        private void OnAnyGamePaused(object sender, EventArgs e)
-        {
-            PlaySound(_audioSource, _gamePauseClip);
-        }
-        
-        private void OnAnyGameUnpaused(object sender, EventArgs e)
-        {
-            PlaySound(_audioSource, _gameUnpauseClip);
         }
         
         private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)

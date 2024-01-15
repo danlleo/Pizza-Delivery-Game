@@ -6,6 +6,11 @@ namespace TimeControl
     [DisallowMultipleComponent]
     public class TimeControl : MonoBehaviour
     {
+        private void Awake()
+        {
+            Unpause();
+        }
+
         private void OnEnable()
         {
             global::TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;

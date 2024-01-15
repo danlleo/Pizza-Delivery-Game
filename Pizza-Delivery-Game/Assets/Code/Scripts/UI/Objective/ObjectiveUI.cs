@@ -42,6 +42,8 @@ namespace UI.Objective
             FirstObjectiveSetStaticEvent.OnFirstObjectiveSet -= OnFirstObjectiveSet;
             ObjectiveFinishedStaticEvent.OnObjectiveFinished -= OnObjectiveFinished;
             ToggleObjectiveWindowStaticEvent.OnObjectiveWindowToggleChanged -= OnObjectiveWindowToggleChanged;
+            TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
         }
 
         private void UpdateDisplayObjective(ObjectiveSO objective)

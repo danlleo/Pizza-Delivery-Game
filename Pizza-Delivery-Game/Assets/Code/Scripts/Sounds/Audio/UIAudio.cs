@@ -25,14 +25,14 @@ namespace Sounds.Audio
         private void OnEnable()
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
-            _ui.ConfirmEvent.Event += Confirm_Event;
+            _ui._inspectableObjectConfirmEvent.Event += InspectableObjectConfirmEvent;
             _ui.OnObjectiveUpdated.Event += OnObjectiveUpdated;
         }
 
         private void OnDisable()
         {
             _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
-            _ui.ConfirmEvent.Event -= Confirm_Event;
+            _ui._inspectableObjectConfirmEvent.Event -= InspectableObjectConfirmEvent;
             _ui.OnObjectiveUpdated.Event -= OnObjectiveUpdated;
         }
 
@@ -41,7 +41,7 @@ namespace Sounds.Audio
             PlaySound(_audioSource, _itemObtained, 0.625f);
         }
         
-        private void Confirm_Event(object sender, EventArgs e)
+        private void InspectableObjectConfirmEvent(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _confirm, 0.48f);
         }

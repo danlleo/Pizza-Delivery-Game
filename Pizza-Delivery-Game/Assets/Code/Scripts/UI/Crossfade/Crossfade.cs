@@ -26,14 +26,14 @@ namespace UI.Crossfade
 
         public void FadeIn(float duration)
         {
-            _canvasGroup.DOFade(1f, duration);
+            _canvasGroup.DOFade(1f, duration).SetUpdate(this);
         }
 
         public void FadeIn(Action onStart, float duration)
         {
             EnableUI();
 
-            _canvasGroup.DOFade(1f, duration).OnStart(() => onStart?.Invoke());
+            _canvasGroup.DOFade(1f, duration).OnStart(() => onStart?.Invoke()).SetUpdate(this);
         }
 
         public void FadeIn(Action onStart, Action onComplete, float duration)
@@ -41,7 +41,7 @@ namespace UI.Crossfade
             EnableUI();
 
             _canvasGroup.DOFade(1f, duration).OnStart(() => onStart?.Invoke())
-                .OnComplete(() => onComplete?.Invoke());
+                .OnComplete(() => onComplete?.Invoke()).SetUpdate(this);
         }
 
         #endregion
@@ -52,14 +52,14 @@ namespace UI.Crossfade
         {
             EnableUI();
 
-            _canvasGroup.DOFade(0f, duration).OnComplete(DisableUI);
+            _canvasGroup.DOFade(0f, duration).OnComplete(DisableUI).SetUpdate(this);
         }
 
         public void FadeOut(Action onStart, float duration)
         {
             EnableUI();
 
-            _canvasGroup.DOFade(0f, duration).OnStart(() => onStart?.Invoke()).OnComplete(DisableUI);
+            _canvasGroup.DOFade(0f, duration).OnStart(() => onStart?.Invoke()).OnComplete(DisableUI).SetUpdate(this);
         }
 
         public void FadeOut(Action onStart, Action onComplete, float duration)
@@ -71,7 +71,7 @@ namespace UI.Crossfade
                 {
                     onComplete?.Invoke();
                     DisableUI();
-                });
+                }).SetUpdate(this);
         }
 
         #endregion

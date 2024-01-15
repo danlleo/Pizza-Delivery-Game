@@ -77,7 +77,9 @@ namespace Misc
             StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEvent_OnEnded;
             PickedUpStaticEvent.OnTabletPickedUp -= OnAnyTabletPickedUp;
             PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
-
+            TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
+            
             EventBus<InteractedWithKeypadEvent>.Deregister(_interactedWithKeypadEventBinding);
         }
         
@@ -357,6 +359,9 @@ namespace Misc
                 case InputActionPhase.Started:
                     break;
                 case InputActionPhase.Performed:
+                    if (!InputAllowance.InputEnabled)
+                        return;
+                    
                     TimeControl.OnAnyGameUnpaused.Call(this);
                     break;
                 case InputActionPhase.Canceled:
