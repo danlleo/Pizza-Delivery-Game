@@ -7,11 +7,10 @@ using UnityEngine;
 
 namespace Sounds
 {
-    [RequireComponent(typeof(AudioSource))]
     [DisallowMultipleComponent]
-    public class BedroomMusicPlayer : MonoBehaviour
+    public class LaboratoryFirstLevelMusicPlayer : MonoBehaviour
     {
-        [Header("External references")]
+    [Header("External references")]
         [SerializeField] private AudioClip _ambientMusicClip;
         
         [Header("Settings")]

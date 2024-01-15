@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Environment.LaboratorySecondLevel
@@ -14,7 +15,7 @@ namespace Environment.LaboratorySecondLevel
         {
             InitializeAudioSource();
         }
-        
+
         private void OnTriggerEnter(Collider other)
         {
             _audioSource.Play();

@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Sounds
 {
     [RequireComponent(typeof(AudioSource))]
+    [DisallowMultipleComponent]
     public class LaboratorySecondLevelMusicPlayer : MonoBehaviour
     {
         [Header("Music clips")]
@@ -13,13 +14,18 @@ namespace Sounds
         [SerializeField] private MusicClip _chasingAmbientClip;
         [SerializeField] private MusicClip _investigatingAmbientClip;
         
+        [Header("Settings")]
+        [SerializeField] private float _fadeDurationInSeconds = 0.345f;
+        
         private AudioSource _audioSource;
+        private float _currentVolume;
 
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
             _audioSource.loop = true;
             _audioSource.clip = _roamingAmbientClip.Clip;
+            _currentVolume = _audioSource.volume;
         }
 
         private void Start()
@@ -33,14 +39,18 @@ namespace Sounds
             StoppedChaseStaticEvent.OnAnyStoppedChaseStaticEvent += Monster_OnAnyStoppedChaseStaticEvent;
             MonsterStartedInvestigatingStaticEvent.OnAnyMonsterStartedInvestigating += Monster_OnAnyMonsterStartedInvestigating;
             MonsterStoppedInvestigatingStaticEvent.OnAnyMonsterStoppedInvestigating += Monster_OnAnyMonsterStoppedInvestigating;
+            TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
         }
-        
+
         private void OnDisable()
         {
             BeganChaseStaticEvent.OnAnyBeganChase -= Monster_OnAnyBeganChase;
             StoppedChaseStaticEvent.OnAnyStoppedChaseStaticEvent -= Monster_OnAnyStoppedChaseStaticEvent;
             MonsterStartedInvestigatingStaticEvent.OnAnyMonsterStartedInvestigating -= Monster_OnAnyMonsterStartedInvestigating;
             MonsterStoppedInvestigatingStaticEvent.OnAnyMonsterStoppedInvestigating -= Monster_OnAnyMonsterStoppedInvestigating;
+            TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
+            TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
         }
 
         private void TransitionTo(MusicClip target)
@@ -52,9 +62,47 @@ namespace Sounds
             fadeSequence.AppendCallback(() =>
             {
                 _audioSource.clip = target.Clip;
+                _currentVolume = target.Volume;
                 _audioSource.Play();
             });
             fadeSequence.Append(_audioSource.DOFade(target.Volume, target.FadeInTime));
+        }
+        
+        private void FadeIn()
+        {
+            if (!_audioSource.isPlaying)
+                _audioSource.Play();
+            
+            _audioSource.DOKill();
+            _audioSource.DOFade(_currentVolume, _fadeDurationInSeconds).SetUpdate(this);
+        }
+
+        private void FadeIn(float durationInSeconds)
+        {
+            if (!_audioSource.isPlaying)
+                _audioSource.Play();
+            
+            _audioSource.DOKill();
+            _audioSource.DOFade(_currentVolume, durationInSeconds).SetUpdate(this);
+        }
+        
+        private void FadeOut(bool pause)
+        {
+            if (!_audioSource.isPlaying)
+                _audioSource.Play();
+                
+            _audioSource.DOKill();
+            _audioSource.DOFade(0f, _fadeDurationInSeconds).SetUpdate(this)
+                .OnComplete(pause ? _audioSource.Stop : null);
+        }
+        
+        private void FadeOut(bool pause, float durationInSeconds)
+        {
+            if (!_audioSource.isPlaying)
+                _audioSource.Play();
+                
+            _audioSource.DOKill();
+            _audioSource.DOFade(0f, durationInSeconds).SetUpdate(this).OnComplete(pause ? _audioSource.Stop : null);
         }
         
         private void Monster_OnAnyStoppedChaseStaticEvent(object sender, EventArgs e)
@@ -76,6 +124,16 @@ namespace Sounds
         {
             if (e.HasDetectedPlayer) return;
             TransitionTo(_roamingAmbientClip);
+        }
+        
+        private void OnAnyGameUnpaused(object sender, EventArgs e)
+        {
+            FadeIn();
+        }
+
+        private void OnAnyGamePaused(object sender, EventArgs e)
+        {
+            FadeOut(true);
         }
     }
 }

@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: Slide_Test 1
   m_EditorClassIdentifier: 
   _slideItemList:
-  - Text: Slide 2 test
+  - Text: The player treaded cautiously through the dense woods, the sound of crunching
+      leaves underfoot breaking the silence.
     TimeToDisplayInSeconds: 1
     Clip: {fileID: 0}
-  - Text: Slide 2 test 1
+  - Text: Shadows danced between the trees as the player navigated the winding forest
+      path, guided by the faint light filtering through the canopy.
     TimeToDisplayInSeconds: 1
-    Clip: {fileID: 0}
-  _timeToTransitionToAnotherSlide: 1
+    Clip: {fileID: 8300000, guid: 8e8c1be346b413146a788f7a2d5d7f6f, type: 3}
+  - Text: Every step taken by the player stirred the woodland creatures, their rustling
+      movements adding to the symphony of the forest.
+    TimeToDisplayInSeconds: 1
+    Clip: {fileID: 8300000, guid: 8e8c1be346b413146a788f7a2d5d7f6f, type: 3}
+  _timeToTransitionToAnotherSlide: 2

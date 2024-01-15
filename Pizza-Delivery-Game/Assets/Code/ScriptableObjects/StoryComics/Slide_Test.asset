@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Slide_Test
   m_EditorClassIdentifier: 
   _slideItemList:
-  - Text: Item 1 test
-    TimeToDisplayInSeconds: 1
-    Clip: {fileID: 0}
-  - Text: Item 2 test
-    TimeToDisplayInSeconds: 1.5
-    Clip: {fileID: 0}
-  _timeToTransitionToAnotherSlide: 1
+  - Text: The player paused occasionally, admiring the way the sunlight pierced through
+      the thick foliage, creating patterns of light and dark on the forest floor.
+    TimeToDisplayInSeconds: 2
+    Clip: {fileID: 8300000, guid: 9470a92e2a2f823418b23dae7b15e378, type: 3}
+  - Text: As the player ventured deeper, the woods seemed to embrace them, with ancient
+      trees standing like silent sentinels guarding long-held secrets.
+    TimeToDisplayInSeconds: 2
+    Clip: {fileID: 8300000, guid: ae575344ed94ce54ea9ab0fe138671a0, type: 3}
+  _timeToTransitionToAnotherSlide: 2

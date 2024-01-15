@@ -48,6 +48,7 @@ namespace Sounds.Audio
         private void Monster_OnAnyBeganChase(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _beganChangeClip);
+            _canPlayAttractedMonsterClip = false;
         }
         
         private void Monster_OnAnyMonsterStoppedInvestigating(object sender, MonsterStoppedInvestigatingEventArgs e)

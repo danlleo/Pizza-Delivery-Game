@@ -6,7 +6,7 @@ namespace StoryComics
     public struct SlideItem
     {
         public string Text;
-        [Range(0f, 2f)] public float TimeToDisplayInSeconds;
+        [Range(0f, 10f)] public float TimeToDisplayInSeconds;
         public AudioClip Clip;
     }
 }

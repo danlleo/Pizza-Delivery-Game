@@ -28145,10 +28145,35 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4054910356430913470, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054910356430913470, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054910356430913470, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6357647994849872284, guid: d0dd9d2c776864d49aacd0c7fdf27503,
         type: 3}
       propertyPath: _locationName
       value: Laboratory
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572202348158859592, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572202348158859592, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8135827518465784172, guid: d0dd9d2c776864d49aacd0c7fdf27503,
         type: 3}
@@ -31643,6 +31668,7 @@ MonoBehaviour:
     FadeOutTime: 0.2
     FadeInTime: 0.2
     Volume: 0.2
+  _fadeDurationInSeconds: 0.345
 --- !u!1001 &1890678692
 PrefabInstance:
   m_ObjectHideFlags: 0
