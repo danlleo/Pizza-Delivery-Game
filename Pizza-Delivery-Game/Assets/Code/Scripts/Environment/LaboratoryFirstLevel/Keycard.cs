@@ -27,7 +27,7 @@ namespace Environment.LaboratoryFirstLevel
                 case KeycardType.KeycardB:
                     break;
                 case KeycardType.KeycardC:
-                        PickedUpKeycardCStaticEvent.Call(this);
+                    PickedUpKeycardCStaticEvent.Call(this);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -44,8 +44,7 @@ namespace Environment.LaboratoryFirstLevel
 
         public void AddToInventory()
         {
-            Player.Player player = Player.Player.Instance;
-            player.AddingItemEvent.Call(player, new AddingItemEventArgs(_inspectableObject.Item));
+            OnAnyAddedItemEvent.Call(this, new AddingItemEventArgs(_inspectableObject.Item));
         }
 
         public override WorldScreenSpaceIconData GetWorldScreenSpaceIconData()

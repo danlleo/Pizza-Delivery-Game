@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DataPersistence;
 using Enums.Scenes;
 using Misc;
 using Misc.Loader;
@@ -85,6 +86,7 @@ namespace UI.MainMenu
             CreatePopupWindow("ARE YOU SURE YOU WANT TO START A NEW GAME?", "You don't know how this journey will end.",
                 () =>
                 {
+                    NewGameStaticEvent.Call(this);
                     OnAnyNewGameStarted?.Invoke();
                     _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
                     DisableMainMenuButtonsFocus();

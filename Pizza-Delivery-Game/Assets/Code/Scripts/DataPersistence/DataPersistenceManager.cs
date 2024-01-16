@@ -14,7 +14,7 @@ namespace DataPersistence
         [SerializeField] private bool _useEncryption;
         
         private List<IDataPersistence> _dataPersistenceObjects;
-        private FileDataHandler _fileDataHandler;
+        private IFileDataHandler _fileDataHandler;
         private GameData _gameData;
         
         private void Start()
@@ -52,6 +52,7 @@ namespace DataPersistence
             {
                 Debug.Log("No data was found. Starting a new game...");
                 NewGame();
+                return;
             }
 
             foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)

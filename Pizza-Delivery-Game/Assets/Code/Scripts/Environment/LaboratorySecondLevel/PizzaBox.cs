@@ -12,9 +12,7 @@ namespace Environment.LaboratorySecondLevel
         
         public void Interact()
         {
-            Player.Player player =  Player.Player.Instance;
-
-            player.AddingItemEvent.Call(player, new AddingItemEventArgs(_pizzaBox));
+            OnAnyAddedItemEvent.Call(this, new AddingItemEventArgs(_pizzaBox));
 
             Destroy(gameObject);
         }

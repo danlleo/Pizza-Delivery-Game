@@ -10,18 +10,19 @@ namespace UI
     [DisallowMultipleComponent]
     public class StaminaBar : MonoBehaviour
     {
-        [Header("External references")] [SerializeField]
-        private CanvasGroup _staminaBarCanvasGroup;
+        [Header("External references")] 
+        [SerializeField] private CanvasGroup _staminaBarCanvasGroup;
 
         [SerializeField] private Image _foreground;
 
-        [Header("Settings")] [SerializeField] private Color _emptyStaminaColor;
-
+        [Header("Settings")] 
+        [SerializeField] private Color _emptyStaminaColor;
         [SerializeField] private Color _fullStaminaColor;
 
         [SerializeField] private float _fadeInTimeInSeconds = .2f;
         [SerializeField] private float _fadeOutTimeInSeconds = .2f;
         [SerializeField] private float _delayFadeInTimeInSeconds = .2f;
+        
         private Coroutine _delayFadeInRoutine;
 
         private bool _isFadedIn;
@@ -46,19 +47,20 @@ namespace UI
 
         private void StaminaEvent(object sender, StaminaEventArgs e)
         {
-            if (e.IsStaminaFull && !_isFadedIn)
+            switch (e.IsStaminaFull)
             {
-                _delayFadeInRoutine = StartCoroutine(DelayFadeInRoutine());
-                return;
-            }
+                case true when !_isFadedIn:
+                    _delayFadeInRoutine = StartCoroutine(DelayFadeInRoutine());
+                    return;
+                case false when _isFadedIn:
+                {
+                    if (_delayFadeInRoutine != null)
+                        StopCoroutine(_delayFadeInRoutine);
 
-            if (!e.IsStaminaFull && _isFadedIn)
-            {
-                if (_delayFadeInRoutine != null)
-                    StopCoroutine(_delayFadeInRoutine);
-
-                _staminaBarCanvasGroup.DOFade(0.355f, _fadeOutTimeInSeconds);
-                _isFadedIn = false;
+                    _staminaBarCanvasGroup.DOFade(0.355f, _fadeOutTimeInSeconds);
+                    _isFadedIn = false;
+                    break;
+                }
             }
 
             float normalizedStaminaPercent = e.StaminaPercent / 100;

@@ -1,15 +1,12 @@
 ﻿using System;
-using Interfaces;
-using UnityEngine;
 
 namespace Player.Inventory
 {
-    [DisallowMultipleComponent]
-    public class AddingItemEvent : MonoBehaviour
+    public static class OnAnyAddedItemEvent 
     {
-        public event EventHandler<AddingItemEventArgs> Event;
+        public static event EventHandler<AddingItemEventArgs> Event;
         
-        public void Call(object sender, AddingItemEventArgs eventArgs)
+        public static void Call(object sender, AddingItemEventArgs eventArgs)
         {
             Event?.Invoke(sender, eventArgs);
         }

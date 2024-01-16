@@ -1,14 +1,12 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Player.Inventory
 {
-    [DisallowMultipleComponent]
-    public class RemovingItemEvent : MonoBehaviour
+    public static class OnAnyRemovedItemEvent
     {
-        public event EventHandler<RemovingItemEventArgs> Event;
+        public static event EventHandler<RemovingItemEventArgs> Event;
         
-        public void Call(object sender, RemovingItemEventArgs eventArgs)
+        public static void Call(object sender, RemovingItemEventArgs eventArgs)
         {
             Event?.Invoke(sender, eventArgs);
         }

@@ -2,11 +2,11 @@
 
 namespace DataPersistence
 {
-    public class NewGameStaticEvent
+    public static class NewGameStaticEvent
     {
         public static EventHandler OnNewGame;
         
-        public static void CallNewGameEvent(object sender)
+        public static void Call(object sender)
             => OnNewGame?.Invoke(sender, EventArgs.Empty);
     }
 }

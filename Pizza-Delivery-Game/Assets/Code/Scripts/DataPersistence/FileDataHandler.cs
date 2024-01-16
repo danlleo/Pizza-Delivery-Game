@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DataPersistence
 {
-    public class FileDataHandler
+    public class FileDataHandler : IFileDataHandler
     {
         private const string ENCRYPTION_KEYWORD = "Prototype";
         

@@ -24,8 +24,7 @@ namespace Environment.LaboratoryFirstLevel
 
         public void AddToInventory()
         {
-            Player.Player player = Player.Player.Instance;
-            player.AddingItemEvent.Call(player, new AddingItemEventArgs(_inspectableObject.Item));
+            OnAnyAddedItemEvent.Call(this, new AddingItemEventArgs(_inspectableObject.Item));
         }
     }
 }

@@ -9,26 +9,24 @@ namespace Player.Inventory
     [DisallowMultipleComponent]
     public class Inventory : MonoBehaviour, IDataPersistence
     {
-        [SerializeField] private Player _player;
-        
         private HashSet<string> _itemsHashSet = new();
 
         private void OnEnable()
         {
-            _player.AddingItemEvent.Event += AddingItemEvent;
-            _player.RemovingItemEvent.Event += RemovingItemEvent;
+            OnAnyAddedItemEvent.Event += OnAnyAddedItem;
+            OnAnyRemovedItemEvent.Event += OnAnyRemovedItem;
         }
         
         private void OnDisable()
         {
-            _player.AddingItemEvent.Event -= AddingItemEvent;
-            _player.RemovingItemEvent.Event -= RemovingItemEvent;
+            OnAnyAddedItemEvent.Event -= OnAnyAddedItem;
+            OnAnyRemovedItemEvent.Event -= OnAnyRemovedItem;
         }
 
         public bool HasItem(ItemSO item)
             => _itemsHashSet.Contains(item.ID);
         
-        private void AddingItemEvent(object sender, AddingItemEventArgs e)
+        private void OnAnyAddedItem(object sender, AddingItemEventArgs e)
         {
             if (TryAddItem(e.Item, out bool itemAdded))
             {
@@ -39,7 +37,7 @@ namespace Player.Inventory
             print("Contains duplicate or null");
         }
         
-        private void RemovingItemEvent(object sender, RemovingItemEventArgs e)
+        private void OnAnyRemovedItem(object sender, RemovingItemEventArgs e)
         {
             if (TryRemoveItem(e.Item, out bool itemRemoved))
             {
