@@ -35,7 +35,7 @@ namespace Sounds
 
         private void OnEnable()
         {
-            StoppedUsingPCStaticEvent.OnEnded += OnAnyStoppedUsingPC;
+            Environment.Bedroom.PC.OnAnyStoppedUsingPC.Event += OnAnyStoppedUsingPC;
             WokeUpStaticEvent.OnWokeUp += OnAnyWokeUp;
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
@@ -43,7 +43,7 @@ namespace Sounds
         
         private void OnDisable()
         {
-            StoppedUsingPCStaticEvent.OnEnded -= OnAnyStoppedUsingPC;
+            Environment.Bedroom.PC.OnAnyStoppedUsingPC.Event -= OnAnyStoppedUsingPC;
             WokeUpStaticEvent.OnWokeUp -= OnAnyWokeUp;
             TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;

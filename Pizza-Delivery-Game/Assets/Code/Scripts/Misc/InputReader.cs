@@ -1,4 +1,5 @@
 using System;
+using Environment.Bedroom;
 using Environment.Bedroom.PC;
 using EventBus;
 using Keypad;
@@ -7,6 +8,7 @@ using Tablet;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utilities;
 
 namespace Misc
 {
@@ -54,8 +56,8 @@ namespace Misc
         {
             UIOpenedStaticEvent.OnUIOpen += UIOpenedStaticEvent_OnUIOpen;
             UIClosedStaticEvent.OnUIClose += UIClosedStaticEvent_OnUIClose;
-            StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
-            StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEvent_OnEnded;
+            OnAnyStartedUsingPC.Event += StartedUsingPCStaticEventEvent;
+            WokeUpStaticEvent.OnWokeUp += OnAnyWokeUp;
             PickedUpStaticEvent.OnTabletPickedUp += OnAnyTabletPickedUp;
             PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
@@ -66,15 +68,17 @@ namespace Misc
 
             EventBus<InteractedWithKeypadEvent>.Register(_interactedWithKeypadEventBinding);
         }
+
         
+
         private void OnDisable()
         {
             _gameInput.Disable();
             
             UIOpenedStaticEvent.OnUIOpen -= UIOpenedStaticEvent_OnUIOpen;
             UIClosedStaticEvent.OnUIClose -= UIClosedStaticEvent_OnUIClose;
-            StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
-            StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEvent_OnEnded;
+            OnAnyStartedUsingPC.Event -= StartedUsingPCStaticEventEvent;
+            WokeUpStaticEvent.OnWokeUp -= OnAnyWokeUp;
             PickedUpStaticEvent.OnTabletPickedUp -= OnAnyTabletPickedUp;
             PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
             TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
@@ -95,16 +99,8 @@ namespace Misc
             if (_crouchButtonHeld)
                 _movement.Crouch();
         }
-
         private void LateUpdate()
         {
-            if (!InputAllowance.InputEnabled) return;
-            
-            float mouseX = Input.GetAxisRaw(Axis.MouseX);
-            float mouseY = Input.GetAxisRaw(Axis.MouseY);
-
-            _rotateDirection = new Vector2(mouseX, mouseY);
-            
             _mouseRotation.RotateTowards(_rotateDirection);
         }
         
@@ -124,18 +120,22 @@ namespace Misc
 
         #region PC Events
 
-        private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
+        private void StartedUsingPCStaticEventEvent(object sender, EventArgs e)
         {
             _gameInput.SetDefaultActionMap(nameof(_gameInput.PC));
         }
-        
-        private void StoppedUsingPCStaticEvent_OnEnded(object sender, EventArgs e)
+
+        #endregion
+
+        #region BedroomEvents
+
+        private void OnAnyWokeUp(object sender, EventArgs e)
         {
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
 
         #endregion
-
+        
         #region TabletEvents
 
         private void OnAnyTabletPickedUp(object sender, EventArgs e)
@@ -251,6 +251,11 @@ namespace Misc
                     TimeControl.OnAnyGamePaused.Call(this);
                     break;
             }
+        }
+
+        public void OnLook(InputAction.CallbackContext context)
+        {
+            _rotateDirection = context.ReadValue<Vector2>();
         }
 
         #endregion

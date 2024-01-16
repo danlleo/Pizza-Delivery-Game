@@ -1,5 +1,4 @@
 using System.Collections;
-using Enums.Player;
 using Player.Inventory;
 using Sounds.Audio;
 using UnityEngine;
@@ -71,7 +70,6 @@ namespace Player
         {
             if (!_isEnabled) return;
             if (!_inventory.HasItem(_item)) return;
-            if (Player.Instance.State != PlayerState.Exploring) return;
             
             if (_flickeringRoutine != null)
                 StopCoroutine(_flickeringRoutine);

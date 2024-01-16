@@ -1,6 +1,5 @@
 using System;
 using Cinemachine;
-using Environment.Bedroom.PC;
 using Misc;
 using UnityEngine;
 
@@ -27,14 +26,14 @@ namespace Environment.Bedroom
 
         private void OnEnable()
         {
-            StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEventOn_Started;
-            StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEvent_OnEnded;
+            PC.OnAnyStartedUsingPC.Event += OnAnyStartedUsingPC;
+            PC.OnAnyStoppedUsingPC.Event += OnAnyStoppedUsingPC;
         }
 
         private void OnDisable()
         {
-            StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEventOn_Started;
-            StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEvent_OnEnded;
+            PC.OnAnyStartedUsingPC.Event -= OnAnyStartedUsingPC;
+            PC.OnAnyStoppedUsingPC.Event -= OnAnyStoppedUsingPC;
         }
 
         public void ResetMainCamera()
@@ -53,13 +52,13 @@ namespace Environment.Bedroom
             _mainCamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
         
-        private void StartedUsingPCStaticEventOn_Started(object sender, EventArgs e)
+        private void OnAnyStartedUsingPC(object sender, EventArgs e)
         {
             _mainVirtualCamera.Priority = _lowPriorityValue;
             _computerScreenVirtualCamera.Priority = _highPriorityValue;
         }
         
-        private void StoppedUsingPCStaticEvent_OnEnded(object sender, EventArgs e)
+        private void OnAnyStoppedUsingPC(object sender, EventArgs e)
         {
             _mainVirtualCamera.Priority = _highPriorityValue;
             _computerScreenVirtualCamera.Priority = _lowPriorityValue;

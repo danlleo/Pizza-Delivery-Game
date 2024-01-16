@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Misc
+namespace Utilities
 {
     public static class GameInputExtensions
     {

@@ -65,9 +65,6 @@ namespace Environment.Bedroom.PC
 
         private void Update()
         {
-            if (Player.Player.Instance.State != PlayerState.UsingPC)
-                return;
-
             MoveCursor();
             TryOverlapWithClickableObjects();
         }

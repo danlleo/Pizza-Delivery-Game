@@ -24,17 +24,17 @@ namespace Sounds.Audio
 
         private void OnEnable()
         {
-            StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
+            OnAnyStartedUsingPC.Event += StartedUsingPCStaticEventEvent;
             ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
         }
         
         private void OnDisable()
         {
-            StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
+            OnAnyStartedUsingPC.Event -= StartedUsingPCStaticEventEvent;
             ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
         }
         
-        private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
+        private void StartedUsingPCStaticEventEvent(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _chairPullClip);
         }

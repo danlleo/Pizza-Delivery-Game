@@ -13,15 +13,15 @@ namespace Dialogue.DialogueTriggers
 
         private void OnEnable()
         {
-            StoppedUsingPCStaticEvent.OnEnded += StoppedUsingPCStaticEvent_OnEnded;
+            OnAnyStoppedUsingPC.Event += StoppedUsingPCStaticEventEvent;
         }
 
         private void OnDisable()
         {
-            StoppedUsingPCStaticEvent.OnEnded -= StoppedUsingPCStaticEvent_OnEnded;
+            OnAnyStoppedUsingPC.Event -= StoppedUsingPCStaticEventEvent;
         }
 
-        private void StoppedUsingPCStaticEvent_OnEnded(object sender, EventArgs e)
+        private void StoppedUsingPCStaticEventEvent(object sender, EventArgs e)
         {
             InvokeDialogue(_sentApplicationDialogueSO);
         }

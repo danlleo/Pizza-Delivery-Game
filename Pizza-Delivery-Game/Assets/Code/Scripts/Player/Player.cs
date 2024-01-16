@@ -1,9 +1,4 @@
-using System;
-using Enums.Player;
-using Environment.Bedroom;
-using Environment.Bedroom.PC;
 using Misc;
-using UI.InspectableObject;
 using UnityEngine;
 
 namespace Player
@@ -18,7 +13,6 @@ namespace Player
     public sealed class Player : Singleton<Player>
     {
         [Header("External references")]
-        [SerializeField] private UI.UI _ui;
         [SerializeField] private Transform _itemHolderTransform;
         
         [HideInInspector] public StaminaEvent StaminaEvent;
@@ -28,8 +22,6 @@ namespace Player
         [HideInInspector] public LandedEvent LandedEvent;
         
         [HideInInspector] public SprintStateChangedEvent SprintStateChangedEvent;
-
-        public PlayerState State { get; private set; }
 
         protected override void Awake()
         {
@@ -41,29 +33,6 @@ namespace Player
             StepEvent = GetComponent<StepEvent>();
             LandedEvent = GetComponent<LandedEvent>();
             SprintStateChangedEvent = GetComponent<SprintStateChangedEvent>();
-
-            // Change it in the future.
-            SetExploringState();
-        }
-        
-        private void OnEnable()
-        {
-            _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
-            _ui.InspectableObjectCloseEvent.Event += InspectableObjectClose_Event;
-            
-            // TODO: GET RID OF THIS SHIT
-            StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
-            WokeUpStaticEvent.OnWokeUp += WokeUpStaticEvent_OnWokeUp;
-        }
-
-        private void OnDisable()
-        {
-            _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
-            _ui.InspectableObjectCloseEvent.Event -= InspectableObjectClose_Event;
-            
-            // TODO: GET RID OF THIS SHIT
-            StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
-            WokeUpStaticEvent.OnWokeUp -= WokeUpStaticEvent_OnWokeUp;
         }
 
         public void PlaceAt(Vector3 targetPosition)
@@ -71,37 +40,5 @@ namespace Player
 
         public Transform GetItemHolderTransform()
             => _itemHolderTransform;
-        
-        private void SetExploringState()
-            => State = PlayerState.Exploring;
-
-        private void SetInspectingState()
-            => State = PlayerState.Inspecting;
-
-        private void SetUsingPCState()
-            => State = PlayerState.UsingPC;
-
-        #region Events
-
-        private void InspectableObjectOpening_Event(object sender, InspectableObjectOpeningEventArgs e)
-        {
-            SetInspectingState();
-        }
-        
-        private void InspectableObjectClose_Event(object sender, EventArgs e)
-        {
-            SetExploringState();
-        }
-        private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
-        {
-            SetUsingPCState();
-        }
-        
-        private void WokeUpStaticEvent_OnWokeUp(object sender, EventArgs e)
-        {
-            SetExploringState();
-        }
-        
-        #endregion
     }
 }

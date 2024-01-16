@@ -1,5 +1,4 @@
 using DG.Tweening;
-using Enums.Player;
 using UnityEngine;
 
 namespace Player
@@ -12,7 +11,7 @@ namespace Player
         [SerializeField] private Camera _camera;
         
         [Header("Settings")]
-        [SerializeField] private float _mouseSensitivity = 5f;
+        [SerializeField, Range(1f, 100f)] private float _mouseSensitivity = 5f;
         [SerializeField] private float _verticalClampValueInDegrees = 90f;
         [SerializeField, Range(0f, 1f)] private float _smoothingTime = 0.15f;
         [SerializeField] private bool _useSmoothing;
@@ -22,9 +21,6 @@ namespace Player
         
         public void RotateTowards(Vector2 input)
         {
-            if (_player.State != PlayerState.Exploring)
-                return;
-            
             input *= _mouseSensitivity * Time.deltaTime;
 
             _horizontalRotation += input.x;

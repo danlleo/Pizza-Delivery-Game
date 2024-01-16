@@ -1,5 +1,4 @@
 using System.Collections;
-using Enums.Player;
 using UnityEngine;
 
 namespace Player
@@ -94,9 +93,6 @@ namespace Player
 
         public void Move(Vector2 input)
         {
-            if (_player.State != PlayerState.Exploring)
-                return;
-            
             // We multiple direction in which player is looking by direction on vertical input,
             // that way we can move him forward or backwards, plus we add player's horizontal direction 
             // by horizontal input, to move him to the right or left

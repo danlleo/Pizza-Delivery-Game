@@ -1,4 +1,3 @@
-using Enums.Player;
 using Interfaces;
 using UnityEngine;
 
@@ -37,9 +36,6 @@ namespace Player
 
         public void TryInteract()
         {
-            if (_player.State != PlayerState.Exploring)
-                return;
-            
             if (_hit.collider == null) return;
             if (!_hit.collider.TryGetComponent(out IInteractable interactable)) return;
             

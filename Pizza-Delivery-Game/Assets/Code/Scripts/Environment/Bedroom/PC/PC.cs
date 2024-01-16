@@ -19,7 +19,7 @@ namespace Environment.Bedroom.PC
         {
             _boxCollider.enabled = false;
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
-            Player.Player.Instance.CallStartedUsingPC();
+            OnAnyStartedUsingPC.Call(this);
         }
 
         public string GetActionDescription()

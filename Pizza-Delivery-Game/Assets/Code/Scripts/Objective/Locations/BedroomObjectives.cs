@@ -23,19 +23,19 @@ namespace Objective.Locations
 
         private void OnEnable()
         {
-            StartedUsingPCStaticEvent.OnStarted += StartedUsingPCStaticEvent_OnStarted;
+            OnAnyStartedUsingPC.Event += StartedUsingPCStaticEventEvent;
             WokeUpStaticEvent.OnWokeUp += WokeUpStaticEvent_OnWokeUp;
             OpenedDoorStaticEvent.OnOpenedDoor += OnOpenedDoor;
         }
 
         private void OnDisable()
         {
-            StartedUsingPCStaticEvent.OnStarted -= StartedUsingPCStaticEvent_OnStarted;
+            OnAnyStartedUsingPC.Event -= StartedUsingPCStaticEventEvent;
             WokeUpStaticEvent.OnWokeUp -= WokeUpStaticEvent_OnWokeUp;             
             OpenedDoorStaticEvent.OnOpenedDoor -= OnOpenedDoor;
         }
 
-        private void StartedUsingPCStaticEvent_OnStarted(object sender, EventArgs e)
+        private void StartedUsingPCStaticEventEvent(object sender, EventArgs e)
         {
             ToggleObjectiveWindowStaticEvent.Call(this, new ToggleObjectiveWindowStaticEventArgs(false));
         }

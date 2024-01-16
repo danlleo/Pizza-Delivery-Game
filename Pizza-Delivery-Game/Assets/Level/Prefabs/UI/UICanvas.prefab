@@ -76,7 +76,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4283358207
-  m_fontColor: {r: 1, g: 0.8593539, b: 0.3066038, a: 1}
+  m_fontColor: {r: 0.84313726, g: 0.6745098, b: 0.2901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1126,7 +1126,7 @@ MonoBehaviour:
   InspectableObjectOpeningEvent: {fileID: 0}
   InspectableObjectClosingEvent: {fileID: 0}
   InspectableObjectCloseEvent: {fileID: 0}
-  ConfirmEvent: {fileID: 0}
+  _inspectableObjectConfirmEvent: {fileID: 0}
   OnObjectiveUpdated: {fileID: 0}
 --- !u!114 &6894446411172980243
 MonoBehaviour:

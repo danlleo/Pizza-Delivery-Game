@@ -4,7 +4,7 @@ namespace Environment.Bedroom.PC.Programs
     {
         public override void HandleClick()
         {
-            Player.Player.Instance.CallStoppedUsingPC();
+            OnAnyStoppedUsingPC.Call(this);
             Destroy(gameObject);
         }
     }

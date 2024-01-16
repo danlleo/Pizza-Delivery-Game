@@ -12,8 +12,8 @@ namespace UI.InspectableObject
     {
         private const string UI_LAYER = "UI";
 
-        [Header("External references")] [SerializeField]
-        private GameObject _inspectableObjectUI;
+        [Header("External references")] 
+        [SerializeField] private GameObject _inspectableObjectUI;
 
         [SerializeField] private GameObject _objectParentContainer;
         [SerializeField] private UI _ui;
