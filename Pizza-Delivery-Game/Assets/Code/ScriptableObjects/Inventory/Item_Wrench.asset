@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Item_Wrench
   m_EditorClassIdentifier: 
   _id: 
+  _itemName: Wrench

@@ -14,6 +14,12 @@ namespace UI.Crossfade
         private void Awake()
         {
             DisableUI();
+            _canvasGroup.alpha = 1f;
+        }
+
+        private void Start()
+        {
+            FadeOut(5f);
         }
 
         private void EnableUI()
@@ -26,6 +32,7 @@ namespace UI.Crossfade
 
         public void FadeIn(float duration)
         {
+            _canvasGroup.DOKill();
             _canvasGroup.DOFade(1f, duration).SetUpdate(this);
         }
 
@@ -33,6 +40,7 @@ namespace UI.Crossfade
         {
             EnableUI();
 
+            _canvasGroup.DOKill();
             _canvasGroup.DOFade(1f, duration).OnStart(() => onStart?.Invoke()).SetUpdate(this);
         }
 
@@ -40,6 +48,7 @@ namespace UI.Crossfade
         {
             EnableUI();
 
+            _canvasGroup.DOKill();
             _canvasGroup.DOFade(1f, duration).OnStart(() => onStart?.Invoke())
                 .OnComplete(() => onComplete?.Invoke()).SetUpdate(this);
         }
@@ -52,6 +61,7 @@ namespace UI.Crossfade
         {
             EnableUI();
 
+            _canvasGroup.DOKill();
             _canvasGroup.DOFade(0f, duration).OnComplete(DisableUI).SetUpdate(this);
         }
 
@@ -59,6 +69,7 @@ namespace UI.Crossfade
         {
             EnableUI();
 
+            _canvasGroup.DOKill();
             _canvasGroup.DOFade(0f, duration).OnStart(() => onStart?.Invoke()).OnComplete(DisableUI).SetUpdate(this);
         }
 
@@ -66,6 +77,7 @@ namespace UI.Crossfade
         {
             EnableUI();
 
+            _canvasGroup.DOKill();
             _canvasGroup.DOFade(0f, duration).OnStart(() => onStart?.Invoke())
                 .OnComplete(() =>
                 {

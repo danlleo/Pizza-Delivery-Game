@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Item_Flashlight
   m_EditorClassIdentifier: 
   _id: 8c25de7d0c1a7c54cb1bfbca223a028a
+  _itemName: Flashlight

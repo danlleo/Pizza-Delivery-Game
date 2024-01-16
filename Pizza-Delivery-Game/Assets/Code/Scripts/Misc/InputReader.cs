@@ -4,6 +4,7 @@ using Environment.Bedroom.PC;
 using EventBus;
 using Keypad;
 using Player;
+using Player.Inventory;
 using Tablet;
 using UI;
 using UnityEngine;
@@ -20,7 +21,8 @@ namespace Misc
         GameInput.IPCActions, 
         GameInput.IKeypadActions, 
         GameInput.ITabletActions, 
-        GameInput.IPauseMenuActions
+        GameInput.IPauseMenuActions,
+        GameInput.IUIConfirmationActions
     {
         [Header("External references")] 
         [SerializeField] private UI.UI _ui;
@@ -49,6 +51,7 @@ namespace Misc
             _gameInput.Tablet.SetCallbacks(this);
             _gameInput.Keypad.SetCallbacks(this);
             _gameInput.PauseMenu.SetCallbacks(this);
+            _gameInput.UIConfirmation.SetCallbacks(this);
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
         }
         
@@ -62,15 +65,15 @@ namespace Misc
             PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
+            Player.Inventory.OnAnyItemUse.Event += OnAnyItemUse;
+            Player.Inventory.OnAnyItemUseDeclined.Event += OnAnyItemUseDeclined;
             
             _interactedWithKeypadEventBinding =
                 new EventBinding<InteractedWithKeypadEvent>(HandleInteractedWithKeypadEvent);
 
             EventBus<InteractedWithKeypadEvent>.Register(_interactedWithKeypadEventBinding);
         }
-
         
-
         private void OnDisable()
         {
             _gameInput.Disable();
@@ -83,6 +86,8 @@ namespace Misc
             PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
             TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
+            Player.Inventory.OnAnyItemUse.Event -= OnAnyItemUse;
+            Player.Inventory.OnAnyItemUseDeclined.Event -= OnAnyItemUseDeclined;
             
             EventBus<InteractedWithKeypadEvent>.Deregister(_interactedWithKeypadEventBinding);
         }
@@ -152,6 +157,20 @@ namespace Misc
 
         #endregion
 
+        #region UIConfirmationEvents
+
+        private void OnAnyItemUse(object sender, OnAnyItemUseEventArgs e)
+        {
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.UIConfirmation));
+        }
+        
+        private void OnAnyItemUseDeclined(object sender, EventArgs e)
+        {
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
+        }
+
+        #endregion
+        
         #region TimeControlEvents
 
         private void OnAnyGamePaused(object sender, EventArgs e)

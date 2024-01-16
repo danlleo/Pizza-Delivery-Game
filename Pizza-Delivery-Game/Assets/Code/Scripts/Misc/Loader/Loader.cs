@@ -1,4 +1,5 @@
 using System;
+using DataPersistence;
 using UnityEngine.SceneManagement;
 using Scene = Enums.Scenes.Scene;
 
@@ -10,6 +11,8 @@ namespace Misc.Loader
         
         public static void Load(Scene scene)
         {
+            SaveStaticEvent.CallSaveEvent(scene);
+            
             s_onLoaderCallback = () =>
             {
                 SceneManager.LoadScene(scene.ToString());

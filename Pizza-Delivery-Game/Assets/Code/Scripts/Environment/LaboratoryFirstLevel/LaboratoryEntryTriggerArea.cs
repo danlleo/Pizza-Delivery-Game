@@ -1,4 +1,5 @@
 using System;
+using Player;
 using UnityEngine;
 
 namespace Environment.LaboratoryFirstLevel
@@ -30,9 +31,10 @@ namespace Environment.LaboratoryFirstLevel
             if (!_hasPickedUpAKeycard)
                 return;
             
-            if (!other.gameObject.TryGetComponent(out Player.Player player)) 
+            if (!other.gameObject.TryGetComponent(out Player.Player _)) 
                 return;
-            
+
+            GravityPulldownEnableStateStaticEvent.Call(this, new GravityPulldownEnableStateStaticEventArgs(true));
             EnteredLaboratoryEntryTriggerAreaStaticEvent.Call(this);
             
             _laboratoryEntryDoor.Close();

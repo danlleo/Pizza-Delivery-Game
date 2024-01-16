@@ -9626,6 +9626,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5047099707145332367, guid: 530d746b804020948a76e48f66d7973c,
+        type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 8530758911292480668, guid: 530d746b804020948a76e48f66d7973c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15034,6 +15039,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 857449011}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &864651698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 864651700}
+  - component: {fileID: 864651699}
+  m_Layer: 0
+  m_Name: UIDocument
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &864651699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864651698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 5fac56e31ce4b974eb83682850addd51, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+--- !u!4 &864651700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864651698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &866349525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16095,6 +16148,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2376937920079473608, guid: 7f7a39f115527924fb8a3f4ab7a4e78e,
+        type: 3}
+      propertyPath: _uiDocument
+      value: 
+      objectReference: {fileID: 864651699}
     - target: {fileID: 2998491222185887845, guid: 7f7a39f115527924fb8a3f4ab7a4e78e,
         type: 3}
       propertyPath: m_Name
@@ -41498,3 +41556,4 @@ SceneRoots:
   - {fileID: 947625240}
   - {fileID: 1106648338}
   - {fileID: 1792103180}
+  - {fileID: 864651700}

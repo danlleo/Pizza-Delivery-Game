@@ -387,6 +387,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UIConfirmation",
+            "id": "bd7e6d6e-84b7-49e1-8945-ddb10d7072cc",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []

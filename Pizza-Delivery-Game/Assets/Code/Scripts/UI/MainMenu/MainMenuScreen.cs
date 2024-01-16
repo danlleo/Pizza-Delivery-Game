@@ -91,7 +91,7 @@ namespace UI.MainMenu
                     _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
                     DisableMainMenuButtonsFocus();
                     ServiceLocator.ServiceLocator.GetCrossfadeService()
-                        .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BedroomScene), 3.2f);
+                        .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.FirstLaboratoryLevelScene), 3.2f);
                 },
                 () =>
                 {

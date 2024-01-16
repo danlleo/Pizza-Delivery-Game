@@ -19,8 +19,6 @@ namespace Environment.LaboratoryFirstLevel
         private Vector3 _defaultPosition;
         private Quaternion _defaultRotation;
         
-        private bool _wasTeleported;
-        
         private void Awake()
         {
             _defaultPosition = transform.position;
@@ -47,15 +45,8 @@ namespace Environment.LaboratoryFirstLevel
             _player.transform.SetParent(transform);
         }
 
-        private void OnTriggerExit(Collider other)
-        {
-            if (!_wasTeleported) return;
-            GravityPulldownEnableStateStaticEvent.Call(this, new GravityPulldownEnableStateStaticEventArgs(true));
-        }
-
         private void TeleportToTargetPosition()
         {
-            _wasTeleported = true;
             GravityPulldownEnableStateStaticEvent.Call(this, new GravityPulldownEnableStateStaticEventArgs(false));
             transform.position = _targetTeleportPosition;
         }

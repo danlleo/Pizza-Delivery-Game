@@ -7,7 +7,7 @@ namespace Terminal
 {
     [DisallowMultipleComponent]
     [SelectionBase]
-    public class Terminal : MonoBehaviour, IInteractable
+    public class Terminal : MonoBehaviour, IInteractable, IItemReceiver
     {
         [Header("External references")]
         [SerializeField] private ItemSO _requiredKeycard;
@@ -20,7 +20,17 @@ namespace Terminal
                 KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(false, transform.position));
                 return;
             }
-            
+
+            this.CallOnAnyItemUseEvent(new OnAnyItemUseEventArgs(this, _requiredKeycard));
+        }
+
+        public string GetActionDescription()
+        {
+            return "Insert keycard";
+        }
+
+        public void OnReceive()
+        {
             _door.Unlock();
             _door.Open();
             
@@ -29,9 +39,9 @@ namespace Terminal
             Destroy(this);
         }
 
-        public string GetActionDescription()
+        public void OnDecline()
         {
-            return "Insert keycard";
+            
         }
     }
 }

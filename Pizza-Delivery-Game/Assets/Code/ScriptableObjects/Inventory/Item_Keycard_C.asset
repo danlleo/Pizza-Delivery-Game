@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Item_Keycard_C
   m_EditorClassIdentifier: 
   _id: 
+  _itemName: Keycard C

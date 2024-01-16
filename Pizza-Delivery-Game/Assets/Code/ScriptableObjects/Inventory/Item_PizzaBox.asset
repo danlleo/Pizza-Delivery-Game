@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Item_PizzaBox
   m_EditorClassIdentifier: 
   _id: 
+  _itemName: Pizza box

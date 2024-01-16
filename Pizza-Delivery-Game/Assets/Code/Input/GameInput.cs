@@ -409,6 +409,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UIConfirmation"",
+            ""id"": ""bd7e6d6e-84b7-49e1-8945-ddb10d7072cc"",
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": []
@@ -437,6 +443,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // PauseMenu
         m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
         m_PauseMenu_Unpause = m_PauseMenu.FindAction("Unpause", throwIfNotFound: true);
+        // UIConfirmation
+        m_UIConfirmation = asset.FindActionMap("UIConfirmation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -818,6 +826,44 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
+
+    // UIConfirmation
+    private readonly InputActionMap m_UIConfirmation;
+    private List<IUIConfirmationActions> m_UIConfirmationActionsCallbackInterfaces = new List<IUIConfirmationActions>();
+    public struct UIConfirmationActions
+    {
+        private @GameInput m_Wrapper;
+        public UIConfirmationActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_UIConfirmation; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIConfirmationActions set) { return set.Get(); }
+        public void AddCallbacks(IUIConfirmationActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIConfirmationActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIConfirmationActionsCallbackInterfaces.Add(instance);
+        }
+
+        private void UnregisterCallbacks(IUIConfirmationActions instance)
+        {
+        }
+
+        public void RemoveCallbacks(IUIConfirmationActions instance)
+        {
+            if (m_Wrapper.m_UIConfirmationActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIConfirmationActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIConfirmationActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIConfirmationActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIConfirmationActions @UIConfirmation => new UIConfirmationActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -847,5 +893,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     public interface IPauseMenuActions
     {
         void OnUnpause(InputAction.CallbackContext context);
+    }
+    public interface IUIConfirmationActions
+    {
     }
 }

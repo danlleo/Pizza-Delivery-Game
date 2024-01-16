@@ -98,6 +98,8 @@ namespace Player
         
         private void OnAnyGravityPulldownEnableStateChanged(object sender, GravityPulldownEnableStateStaticEventArgs e)
         {
+            print("true");
+            
             _gravityEnabled = e.Enabled;
         }
     }
