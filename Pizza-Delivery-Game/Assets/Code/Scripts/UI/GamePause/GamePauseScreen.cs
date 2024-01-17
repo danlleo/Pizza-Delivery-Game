@@ -19,6 +19,10 @@ namespace UI.GamePause
         [SerializeField] private UIDocument _uiDocument;
         [SerializeField] private StyleSheet _styleSheet;
         
+        private Dictionary<Button, Action> _buttonActions;
+        
+        private EventCallback<KeyDownEvent> _keyDownCallback;
+        
         private void OnEnable()
         {
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
@@ -40,9 +44,12 @@ namespace UI.GamePause
         {
             DeleteUI();
         }
-        
+
         private void DeleteUI()
-            => _uiDocument.rootVisualElement.Clear();
+        {
+            _uiDocument.rootVisualElement.UnregisterCallback(_keyDownCallback);
+            _uiDocument.rootVisualElement.Clear();
+        }
         
         private IEnumerator GenerateUIRoutine()
         {
@@ -70,74 +77,103 @@ namespace UI.GamePause
             var resumeButton = Create<Button>();
             resumeButton.text = "RESUME";
             resumeButton.name = "resume-button";
-            resumeButton.clicked += () =>
-            {
-                OnAnyButtonPressed?.Invoke();
-                TimeControl.OnAnyGameUnpaused.Call(this);
-            };
+            resumeButton.clicked += HandleResumeButtonClick;
             mainContentButtonsContainer.Add(resumeButton);
             
             var optionsButton = Create<Button>();
             optionsButton.text = "OPTIONS";
-            optionsButton.clicked += () =>
-            {
-                OnAnyButtonPressed?.Invoke();
-                DeleteUI();
-                CreateSettingsWindow(() =>
-                {
-                    EnableMenuButtonsFocus();
-                    StartCoroutine(GenerateUIRoutine());
-                }, () =>
-                {
-                    EnableMenuButtonsFocus();
-                    StartCoroutine(GenerateUIRoutine());
-                });
-            };
+            optionsButton.clicked += HandleOptionsButtonClick;
             mainContentButtonsContainer.Add(optionsButton);
             
             var mainMenuButton = Create<Button>();
             mainMenuButton.text = "MAIN MENU";
-            mainMenuButton.clicked += () =>
-            {
-                OnAnyButtonPressed?.Invoke();
-                DeleteUI();
-                CreatePopupWindow("ARE YOU SURE YOU WANT TO MOVE TO THE MAIN MENU?",
-                    "Moving to the main menu will loose your current progress.",
-                    () =>
-                    {
-                        InputAllowance.DisableInput();
-                        DeleteUI();
-                        ServiceLocator.ServiceLocator.GetCrossfadeService()
-                            .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.MainMenuScene), 1f);
-                    },
-                    () => StartCoroutine(GenerateUIRoutine()));
-            };
+            mainMenuButton.clicked += HandleMainMenuButtonClick;
             mainContentButtonsContainer.Add(mainMenuButton);
             
             var desktopButton = Create<Button>();
             desktopButton.text = "DESKTOP";
-            desktopButton.clicked += () =>
-            {
-                OnAnyButtonPressed?.Invoke();
-                DeleteUI();
-                CreatePopupWindow("ARE YOU SURE YOU WANT TO QUIT?",
-                    "Moving to the desktop will loose your current progress.",
-                    () =>
-                    {
-                        DeleteUI();
-                        Application.Quit();
-                    },
-                    () => StartCoroutine(GenerateUIRoutine()));
-            };
+            desktopButton.clicked += HandleDesktopButtonClick;
             mainContentButtonsContainer.Add(desktopButton);
+            
+            _buttonActions = new Dictionary<Button, Action>
+            {
+                { resumeButton, HandleResumeButtonClick },
+                { optionsButton, HandleOptionsButtonClick },
+                { mainMenuButton, HandleMainMenuButtonClick },
+                { desktopButton, HandleDesktopButtonClick }
+            };
+            
+            _keyDownCallback = evt => OnKeyDown(evt, _buttonActions);
             
             root.Add(container);
             root.Q<Button>("resume-button").Focus();
+            root.RegisterCallback(_keyDownCallback);
             
             resumeButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
             optionsButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
             mainMenuButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
             desktopButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+        }
+        
+        private void HandleResumeButtonClick()
+        {
+            OnAnyButtonPressed?.Invoke();
+            TimeControl.OnAnyGameUnpaused.Call(this);
+        }
+        
+        private void HandleOptionsButtonClick()
+        {
+            OnAnyButtonPressed?.Invoke();
+            DeleteUI();
+            CreateSettingsWindow(() =>
+            {
+                DeleteUI();
+                EnableMenuButtonsFocus();
+                StartCoroutine(GenerateUIRoutine());
+            }, () =>
+            {
+                DeleteUI();
+                EnableMenuButtonsFocus();
+                StartCoroutine(GenerateUIRoutine());
+            });
+        }
+        
+        private void HandleMainMenuButtonClick()
+        {
+            OnAnyButtonPressed?.Invoke();
+            DeleteUI();
+            CreatePopupWindow("ARE YOU SURE YOU WANT TO MOVE TO THE MAIN MENU?",
+                "Moving to the main menu will loose your current progress.",
+                () =>
+                {
+                    InputAllowance.DisableInput();
+                    DeleteUI();
+                    ServiceLocator.ServiceLocator.GetCrossfadeService()
+                        .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.MainMenuScene), 1f);
+                },
+                () =>
+                {
+                    DeleteUI();
+                    StartCoroutine(GenerateUIRoutine());
+                });
+        }
+
+        private void HandleDesktopButtonClick()
+        {
+            OnAnyButtonPressed?.Invoke();
+            DeleteUI();
+            CreatePopupWindow("ARE YOU SURE YOU WANT TO QUIT?",
+                "Moving to the desktop will loose your current progress.",
+                () =>
+                {
+                    DeleteUI();
+                    Application.Quit();
+                },
+                () =>
+                {
+                    DeleteUI();
+                    StartCoroutine(GenerateUIRoutine());
+                });
         }
         
         private void CreatePopupWindow(string titleMessage, string bodyMessage, Action onConfirm, Action onDecline)
@@ -158,6 +194,8 @@ namespace UI.GamePause
         
             // Add blur event to enable main menu buttons
             popupWindow.RegisterCallback<BlurEvent>(_ => EnableMenuButtonsFocus());
+            
+            popupWindow.RegisterButtonPressEvent(_uiDocument.rootVisualElement);
         }
         
         private void CreateSettingsWindow(Action onConfirm, Action onCancel)

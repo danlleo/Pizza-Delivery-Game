@@ -69,7 +69,7 @@ namespace Player
         public void ToggleLight()
         {
             if (!_isEnabled) return;
-            if (!_inventory.HasItem(_item)) return;
+            //if (!_inventory.HasItem(_item)) return;
             
             if (_flickeringRoutine != null)
                 StopCoroutine(_flickeringRoutine);

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Player
 {
     [DisallowMultipleComponent]
-    public class MouseRotation : MonoBehaviour
+    public class MouseLook : MonoBehaviour
     {
         [Header("External references")]
         [SerializeField] private Player _player;

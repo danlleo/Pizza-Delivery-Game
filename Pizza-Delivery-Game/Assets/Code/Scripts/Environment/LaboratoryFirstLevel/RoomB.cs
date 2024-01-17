@@ -18,7 +18,7 @@ namespace Environment.LaboratoryFirstLevel
 
         private Vector3 _defaultPosition;
         private Quaternion _defaultRotation;
-        
+
         private void Awake()
         {
             _defaultPosition = transform.position;
@@ -45,23 +45,23 @@ namespace Environment.LaboratoryFirstLevel
             _player.transform.SetParent(transform);
         }
 
-        private void TeleportToTargetPosition()
+        private void TeleportRoomToTargetPosition()
         {
             GravityPulldownEnableStateStaticEvent.Call(this, new GravityPulldownEnableStateStaticEventArgs(false));
-            transform.position = _targetTeleportPosition;
+            transform.localPosition = _targetTeleportPosition;
         }
 
-        private void RotateToTargetRotation()
+        private void RotateRoomToTargetRotation()
         {
             transform.rotation = Quaternion.Euler(_targetRotation);
         }
 
-        private void RotateToDefaultRotation()
+        private void RotateRoomToDefaultRotation()
         {
             transform.rotation = _defaultRotation;
         }
         
-        private void TeleportToDefaultPosition()
+        private void TeleportRoomToDefaultPosition()
         {
             transform.position = _defaultPosition;
         }
@@ -75,14 +75,14 @@ namespace Environment.LaboratoryFirstLevel
         private void AnyPickedUpKeycardA(object sender, EventArgs e)
         {
             UnlockLaboratoryEntryDoor();
-            TeleportToTargetPosition();
-            RotateToTargetRotation();
+            TeleportRoomToTargetPosition();
+            RotateRoomToTargetRotation();
         }
         
         private void OnAnyEnteredLaboratoryEntryTriggerArea(object sender, EventArgs e)
         {
-            TeleportToDefaultPosition();
-            RotateToDefaultRotation();
+            TeleportRoomToDefaultPosition();
+            RotateRoomToDefaultRotation();
             
             Destroy(this);
         }

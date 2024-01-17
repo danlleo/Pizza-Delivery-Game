@@ -9,12 +9,13 @@ using Tablet;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Utilities;
 
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class InputReader : 
+    public class InputHandler : 
         MonoBehaviour, 
         GameInput.IPlayerActions,
         GameInput.IUIActions,
@@ -28,7 +29,7 @@ namespace Misc
         [SerializeField] private UI.UI _ui;
         [SerializeField] private Player.Player _player;
         [SerializeField] private CharacterControllerMovement _movement;
-        [SerializeField] private MouseRotation _mouseRotation;
+        [FormerlySerializedAs("_mouseRotation")] [SerializeField] private MouseLook _mouseLook;
         [SerializeField] private Interact _interact;
         [SerializeField] private Flashlight _flashlight;
         
@@ -41,8 +42,8 @@ namespace Misc
         private Vector3 _rotateDirection;
 
         private EventBinding<InteractedWithKeypadEvent> _interactedWithKeypadEventBinding;
-
-        private void Awake()
+        
+        private void OnEnable()
         {
             _gameInput = new GameInput();
             _gameInput.Player.SetCallbacks(this);
@@ -53,10 +54,7 @@ namespace Misc
             _gameInput.PauseMenu.SetCallbacks(this);
             _gameInput.UIConfirmation.SetCallbacks(this);
             _gameInput.SetDefaultActionMap(nameof(_gameInput.Player));
-        }
-        
-        private void OnEnable()
-        {
+            
             UIOpenedStaticEvent.OnUIOpen += UIOpenedStaticEvent_OnUIOpen;
             UIClosedStaticEvent.OnUIClose += UIClosedStaticEvent_OnUIClose;
             OnAnyStartedUsingPC.Event += StartedUsingPCStaticEventEvent;
@@ -94,8 +92,6 @@ namespace Misc
         
         private void Update()
         {
-            if (!InputAllowance.InputEnabled) return;
-            
             _movement.Move(_moveVector);
             
             if (_sprintButtonHeld)
@@ -103,10 +99,6 @@ namespace Misc
             
             if (_crouchButtonHeld)
                 _movement.Crouch();
-        }
-        private void LateUpdate()
-        {
-            _mouseRotation.RotateTowards(_rotateDirection);
         }
         
         #region UI Events
@@ -189,8 +181,6 @@ namespace Misc
 
         public void OnMovement(InputAction.CallbackContext context)
         {
-            if (!InputAllowance.InputEnabled) return;
-            
             switch (context.phase)
             {
                 case InputActionPhase.Performed:
@@ -199,18 +189,34 @@ namespace Misc
                 case InputActionPhase.Canceled:
                     _moveVector = Vector2.zero;
                     break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Started:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (!InputAllowance.InputEnabled) return;
-            
             switch (context.phase)
             {
-                case InputActionPhase.Started:
+                case InputActionPhase.Performed:
                     _interact.TryInteract();
                     break;
+                case InputActionPhase.Started:
+                    break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -221,13 +227,21 @@ namespace Misc
                 case InputActionPhase.Started:
                     _flashlight.ToggleLight();
                     break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Performed:
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            if (!InputAllowance.InputEnabled) return;
-            
             switch (context.phase)
             {
                 case InputActionPhase.Started:
@@ -240,13 +254,17 @@ namespace Misc
                     _sprintButtonHeld = false;
                     _movement.StopSprint();
                     break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         public void OnCrouch(InputAction.CallbackContext context)
         {
-            if (!InputAllowance.InputEnabled) return;
-            
             switch (context.phase)
             {
                 case InputActionPhase.Started:
@@ -259,6 +277,12 @@ namespace Misc
                     _crouchButtonHeld = false;
                     _movement.EndCrouch();
                     break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -269,12 +293,23 @@ namespace Misc
                 case InputActionPhase.Performed:
                     TimeControl.OnAnyGamePaused.Call(this);
                     break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Started:
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
             _rotateDirection = context.ReadValue<Vector2>();
+            _mouseLook.RotateTowards(_rotateDirection);
         }
 
         #endregion
@@ -288,6 +323,16 @@ namespace Misc
                 case InputActionPhase.Started:
                     _ui.InspectableObjectClosingEvent.Call(_ui);
                     break;
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Performed:
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         

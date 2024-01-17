@@ -101,6 +101,9 @@ namespace Player
             
             _isMoving = moveDirection != Vector3.zero;
 
+            if (!_isMoving)
+                return;
+            
             if (!_isSprinting)
                 _player.MovementEvent.Call(_player, new MovementEventArgs(_isMoving));
 

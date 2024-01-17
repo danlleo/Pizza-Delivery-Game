@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Misc;
 using UnityEngine.UIElements;
 using static Utilities.VisualElementCreationTool;
@@ -17,6 +18,9 @@ namespace UI
 
         public Action OnConfirm;
         public Action OnDecline;
+
+        private Button _confirmButton;
+        private Button _declineButton;
         
         private string _title;
         public string Title
@@ -73,27 +77,50 @@ namespace UI
             VisualElement windowHeaderBtnGroup = Create(USS_POPUP_HEADER_BTN_GROUP);
             window.Add(windowHeaderBtnGroup);
 
-            var confirmButton = Create<Button>();
-            confirmButton.text = "YES";
-            confirmButton.clicked += () =>
+            _confirmButton = Create<Button>();
+            _confirmButton.text = "YES";
+            _confirmButton.clicked += () =>
             {
                 OnAnyButtonClicked?.Invoke();
                 OnConfirm?.Invoke();
             };
-            windowHeaderBtnGroup.Add(confirmButton);
+            windowHeaderBtnGroup.Add(_confirmButton);
             
-            var cancelButton = Create<Button>();
-            cancelButton.text = "NO";
-            cancelButton.name = "cancel-button";
-            cancelButton.clicked += () =>
+            _declineButton = Create<Button>();
+            _declineButton.text = "NO";
+            _declineButton.name = "cancel-button";
+            _declineButton.clicked += () =>
             {
                 OnAnyButtonClicked?.Invoke();
                 OnDecline?.Invoke();
             };
-            windowHeaderBtnGroup.Add(cancelButton);
+            windowHeaderBtnGroup.Add(_declineButton);
+            
+            _confirmButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+            _declineButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+        }
 
-            confirmButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
-            cancelButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
+        public void RegisterButtonPressEvent(VisualElement root)
+        {
+            var buttonActions = new Dictionary<Button, Action>()
+            {
+                {
+                    _confirmButton, () =>
+                    {
+                        OnConfirm?.Invoke();
+                        OnAnyButtonClicked?.Invoke();
+                    }
+                },
+                {
+                    _declineButton, () =>
+                    {
+                        OnDecline?.Invoke();
+                        OnAnyButtonClicked?.Invoke();
+                    }
+                }
+            };
+
+            root.RegisterCallback<KeyDownEvent>(evt => OnKeyDown(evt, buttonActions));
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿using UnityEngine.UIElements;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Utilities
 {
@@ -19,6 +23,17 @@ namespace Utilities
             }
             
             return element;
+        }
+        
+        public static void OnKeyDown(KeyDownEvent evt, Dictionary<Button, Action> buttonActions)
+        {
+            if (evt.keyCode != KeyCode.E) return;
+
+            foreach (KeyValuePair<Button, Action> pair in buttonActions.Where(pair => pair.Key.IsFocused()))
+            {
+                pair.Value.Invoke();
+                break;
+            }
         }
     }
 }
