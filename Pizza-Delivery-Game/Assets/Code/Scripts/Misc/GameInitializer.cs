@@ -9,7 +9,7 @@ namespace Misc
     {
         private Crossfade _crossfade;
         
-        private void Awake()
+        public void Initialize()
         {
             _crossfade = Instantiate(GameResources.Retrieve.CrossfadePrefab);
             

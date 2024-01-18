@@ -13,7 +13,7 @@ namespace Environment.LaboratorySecondLevel
         
         public void Interact()
         {
-            if (!Player.Player.Instance.TryGetComponent(out Inventory inventory))
+            if (!Player.Player.Instance.TryGetComponent(out Inventory.Inventory inventory))
             {
                 throw new Exception(
                     "Player component doesn't have inventory component, or player reference null itself");

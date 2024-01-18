@@ -2,7 +2,6 @@ using System;
 using Enums.Keycards;
 using InspectableObject;
 using Interfaces;
-using Player.Inventory;
 using UnityEngine;
 using WorldScreenSpaceIcon;
 
@@ -44,7 +43,7 @@ namespace Environment.LaboratoryFirstLevel
 
         public void AddToInventory()
         {
-            OnAnyAddedItemEvent.Call(this, new AddingItemEventArgs(_inspectableObject.Item));
+            Player.Player.Instance.Inventory.TryAddItem(_inspectableObject.Item, out bool _);
         }
 
         public override WorldScreenSpaceIconData GetWorldScreenSpaceIconData()

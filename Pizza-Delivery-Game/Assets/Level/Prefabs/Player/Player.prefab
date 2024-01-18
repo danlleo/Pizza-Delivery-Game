@@ -711,8 +711,8 @@ MonoBehaviour:
   _maxReachTargetIntensityTime: 0.1
   _minLowIntensityValue: 0
   _maxLowIntensityValue: 7
-  _minHighIntensityValue: 22
-  _maxHighIntensityValue: 25
+  _minHighIntensityValue: 55
+  _maxHighIntensityValue: 60
   _swingMinimumHeightValue: -0.1
   _swingMaximumHeightValue: 0.1
   _isEnabled: 1

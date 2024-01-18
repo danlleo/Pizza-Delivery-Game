@@ -70,7 +70,7 @@ namespace Keypad
                 return;
             }
 
-            if (!Player.Player.Instance.TryGetComponent(out Inventory inventory))
+            if (!Player.Player.Instance.TryGetComponent(out Inventory.Inventory inventory))
                 throw new Exception("Didn't get the inventory component from the player");
 
             if (!inventory.HasItem(_flashLightItemSO))

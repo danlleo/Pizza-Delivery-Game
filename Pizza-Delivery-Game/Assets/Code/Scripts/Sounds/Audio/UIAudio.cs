@@ -25,14 +25,14 @@ namespace Sounds.Audio
         private void OnEnable()
         {
             _ui.InspectableObjectOpeningEvent.Event += InspectableObjectOpening_Event;
-            _ui._inspectableObjectConfirmEvent.Event += InspectableObjectConfirmEvent;
+            _ui.InspectableObjectConfirmEvent.Event += InspectableObjectConfirmEvent;
             _ui.OnObjectiveUpdated.Event += OnObjectiveUpdated;
         }
 
         private void OnDisable()
         {
             _ui.InspectableObjectOpeningEvent.Event -= InspectableObjectOpening_Event;
-            _ui._inspectableObjectConfirmEvent.Event -= InspectableObjectConfirmEvent;
+            _ui.InspectableObjectConfirmEvent.Event -= InspectableObjectConfirmEvent;
             _ui.OnObjectiveUpdated.Event -= OnObjectiveUpdated;
         }
 

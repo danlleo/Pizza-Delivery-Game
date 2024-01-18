@@ -1,6 +1,5 @@
 using InspectableObject;
 using Interfaces;
-using Player.Inventory;
 using UnityEngine;
 
 namespace Environment.LaboratoryFirstLevel
@@ -8,7 +7,8 @@ namespace Environment.LaboratoryFirstLevel
     [DisallowMultipleComponent]
     public class Flashlight : MonoBehaviour, IInteractable, IInspectable
     {
-        [Header("External references")]
+        [Header("External references")] 
+        [SerializeField] private Player.Player _player;
         [SerializeField] private InspectableObjectSO _inspectableObject;
         
         public void Interact()
@@ -24,7 +24,8 @@ namespace Environment.LaboratoryFirstLevel
 
         public void AddToInventory()
         {
-            OnAnyAddedItemEvent.Call(this, new AddingItemEventArgs(_inspectableObject.Item));
+            if (!_player.Inventory.TryAddItem(_inspectableObject.Item, out bool _))
+                Debug.LogError("Error when adding item to the inventory");
         }
     }
 }

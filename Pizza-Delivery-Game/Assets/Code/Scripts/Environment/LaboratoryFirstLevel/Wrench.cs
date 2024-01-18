@@ -1,7 +1,6 @@
 using InspectableObject;
 using Interfaces;
 using UnityEngine;
-using Player.Inventory;
 using WorldScreenSpaceIcon;
 
 namespace Environment.LaboratoryFirstLevel
@@ -28,7 +27,7 @@ namespace Environment.LaboratoryFirstLevel
 
         public void AddToInventory()
         {
-            OnAnyAddedItemEvent.Call(this, new AddingItemEventArgs(_wrenchInspectableObject.Item));
+            Player.Player.Instance.Inventory.TryAddItem(_wrenchInspectableObject.Item, out bool _);
         }
     }
 }

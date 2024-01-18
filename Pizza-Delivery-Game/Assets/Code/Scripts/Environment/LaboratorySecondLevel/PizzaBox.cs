@@ -12,7 +12,7 @@ namespace Environment.LaboratorySecondLevel
         
         public void Interact()
         {
-            OnAnyAddedItemEvent.Call(this, new AddingItemEventArgs(_pizzaBox));
+            Player.Player.Instance.Inventory.TryAddItem(_pizzaBox, out bool _);
 
             Destroy(gameObject);
         }

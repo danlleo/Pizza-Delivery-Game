@@ -17,7 +17,7 @@ namespace DataPersistence
         private IFileDataHandler _fileDataHandler;
         private GameData _gameData;
         
-        private void Start()
+        public void Initialize()
         {
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, _useEncryption);
             _dataPersistenceObjects = FindAllDataPersistenceObjects();

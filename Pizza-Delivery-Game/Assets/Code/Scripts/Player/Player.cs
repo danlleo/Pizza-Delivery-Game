@@ -23,16 +23,21 @@ namespace Player
         
         [HideInInspector] public SprintStateChangedEvent SprintStateChangedEvent;
 
-        protected override void Awake()
+        /// <summary>
+        /// I'm learning about dependency inversion, and I'm sure what I did here is horrible,
+        /// but when I will learn zenject, I will understand how to get rid of this tightly coupled code.
+        /// </summary>
+        public global::Inventory.Inventory Inventory { get; private set; }
+        
+        public void Initialize()
         {
-            base.Awake();
-            
             StaminaEvent = GetComponent<StaminaEvent>();
             MovementEvent = GetComponent<MovementEvent>();
             HoveringOverInteractableEvent = GetComponent<HoveringOverInteractableEvent>();
             StepEvent = GetComponent<StepEvent>();
             LandedEvent = GetComponent<LandedEvent>();
             SprintStateChangedEvent = GetComponent<SprintStateChangedEvent>();
+            Inventory = new global::Inventory.Inventory();
         }
 
         public void PlaceAt(Vector3 targetPosition)

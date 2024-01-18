@@ -1,7 +1,6 @@
 using UI.Dialogue;
 using UI.InspectableObject;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI
 {
@@ -24,11 +23,11 @@ namespace UI
         [HideInInspector] public InspectableObjectClosingEvent InspectableObjectClosingEvent;
         [HideInInspector] public InspectableObjectCloseEvent InspectableObjectCloseEvent;
 
-        [FormerlySerializedAs("ConfirmEvent")] [HideInInspector] public InspectableObjectConfirmEvent _inspectableObjectConfirmEvent;
+        [HideInInspector] public InspectableObjectConfirmEvent InspectableObjectConfirmEvent;
 
         [HideInInspector] public OnObjectiveUpdated OnObjectiveUpdated;
-        
-        private void Awake()
+
+        public void Initialize()
         {
             DialogueOpeningEvent = GetComponent<DialogueOpeningEvent>();
             DialogueClosingEvent = GetComponent<DialogueClosingEvent>();
@@ -38,7 +37,7 @@ namespace UI
             InspectableObjectClosingEvent = GetComponent<InspectableObjectClosingEvent>();
             InspectableObjectCloseEvent = GetComponent<InspectableObjectCloseEvent>();
 
-            _inspectableObjectConfirmEvent = GetComponent<InspectableObjectConfirmEvent>();
+            InspectableObjectConfirmEvent = GetComponent<InspectableObjectConfirmEvent>();
 
             OnObjectiveUpdated = GetComponent<OnObjectiveUpdated>();
         }

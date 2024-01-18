@@ -92,7 +92,7 @@ namespace UI.InspectableObject
             _allowedToRead = true;
 
             _onComplete?.Invoke();
-            _ui._inspectableObjectConfirmEvent.Call(_ui);
+            _ui.InspectableObjectConfirmEvent.Call(_ui);
             UIClosedStaticEvent.Call(_ui);
             StopCoroutine(_rotateObjectRoutine);
         }

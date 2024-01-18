@@ -12,7 +12,7 @@ namespace Environment.LaboratoryFirstLevel
         
         public void Interact()
         {
-            if (!Player.Player.Instance.GetComponent<Inventory>().HasItem(_wrench))
+            if (!Player.Player.Instance.Inventory.HasItem(_wrench))
             {
                 EventBus<FixPipesEvent>.Raise(new FixPipesEvent(false));
                 return;
