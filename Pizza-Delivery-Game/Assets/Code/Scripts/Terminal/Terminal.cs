@@ -15,7 +15,7 @@ namespace Terminal
         
         public void Interact()
         {
-            if (!Player.Player.Instance.GetComponent<Inventory.Inventory>().HasItem(_requiredKeycard))
+            if (!Player.Player.Instance.Inventory.HasItem(_requiredKeycard))
             {
                 KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(false, transform.position));
                 return;

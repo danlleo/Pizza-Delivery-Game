@@ -36,6 +36,11 @@ namespace Environment.LaboratoryFirstLevel
             PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
         }
 
+        private void OnDisable()
+        {
+            PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
+        }
+
         public void Interact()
         {
             PickUp();

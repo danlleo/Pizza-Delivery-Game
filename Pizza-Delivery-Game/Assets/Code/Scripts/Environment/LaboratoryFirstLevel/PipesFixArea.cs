@@ -29,7 +29,6 @@ namespace Environment.LaboratoryFirstLevel
         public void OnReceive()
         {
             EventBus<FixPipesEvent>.Raise(new FixPipesEvent(true));
-            Destroy(gameObject);
         }
 
         public void OnDecline()
