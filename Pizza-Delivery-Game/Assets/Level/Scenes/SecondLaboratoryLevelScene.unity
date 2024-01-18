@@ -28214,6 +28214,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3132848661746719256, guid: d0dd9d2c776864d49aacd0c7fdf27503,
         type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1589578089}
+    - target: {fileID: 3132848661746719256, guid: d0dd9d2c776864d49aacd0c7fdf27503,
+        type: 3}
       propertyPath: m_RenderMode
       value: 1
       objectReference: {fileID: 0}

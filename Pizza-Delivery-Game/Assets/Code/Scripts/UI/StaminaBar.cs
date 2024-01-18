@@ -11,8 +11,8 @@ namespace UI
     public class StaminaBar : MonoBehaviour
     {
         [Header("External references")] 
+        [SerializeField] private UI _ui;
         [SerializeField] private CanvasGroup _staminaBarCanvasGroup;
-
         [SerializeField] private Image _foreground;
 
         [Header("Settings")] 
@@ -27,8 +27,6 @@ namespace UI
 
         private bool _isFadedIn;
 
-        private Player.Player _player;
-
         private void Awake()
         {
             _isFadedIn = true;
@@ -36,13 +34,12 @@ namespace UI
 
         private void OnEnable()
         {
-            _player = Player.Player.Instance;
-            _player.StaminaEvent.Event += StaminaEvent;
+            _ui.Player.StaminaEvent.Event += StaminaEvent;
         }
 
         private void OnDisable()
         {
-            _player.StaminaEvent.Event -= StaminaEvent;
+            _ui.Player.StaminaEvent.Event -= StaminaEvent;
         }
 
         private void StaminaEvent(object sender, StaminaEventArgs e)

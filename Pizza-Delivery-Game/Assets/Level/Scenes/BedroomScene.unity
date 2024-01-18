@@ -2554,16 +2554,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 468116782739545719, guid: ddd24bdb5e200284ab06417b980055e2,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 468116782739545719, guid: ddd24bdb5e200284ab06417b980055e2,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 2316893093598077723, guid: ddd24bdb5e200284ab06417b980055e2,
         type: 3}
       propertyPath: m_Pivot.x
@@ -10818,6 +10808,11 @@ PrefabInstance:
       objectReference: {fileID: 1855918439}
     - target: {fileID: 908390276743647067, guid: 0ab8db6834055ea448467f61f2ce737f,
         type: 3}
+      propertyPath: _serviceRegistrar
+      value: 
+      objectReference: {fileID: 1855918439}
+    - target: {fileID: 908390276743647067, guid: 0ab8db6834055ea448467f61f2ce737f,
+        type: 3}
       propertyPath: _dataPersistenceManager
       value: 
       objectReference: {fileID: 1054596993}
@@ -11918,7 +11913,7 @@ PrefabInstance:
     - target: {fileID: 7711532442976343110, guid: aeb5c357a6084fd4aa5a681557147e3f,
         type: 3}
       propertyPath: m_Name
-      value: GameInitializer
+      value: ServiceRegistrar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

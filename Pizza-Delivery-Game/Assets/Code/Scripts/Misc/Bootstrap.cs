@@ -6,7 +6,7 @@ namespace Misc
     [DisallowMultipleComponent]
     public class Bootstrap : MonoBehaviour
     {
-        [SerializeField] private GameInitializer _gameInitializer;
+        [SerializeField] private ServiceRegistrar _serviceRegistrar;
         [SerializeField] private DataPersistenceManager _dataPersistenceManager;
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private UI.UI _ui;
@@ -14,11 +14,11 @@ namespace Misc
         
         private void Awake()
         {
-            _gameInitializer.Initialize();
+            _serviceRegistrar.Initialize();
             _dataPersistenceManager.Initialize();
             _gameManager.Initialize();
             _player.Initialize();
-            _ui.Initialize();
+            _ui.Initialize(_player);
         }
     }
 }

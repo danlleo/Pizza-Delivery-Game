@@ -9,6 +9,7 @@ namespace UI
     public class Crosshair : MonoBehaviour
     {
         [Header("External references")] 
+        [SerializeField] private UI _ui;
         [SerializeField] private Image _crosshairImage;
 
         [Header("Settings")] 
@@ -21,19 +22,16 @@ namespace UI
 
         [SerializeField] private Vector2 _interactCrosshairSize;
 
-        private Player.Player _player;
-
         private void OnEnable()
         {
-            _player = Player.Player.Instance;
-            _player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
+            _ui.Player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
         }
 
         private void OnDisable()
         {
-            _player.HoveringOverInteractableEvent.Event -= HoveringOverInteractable_Event;
+            _ui.Player.HoveringOverInteractableEvent.Event -= HoveringOverInteractable_Event;
             TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
         }

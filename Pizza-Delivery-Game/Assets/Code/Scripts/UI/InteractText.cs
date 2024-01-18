@@ -8,6 +8,9 @@ namespace UI
     [DisallowMultipleComponent]
     public class InteractText : MonoBehaviour
     {
+        [Header("External references")]
+        [SerializeField] private UI _ui;
+        
         private TextMeshProUGUI _interactText;
         private Player.Player _player;
 
@@ -18,13 +21,12 @@ namespace UI
 
         private void OnEnable()
         {
-            _player = Player.Player.Instance;
-            _player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
+            _ui.Player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
         }
 
         private void OnDisable()
         {
-            _player.HoveringOverInteractableEvent.Event -= HoveringOverInteractable_Event;
+            _ui.Player.HoveringOverInteractableEvent.Event -= HoveringOverInteractable_Event;
         }
 
         private void HoveringOverInteractable_Event(object sender, HoveringOverInteractableEventArgs e)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6917057330405965895}
   - component: {fileID: 2340196113653582042}
   m_Layer: 0
-  m_Name: GameInitializer
+  m_Name: ServiceRegistrar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,5 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7367d7b9d382b4a408eb2a61a2978e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _crossfade: {fileID: 3247858790379320299, guid: 4326d5bcf21b0894db0c57a78786a33e,
-    type: 3}
