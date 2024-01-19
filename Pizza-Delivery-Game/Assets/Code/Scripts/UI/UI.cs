@@ -27,9 +27,7 @@ namespace UI
 
         [HideInInspector] public OnObjectiveUpdated OnObjectiveUpdated;
         
-        public Player.Player Player { get; private set; }
-        
-        public void Initialize(Player.Player player)
+        private void Awake()
         {
             DialogueOpeningEvent = GetComponent<DialogueOpeningEvent>();
             DialogueClosingEvent = GetComponent<DialogueClosingEvent>();
@@ -42,8 +40,6 @@ namespace UI
             InspectableObjectConfirmEvent = GetComponent<InspectableObjectConfirmEvent>();
             
             OnObjectiveUpdated = GetComponent<OnObjectiveUpdated>();
-            
-            Player = player;
         }
     }
 }

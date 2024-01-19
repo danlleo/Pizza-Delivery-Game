@@ -6,10 +6,8 @@ namespace Dialogue.DialogueTriggers
 {
     public class Bedroom : DialogueTrigger
     {
-        [SerializeField] private UI.UI _ui;
+        [Header("Dialogue items")] 
         [SerializeField] private DialogueSO _sentApplicationDialogueSO; 
-        
-        protected override UI.UI UI => _ui;
 
         private void OnEnable()
         {

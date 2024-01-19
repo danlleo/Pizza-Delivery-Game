@@ -1,15 +1,21 @@
-using Misc;
 using UI.Dialogue;
 using UnityEngine;
+using Zenject;
 
 namespace Dialogue
 {
     [DisallowMultipleComponent]
-    public abstract class DialogueTrigger : Singleton<DialogueTrigger>
+    public abstract class DialogueTrigger : MonoBehaviour
     {
-        protected abstract UI.UI UI { get; }
-        
-        public void InvokeDialogue(DialogueSO dialogue)
-            => UI.DialogueOpeningEvent.Call(UI, new DialogueOpeningEventArgs(dialogue));
+        private UI.UI _ui;
+
+        [Inject]
+        private void Construct(UI.UI ui)
+        {
+            _ui = ui;
+        }
+
+        protected void InvokeDialogue(DialogueSO dialogue)
+            => _ui.DialogueOpeningEvent.Call(_ui, new DialogueOpeningEventArgs(dialogue));
     }
 }

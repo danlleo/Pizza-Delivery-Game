@@ -2,25 +2,32 @@ using System;
 using Cinemachine;
 using Misc;
 using UnityEngine;
+using Zenject;
 
 namespace Environment.Bedroom
 {
     public class BedroomCamerasTransition : Singleton<BedroomCamerasTransition>
     {
         [Header("External references")] 
-        [SerializeField] private CinemachineVirtualCamera _mainVirtualCamera;
         [SerializeField] private CinemachineVirtualCamera _computerScreenVirtualCamera;        
         
         [Header("Settings")]
         [SerializeField] private int _lowPriorityValue = 1;
         [SerializeField] private int _highPriorityValue = 10;
 
+        private CinemachineVirtualCamera _mainVirtualCamera;
         private Camera _mainCamera;
 
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _mainVirtualCamera = player.MainVirtualCamera;
+        }
+        
         protected override void Awake()
         {
             base.Awake();
-            
+
             _mainCamera = Camera.main;
         }
 

@@ -8,10 +8,7 @@ namespace Dialogue.DialogueTriggers
 {
     public class LaboratoryFirstLevel : DialogueTrigger
     {
-        [Header("External references")]
-        [SerializeField] private UI.UI _ui;
-        
-        [Header("Configuration")]
+        [Header("Dialogue items")]
         [SerializeField] private DialogueSO _noKeycardDialogueSO;
         [SerializeField] private DialogueSO _noWrenchDialogueSO;
         [SerializeField] private DialogueSO _fixedPipesDialogueSO;
@@ -19,8 +16,6 @@ namespace Dialogue.DialogueTriggers
         [SerializeField] private DialogueSO _fireExtinguisherDialogueSO;
         [SerializeField] private DialogueSO _noFlashlightDialogueSO;
         
-        protected override UI.UI UI => _ui;
-
         private EventBinding<FixPipesEvent> _noWrenchEventBinding;
         
         private void OnEnable()

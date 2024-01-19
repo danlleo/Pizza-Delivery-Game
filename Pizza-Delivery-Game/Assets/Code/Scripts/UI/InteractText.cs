@@ -1,6 +1,7 @@
 using Player;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace UI
 {
@@ -9,11 +10,16 @@ namespace UI
     public class InteractText : MonoBehaviour
     {
         [Header("External references")]
-        [SerializeField] private UI _ui;
         
         private TextMeshProUGUI _interactText;
         private Player.Player _player;
 
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
+        
         private void Awake()
         {
             _interactText = GetComponent<TextMeshProUGUI>();
@@ -21,12 +27,12 @@ namespace UI
 
         private void OnEnable()
         {
-            _ui.Player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
+            _player.HoveringOverInteractableEvent.Event += HoveringOverInteractable_Event;
         }
 
         private void OnDisable()
         {
-            _ui.Player.HoveringOverInteractableEvent.Event -= HoveringOverInteractable_Event;
+            _player.HoveringOverInteractableEvent.Event -= HoveringOverInteractable_Event;
         }
 
         private void HoveringOverInteractable_Event(object sender, HoveringOverInteractableEventArgs e)

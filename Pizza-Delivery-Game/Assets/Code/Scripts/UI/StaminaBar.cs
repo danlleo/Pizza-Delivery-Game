@@ -3,7 +3,8 @@ using DG.Tweening;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
-using Utilities;
+using Zenject;
+using Math = Utilities.Math;
 
 namespace UI
 {
@@ -11,7 +12,6 @@ namespace UI
     public class StaminaBar : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private UI _ui;
         [SerializeField] private CanvasGroup _staminaBarCanvasGroup;
         [SerializeField] private Image _foreground;
 
@@ -24,9 +24,16 @@ namespace UI
         [SerializeField] private float _delayFadeInTimeInSeconds = .2f;
         
         private Coroutine _delayFadeInRoutine;
-
+        private Player.Player _player;
+        
         private bool _isFadedIn;
 
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
+        
         private void Awake()
         {
             _isFadedIn = true;
@@ -34,12 +41,12 @@ namespace UI
 
         private void OnEnable()
         {
-            _ui.Player.StaminaEvent.Event += StaminaEvent;
+            _player.StaminaEvent.Event += StaminaEvent;
         }
 
         private void OnDisable()
         {
-            _ui.Player.StaminaEvent.Event -= StaminaEvent;
+            _player.StaminaEvent.Event -= StaminaEvent;
         }
 
         private void StaminaEvent(object sender, StaminaEventArgs e)

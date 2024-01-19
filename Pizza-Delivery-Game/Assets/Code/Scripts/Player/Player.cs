@@ -1,3 +1,4 @@
+using Cinemachine;
 using Misc;
 using UnityEngine;
 
@@ -23,13 +24,10 @@ namespace Player
         
         [HideInInspector] public SprintStateChangedEvent SprintStateChangedEvent;
 
-        /// <summary>
-        /// I'm learning about dependency inversion, and I'm sure what I did here is horrible,
-        /// but when I will learn zenject, I will understand how to get rid of this tightly coupled code.
-        /// </summary>
+        [field:SerializeField] public CinemachineVirtualCamera MainVirtualCamera { get; private set; }
         public global::Inventory.Inventory Inventory { get; private set; }
-        
-        public void Initialize()
+
+        protected override void Awake()
         {
             StaminaEvent = GetComponent<StaminaEvent>();
             MovementEvent = GetComponent<MovementEvent>();
