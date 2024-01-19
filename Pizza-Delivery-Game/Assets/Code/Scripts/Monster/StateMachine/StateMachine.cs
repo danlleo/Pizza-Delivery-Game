@@ -1,6 +1,6 @@
 namespace Monster.StateMachine
 {
-    public class StateMachine
+    public sealed class StateMachine
     {
         public State CurrentState { get; private set; }
 

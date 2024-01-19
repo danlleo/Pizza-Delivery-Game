@@ -39,9 +39,6 @@ namespace Player
             Inventory = new global::Inventory.Inventory();
         }
 
-        public void PlaceAt(Vector3 targetPosition)
-            => transform.position = targetPosition;
-
         public Transform GetItemHolderTransform()
             => _itemHolderTransform;
     }

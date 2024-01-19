@@ -7,6 +7,8 @@ using Zenject;
 
 namespace UI
 {
+    [RequireComponent(typeof(Canvas))]
+    [DisallowMultipleComponent]
     public class OneHourLaterCanvas : MonoBehaviour
     {
         [Header("External references")] 
@@ -17,6 +19,7 @@ namespace UI
         [SerializeField] private float _timeToStayBeforeFadeOut;
 
         private Player.Player _player;
+        private Canvas _canvas;
         
         [Inject]
         private void Construct(Player.Player player)
@@ -26,7 +29,8 @@ namespace UI
         
         private void Awake()
         {
-            GetComponent<Canvas>().sortingOrder = 5;
+            _canvas = GetComponent<Canvas>();
+            _canvas.sortingOrder = 5;
         }
 
         private void Start()
@@ -39,7 +43,7 @@ namespace UI
             _canvasGroup.DOFade(0f, _timeToFade).OnComplete(() =>
             {
                 BedroomAudio.Instance.PlayDoorBellSound();
-                _player.PlaceAt(new Vector3(1.5f, 0.1f, 2.25f));
+                _player.transform.position = new Vector3(1.5f, 0.1f, 2.25f);
                 BedroomCamerasTransition.Instance.ResetMainCamera();
                 Destroy(gameObject);
             });
@@ -50,5 +54,7 @@ namespace UI
             yield return new WaitForSeconds(_timeToStayBeforeFadeOut);
             FadeOut();
         }
+        
+        public class Factory : PlaceholderFactory<Player.Player, OneHourLaterCanvas> { }
     }
 }
