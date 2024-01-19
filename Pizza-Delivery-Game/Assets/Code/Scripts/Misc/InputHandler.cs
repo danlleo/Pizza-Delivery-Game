@@ -9,30 +9,30 @@ using Tablet;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using Utilities;
+using Zenject;
 
 namespace Misc
 {
-    [DisallowMultipleComponent]
     public class InputHandler : 
-        MonoBehaviour, 
         GameInput.IPlayerActions,
         GameInput.IUIActions,
         GameInput.IPCActions, 
         GameInput.IKeypadActions, 
         GameInput.ITabletActions, 
         GameInput.IPauseMenuActions,
-        GameInput.IUIConfirmationActions
+        GameInput.IUIConfirmationActions,
+        ITickable,
+        IInitializable,
+        IDisposable
     {
-        [Header("External references")] 
-        [SerializeField] private UI.UI _ui;
-        [SerializeField] private Player.Player _player;
-        [SerializeField] private CharacterControllerMovement _movement;
-        [FormerlySerializedAs("_mouseRotation")] [SerializeField] private MouseLook _mouseLook;
-        [SerializeField] private Interact _interact;
-        [SerializeField] private Flashlight _flashlight;
+        private Player.Player _player;
+        private CharacterControllerMovement _movement;
+        private MouseLook _mouseLook;
+        private Interact _interact;
+        private Flashlight _flashlight;
         
+        private UI.UI _ui;
         private GameInput _gameInput;
         private Vector2 _moveVector;
         
@@ -43,7 +43,18 @@ namespace Misc
 
         private EventBinding<InteractedWithKeypadEvent> _interactedWithKeypadEventBinding;
         
-        private void OnEnable()
+        [Inject]
+        public InputHandler(Player.Player player, UI.UI ui)
+        {
+            _player = player;
+            _ui = ui;
+            _movement = player.GetComponent<CharacterControllerMovement>();
+            _mouseLook = player.GetComponent<MouseLook>();
+            _interact = player.GetComponent<Interact>();
+            _flashlight = player.GetComponent<Flashlight>();
+        }
+        
+        public void Initialize()
         {
             _gameInput = new GameInput();
             _gameInput.Player.SetCallbacks(this);
@@ -71,8 +82,8 @@ namespace Misc
 
             EventBus<InteractedWithKeypadEvent>.Register(_interactedWithKeypadEventBinding);
         }
-        
-        private void OnDisable()
+
+        public void Dispose()
         {
             _gameInput.Disable();
             
@@ -90,7 +101,7 @@ namespace Misc
             EventBus<InteractedWithKeypadEvent>.Deregister(_interactedWithKeypadEventBinding);
         }
         
-        private void Update()
+        public void Tick()
         {
             _movement.Move(_moveVector);
             
@@ -100,7 +111,7 @@ namespace Misc
             if (_crouchButtonHeld)
                 _movement.Crouch();
         }
-        
+
         #region UI Events
 
         private void UIClosedStaticEvent_OnUIClose(object sender, EventArgs e)

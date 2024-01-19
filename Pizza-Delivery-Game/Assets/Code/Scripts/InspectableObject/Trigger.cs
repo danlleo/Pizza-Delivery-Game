@@ -2,13 +2,20 @@
 using Misc;
 using UI.InspectableObject;
 using UnityEngine;
+using Zenject;
 
 namespace InspectableObject
 {
     [DisallowMultipleComponent]
     public class Trigger : Singleton<Trigger>
     {
-        [SerializeField] private UI.UI _ui;
+        private UI.UI _ui;
+
+        [Inject]
+        private void Construct(UI.UI ui)
+        {
+            _ui = ui;
+        }
         
         public void Invoke(InspectableObjectSO inspectableObject, Action onComplete)
         {

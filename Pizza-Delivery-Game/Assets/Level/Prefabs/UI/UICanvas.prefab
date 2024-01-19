@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f554b0d0a043d2af4d3395f81b7d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ui: {fileID: 965229083523558271}
   _staminaBarCanvasGroup: {fileID: 6175180566403976552}
   _foreground: {fileID: 449721479993506701}
   _emptyStaminaColor: {r: 1, g: 0.2688679, b: 0.2688679, a: 1}
@@ -731,7 +730,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f8141b044343f478827d6513a45678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ui: {fileID: 965229083523558271}
   _crosshairImage: {fileID: 4164928613521283241}
   _defaultCrosshairSprite: {fileID: 21300000, guid: 01daba06fd1c3104b89889dbdcdcdb92,
     type: 3}
@@ -919,6 +917,7 @@ GameObject:
   - component: {fileID: 4793986125981619321}
   - component: {fileID: 6125330398367582732}
   - component: {fileID: 5552108210663328240}
+  - component: {fileID: 1268909867529178313}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -1308,6 +1307,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac59276733d54975a0fd6afb1e1dcbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1268909867529178313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837689530654671978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6bd75e5522b4e346a21a78ff5f3ae0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3925852911189296028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,7 +1542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2d78d017617f7468ef2fae1d5e3ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ui: {fileID: 965229083523558271}
 --- !u!1 &4931608262569485298
 GameObject:
   m_ObjectHideFlags: 0

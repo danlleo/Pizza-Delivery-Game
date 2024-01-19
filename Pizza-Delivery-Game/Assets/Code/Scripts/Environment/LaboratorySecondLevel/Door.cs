@@ -1,7 +1,7 @@
-using System;
 using Interfaces;
 using Player.Inventory;
 using UnityEngine;
+using Zenject;
 
 namespace Environment.LaboratorySecondLevel
 {
@@ -10,16 +10,18 @@ namespace Environment.LaboratorySecondLevel
     {
         [Header("External references")]
         [SerializeField] private ItemSO _pizzaBox;
+
+        private Player.Player _player;
+
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
         
         public void Interact()
         {
-            if (!Player.Player.Instance.TryGetComponent(out Inventory.Inventory inventory))
-            {
-                throw new Exception(
-                    "Player component doesn't have inventory component, or player reference null itself");
-            }
-
-            if (!inventory.HasItem(_pizzaBox))
+            if (!_player.Inventory.HasItem(_pizzaBox))
             {
                 NoPizzaBoxStaticEvent.Call(this);
                 return;

@@ -1,28 +1,11 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace TimeControl
 {
-    [DisallowMultipleComponent]
-    public class TimeControl : MonoBehaviour
+    public class TimeControl : IInitializable, IDisposable
     {
-        private void Awake()
-        {
-            Unpause();
-        }
-
-        private void OnEnable()
-        {
-            global::TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
-            global::TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
-        }
-
-        private void OnDisable()
-        {
-            global::TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
-            global::TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
-        }
-
         private void Pause()
             => Time.timeScale = 0f;
 
@@ -37,6 +20,18 @@ namespace TimeControl
         private void OnAnyGameUnpaused(object sender, EventArgs e)
         {
             Unpause();
+        }
+        
+        public void Initialize()
+        {
+            global::TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
+            global::TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
+        }
+
+        public void Dispose()
+        {
+            global::TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
+            global::TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
         }
     }
 }

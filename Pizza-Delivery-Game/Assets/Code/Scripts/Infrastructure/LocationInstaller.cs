@@ -1,3 +1,5 @@
+using Environment.Share;
+using Misc;
 using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
@@ -7,18 +9,27 @@ namespace Infrastructure
     public class LocationInstaller : MonoInstaller
     {
         [SerializeField] private Transform _startPoint;
+        
         [SerializeField] private Player.Player _playerPrefab;
-        [SerializeField] private UI.UI _ui;
+        [SerializeField] private UI.UI _uiPrefab;
+        [SerializeField] private LocationDetails _locationDetailsPrefab;
         
         public override void InstallBindings()
         {
             BindPlayer();
             BindUI();
+            BindInputHandler();
+            BindLocationDetails();
+        }
+        
+        private void BindLocationDetails()
+        {
+            Container.InstantiatePrefab(_locationDetailsPrefab);
         }
 
         private void BindUI()
         {
-            UI.UI ui = Container.InstantiatePrefabForComponent<UI.UI>(_ui);
+            UI.UI ui = Container.InstantiatePrefabForComponent<UI.UI>(_uiPrefab);
 
             Container
                 .BindInstance(ui)
@@ -33,6 +44,11 @@ namespace Infrastructure
             Container
                 .BindInstance(player)
                 .AsSingle();
+        }
+
+        private void BindInputHandler()
+        {
+            Container.BindInterfacesAndSelfTo<InputHandler>().FromNew().AsSingle();
         }
     }
 }

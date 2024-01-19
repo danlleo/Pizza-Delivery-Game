@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using Environment.Bedroom;
 using Misc;
 using UI;
 using UnityEngine;
+using Zenject;
 
 namespace Dialogue.ConcreteActions
 {
@@ -10,6 +12,14 @@ namespace Dialogue.ConcreteActions
     {
         [Header("External references")]
         [SerializeField] private OneHourLaterCanvas _oneHourLaterCanvas;
+
+        private Player.Player _player;
+        
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
         
         protected override void Perform()
         {
@@ -30,7 +40,7 @@ namespace Dialogue.ConcreteActions
             ServiceLocator.ServiceLocator.GetCrossfadeService().FadeOut(() => {}, () =>
             {
                 InputAllowance.EnableInput();
-                WokeUpStaticEvent.Call(Player.Player.Instance);
+                WokeUpStaticEvent.Call(_player);
                 CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(true));
             }, 1.2f);
         }

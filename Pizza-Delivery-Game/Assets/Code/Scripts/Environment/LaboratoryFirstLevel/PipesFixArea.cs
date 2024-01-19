@@ -2,6 +2,7 @@ using EventBus;
 using Interfaces;
 using Player.Inventory;
 using UnityEngine;
+using Zenject;
 
 namespace Environment.LaboratoryFirstLevel
 {
@@ -9,10 +10,18 @@ namespace Environment.LaboratoryFirstLevel
     public class PipesFixArea : MonoBehaviour, IInteractable, IItemReceiver
     {
         [SerializeField] private ItemSO _wrench;
+
+        private Player.Player _player;
+        
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
         
         public void Interact()
         {
-            if (!Player.Player.Instance.Inventory.HasItem(_wrench))
+            if (!_player.Inventory.HasItem(_wrench))
             {
                 EventBus<FixPipesEvent>.Raise(new FixPipesEvent(false));
                 return;

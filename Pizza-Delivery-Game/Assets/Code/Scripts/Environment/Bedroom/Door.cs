@@ -41,7 +41,7 @@ namespace Environment.Bedroom
         public void Interact()
         {
             ServiceLocator.ServiceLocator.GetCrossfadeService()
-                .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorScene), 1.5f);
+                .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.FirstLaboratoryLevelScene), 1.5f);
            
             _bedroomAudio.PlayDoorOpenSound();
             OpenedDoorStaticEvent.Call(this);

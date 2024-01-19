@@ -34,7 +34,7 @@ namespace Monster.StateMachine.ConcreteStates
             _monster.StartedChasingEvent.Call(_monster);
             _monster.CallBeganChaseStaticEvent();
             _transform = _monster.transform;
-            _targetTransform = Player.Player.Instance.transform;
+            _targetTransform = _monster.Player.transform;
         }
 
         public override void SubscribeToEvents()
@@ -51,10 +51,10 @@ namespace Monster.StateMachine.ConcreteStates
 
         public override void FrameUpdate()
         {
-            Debug.Log($"Distance: {Vector3.Distance(_transform.position, _targetTransform.position)}");
-            
             if (Vector3.Distance(_transform.position, _targetTransform.position) > _stoppingDistance)
+            {
                 _navMeshAgent.SetDestination(_targetTransform.position);
+            }
             else
             {
                 _navMeshAgent.ResetPath();

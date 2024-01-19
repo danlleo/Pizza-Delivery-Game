@@ -8,6 +8,7 @@ using Misc.Loader;
 using Player.Inventory;
 using Tablet;
 using UnityEngine;
+using Zenject;
 
 namespace Keypad
 {
@@ -18,7 +19,8 @@ namespace Keypad
         [Header("External References")]
         [SerializeField] private ButtonPress _buttonPress;
         [SerializeField] private ItemSO _flashLightItemSO;
-        
+
+        private Player.Player _player;
         private BoxCollider _keypadBoxCollider;
 
         private EventBinding<PasswordValidationEvent> _passwordValidationEventBinding;
@@ -26,6 +28,12 @@ namespace Keypad
 
         private bool _playerKnowsPassword;
         private bool _isAvailable;
+
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
         
         private void Awake()
         {
@@ -69,11 +77,8 @@ namespace Keypad
                 PasswordUnknownStaticEvent.Call(this);
                 return;
             }
-
-            if (!Player.Player.Instance.TryGetComponent(out Inventory.Inventory inventory))
-                throw new Exception("Didn't get the inventory component from the player");
-
-            if (!inventory.HasItem(_flashLightItemSO))
+            
+            if (!_player.Inventory.HasItem(_flashLightItemSO))
             {
                 this.CallNoFlashlightStaticEvent();
                 return;

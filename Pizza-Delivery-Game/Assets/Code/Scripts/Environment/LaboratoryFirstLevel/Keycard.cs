@@ -4,6 +4,7 @@ using InspectableObject;
 using Interfaces;
 using UnityEngine;
 using WorldScreenSpaceIcon;
+using Zenject;
 
 namespace Environment.LaboratoryFirstLevel
 {
@@ -15,7 +16,15 @@ namespace Environment.LaboratoryFirstLevel
 
         [Header("Settings")] 
         [SerializeField] private KeycardType _keycardType;
-            
+
+        private Player.Player _player;
+
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
+        
         public void Interact()
         {
             switch (_keycardType)
@@ -43,7 +52,7 @@ namespace Environment.LaboratoryFirstLevel
 
         public void AddToInventory()
         {
-            Player.Player.Instance.Inventory.TryAddItem(_inspectableObject.Item, out bool _);
+            _player.Inventory.TryAddItem(_inspectableObject.Item, out bool _);
         }
 
         public override WorldScreenSpaceIconData GetWorldScreenSpaceIconData()

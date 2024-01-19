@@ -1,15 +1,22 @@
 using InspectableObject;
 using Interfaces;
 using UnityEngine;
+using Zenject;
 
 namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
     public class Flashlight : MonoBehaviour, IInteractable, IInspectable
     {
-        [Header("External references")] 
-        [SerializeField] private Player.Player _player;
         [SerializeField] private InspectableObjectSO _inspectableObject;
+        
+        private Player.Player _player;
+
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
         
         public void Interact()
         {

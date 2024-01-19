@@ -9,7 +9,6 @@ namespace Player
     public class Flashlight : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private global::Inventory.Inventory _inventory;
         [SerializeField] private ItemSO _item;
         [SerializeField] private Transform _flashLightHolderTransform;
         [SerializeField] private Camera _camera;
@@ -39,6 +38,8 @@ namespace Player
         
         [Space(5)]
         [SerializeField] private bool _isEnabled = true;
+        
+        private global::Inventory.Inventory _inventory;
         
         private bool _isOn;
 

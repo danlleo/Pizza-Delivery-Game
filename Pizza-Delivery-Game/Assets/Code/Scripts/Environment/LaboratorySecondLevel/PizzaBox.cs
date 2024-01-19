@@ -1,6 +1,7 @@
 using Interfaces;
 using Player.Inventory;
 using UnityEngine;
+using Zenject;
 
 namespace Environment.LaboratorySecondLevel
 {
@@ -9,10 +10,18 @@ namespace Environment.LaboratorySecondLevel
     {
         [Header("External references")]
         [SerializeField] private ItemSO _pizzaBox;
+
+        private Player.Player _player;
+        
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
         
         public void Interact()
         {
-            Player.Player.Instance.Inventory.TryAddItem(_pizzaBox, out bool _);
+            _player.Inventory.TryAddItem(_pizzaBox, out bool _);
 
             Destroy(gameObject);
         }

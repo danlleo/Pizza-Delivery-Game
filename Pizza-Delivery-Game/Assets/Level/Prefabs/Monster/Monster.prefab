@@ -2153,13 +2153,13 @@ GameObject:
   - component: {fileID: 3483405104358179865}
   - component: {fileID: 267298868509543879}
   - component: {fileID: 277866394886436243}
+  - component: {fileID: 565167194572208012}
   - component: {fileID: 4374507793154143181}
   - component: {fileID: 8957917205037354440}
   - component: {fileID: 3729761993483121771}
   - component: {fileID: 7289758345409941303}
   - component: {fileID: 128424672288481009}
   - component: {fileID: 3088914326225946029}
-  - component: {fileID: 565167194572208012}
   - component: {fileID: 8472241667752754330}
   - component: {fileID: 667044388585407909}
   - component: {fileID: 2571240397581539923}
@@ -2356,6 +2356,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &565167194572208012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8710919085391389272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe3a19b5ba5cc04985973600cda5291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartedChasingEvent: {fileID: 0}
+  StoppedChasingEvent: {fileID: 0}
+  DetectedTargetEvent: {fileID: 0}
+  LostTargetEvent: {fileID: 0}
+  StartedPatrollingEvent: {fileID: 0}
+  _patrolPointList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _walkingSpeed: 0.1
+  _runningSpeed: 0.225
 --- !u!114 &4374507793154143181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2436,34 +2464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7cf472f60e44079a5139b9335436e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &565167194572208012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8710919085391389272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbe3a19b5ba5cc04985973600cda5291, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartedChasingEvent: {fileID: 0}
-  StoppedChasingEvent: {fileID: 0}
-  DetectedTargetEvent: {fileID: 0}
-  LostTargetEvent: {fileID: 0}
-  StartedPatrollingEvent: {fileID: 0}
-  _patrolPointList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _walkingSpeed: 0.1
-  _runningSpeed: 0.225
 --- !u!114 &8472241667752754330
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
+using System;
 using Environment.LaboratoryFirstLevel;
 using Interfaces;
 using Player.Inventory;
 using UnityEngine;
+using Zenject;
 
 namespace Terminal
 {
@@ -13,9 +15,17 @@ namespace Terminal
         [SerializeField] private ItemSO _requiredKeycard;
         [SerializeField] private Door.Door _door;
         
+        private Player.Player _player;
+
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
+        
         public void Interact()
         {
-            if (!Player.Player.Instance.Inventory.HasItem(_requiredKeycard))
+            if (_player.Inventory.HasItem(_requiredKeycard))
             {
                 KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(false, transform.position));
                 return;

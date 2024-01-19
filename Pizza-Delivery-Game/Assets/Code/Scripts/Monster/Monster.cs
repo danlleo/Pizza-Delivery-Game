@@ -5,6 +5,7 @@ using Environment.LaboratorySecondLevel;
 using Monster.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace Monster
 {
@@ -25,8 +26,10 @@ namespace Monster
         [HideInInspector] public LostTargetEvent LostTargetEvent;
         [HideInInspector] public StartedPatrollingEvent StartedPatrollingEvent;
         
-        public StateMachine.StateMachine StateMachine { get; set; }
+        public StateMachine.StateMachine StateMachine { get; private set; }
         public StateFactory StateFactory;
+
+        public Player.Player Player { get; private set; }
         
         public NavMeshAgent NavMeshAgent { get; private set; }
         public FieldOfView FieldOfView { get; private set; }
@@ -41,6 +44,12 @@ namespace Monster
         [SerializeField] private float _walkingSpeed;
         [SerializeField] private float _runningSpeed;
 
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            Player = player;
+        }
+        
         private void Awake()
         {
             NavMeshAgent = GetComponent<NavMeshAgent>();

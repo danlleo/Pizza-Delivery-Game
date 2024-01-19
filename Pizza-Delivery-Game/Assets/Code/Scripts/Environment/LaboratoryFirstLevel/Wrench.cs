@@ -2,12 +2,21 @@ using InspectableObject;
 using Interfaces;
 using UnityEngine;
 using WorldScreenSpaceIcon;
+using Zenject;
 
 namespace Environment.LaboratoryFirstLevel
 {
     public class Wrench : WorldScreenSpaceIcon.WorldScreenSpaceIcon, IInteractable, IInspectable
     {
         [SerializeField] private InspectableObjectSO _wrenchInspectableObject;
+
+        private Player.Player _player;
+
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
         
         public void Interact()
         {
@@ -24,10 +33,10 @@ namespace Environment.LaboratoryFirstLevel
         {
             return new WorldScreenSpaceIconData(transform, Vector3.zero);
         }
-
+        
         public void AddToInventory()
         {
-            Player.Player.Instance.Inventory.TryAddItem(_wrenchInspectableObject.Item, out bool _);
+            _player.Inventory.TryAddItem(_wrenchInspectableObject.Item, out bool _);
         }
     }
 }

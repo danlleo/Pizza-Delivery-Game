@@ -5,6 +5,7 @@ using Misc;
 using Tablet;
 using UnityEngine;
 using Utilities;
+using Zenject;
 
 namespace Environment.LaboratoryFirstLevel
 {
@@ -22,6 +23,14 @@ namespace Environment.LaboratoryFirstLevel
         private Quaternion _initialRotation;
 
         private BoxCollider _boxCollider;
+
+        private Player.Player _player;
+
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
         
         private void Awake()
         {
@@ -70,7 +79,7 @@ namespace Environment.LaboratoryFirstLevel
         
         private void MoveToPlayer()
         {
-            Transform itemHolderTransform = Player.Player.Instance.GetItemHolderTransform();
+            Transform itemHolderTransform = _player.GetItemHolderTransform();
             transform.DOLocalMove(itemHolderTransform.localPosition, _moveTimeInSeconds);
         }
         

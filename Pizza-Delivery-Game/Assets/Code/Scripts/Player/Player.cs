@@ -1,5 +1,4 @@
 using Cinemachine;
-using Misc;
 using UnityEngine;
 
 namespace Player
@@ -11,7 +10,7 @@ namespace Player
     [RequireComponent(typeof(LandedEvent))]
     [RequireComponent(typeof(SprintStateChangedEvent))]
     [DisallowMultipleComponent]
-    public sealed class Player : Singleton<Player>
+    public sealed class Player : MonoBehaviour
     {
         [Header("External references")]
         [SerializeField] private Transform _itemHolderTransform;
@@ -25,9 +24,11 @@ namespace Player
         [HideInInspector] public SprintStateChangedEvent SprintStateChangedEvent;
 
         [field:SerializeField] public CinemachineVirtualCamera MainVirtualCamera { get; private set; }
+        [field:SerializeField] public Camera UICamera { get; private set; }
+        
         public global::Inventory.Inventory Inventory { get; private set; }
 
-        protected override void Awake()
+        private void Awake()
         {
             StaminaEvent = GetComponent<StaminaEvent>();
             MovementEvent = GetComponent<MovementEvent>();

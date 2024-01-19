@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using Environment.Bedroom;
 using Sounds.Audio;
 using UnityEngine;
+using Zenject;
 
 namespace UI
 {
@@ -16,6 +16,14 @@ namespace UI
         [SerializeField] private float _timeToFade;
         [SerializeField] private float _timeToStayBeforeFadeOut;
 
+        private Player.Player _player;
+        
+        [Inject]
+        private void Construct(Player.Player player)
+        {
+            _player = player;
+        }
+        
         private void Awake()
         {
             GetComponent<Canvas>().sortingOrder = 5;
@@ -23,7 +31,6 @@ namespace UI
 
         private void Start()
         {
-            
             _canvasGroup.DOFade(1f, _timeToFade).OnComplete(() => StartCoroutine(WaitBeforeFadeOutRoutine()));
         }
 
@@ -32,7 +39,7 @@ namespace UI
             _canvasGroup.DOFade(0f, _timeToFade).OnComplete(() =>
             {
                 BedroomAudio.Instance.PlayDoorBellSound();
-                Player.Player.Instance.PlaceAt(new Vector3(1.5f, 0.1f, 2.25f));
+                _player.PlaceAt(new Vector3(1.5f, 0.1f, 2.25f));
                 BedroomCamerasTransition.Instance.ResetMainCamera();
                 Destroy(gameObject);
             });
