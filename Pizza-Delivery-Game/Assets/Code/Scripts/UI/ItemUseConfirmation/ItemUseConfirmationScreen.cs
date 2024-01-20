@@ -1,4 +1,5 @@
 using System;
+using Inventory;
 using Player.Inventory;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,12 +14,12 @@ namespace UI.ItemUseConfirmation
 
         private void OnEnable()
         {
-            Player.Inventory.OnAnyItemUse.Event += OnAnyItemUse;
+            Inventory.OnAnyItemUse.Event += OnAnyItemUse;
         }
 
         private void OnDisable()
         {
-            Player.Inventory.OnAnyItemUse.Event -= OnAnyItemUse;
+            Inventory.OnAnyItemUse.Event -= OnAnyItemUse;
         }
 
         private void OnAnyItemUse(object sender, OnAnyItemUseEventArgs e)

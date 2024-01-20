@@ -41,7 +41,7 @@ namespace Environment.LaboratoryFirstLevel
                     throw new ArgumentOutOfRangeException();
             }
             
-            Trigger.Instance.Invoke(_inspectableObject, AddToInventory);
+            InspectableObjectTrigger.Instance.Invoke(_inspectableObject, AddToInventory);
             Destroy(gameObject);
         }
 

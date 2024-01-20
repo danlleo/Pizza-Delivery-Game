@@ -20,7 +20,7 @@ namespace Environment.LaboratoryFirstLevel
         
         public void Interact()
         {
-            Trigger.Instance.Invoke(_inspectableObject, AddToInventory);
+            InspectableObjectTrigger.Instance.Invoke(_inspectableObject, AddToInventory);
             Destroy(gameObject);
         }
 

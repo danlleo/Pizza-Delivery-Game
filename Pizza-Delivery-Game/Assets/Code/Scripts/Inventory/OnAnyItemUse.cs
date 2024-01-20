@@ -1,7 +1,8 @@
 using System;
 using Interfaces;
+using Player.Inventory;
 
-namespace Player.Inventory
+namespace Inventory
 {
     public static class OnAnyItemUse
     {

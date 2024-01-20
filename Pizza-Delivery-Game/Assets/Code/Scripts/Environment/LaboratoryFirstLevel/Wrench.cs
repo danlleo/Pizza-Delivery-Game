@@ -20,7 +20,7 @@ namespace Environment.LaboratoryFirstLevel
         
         public void Interact()
         {
-            Trigger.Instance.Invoke(_wrenchInspectableObject, AddToInventory);
+            InspectableObjectTrigger.Instance.Invoke(_wrenchInspectableObject, AddToInventory);
             Destroy(gameObject);
         }
 

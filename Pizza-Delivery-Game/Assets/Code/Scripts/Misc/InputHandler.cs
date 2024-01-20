@@ -2,6 +2,7 @@ using System;
 using Environment.Bedroom;
 using Environment.Bedroom.PC;
 using EventBus;
+using Inventory;
 using Keypad;
 using Player;
 using Player.Inventory;
@@ -74,7 +75,7 @@ namespace Misc
             PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
-            Player.Inventory.OnAnyItemUse.Event += OnAnyItemUse;
+            Inventory.OnAnyItemUse.Event += OnAnyItemUse;
             Player.Inventory.OnAnyItemUseDeclined.Event += OnAnyItemUseDeclined;
             
             _interactedWithKeypadEventBinding =
@@ -95,7 +96,7 @@ namespace Misc
             PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
             TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
-            Player.Inventory.OnAnyItemUse.Event -= OnAnyItemUse;
+            Inventory.OnAnyItemUse.Event -= OnAnyItemUse;
             Player.Inventory.OnAnyItemUseDeclined.Event -= OnAnyItemUseDeclined;
             
             EventBus<InteractedWithKeypadEvent>.Deregister(_interactedWithKeypadEventBinding);

@@ -4,6 +4,7 @@ using Environment.LaboratoryFirstLevel;
 using EventBus;
 using Interfaces;
 using Misc;
+using Misc.CursorLockState;
 using Misc.Loader;
 using Player.Inventory;
 using Tablet;
@@ -23,6 +24,7 @@ namespace Keypad
 
         private Player.Player _player;
         private Crossfade _crossfade;
+        private CursorLockState _cursorLockState;
         
         private BoxCollider _keypadBoxCollider;
 
@@ -33,10 +35,11 @@ namespace Keypad
         private bool _isAvailable;
 
         [Inject]
-        private void Construct(Player.Player player, Crossfade crossfade)
+        private void Construct(Player.Player player, Crossfade crossfade, CursorLockState cursorLockState)
         {
             _player = player;
             _crossfade = crossfade;
+            _cursorLockState = cursorLockState;
         }
         
         private void Awake()
@@ -82,18 +85,17 @@ namespace Keypad
                 return;
             }
             
-            if (!_player.Inventory.HasItem(_flashLightItemSO))
-            {
-                this.CallNoFlashlightStaticEvent();
-                return;
-            }
+            // if (!_player.Inventory.HasItem(_flashLightItemSO))
+            // {
+            //     this.CallNoFlashlightStaticEvent();
+            //     return;
+            // }
             
             InputAllowance.DisableInput();
             EventBus<InteractedWithKeypadEvent>.Raise(new InteractedWithKeypadEvent());
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
             
-            // TODO: DON'T FORGET TO IMPLEMENT SERVICE            
-            // ServiceLocator.ServiceLocator.GetCursorLockService().UnlockCursor();
+            _cursorLockState.UnlockCursor();
 
             _buttonPress.enabled = true;
             _keypadBoxCollider.enabled = false;
@@ -124,6 +126,7 @@ namespace Keypad
             if (!passwordValidationResponseEvent.IsCorrect)
                 return;
 
+            _cursorLockState.LockCursor();
             _crossfade.FadeIn(InputAllowance.DisableInput,
                 () => Loader.Load(Scene.SecondLaboratoryLevelScene), 1.5f);
             

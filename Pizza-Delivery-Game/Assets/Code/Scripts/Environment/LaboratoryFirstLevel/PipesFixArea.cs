@@ -1,5 +1,6 @@
 using EventBus;
 using Interfaces;
+using Inventory;
 using Player.Inventory;
 using UnityEngine;
 using Zenject;

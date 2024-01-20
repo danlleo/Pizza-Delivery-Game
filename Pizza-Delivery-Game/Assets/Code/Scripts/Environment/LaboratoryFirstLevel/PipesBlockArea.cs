@@ -1,5 +1,7 @@
+using System;
 using EventBus;
 using UnityEngine;
+using Utilities;
 
 namespace Environment.LaboratoryFirstLevel
 {
@@ -14,7 +16,7 @@ namespace Environment.LaboratoryFirstLevel
         private void Awake()
         {
             _boxCollider = GetComponent<BoxCollider>();
-            _boxCollider.enabled = true;
+            _boxCollider.Enable();
         }
 
         private void OnEnable()
@@ -27,12 +29,12 @@ namespace Environment.LaboratoryFirstLevel
         {
             EventBus<FixPipesEvent>.Deregister(_fixPipesEventBinding);
         }
-        
+
         private void HandleFixPipesEvent(FixPipesEvent fixPipesEvent)
         {
             if (!fixPipesEvent.HasFixed) return;
-            
-            Destroy(gameObject);
+
+            _boxCollider.Disable();
         }
     }
 }

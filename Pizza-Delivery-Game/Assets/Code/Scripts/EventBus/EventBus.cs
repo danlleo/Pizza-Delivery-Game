@@ -5,10 +5,11 @@ namespace EventBus
 {
     public static class EventBus<T> where T : IEvent
     {
-        private static readonly HashSet<IEventBinding<T>> s_bindings = new();
         public static void Register(EventBinding<T> binding) => s_bindings.Add(binding);
         public static void Deregister(EventBinding<T> binding) => s_bindings.Remove(binding);
 
+        private static readonly HashSet<IEventBinding<T>> s_bindings = new();
+        
         public static void Raise(T @event)
         {
             foreach (IEventBinding<T> binding in s_bindings)

@@ -3,27 +3,27 @@ using EventBus;
 using Keypad;
 using Misc;
 using UnityEngine;
+using Zenject;
 
 namespace Environment.LaboratoryFirstLevel
 {
     public class LaboratoryCamerasTransition : Singleton<LaboratoryCamerasTransition>
     {
         [Header("External references")] 
-        [SerializeField] private CinemachineVirtualCamera _mainVirtualCamera;
         [SerializeField] private CinemachineVirtualCamera _keypadVirtualCamera;        
         
         [Header("Settings")]
         [SerializeField] private int _lowPriorityValue = 1;
         [SerializeField] private int _highPriorityValue = 10;
+        
+        private CinemachineVirtualCamera _mainVirtualCamera;
 
         private EventBinding<InteractedWithKeypadEvent> _interactedWithKeypadEventBinding;
-        private Camera _mainCamera;
-        
-        protected override void Awake()
+
+        [Inject]
+        private void Construct(Player.Player player)
         {
-            base.Awake();
-            
-            _mainCamera = Camera.main;
+            _mainVirtualCamera = player.MainVirtualCamera;
         }
 
         private void OnEnable()

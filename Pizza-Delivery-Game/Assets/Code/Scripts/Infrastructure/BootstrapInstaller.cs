@@ -24,8 +24,7 @@ namespace Infrastructure
 
         private void BindCursorLockState()
         {
-            CursorLockState cursorLockState = new CursorLockState(true);
-            Container.BindInstance(cursorLockState);
+            Container.Bind<CursorLockState>().FromInstance(new CursorLockState(true)).AsSingle();
         }
 
         private void BindCrossfade()

@@ -7,7 +7,7 @@ using Zenject;
 namespace InspectableObject
 {
     [DisallowMultipleComponent]
-    public class Trigger : Singleton<Trigger>
+    public class InspectableObjectTrigger : Singleton<InspectableObjectTrigger>
     {
         private UI.UI _ui;
 

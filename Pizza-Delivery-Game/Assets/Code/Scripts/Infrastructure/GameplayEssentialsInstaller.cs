@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Infrastructure
 {
-    public class LocationInstaller : MonoInstaller
+    public class GameplayEssentialsInstaller : MonoInstaller
     {
         [SerializeField] private Transform _startPoint;
         
