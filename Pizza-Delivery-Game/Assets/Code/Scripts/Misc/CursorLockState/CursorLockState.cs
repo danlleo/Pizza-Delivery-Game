@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Misc.CursorLockState
 {
-    public class CursorLockState : ICursorLockService
+    public class CursorLockState
     {
         public CursorLockState(bool isLocked)
         {

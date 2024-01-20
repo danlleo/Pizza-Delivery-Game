@@ -5,7 +5,7 @@ using UnityEngine;
 namespace UI.Crossfade
 {
     [DisallowMultipleComponent]
-    public class Crossfade : MonoBehaviour, ICrossfadeService
+    public class Crossfade : MonoBehaviour
     {
         [Header("External references")] 
         [SerializeField] private CanvasGroup _canvasGroup;

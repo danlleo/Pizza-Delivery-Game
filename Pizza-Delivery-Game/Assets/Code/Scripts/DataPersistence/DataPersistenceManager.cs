@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace DataPersistence
 {
+    [DisallowMultipleComponent]
     public class DataPersistenceManager : MonoBehaviour
     {
         [Header("File Storage Config")] 
@@ -17,7 +18,7 @@ namespace DataPersistence
         private IFileDataHandler _fileDataHandler;
         private GameData _gameData;
         
-        public void Initialize()
+        public void Awake()
         {
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, _useEncryption);
             _dataPersistenceObjects = FindAllDataPersistenceObjects();

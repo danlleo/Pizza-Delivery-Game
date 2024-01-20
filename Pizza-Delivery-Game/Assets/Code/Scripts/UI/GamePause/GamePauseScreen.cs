@@ -6,6 +6,7 @@ using Misc;
 using Misc.Loader;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Zenject;
 using static Utilities.VisualElementCreationTool;
 
 namespace UI.GamePause
@@ -22,6 +23,14 @@ namespace UI.GamePause
         private Dictionary<Button, Action> _buttonActions;
         
         private EventCallback<KeyDownEvent> _keyDownCallback;
+
+        private Crossfade.Crossfade _crossfade;
+        
+        [Inject]
+        private void Construct(Crossfade.Crossfade crossfade)
+        {
+            _crossfade = crossfade;
+        }
         
         private void OnEnable()
         {
@@ -148,7 +157,7 @@ namespace UI.GamePause
                 {
                     InputAllowance.DisableInput();
                     DeleteUI();
-                    ServiceLocator.ServiceLocator.GetCrossfadeService()
+                    _crossfade
                         .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.MainMenuScene), 1f);
                 },
                 () =>

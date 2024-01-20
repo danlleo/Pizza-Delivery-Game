@@ -2,6 +2,7 @@ using System.Collections;
 using Environment.Bedroom;
 using Misc;
 using UI;
+using UI.Crossfade;
 using UnityEngine;
 using Zenject;
 
@@ -13,16 +14,18 @@ namespace Dialogue.ConcreteActions
         [SerializeField] private OneHourLaterCanvas _oneHourLaterCanvas;
 
         private Player.Player _player;
+        private Crossfade _crossfade;
         
         [Inject]
-        private void Construct(Player.Player player)
+        private void Construct(Player.Player player, Crossfade crossfade)
         {
             _player = player;
+            _crossfade = crossfade;
         }
         
         protected override void Perform()
         {
-            ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput, () =>
+            _crossfade.FadeIn(InputAllowance.DisableInput, () =>
             {
                 StartCoroutine(WaitSpecificTimeBeforeDoorRingRoutine());
             }, 1.2f);
@@ -36,7 +39,7 @@ namespace Dialogue.ConcreteActions
             
             yield return new WaitForSeconds(4f);
             
-            ServiceLocator.ServiceLocator.GetCrossfadeService().FadeOut(() => {}, () =>
+            _crossfade.FadeOut(() => {}, () =>
             {
                 InputAllowance.EnableInput();
                 WokeUpStaticEvent.Call(_player);

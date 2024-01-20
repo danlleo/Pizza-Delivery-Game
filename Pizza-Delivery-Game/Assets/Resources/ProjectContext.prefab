@@ -74,3 +74,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b5f1aea795dda4dbb5dface0ea61e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameManager: {fileID: 2591601673523742123, guid: f27cb253888e57b40831d2a6b3ddf3cd,
+    type: 3}
+  _dataPersistenceManager: {fileID: 7848667364051869669, guid: 722f5b23d476c3c4ebe00e5168346913,
+    type: 3}
+  _crossfade: {fileID: 3247858790379320299, guid: 4326d5bcf21b0894db0c57a78786a33e,
+    type: 3}

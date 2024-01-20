@@ -24,9 +24,6 @@ namespace Misc
             }
         }
 
-        [Space(10)]
-        public Crossfade CrossfadePrefab;
-
         [Space(10)] 
         public StoryComicsText StoryComicsTextPrefab;
         

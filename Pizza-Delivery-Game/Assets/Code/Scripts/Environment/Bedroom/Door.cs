@@ -5,8 +5,10 @@ using Interfaces;
 using Misc;
 using Misc.Loader;
 using Sounds.Audio;
+using UI.Crossfade;
 using UnityEngine;
 using Utilities;
+using Zenject;
 
 namespace Environment.Bedroom
 {
@@ -21,6 +23,14 @@ namespace Environment.Bedroom
         
         private BoxCollider _interactableCollider;
 
+        private Crossfade _crossfade;
+        
+        [Inject]
+        private void Construct(Crossfade crossfade)
+        {
+            _crossfade = crossfade;
+        }
+        
         private void Awake()
         {
             _interactableCollider = GetComponent<BoxCollider>();
@@ -40,7 +50,7 @@ namespace Environment.Bedroom
 
         public void Interact()
         {
-            ServiceLocator.ServiceLocator.GetCrossfadeService()
+            _crossfade
                 .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.FirstLaboratoryLevelScene), 1.5f);
            
             _bedroomAudio.PlayDoorOpenSound();

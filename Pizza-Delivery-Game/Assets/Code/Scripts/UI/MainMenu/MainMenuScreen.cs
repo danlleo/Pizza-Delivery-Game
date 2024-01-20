@@ -7,6 +7,7 @@ using Misc;
 using Misc.Loader;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Zenject;
 using static Utilities.VisualElementCreationTool;
 
 namespace UI.MainMenu
@@ -25,6 +26,14 @@ namespace UI.MainMenu
         public static Action OnAnyButtonSelected;
 
         public static Action OnAnyNewGameStarted;
+
+        private Crossfade.Crossfade _crossfade;
+        
+        [Inject]
+        private void Construct(Crossfade.Crossfade crossfade)
+        {
+            _crossfade = crossfade;
+        }
         
         private void OnEnable()
         {
@@ -90,7 +99,7 @@ namespace UI.MainMenu
                     OnAnyNewGameStarted?.Invoke();
                     _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
                     DisableMainMenuButtonsFocus();
-                    ServiceLocator.ServiceLocator.GetCrossfadeService()
+                    _crossfade
                         .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.FirstLaboratoryLevelScene), 3.2f);
                 },
                 () =>

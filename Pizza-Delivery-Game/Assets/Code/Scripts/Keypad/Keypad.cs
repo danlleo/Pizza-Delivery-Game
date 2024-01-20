@@ -7,6 +7,7 @@ using Misc;
 using Misc.Loader;
 using Player.Inventory;
 using Tablet;
+using UI.Crossfade;
 using UnityEngine;
 using Zenject;
 
@@ -21,6 +22,8 @@ namespace Keypad
         [SerializeField] private ItemSO _flashLightItemSO;
 
         private Player.Player _player;
+        private Crossfade _crossfade;
+        
         private BoxCollider _keypadBoxCollider;
 
         private EventBinding<PasswordValidationEvent> _passwordValidationEventBinding;
@@ -30,9 +33,10 @@ namespace Keypad
         private bool _isAvailable;
 
         [Inject]
-        private void Construct(Player.Player player)
+        private void Construct(Player.Player player, Crossfade crossfade)
         {
             _player = player;
+            _crossfade = crossfade;
         }
         
         private void Awake()
@@ -87,7 +91,9 @@ namespace Keypad
             InputAllowance.DisableInput();
             EventBus<InteractedWithKeypadEvent>.Raise(new InteractedWithKeypadEvent());
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
-            ServiceLocator.ServiceLocator.GetCursorLockService().UnlockCursor();
+            
+            // TODO: DON'T FORGET TO IMPLEMENT SERVICE            
+            // ServiceLocator.ServiceLocator.GetCursorLockService().UnlockCursor();
 
             _buttonPress.enabled = true;
             _keypadBoxCollider.enabled = false;
@@ -118,7 +124,7 @@ namespace Keypad
             if (!passwordValidationResponseEvent.IsCorrect)
                 return;
 
-            ServiceLocator.ServiceLocator.GetCrossfadeService().FadeIn(InputAllowance.DisableInput,
+            _crossfade.FadeIn(InputAllowance.DisableInput,
                 () => Loader.Load(Scene.SecondLaboratoryLevelScene), 1.5f);
             
             Destroy(this);
