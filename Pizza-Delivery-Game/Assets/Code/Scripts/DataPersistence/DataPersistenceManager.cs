@@ -4,34 +4,38 @@ using System.Linq;
 using DataPersistence.Data;
 using Interfaces;
 using UnityEngine;
+using Zenject;
+using Object = UnityEngine.Object;
 
 namespace DataPersistence
 {
-    [DisallowMultipleComponent]
-    public class DataPersistenceManager : MonoBehaviour
+    public class DataPersistenceManager : IInitializable, IDisposable
     {
-        [Header("File Storage Config")] 
-        [SerializeField] private string _fileName;
-        [SerializeField] private bool _useEncryption;
+        // FILE NAME - Data.game
+        // USE ENCRYPTION - True
+        private string _fileName;
+        private bool _useEncryption;
         
         private List<IDataPersistence> _dataPersistenceObjects;
         private IFileDataHandler _fileDataHandler;
         private GameData _gameData;
-        
-        public void Awake()
+
+        public DataPersistenceManager(string fileName, bool useEncryption)
         {
+            _fileName = fileName;
+            _useEncryption = useEncryption;
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, _useEncryption);
             _dataPersistenceObjects = FindAllDataPersistenceObjects();
         }
 
-        private void OnEnable()
+        public void Initialize()
         {
             NewGameStaticEvent.OnNewGame += NewGameStaticEvent_OnNewGame;
             LoadStaticEvent.OnLoad += LoadStaticEvent_OnLoad;
             SaveStaticEvent.OnSave += SaveStaticEvent_OnSave;
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
             NewGameStaticEvent.OnNewGame -= NewGameStaticEvent_OnNewGame;
             LoadStaticEvent.OnLoad -= LoadStaticEvent_OnLoad;
@@ -76,7 +80,7 @@ namespace DataPersistence
         private List<IDataPersistence> FindAllDataPersistenceObjects()
         {
             IEnumerable<IDataPersistence> dataPersistenceObjects =
-                FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
+                Object.FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
 
             return new List<IDataPersistence>(dataPersistenceObjects);
         }

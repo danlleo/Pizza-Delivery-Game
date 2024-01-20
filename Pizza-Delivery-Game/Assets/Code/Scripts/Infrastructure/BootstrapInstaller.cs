@@ -31,17 +31,16 @@ namespace Infrastructure
         {
             Crossfade crossfade = Container.InstantiatePrefabForComponent<Crossfade>(_crossfade);
 
-            Container.BindInstance(crossfade).AsSingle();
+            Container.BindInstance(crossfade).AsSingle().NonLazy();
         }
 
         private void BindDataPersistenceManager()
         {
-            DataPersistenceManager dataPersistenceManager =
-                Container.InstantiatePrefabForComponent<DataPersistenceManager>(_dataPersistenceManager);
-
             Container
-                .BindInstance(dataPersistenceManager)
-                .AsSingle();
+                .Bind<DataPersistenceManager>()
+                .AsSingle()
+                .WithArguments("Data.game", true)
+                .NonLazy();
         }
 
         private void BindGameManager()

@@ -3,7 +3,6 @@ using DG.Tweening;
 using Environment.Bedroom;
 using Sounds.Audio;
 using UnityEngine;
-using Zenject;
 
 namespace UI
 {
@@ -21,11 +20,7 @@ namespace UI
         private Player.Player _player;
         private Canvas _canvas;
         
-        [Inject]
-        private void Construct(Player.Player player)
-        {
-            _player = player;
-        }
+        private readonly Vector3 _bedPosition = new(1.5f, 0.1f, 2.25f);
         
         private void Awake()
         {
@@ -35,6 +30,7 @@ namespace UI
 
         private void Start()
         {
+            _player = FindObjectOfType<Player.Player>();
             _canvasGroup.DOFade(1f, _timeToFade).OnComplete(() => StartCoroutine(WaitBeforeFadeOutRoutine()));
         }
 
@@ -43,7 +39,7 @@ namespace UI
             _canvasGroup.DOFade(0f, _timeToFade).OnComplete(() =>
             {
                 BedroomAudio.Instance.PlayDoorBellSound();
-                _player.transform.position = new Vector3(1.5f, 0.1f, 2.25f);
+                _player.transform.position = _bedPosition;
                 BedroomCamerasTransition.Instance.ResetMainCamera();
                 Destroy(gameObject);
             });
@@ -54,7 +50,5 @@ namespace UI
             yield return new WaitForSeconds(_timeToStayBeforeFadeOut);
             FadeOut();
         }
-        
-        public class Factory : PlaceholderFactory<Player.Player, OneHourLaterCanvas> { }
     }
 }

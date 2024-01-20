@@ -1,5 +1,3 @@
-using StoryComics;
-using UI.Crossfade;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,13 +21,9 @@ namespace Misc
                 return s_instance;
             }
         }
-
-        [Space(10)] 
-        public StoryComicsText StoryComicsTextPrefab;
         
-        [Space(10)]
-        public StyleSheet PopupWindowStylesheet;
-        public StyleSheet CreditsWindowStylesheet;
-        public StyleSheet SettingsWindowStylesheet;
+        [field:SerializeField] public StyleSheet PopupWindowStylesheet {get; private set;}
+        [field:SerializeField] public StyleSheet CreditsWindowStylesheet {get; private set;}
+        [field:SerializeField] public StyleSheet SettingsWindowStylesheet {get; private set;}
     }
 }

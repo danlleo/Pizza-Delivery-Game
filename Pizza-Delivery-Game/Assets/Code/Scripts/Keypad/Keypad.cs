@@ -85,11 +85,11 @@ namespace Keypad
                 return;
             }
             
-            // if (!_player.Inventory.HasItem(_flashLightItemSO))
-            // {
-            //     this.CallNoFlashlightStaticEvent();
-            //     return;
-            // }
+            if (!_player.Inventory.HasItem(_flashLightItemSO))
+            {
+                this.CallNoFlashlightStaticEvent();
+                return;
+            }
             
             InputAllowance.DisableInput();
             EventBus<InteractedWithKeypadEvent>.Raise(new InteractedWithKeypadEvent());

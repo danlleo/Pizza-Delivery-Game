@@ -4,7 +4,6 @@ using Misc;
 using UI;
 using UI.Crossfade;
 using UnityEngine;
-using Zenject;
 
 namespace Dialogue.ConcreteActions
 {
@@ -13,16 +12,14 @@ namespace Dialogue.ConcreteActions
         [Header("External references")]
         [SerializeField] private OneHourLaterCanvas _oneHourLaterCanvas;
 
-        private Player.Player _player;
         private Crossfade _crossfade;
-        
-        [Inject]
-        private void Construct(Player.Player player, Crossfade crossfade)
+
+        protected override void Start()
         {
-            _player = player;
-            _crossfade = crossfade;
+            _crossfade = FindObjectOfType<Crossfade>();
+            base.Start();
         }
-        
+
         protected override void Perform()
         {
             _crossfade.FadeIn(InputAllowance.DisableInput, () =>
@@ -42,7 +39,7 @@ namespace Dialogue.ConcreteActions
             _crossfade.FadeOut(() => {}, () =>
             {
                 InputAllowance.EnableInput();
-                WokeUpStaticEvent.Call(_player);
+                WokeUpStaticEvent.Call(this);
                 CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(true));
             }, 1.2f);
         }

@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UI.Crossfade
 {
@@ -14,12 +15,22 @@ namespace UI.Crossfade
         private void Awake()
         {
             DisableUI();
-            _canvasGroup.alpha = 1f;
+            SetMaxAlpha();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            FadeOut(5f);
+            SceneManager.activeSceneChanged += SceneManager_OnActiveSceneChanged;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.activeSceneChanged -= SceneManager_OnActiveSceneChanged;
+        }
+        
+        private void SetMaxAlpha()
+        {
+            _canvasGroup.alpha = 1f;
         }
 
         private void EnableUI()
@@ -27,6 +38,13 @@ namespace UI.Crossfade
 
         private void DisableUI()
             => _crossfadeUI.gameObject.SetActive(false);
+        
+        private void SceneManager_OnActiveSceneChanged(Scene arg0, Scene arg1)
+        {
+            EnableUI();
+            SetMaxAlpha();
+            FadeOut(5f);
+        }
         
         #region FadeIn
 
