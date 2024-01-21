@@ -683,6 +683,7 @@ MonoBehaviour:
   _playerAudio: {fileID: 6591719902434433139}
   _lightSourcePrefab: {fileID: 9057668252911292219, guid: c584f7d5680ebef46a9aac9d41d1aed0,
     type: 3}
+  _player: {fileID: 1418063800019633332}
   _flashlightFollowSpeed: 6
   _lightFadingTimeInSeconds: 0.125
   _chanceToBeginFlickering: 60

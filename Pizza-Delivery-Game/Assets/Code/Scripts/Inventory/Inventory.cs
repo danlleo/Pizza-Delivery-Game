@@ -1,17 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
+using DataPersistence;
 using DataPersistence.Data;
-using Interfaces;
 using Player.Inventory;
+using UnityEngine;
 
 namespace Inventory
 {
-    public class Inventory : IDataPersistence
+    public class Inventory : PersistentData
     {
         private HashSet<string> _itemsHashSet = new();
-
+        
         public bool HasItem(ItemSO item)
-            => _itemsHashSet.Contains(item.ID);
+        {
+            if (item != null) return _itemsHashSet.Contains(item.ID);
+            
+            Debug.LogWarning("Item you're passing is null");
+            return false;
+        }
 
         public bool TryAddItem(ItemSO item, out bool itemAdded)
         {
@@ -38,13 +44,13 @@ namespace Inventory
 
             return true;
         }
-
-        public void LoadData(GameData gameData)
+        
+        public override void LoadData(GameData gameData)
         {
             _itemsHashSet = gameData.SavedInventoryItems.ToHashSet();
         }
 
-        public void SaveData(GameData gameData)
+        public override void SaveData(GameData gameData)
         {
             gameData.SavedInventoryItems = _itemsHashSet.ToList();
         }

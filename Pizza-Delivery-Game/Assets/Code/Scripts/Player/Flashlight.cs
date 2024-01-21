@@ -14,6 +14,7 @@ namespace Player
         [SerializeField] private Camera _camera;
         [SerializeField] private PlayerAudio _playerAudio;
         [SerializeField] private Light _lightSourcePrefab;
+        [SerializeField] private Player _player;
         
         [Header("Settings")] 
         [SerializeField] private float _flashlightFollowSpeed = 0.75f;
@@ -56,6 +57,7 @@ namespace Player
             _lightSource = Instantiate(_lightSourcePrefab, Vector3.zero, Quaternion.identity);
             _lightSource.enabled = false;
             _lightSource.transform.SetParent(_parent.transform);
+            _inventory = _player.Inventory;
         }
 
         private void Update()
@@ -70,7 +72,7 @@ namespace Player
         public void ToggleLight()
         {
             if (!_isEnabled) return;
-            //if (!_inventory.HasItem(_item)) return;
+            if (!_inventory.HasItem(_item)) return;
             
             if (_flickeringRoutine != null)
                 StopCoroutine(_flickeringRoutine);

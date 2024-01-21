@@ -6,7 +6,7 @@ namespace DataPersistence
     {
         public static EventHandler OnSave;
         
-        public static void CallSaveEvent(object sender)
+        public static void Call(object sender)
             => OnSave?.Invoke(sender, EventArgs.Empty);
     }
 }

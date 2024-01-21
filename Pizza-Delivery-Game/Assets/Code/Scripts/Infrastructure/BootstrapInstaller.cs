@@ -37,7 +37,7 @@ namespace Infrastructure
         private void BindDataPersistenceManager()
         {
             Container
-                .Bind<DataPersistenceManager>()
+                .BindInterfacesAndSelfTo<DataPersistenceManager>()
                 .AsSingle()
                 .WithArguments("Data.game", true)
                 .NonLazy();
@@ -46,7 +46,7 @@ namespace Infrastructure
         private void BindGameManager()
         {
             GameManager gameManager = Container.InstantiatePrefabForComponent<GameManager>(_gameManager);
-
+            
             Container
                 .BindInstance(gameManager)
                 .AsSingle();
@@ -54,7 +54,7 @@ namespace Infrastructure
 
         private void BindTimeControl()
         {
-            Container.Bind<TimeControl.TimeControl>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TimeControl.TimeControl>().AsSingle();
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Environment.Bedroom
            
             _bedroomAudio.PlayDoorOpenSound();
             OpenedDoorStaticEvent.Call(this);
-            SaveStaticEvent.CallSaveEvent(this);
+            SaveStaticEvent.Call(this);
             Destroy(this);
         }
 

@@ -29,7 +29,7 @@ namespace DataPersistence
 
             if (!File.Exists(fullPath))
             {
-                Debug.LogError("Path not found!");
+                Debug.LogWarning("Path not found!");
                 return null;
             }
             

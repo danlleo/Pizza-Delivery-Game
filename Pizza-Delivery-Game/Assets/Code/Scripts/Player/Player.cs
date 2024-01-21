@@ -1,4 +1,5 @@
 using Cinemachine;
+using DataPersistence;
 using UnityEngine;
 
 namespace Player
@@ -22,7 +23,7 @@ namespace Player
         [HideInInspector] public LandedEvent LandedEvent;
         
         [HideInInspector] public SprintStateChangedEvent SprintStateChangedEvent;
-
+        
         [field:SerializeField] public CinemachineVirtualCamera MainVirtualCamera { get; private set; }
         [field:SerializeField] public Camera UICamera { get; private set; }
         
@@ -37,6 +38,18 @@ namespace Player
             LandedEvent = GetComponent<LandedEvent>();
             SprintStateChangedEvent = GetComponent<SprintStateChangedEvent>();
             Inventory = new global::Inventory.Inventory();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+                LoadStaticEvent.Call(this);
+            
+            if (Input.GetKeyDown(KeyCode.N))
+                NewGameStaticEvent.Call(this);
+                
+            if (Input.GetKeyDown(KeyCode.Space))
+                SaveStaticEvent.Call(this);
         }
 
         public Transform GetItemHolderTransform()

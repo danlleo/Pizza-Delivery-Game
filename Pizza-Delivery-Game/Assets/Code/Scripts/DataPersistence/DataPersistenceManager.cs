@@ -1,31 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using DataPersistence.Data;
-using Interfaces;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
-using Object = UnityEngine.Object;
 
 namespace DataPersistence
 {
     public class DataPersistenceManager : IInitializable, IDisposable
     {
-        // FILE NAME - Data.game
-        // USE ENCRYPTION - True
-        private string _fileName;
-        private bool _useEncryption;
+        public static Action<DataPersistenceManager> OnAnyDataLoadRequest;
         
-        private List<IDataPersistence> _dataPersistenceObjects;
-        private IFileDataHandler _fileDataHandler;
+        private readonly List<PersistentData> _dataPersistenceObjects;
+        private readonly IFileDataHandler _fileDataHandler;
+        
         private GameData _gameData;
 
         public DataPersistenceManager(string fileName, bool useEncryption)
         {
-            _fileName = fileName;
-            _useEncryption = useEncryption;
-            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName, _useEncryption);
-            _dataPersistenceObjects = FindAllDataPersistenceObjects();
+            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+            _dataPersistenceObjects = new List<PersistentData>();
         }
 
         public void Initialize()
@@ -33,6 +27,8 @@ namespace DataPersistence
             NewGameStaticEvent.OnNewGame += NewGameStaticEvent_OnNewGame;
             LoadStaticEvent.OnLoad += LoadStaticEvent_OnLoad;
             SaveStaticEvent.OnSave += SaveStaticEvent_OnSave;
+            SceneManager.activeSceneChanged += SceneManager_OnActiveSceneChanged;
+            SceneManager.sceneLoaded += SceneManager_OnSceneLoaded;
         }
 
         public void Dispose()
@@ -40,6 +36,15 @@ namespace DataPersistence
             NewGameStaticEvent.OnNewGame -= NewGameStaticEvent_OnNewGame;
             LoadStaticEvent.OnLoad -= LoadStaticEvent_OnLoad;
             SaveStaticEvent.OnSave -= SaveStaticEvent_OnSave;
+            SceneManager.activeSceneChanged -= SceneManager_OnActiveSceneChanged;
+            SceneManager.sceneLoaded -= SceneManager_OnSceneLoaded;
+            
+            ClearDataPersistenceObjectsSubscriptions();
+        }
+
+        public void AddDataPersistenceObject(PersistentData persistentData)
+        {
+            _dataPersistenceObjects.Add(persistentData);
         }
         
         private void NewGame()
@@ -60,7 +65,7 @@ namespace DataPersistence
                 return;
             }
 
-            foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
+            foreach (PersistentData dataPersistenceObject in _dataPersistenceObjects)
             {
                 dataPersistenceObject.LoadData(_gameData);
             }
@@ -68,21 +73,29 @@ namespace DataPersistence
 
         private void SaveGame()
         {
-            foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
+            if (_dataPersistenceObjects != null)
             {
-                dataPersistenceObject.SaveData(_gameData);
+                foreach (PersistentData dataPersistenceObject in _dataPersistenceObjects)
+                {
+                    dataPersistenceObject.SaveData(_gameData);
+                }
             }
             
             // Write saved data to a file
             _fileDataHandler.Save(_gameData);
         }
 
-        private List<IDataPersistence> FindAllDataPersistenceObjects()
+        private void ClearDataPersistenceObjectsSubscriptions()
         {
-            IEnumerable<IDataPersistence> dataPersistenceObjects =
-                Object.FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
-
-            return new List<IDataPersistence>(dataPersistenceObjects);
+            foreach (PersistentData dataPersistence in _dataPersistenceObjects)
+            {
+                dataPersistence.Dispose();
+            }
+        }
+        
+        private void ClearDataPersistenceObjects()
+        {
+            _dataPersistenceObjects.Clear();
         }
         
         #region Events
@@ -90,6 +103,7 @@ namespace DataPersistence
         private void NewGameStaticEvent_OnNewGame(object sender, EventArgs e)
         {
             NewGame();
+            OnAnyDataLoadRequest?.Invoke(this);
         }
 
         private void SaveStaticEvent_OnSave(object sender, EventArgs e)
@@ -99,6 +113,23 @@ namespace DataPersistence
 
         private void LoadStaticEvent_OnLoad(object sender, EventArgs e)
         {
+            LoadGame();
+        }
+        
+        private void SceneManager_OnActiveSceneChanged(Scene arg0, Scene arg1)
+        {
+            if (arg1.name == nameof(Enums.Scenes.Scene.LoadingScene))
+                return;
+            
+            ClearDataPersistenceObjects();
+            OnAnyDataLoadRequest?.Invoke(this);
+        }
+        
+        private void SceneManager_OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        {
+            if (arg0.name == nameof(Enums.Scenes.Scene.LoadingScene))
+                return;
+            
             LoadGame();
         }
         

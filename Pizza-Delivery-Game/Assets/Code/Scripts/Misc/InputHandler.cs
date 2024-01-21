@@ -5,7 +5,6 @@ using EventBus;
 using Inventory;
 using Keypad;
 using Player;
-using Player.Inventory;
 using Tablet;
 using UI;
 using UnityEngine;

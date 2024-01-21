@@ -4,6 +4,7 @@ namespace Enums.Scenes
     {
         MainMenuScene,
         LoadingScene,
+        BedroomScene,
         FirstLaboratoryLevelScene,
         SecondLaboratoryLevelScene,
     }
