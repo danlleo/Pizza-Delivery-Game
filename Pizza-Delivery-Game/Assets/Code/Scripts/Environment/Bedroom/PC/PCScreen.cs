@@ -9,7 +9,7 @@ namespace Environment.Bedroom.PC
 {
     [RequireComponent(typeof(RectTransform))]
     [DisallowMultipleComponent]
-    public class PCScreen : Singleton<PCScreen>
+    public class PCScreen : MonoBehaviour
     {
         [Header("External references")]
         [SerializeField] private Transform _cursor;
@@ -39,10 +39,8 @@ namespace Environment.Bedroom.PC
         
         private Clickable _selectedClickable;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-            
             _rectCorners = new Vector3[4];
             _cursorImage = _cursor.GetComponent<Image>();
             _cursorRectTransform = _cursor.GetComponent<RectTransform>();
@@ -57,11 +55,15 @@ namespace Environment.Bedroom.PC
         private void OnEnable()
         {
             ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
+            PC.OnAnyClickableRemoveRequest.Event += OnAnyClickableRemoveRequest;
+            PC.OnAnyPCLoading.Event += OnAnyPCLoading;
         }
-
+        
         private void OnDisable()
         {
             ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
+            PC.OnAnyClickableRemoveRequest.Event -= OnAnyClickableRemoveRequest;
+            PC.OnAnyPCLoading.Event -= OnAnyPCLoading;
         }
 
         private void Update()
@@ -77,7 +79,7 @@ namespace Environment.Bedroom.PC
             _selectedClickable = null;
         }
 
-        public void SetLoading(bool isLoading)
+        private void SetLoading(bool isLoading)
         {
             _isLoading = isLoading;
         }
@@ -200,7 +202,17 @@ namespace Environment.Bedroom.PC
             HandleCursorChange(CursorState.Loading);
             _selectedClickable.HandleClick();
         }
+        
+        private void OnAnyPCLoading(object sender, OnAnyPCLoadingEventArgs onAnyPCLoadingEventArgs)
+        {
+            SetLoading(onAnyPCLoadingEventArgs.IsLoading);
+        }
 
+        private void OnAnyClickableRemoveRequest(object sender, EventArgs e)
+        {
+            RemoveClickableObject((Clickable)sender);
+        }
+        
         #endregion
     }
 }

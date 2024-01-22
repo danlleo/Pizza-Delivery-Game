@@ -9,24 +9,24 @@ namespace Environment.Bedroom.PC
     {
         public void HandleClick()
         {
-            PCScreen.Instance.SetLoading(true);
+            OnAnyPCLoading.Call(this, new OnAnyPCLoadingEventArgs(true));
             StartCoroutine(ActionPerformerRoutine());
         }
         
-        protected abstract float DelayTimeInSeconds { get; set; }
+        protected abstract float DelayTimeInSeconds { get; }
         
         protected abstract void PerformAction();
         
         protected virtual void OnDestroy()
         {
-            PCScreen.Instance.RemoveClickableObject(this);
+            OnAnyClickableRemoveRequest.Call(this);
         }
 
         private IEnumerator ActionPerformerRoutine()
         {
             yield return new WaitForSeconds(DelayTimeInSeconds);
             PerformAction();
-            PCScreen.Instance.SetLoading(false);
+            OnAnyPCLoading.Call(this, new OnAnyPCLoadingEventArgs(false));
         }
     }
 }
