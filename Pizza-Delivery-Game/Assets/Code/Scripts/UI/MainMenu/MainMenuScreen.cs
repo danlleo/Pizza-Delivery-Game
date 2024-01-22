@@ -5,12 +5,10 @@ using DataPersistence;
 using Enums.Scenes;
 using Misc;
 using Misc.Loader;
-using SojaExiles;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
 using static Utilities.VisualElementCreationTool;
-using MouseLook = Player.MouseLook;
 
 namespace UI.MainMenu
 {
@@ -37,13 +35,11 @@ namespace UI.MainMenu
         public static Action OnAnyNewGameStarted;
 
         private Crossfade.Crossfade _crossfade;
-        private ScreenSettings _screenSettings;
         
         [Inject]
-        private void Construct(Crossfade.Crossfade crossfade, ScreenSettings screenSettings)
+        private void Construct(Crossfade.Crossfade crossfade)
         {
             _crossfade = crossfade;
-            _screenSettings = screenSettings;
         }
         
         private void OnEnable()

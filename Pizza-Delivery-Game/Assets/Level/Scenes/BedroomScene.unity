@@ -13609,6 +13609,8 @@ MonoBehaviour:
     type: 3}
   _pointingCursorSprite: {fileID: 21300000, guid: 4664455c8f1029c4f83bb34b0d02d73b,
     type: 3}
+  _loadingCursorSprite: {fileID: 21300000, guid: 2cd93828feb12a34ba5c0a24474bb18f,
+    type: 3}
   _mouseSpeed: 1.2
   _screenBoundariesOffset: 0.009
 --- !u!1 &7665314853217331763

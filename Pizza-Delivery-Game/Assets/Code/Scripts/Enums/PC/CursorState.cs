@@ -4,5 +4,6 @@ namespace Enums.PC
     {
         Default,
         Pointing,
+        Loading,
     }
 }

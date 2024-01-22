@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Enums.PC;
-using Enums.Player;
 using Misc;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +9,7 @@ namespace Environment.Bedroom.PC
 {
     [RequireComponent(typeof(RectTransform))]
     [DisallowMultipleComponent]
-    public class ScreenWorldSpaceCanvas : Singleton<ScreenWorldSpaceCanvas>
+    public class PCScreen : Singleton<PCScreen>
     {
         [Header("External references")]
         [SerializeField] private Transform _cursor;
@@ -20,6 +19,7 @@ namespace Environment.Bedroom.PC
         [SerializeField] private CursorState _defaultCursorState;
         [SerializeField] private Sprite _defaultCursorSprite;
         [SerializeField] private Sprite _pointingCursorSprite;
+        [SerializeField] private Sprite _loadingCursorSprite;
         
         [Space(5)]
         [SerializeField] private float _mouseSpeed = 0.35f;
@@ -35,7 +35,8 @@ namespace Environment.Bedroom.PC
         private List<RectTransform> _clickableObjectRectTransforms;
 
         private bool _isHovering;
-
+        private bool _isLoading;
+        
         private Clickable _selectedClickable;
 
         protected override void Awake()
@@ -75,15 +76,20 @@ namespace Environment.Bedroom.PC
             _clickableObjectRectTransforms.Remove(clickable.GetComponent<RectTransform>());
             _selectedClickable = null;
         }
+
+        public void SetLoading(bool isLoading)
+        {
+            _isLoading = isLoading;
+        }
         
         private void MoveCursor()
         {
             float mouseX = Input.GetAxisRaw(Axis.MouseX);
             float mouseY = Input.GetAxisRaw(Axis.MouseY);
 
-            var cursorMoveDirection = new Vector2(mouseX, mouseY) * (Time.deltaTime * _mouseSpeed);
-            var localPosition = _cursor.transform.localPosition;
-            var targetDirection = new Vector3(localPosition.x + cursorMoveDirection.x,
+            Vector2 cursorMoveDirection = new Vector2(mouseX, mouseY) * (Time.deltaTime * _mouseSpeed);
+            Vector3 localPosition = _cursor.transform.localPosition;
+            Vector3 targetDirection = new(localPosition.x + cursorMoveDirection.x,
                 localPosition.y + cursorMoveDirection.y, localPosition.z);
 
             if (!WithingScreenBoundaries(targetDirection))
@@ -94,6 +100,8 @@ namespace Environment.Bedroom.PC
 
         private void TryOverlapWithClickableObjects()
         {
+            if (_isLoading) return;
+            
             Rect cursorRect = GetScreenObjectRect(_cursorRectTransform);
             
             if (_clickableObjectRectTransforms.Count == 0)
@@ -148,6 +156,7 @@ namespace Environment.Bedroom.PC
             {
                 CursorState.Default => _defaultCursorSprite,
                 CursorState.Pointing => _pointingCursorSprite,
+                CursorState.Loading => _loadingCursorSprite,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -186,7 +195,9 @@ namespace Environment.Bedroom.PC
         private void ClickedStaticEvent_OnClicked(object sender, EventArgs e)
         {
             if (!_isHovering) return;
+            if (_isLoading) return;
             
+            HandleCursorChange(CursorState.Loading);
             _selectedClickable.HandleClick();
         }
 

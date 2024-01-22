@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Environment.Bedroom.PC
@@ -6,11 +7,26 @@ namespace Environment.Bedroom.PC
     [RequireComponent(typeof(RectTransform))]
     public abstract class Clickable : MonoBehaviour
     {
-        public abstract void HandleClick();
+        public void HandleClick()
+        {
+            PCScreen.Instance.SetLoading(true);
+            StartCoroutine(ActionPerformerRoutine());
+        }
+        
+        protected abstract float DelayTimeInSeconds { get; set; }
+        
+        protected abstract void PerformAction();
         
         protected virtual void OnDestroy()
         {
-            ScreenWorldSpaceCanvas.Instance.RemoveClickableObject(this);
+            PCScreen.Instance.RemoveClickableObject(this);
+        }
+
+        private IEnumerator ActionPerformerRoutine()
+        {
+            yield return new WaitForSeconds(DelayTimeInSeconds);
+            PerformAction();
+            PCScreen.Instance.SetLoading(false);
         }
     }
 }

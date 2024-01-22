@@ -6,7 +6,7 @@ namespace Environment.Bedroom.PC
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(BoxCollider))]
-    public class PC : MonoBehaviour, IInteractable
+    public class PCCollider : MonoBehaviour, IInteractable
     {
         private BoxCollider _boxCollider;
 
