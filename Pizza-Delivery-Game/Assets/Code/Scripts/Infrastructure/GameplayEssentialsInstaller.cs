@@ -33,7 +33,8 @@ namespace Infrastructure
 
             Container
                 .BindInstance(ui)
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindPlayer()
@@ -43,7 +44,8 @@ namespace Infrastructure
 
             Container
                 .BindInstance(player)
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindInputHandler()

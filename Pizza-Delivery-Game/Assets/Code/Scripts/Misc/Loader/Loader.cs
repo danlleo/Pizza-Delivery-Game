@@ -16,6 +16,7 @@ namespace Misc.Loader
                 SceneManager.LoadScene(scene.ToString());
             };
 
+            SaveStaticEvent.Call(scene);
             SceneManager.LoadScene(Scene.LoadingScene.ToString());
         }
 

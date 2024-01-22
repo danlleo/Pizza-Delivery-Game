@@ -7,6 +7,18 @@ namespace UI
 {
     public class SettingsWindow : VisualElement
     {
+        public const string MOUSE_SENSITIVITY_SLIDER_NAME = "mouse-sensitivity-slider";
+        
+        private const string USS_CONTAINER = "container";
+        private const string USS_WINDOW = "window";
+        private const string USS_WINDOW_HEADER = "header";
+        private const string USS_WINDOW_HEADER_TITLE = "title";
+        private const string USS_WINDOW_MAIN = "main";
+        private const string USS_WINDOW_MAIN_SETTING_OPTION = "setting-option";
+        private const string USS_WINDOW_MAIN_SETTING_OPTION_TEXT = "option-name";
+        private const string USS_WINDOW_MAIN_BTN_GROUP = "btn-group";
+        private const string USS_WINDOW_MAIN_BTN_GROUP_BTN = "btn";
+        
         public static Action OnAnyButtonClicked;
         
         public Action OnConfirm;
@@ -17,45 +29,45 @@ namespace UI
         public SettingsWindow()
         {
             styleSheets.Add(GameResources.Retrieve.SettingsWindowStylesheet);
-            AddToClassList("container");
+            AddToClassList(USS_CONTAINER);
             
-            VisualElement window = Create("window");
+            VisualElement window = Create(USS_WINDOW);
             hierarchy.Add(window);
 
-            VisualElement header = Create("header");
+            VisualElement header = Create(USS_WINDOW_HEADER);
             window.Add(header);
-            var title = Create<Label>("title");
+            var title = Create<Label>(USS_WINDOW_HEADER_TITLE);
             title.text = "SETTINGS";
             header.Add(title);
             
-            VisualElement main = Create("main");
+            VisualElement main = Create(USS_WINDOW_MAIN);
             window.Add(main);
 
-            VisualElement mouseSensitivityOption = Create("setting-option");
-            var mouseSensitivityOptionText = Create<Label>("option-name");
+            VisualElement mouseSensitivityOption = Create(USS_WINDOW_MAIN_SETTING_OPTION);
+            var mouseSensitivityOptionText = Create<Label>(USS_WINDOW_MAIN_SETTING_OPTION_TEXT);
             mouseSensitivityOptionText.text = "Mouse Sensitivity";
             var mouseSensitivitySlider = Create<Slider>();
-            mouseSensitivitySlider.name = "mouse-sensitivity-slider";
+            mouseSensitivitySlider.name = MOUSE_SENSITIVITY_SLIDER_NAME;
             mouseSensitivityOption.Add(mouseSensitivityOptionText);
             mouseSensitivityOption.Add(mouseSensitivitySlider);
 
-            VisualElement vsyncOption = Create("setting-option");
-            var vsyncOptionText = Create<Label>("option-name");
+            VisualElement vsyncOption = Create(USS_WINDOW_MAIN_SETTING_OPTION);
+            var vsyncOptionText = Create<Label>(USS_WINDOW_MAIN_SETTING_OPTION_TEXT);
             vsyncOptionText.text = "Enable VSYNC";
             var vsyncOptionCheckBox = Create<Toggle>();
             vsyncOptionCheckBox.RegisterValueChangedCallback(CheckBoxCallback);
             vsyncOption.Add(vsyncOptionText);
             vsyncOption.Add(vsyncOptionCheckBox);
 
-            VisualElement btnGroup = Create("btn-group");
-            var confirmButton = Create<Button>("btn");
+            VisualElement btnGroup = Create(USS_WINDOW_MAIN_BTN_GROUP);
+            var confirmButton = Create<Button>(USS_WINDOW_MAIN_BTN_GROUP_BTN);
             confirmButton.clicked += () =>
             {
                 OnAnyButtonClicked?.Invoke();
                 OnConfirm?.Invoke();
             };
             confirmButton.text = "CONFIRM";
-            var cancelButton = Create<Button>("btn");
+            var cancelButton = Create<Button>(USS_WINDOW_MAIN_BTN_GROUP_BTN);
             cancelButton.text = "CANCEL";
             cancelButton.clicked += () =>
             {

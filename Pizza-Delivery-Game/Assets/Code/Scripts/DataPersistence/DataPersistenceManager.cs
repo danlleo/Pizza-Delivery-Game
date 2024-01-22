@@ -41,7 +41,7 @@ namespace DataPersistence
             
             ClearDataPersistenceObjectsSubscriptions();
         }
-
+        
         public void AddDataPersistenceObject(PersistentData persistentData)
         {
             _dataPersistenceObjects.Add(persistentData);

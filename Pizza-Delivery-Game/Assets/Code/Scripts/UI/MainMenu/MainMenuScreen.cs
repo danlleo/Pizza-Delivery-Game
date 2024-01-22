@@ -15,6 +15,13 @@ namespace UI.MainMenu
     [DisallowMultipleComponent]
     public sealed class MainMenuScreen : MonoBehaviour
     {
+        private const string NEW_GAME_BUTTON_NAME = "new-game-button";
+        
+        private const string USS_CONTAINER = "container";
+        private const string USS_GAME_CONTAINER = "game-container";
+        private const string USS_GAME_CONTAINER_BTN_GROUP = "game-container-btn-group";
+        private const string USS_GAME_CONTAINER_BTN_GROUP_BTN = "btn";
+        
         [SerializeField] private UIDocument _uiDocument;
         [SerializeField] private StyleSheet _styleSheet;
 
@@ -113,7 +120,7 @@ namespace UI.MainMenu
         #endregion
         
         #region UI Creation
-
+        
         private IEnumerator GenerateUIRoutine()
         {
             yield return null;
@@ -122,35 +129,35 @@ namespace UI.MainMenu
             root.Clear();
             root.styleSheets.Add(_styleSheet);
 
-            VisualElement container = Create("container");
+            VisualElement container = Create(USS_CONTAINER);
             
-            VisualElement gameContainer = Create("game-container");
+            VisualElement gameContainer = Create(USS_GAME_CONTAINER);
             container.Add(gameContainer);
 
             var gameName = Create<Label>();
             gameName.text = "Night Pizza Delivery";
             gameContainer.Add(gameName);
             
-            VisualElement buttonGroup = Create("btn-group");
+            VisualElement buttonGroup = Create(USS_GAME_CONTAINER_BTN_GROUP);
             gameContainer.Add(buttonGroup);
 
-            var newGameButton = Create<Button>("btn");
+            var newGameButton = Create<Button>(USS_GAME_CONTAINER_BTN_GROUP_BTN);
             newGameButton.clicked += OnAnyNewGameButtonClicked;
             newGameButton.text = "NEW GAME";
-            newGameButton.name = "new-game-button";
+            newGameButton.name = NEW_GAME_BUTTON_NAME;
             buttonGroup.Add(newGameButton);
             
-            var optionButton = Create<Button>("btn");
+            var optionButton = Create<Button>(USS_GAME_CONTAINER_BTN_GROUP_BTN);
             optionButton.clicked += OnAnyOptionsButtonClicked;
             optionButton.text = "SETTINGS";
             buttonGroup.Add(optionButton);
 
-            var creditsButton = Create<Button>("btn");
+            var creditsButton = Create<Button>(USS_GAME_CONTAINER_BTN_GROUP_BTN);
             creditsButton.clicked += OnAnyCreditsButtonClicked;
             creditsButton.text = "CREDITS";
             buttonGroup.Add(creditsButton);
             
-            var quitGameButton = Create<Button>("btn");
+            var quitGameButton = Create<Button>(USS_GAME_CONTAINER_BTN_GROUP_BTN);
             quitGameButton.clicked += OnAnyQuitButtonClicked;
             quitGameButton.text = "QUIT";
             buttonGroup.Add(quitGameButton);
@@ -191,23 +198,23 @@ namespace UI.MainMenu
         
         private void FocusOnSliderInSettingsWindow()
         {
-            _uiDocument.rootVisualElement.Q<Slider>("mouse-sensitivity-slider").Focus();
+            _uiDocument.rootVisualElement.Q<Slider>(SettingsWindow.MOUSE_SENSITIVITY_SLIDER_NAME).Focus();
         }
         
         private void FocusOnConfirmButtonInCreditsWindow()
         {
-            _uiDocument.rootVisualElement.Q<Button>("confirm-btn").Focus();
+            _uiDocument.rootVisualElement.Q<Button>(CreditsWindow.CONFIRM_BUTTON).Focus();
         }
         
         private void FocusOnCancelButtonInModalWindow()
         {
-            _uiDocument.rootVisualElement.Q<Button>("cancel-button").Focus();
+            _uiDocument.rootVisualElement.Q<Button>(PopupWindow.DECLINE_BUTTON_NAME).Focus();
         }
         
         private void FocusOnFirstButtonInMainMenuScreenGroup()
         {
             _uiDocument.rootVisualElement.
-                Q<Button>("new-game-button").Focus();
+                Q<Button>(NEW_GAME_BUTTON_NAME).Focus();
         }
 
         private void DisableMainMenuButtonsFocus()

@@ -8,6 +8,15 @@ namespace UI
 {
     public class PopupWindow : VisualElement
     {
+        public const string DECLINE_BUTTON_NAME = "cancel-button";
+        
+        private const string USS_POPUP = "popup-window";
+        private const string USS_POPUP_CONTAINER = "popup-container";
+        private const string USS_POPUP_HEADER = "popup-window-header";
+        private const string USS_POPUP_HEADER_BTN_GROUP = "popup-window-header-btn-group";
+        private const string USS_POPUP_HEADER_MESSAGE_TITLE = "message-title";
+        private const string USS_POPUP_HEADER_MESSAGE_MAIN = "message-main";
+        
         public static Action OnAnyButtonSelected;
         public static Action OnAnyButtonClicked;
         
@@ -50,11 +59,6 @@ namespace UI
             }
         }
         
-        private const string USS_POPUP = "popup-window";
-        private const string USS_POPUP_CONTAINER = "popup-container";
-        private const string USS_POPUP_HEADER = "popup-window-header";
-        private const string USS_POPUP_HEADER_BTN_GROUP = "popup-window-header-btn-group";
-        
         public PopupWindow()
         {
             styleSheets.Add(GameResources.Retrieve.PopupWindowStylesheet);
@@ -66,11 +70,11 @@ namespace UI
             VisualElement windowHeader = Create(USS_POPUP_HEADER);
             window.Add(windowHeader);
 
-            _messageTitle = Create<Label>("message-title");
+            _messageTitle = Create<Label>(USS_POPUP_HEADER_MESSAGE_TITLE);
             _messageTitle.text = Title;
             windowHeader.Add(_messageTitle);
 
-            _messageMain = Create<Label>("message-main");
+            _messageMain = Create<Label>(USS_POPUP_HEADER_MESSAGE_MAIN);
             _messageMain.text = Message;
             windowHeader.Add(_messageMain);
             
@@ -88,7 +92,7 @@ namespace UI
             
             _declineButton = Create<Button>();
             _declineButton.text = "NO";
-            _declineButton.name = "cancel-button";
+            _declineButton.name = DECLINE_BUTTON_NAME;
             _declineButton.clicked += () =>
             {
                 OnAnyButtonClicked?.Invoke();

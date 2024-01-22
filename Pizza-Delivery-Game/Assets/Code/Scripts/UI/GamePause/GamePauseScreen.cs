@@ -14,6 +14,14 @@ namespace UI.GamePause
     [DisallowMultipleComponent]
     public sealed class GamePauseScreen : MonoBehaviour
     {
+        public const string RESUME_BUTTON_NAME = "resume-button";
+        
+        private const string USS_CONTAINER = "container";
+        private const string USS_MAIN = "main";
+        private const string USS_MAIN_CONTENT = "main-content";
+        private const string USS_MAIN_CONTENT_TITLE = "main-content-title";
+        private const string USS_MAIN_CONTENT_BUTTONS_CONTAINER = "main-content-buttons-container";
+        
         public static Action OnAnyButtonSelected;
         public static Action OnAnyButtonPressed;
         
@@ -68,24 +76,24 @@ namespace UI.GamePause
             root.Clear();
             root.styleSheets.Add(_styleSheet);
             
-            VisualElement container = Create("container");
+            VisualElement container = Create(USS_CONTAINER);
 
-            VisualElement main = Create("main");
+            VisualElement main = Create(USS_MAIN);
             container.Add(main);
 
-            VisualElement mainContent = Create("main-content");
+            VisualElement mainContent = Create(USS_MAIN_CONTENT);
             main.Add(mainContent);
 
-            var mainContentTitle = Create<Label>("main-content-title");
+            var mainContentTitle = Create<Label>(USS_MAIN_CONTENT_TITLE);
             mainContentTitle.text = "PAUSE";
             mainContent.Add(mainContentTitle);
 
-            VisualElement mainContentButtonsContainer = Create("main-content-buttons-container");
+            VisualElement mainContentButtonsContainer = Create(USS_MAIN_CONTENT_BUTTONS_CONTAINER);
             mainContent.Add(mainContentButtonsContainer);
 
             var resumeButton = Create<Button>();
             resumeButton.text = "RESUME";
-            resumeButton.name = "resume-button";
+            resumeButton.name = RESUME_BUTTON_NAME;
             resumeButton.clicked += HandleResumeButtonClick;
             mainContentButtonsContainer.Add(resumeButton);
             
@@ -115,7 +123,7 @@ namespace UI.GamePause
             _keyDownCallback = evt => OnKeyDown(evt, _buttonActions);
             
             root.Add(container);
-            root.Q<Button>("resume-button").Focus();
+            root.Q<Button>(RESUME_BUTTON_NAME).Focus();
             root.RegisterCallback(_keyDownCallback);
             
             resumeButton.RegisterCallback<FocusEvent>(_ => OnAnyButtonSelected?.Invoke());
@@ -196,7 +204,7 @@ namespace UI.GamePause
             popupWindow.OnDecline = onDecline;
             
             _uiDocument.rootVisualElement.Add(popupWindow);
-            _uiDocument.rootVisualElement.Q<Button>("cancel-button").Focus();
+            _uiDocument.rootVisualElement.Q<Button>(PopupWindow.DECLINE_BUTTON_NAME).Focus();
             
             // Add focus event to disable main menu buttons
             popupWindow.RegisterCallback<FocusEvent>(_ => DisableMenuButtonsFocus());
@@ -220,7 +228,7 @@ namespace UI.GamePause
             settingsWindow.RegisterCallback<FocusEvent>(_ => DisableMenuButtonsFocus());
             settingsWindow.RegisterCallback<FocusEvent>(_ => EnableMenuButtonsFocus());
             
-            _uiDocument.rootVisualElement.Q<Slider>("mouse-sensitivity-slider").Focus();
+            _uiDocument.rootVisualElement.Q<Slider>(SettingsWindow.MOUSE_SENSITIVITY_SLIDER_NAME).Focus();
 
             RegisterFocusCallbacks(settingsWindow);
         }

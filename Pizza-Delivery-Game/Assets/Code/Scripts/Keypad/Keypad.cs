@@ -123,14 +123,15 @@ namespace Keypad
 
         private void HandlePasswordValidationResponseEvent(PasswordValidationResponseEvent passwordValidationResponseEvent)
         {
+            if (!_isAvailable) return;
+            
             if (!passwordValidationResponseEvent.IsCorrect)
                 return;
 
+            _isAvailable = false;
             _cursorLockState.LockCursor();
             _crossfade.FadeIn(InputAllowance.DisableInput,
                 () => Loader.Load(Scene.SecondLaboratoryLevelScene), 1.5f);
-            
-            Destroy(this);
         }
         
         private void OnAnyInteractedWithTablet(object sender, EventArgs e)
