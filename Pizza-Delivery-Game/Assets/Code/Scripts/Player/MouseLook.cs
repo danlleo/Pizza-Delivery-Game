@@ -1,4 +1,6 @@
+using DataPersistence;
 using DG.Tweening;
+using Settings;
 using UnityEngine;
 
 namespace Player
@@ -6,19 +8,43 @@ namespace Player
     [DisallowMultipleComponent]
     public class MouseLook : MonoBehaviour
     {
+        public const float DefaultMouseSensitivity = 28f;
+        
         [Header("External references")]
         [SerializeField] private Player _player;
         [SerializeField] private Camera _camera;
         
         [Header("Settings")]
-        [SerializeField, Range(1f, 100f)] private float _mouseSensitivity = 5f;
         [SerializeField] private float _verticalClampValueInDegrees = 90f;
         [SerializeField, Range(0f, 1f)] private float _smoothingTime = 0.15f;
         [SerializeField] private bool _useSmoothing;
-
+        
+        private float _mouseSensitivity;
         private float _horizontalRotation;
         private float _verticalRotation;
-        
+
+        private void Awake()
+        {
+            _mouseSensitivity = PlayerPrefs.HasKey(PlayerPrefsKeys.MouseSensitivity)
+                ? PlayerPrefs.GetFloat(PlayerPrefsKeys.MouseSensitivity)
+                : DefaultMouseSensitivity;
+        }
+
+        private void OnEnable()
+        {
+            Settings.OnAnySettingsChanged.Event += OnAnySettingsChanged;
+        }
+
+        private void OnDisable()
+        {
+            Settings.OnAnySettingsChanged.Event -= OnAnySettingsChanged;
+        }
+
+        private void OnAnySettingsChanged(object sender, OnAnySettingsChangedArgs e)
+        {
+            _mouseSensitivity = e.MouseSensitivity;
+        }
+
         public void RotateTowards(Vector2 input)
         {
             input *= _mouseSensitivity * Time.deltaTime;

@@ -228,7 +228,7 @@ namespace UI.GamePause
             settingsWindow.RegisterCallback<FocusEvent>(_ => DisableMenuButtonsFocus());
             settingsWindow.RegisterCallback<FocusEvent>(_ => EnableMenuButtonsFocus());
             
-            _uiDocument.rootVisualElement.Q<Slider>(SettingsWindow.MOUSE_SENSITIVITY_SLIDER_NAME).Focus();
+            _uiDocument.rootVisualElement.Q<Slider>(SettingsWindow.MouseSensitivitySliderName).Focus();
 
             RegisterFocusCallbacks(settingsWindow);
         }

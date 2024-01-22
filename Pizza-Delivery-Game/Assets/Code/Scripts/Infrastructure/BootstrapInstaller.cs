@@ -15,11 +15,21 @@ namespace Infrastructure
         
         public override void InstallBindings()
         {
+            BindScreenSettings();
             BindCursorLockState();
             BindCrossfade();
             BindTimeControl();
             BindGameManager();
             BindDataPersistenceManager();
+        }
+
+        private void BindScreenSettings()
+        {
+            Container.BindInterfacesAndSelfTo<ScreenSettings>()
+                .AsSingle()
+                .WithArguments(PlayerPrefs.HasKey(PlayerPrefsKeys.VSyncStatus) &&
+                               PlayerPrefs.GetInt(PlayerPrefsKeys.VSyncStatus) != 0)
+                .NonLazy();
         }
 
         private void BindCursorLockState()

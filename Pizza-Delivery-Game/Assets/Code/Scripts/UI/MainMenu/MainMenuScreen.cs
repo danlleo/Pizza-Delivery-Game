@@ -5,10 +5,12 @@ using DataPersistence;
 using Enums.Scenes;
 using Misc;
 using Misc.Loader;
+using SojaExiles;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
 using static Utilities.VisualElementCreationTool;
+using MouseLook = Player.MouseLook;
 
 namespace UI.MainMenu
 {
@@ -19,7 +21,7 @@ namespace UI.MainMenu
         
         private const string USS_CONTAINER = "container";
         private const string USS_GAME_CONTAINER = "game-container";
-        private const string USS_GAME_CONTAINER_BTN_GROUP = "game-container-btn-group";
+        private const string USS_GAME_CONTAINER_BTN_GROUP = "btn-group";
         private const string USS_GAME_CONTAINER_BTN_GROUP_BTN = "btn";
         
         [SerializeField] private UIDocument _uiDocument;
@@ -35,11 +37,13 @@ namespace UI.MainMenu
         public static Action OnAnyNewGameStarted;
 
         private Crossfade.Crossfade _crossfade;
+        private ScreenSettings _screenSettings;
         
         [Inject]
-        private void Construct(Crossfade.Crossfade crossfade)
+        private void Construct(Crossfade.Crossfade crossfade, ScreenSettings screenSettings)
         {
             _crossfade = crossfade;
+            _screenSettings = screenSettings;
         }
         
         private void OnEnable()
@@ -198,12 +202,12 @@ namespace UI.MainMenu
         
         private void FocusOnSliderInSettingsWindow()
         {
-            _uiDocument.rootVisualElement.Q<Slider>(SettingsWindow.MOUSE_SENSITIVITY_SLIDER_NAME).Focus();
+            _uiDocument.rootVisualElement.Q<Slider>(SettingsWindow.MouseSensitivitySliderName).Focus();
         }
         
         private void FocusOnConfirmButtonInCreditsWindow()
         {
-            _uiDocument.rootVisualElement.Q<Button>(CreditsWindow.CONFIRM_BUTTON).Focus();
+            _uiDocument.rootVisualElement.Q<Button>(CreditsWindow.CONFIRM_BUTTON_NAME).Focus();
         }
         
         private void FocusOnCancelButtonInModalWindow()

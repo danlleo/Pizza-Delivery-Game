@@ -1,28 +1,39 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using Settings;
 using UnityEngine;
+using Zenject;
 
 namespace Misc
 {
-    public class ScreenSettings : Singleton<ScreenSettings>
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    public class ScreenSettings : IInitializable, IDisposable
     {
-        [Header("Settings")] 
-        [SerializeField] private bool _isVsyncEnabled;
-        [SerializeField] private bool _isFpsLocked;
-        
-        protected override void Awake()
+        private bool _isVsyncEnabled;
+
+        public ScreenSettings(bool isVsyncEnabled)
         {
-            base.Awake();
-        
-            ToggleVsync();
-            ToggleFPSLimit();
+            _isVsyncEnabled = isVsyncEnabled;
         }
 
         private void ToggleVsync()
             => QualitySettings.vSyncCount = _isVsyncEnabled ? 1 : 0;
 
-        private void ToggleFPSLimit()
+        public void Initialize()
         {
-            if (_isFpsLocked)
-                Application.targetFrameRate = 60;
+            ToggleVsync();
+            Settings.OnAnySettingsChanged.Event += OnAnySettingsChanged;
+        }
+        
+        public void Dispose()
+        {
+            Settings.OnAnySettingsChanged.Event -= OnAnySettingsChanged;
+        }
+        
+        private void OnAnySettingsChanged(object sender, OnAnySettingsChangedArgs e)
+        {
+            _isVsyncEnabled = e.VSyncEnabled;
+            ToggleVsync();
         }
     }
 }
