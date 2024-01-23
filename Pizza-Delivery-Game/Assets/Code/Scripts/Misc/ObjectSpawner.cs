@@ -7,7 +7,7 @@ namespace Misc
 {
     public class ObjectSpawner : Singleton<ObjectSpawner>
     {
-        private Dictionary<Type, Queue<GameObject>> _pools = new Dictionary<Type, Queue<GameObject>>();
+        private Dictionary<Type, Queue<GameObject>> _pools = new();
 
         public T SpawnObject<T>(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
             where T : MonoBehaviour, ISpawnable

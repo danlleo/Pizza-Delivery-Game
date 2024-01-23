@@ -1,4 +1,5 @@
 using Environment.Share;
+using InspectableObject;
 using Misc;
 using Unity.Mathematics;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace Infrastructure
             BindUI();
             BindInputHandler();
             BindLocationDetails();
+            BindInspectableObjectTrigger();
         }
         
         private void BindLocationDetails()
@@ -51,6 +53,11 @@ namespace Infrastructure
         private void BindInputHandler()
         {
             Container.BindInterfacesAndSelfTo<InputHandler>().FromNew().AsSingle();
+        }
+
+        private void BindInspectableObjectTrigger()
+        {
+            Container.Bind<InspectableObjectTrigger>().FromNew().AsSingle();
         }
     }
 }

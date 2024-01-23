@@ -9,6 +9,9 @@ namespace WorldScreenSpaceIcon
             this.CallWorldScreenSpaceIconLostStaticEvent();
         }
 
-        public abstract WorldScreenSpaceIconData GetWorldScreenSpaceIconData();
+        public virtual WorldScreenSpaceIconData GetWorldScreenSpaceIconData()
+        {
+            return new WorldScreenSpaceIconData(transform, Vector3.zero);
+        }
     }
 }

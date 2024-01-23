@@ -1,18 +1,15 @@
 ﻿using System;
-using Misc;
 using UI.InspectableObject;
-using UnityEngine;
 using Zenject;
 
 namespace InspectableObject
 {
-    [DisallowMultipleComponent]
-    public class InspectableObjectTrigger : Singleton<InspectableObjectTrigger>
+    public class InspectableObjectTrigger 
     {
         private UI.UI _ui;
 
         [Inject]
-        private void Construct(UI.UI ui)
+        private InspectableObjectTrigger(UI.UI ui)
         {
             _ui = ui;
         }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9c501a57e581c49845076eff7939d7, type: 3}
   m_Name: Item_Keycard_C
   m_EditorClassIdentifier: 
-  _id: 
+  _id: 0a3708d58db366743817653221fe21c31
   _itemName: Keycard C

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9c501a57e581c49845076eff7939d7, type: 3}
   m_Name: Item_PizzaBox
   m_EditorClassIdentifier: 
-  _id: 
+  _id: 79e2dbfb80d4af845bc3ba1bc58731681
   _itemName: Pizza box

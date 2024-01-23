@@ -1,15 +1,12 @@
 using System;
 using Enums.Keycards;
 using InspectableObject;
-using Interfaces;
 using UnityEngine;
-using WorldScreenSpaceIcon;
-using Zenject;
 
 namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
-    public class Keycard : WorldScreenSpaceIcon.WorldScreenSpaceIcon, IInteractable, IInspectable
+    public class Keycard : UI.InspectableObject.InspectableObject
     {
         [Header("External references")]
         [SerializeField] private InspectableObjectSO _inspectableObject;
@@ -17,15 +14,10 @@ namespace Environment.LaboratoryFirstLevel
         [Header("Settings")] 
         [SerializeField] private KeycardType _keycardType;
 
-        private Player.Player _player;
+        protected override InspectableObjectSO InspectableObjectSO => _inspectableObject;
+        protected override string ActionDescription => "Keycard";
 
-        [Inject]
-        private void Construct(Player.Player player)
-        {
-            _player = player;
-        }
-        
-        public void Interact()
+        public override void Interact()
         {
             switch (_keycardType)
             {
@@ -41,23 +33,7 @@ namespace Environment.LaboratoryFirstLevel
                     throw new ArgumentOutOfRangeException();
             }
             
-            InspectableObjectTrigger.Instance.Invoke(_inspectableObject, AddToInventory);
-            Destroy(gameObject);
-        }
-
-        public string GetActionDescription()
-        {
-            return "Keycard";
-        }
-
-        public void AddToInventory()
-        {
-            _player.Inventory.TryAddItem(_inspectableObject.Item, out bool _);
-        }
-
-        public override WorldScreenSpaceIconData GetWorldScreenSpaceIconData()
-        {
-            return new WorldScreenSpaceIconData(transform, Vector3.zero);
+            base.Interact();
         }
     }
 }

@@ -28,11 +28,11 @@ namespace Terminal
         {
             if (_player.Inventory.HasItem(_requiredKeycard))
             {
-                KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(false, transform.position));
+                this.CallOnAnyItemUseEvent(new OnAnyItemUseEventArgs(this, _requiredKeycard));
                 return;
             }
 
-            this.CallOnAnyItemUseEvent(new OnAnyItemUseEventArgs(this, _requiredKeycard));
+            KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(false, transform.position));
         }
 
         public string GetActionDescription()

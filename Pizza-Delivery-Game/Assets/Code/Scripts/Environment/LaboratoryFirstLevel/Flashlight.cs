@@ -1,38 +1,20 @@
 using InspectableObject;
-using Interfaces;
 using UnityEngine;
-using Zenject;
+using WorldScreenSpaceIcon;
 
 namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
-    public class Flashlight : MonoBehaviour, IInteractable, IInspectable
+    public class Flashlight : UI.InspectableObject.InspectableObject
     {
         [SerializeField] private InspectableObjectSO _inspectableObject;
         
-        private Player.Player _player;
-
-        [Inject]
-        private void Construct(Player.Player player)
-        {
-            _player = player;
-        }
+        protected override InspectableObjectSO InspectableObjectSO => _inspectableObject;
+        protected override string ActionDescription => "Flashlight";
         
-        public void Interact()
+        public override WorldScreenSpaceIconData GetWorldScreenSpaceIconData()
         {
-            InspectableObjectTrigger.Instance.Invoke(_inspectableObject, AddToInventory);
-            Destroy(gameObject);
-        }
-
-        public string GetActionDescription()
-        {
-            return "Flashlight";
-        }
-
-        public void AddToInventory()
-        {
-            if (!_player.Inventory.TryAddItem(_inspectableObject.Item, out bool _))
-                Debug.LogError("Error when adding item to the inventory");
+            throw new System.NotImplementedException();
         }
     }
 }
