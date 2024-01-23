@@ -1,12 +1,12 @@
 using System;
 using Cinemachine;
-using Misc;
 using UnityEngine;
 using Zenject;
 
 namespace Environment.Bedroom
 {
-    public class BedroomCamerasTransition : Singleton<BedroomCamerasTransition>
+    [DisallowMultipleComponent]
+    public class BedroomCamerasTransition : MonoBehaviour
     {
         [Header("External references")] 
         [SerializeField] private CinemachineVirtualCamera _computerScreenVirtualCamera;        
@@ -24,10 +24,8 @@ namespace Environment.Bedroom
             _mainVirtualCamera = player.MainVirtualCamera;
         }
         
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             _mainCamera = Camera.main;
         }
 
@@ -35,15 +33,17 @@ namespace Environment.Bedroom
         {
             PC.OnAnyStartedUsingPC.Event += OnAnyStartedUsingPC;
             PC.OnAnyStoppedUsingPC.Event += OnAnyStoppedUsingPC;
+            PC.OnAnyFinishedAllPCTasks.Event += OnAnyFinishedAllPCTasks;
         }
 
         private void OnDisable()
         {
             PC.OnAnyStartedUsingPC.Event -= OnAnyStartedUsingPC;
             PC.OnAnyStoppedUsingPC.Event -= OnAnyStoppedUsingPC;
+            PC.OnAnyFinishedAllPCTasks.Event -= OnAnyFinishedAllPCTasks;
         }
 
-        public void ResetMainCamera()
+        private void ResetMainCamera()
         {
             ResetMainCameraPosition();
             ResetMainCameraRotation();
@@ -69,6 +69,11 @@ namespace Environment.Bedroom
         {
             _mainVirtualCamera.Priority = _highPriorityValue;
             _computerScreenVirtualCamera.Priority = _lowPriorityValue;
+        }
+        
+        private void OnAnyFinishedAllPCTasks(object sender, EventArgs e)
+        {
+            ResetMainCamera();
         }
     }
 }

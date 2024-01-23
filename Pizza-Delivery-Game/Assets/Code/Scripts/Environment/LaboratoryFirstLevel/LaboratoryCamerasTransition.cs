@@ -7,7 +7,8 @@ using Zenject;
 
 namespace Environment.LaboratoryFirstLevel
 {
-    public class LaboratoryCamerasTransition : Singleton<LaboratoryCamerasTransition>
+    [DisallowMultipleComponent]
+    public class LaboratoryCamerasTransition : MonoBehaviour
     {
         [Header("External references")] 
         [SerializeField] private CinemachineVirtualCamera _keypadVirtualCamera;        

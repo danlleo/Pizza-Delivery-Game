@@ -1,5 +1,6 @@
 using System.Collections;
 using Environment.Bedroom;
+using Environment.Bedroom.PC;
 using Misc;
 using UI;
 using UI.Crossfade;
@@ -39,6 +40,7 @@ namespace Dialogue.ConcreteActions
             _crossfade.FadeOut(() => {}, () =>
             {
                 InputAllowance.EnableInput();
+                OnAnyFinishedAllPCTasks.Call(this);
                 WokeUpStaticEvent.Call(this);
                 CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(true));
             }, 1.2f);

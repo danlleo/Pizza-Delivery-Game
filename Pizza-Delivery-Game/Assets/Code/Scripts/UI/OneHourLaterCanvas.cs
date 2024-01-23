@@ -40,7 +40,6 @@ namespace UI
             {
                 BedroomAudio.Instance.PlayDoorBellSound();
                 _player.transform.position = _bedPosition;
-                BedroomCamerasTransition.Instance.ResetMainCamera();
                 Destroy(gameObject);
             });
         }
