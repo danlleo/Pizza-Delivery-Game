@@ -5,10 +5,13 @@ using UnityEngine;
 
 namespace StoryComics
 {
+    [RequireComponent(typeof(OnStoryFinished))]
     [RequireComponent(typeof(AudioSource))]
     [DisallowMultipleComponent]
     public class StoryComicsPlayer : MonoBehaviour
     {
+        [HideInInspector] public OnStoryFinished OnStoryFinished;
+        
         [Header("External references")]
         [SerializeField] private Scene _targetScene;
 
@@ -27,6 +30,7 @@ namespace StoryComics
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            OnStoryFinished = GetComponent<OnStoryFinished>();
         }
 
         private void Start()
@@ -83,9 +87,15 @@ namespace StoryComics
                 ClearContainer();
             }
             
-            Loader.Load(_targetScene);
+            OnStoryFinished.Call(this);
+            Invoke(nameof(LoadTargetScene), 3f);
         }
 
+        private void LoadTargetScene()
+        {
+            Loader.Load(_targetScene);
+        }
+        
         private void ResetContainerCanvasGroupAlpha()
             => _containerCanvasGroup.alpha = 1f;
         

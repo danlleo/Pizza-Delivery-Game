@@ -107,7 +107,7 @@ namespace UI.MainMenu
                     _uiDocument.rootVisualElement.Q<PopupWindow>().RemoveFromHierarchy();
                     DisableMainMenuButtonsFocus();
                     _crossfade
-                        .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BedroomScene), 3.2f);
+                        .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.BackStoryComicScene), 3.2f);
                 },
                 () =>
                 {
