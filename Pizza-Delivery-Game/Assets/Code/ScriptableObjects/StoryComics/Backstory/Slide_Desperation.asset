@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d729baaeb3cf1134cb751744b3454177, type: 3}
+  m_Name: Slide_Desperation
+  m_EditorClassIdentifier: 
+  _slideItemList:
+  - Text: In the dim glow of the flickering streetlight outside, Jack sat hunched
+      over a pile of unpaid bills and final notices.
+    TimeToDisplayInSeconds: 5
+    Clip: {fileID: 0}
+  - Text: Each envelope was a stark reminder of the life he once had, now shattered
+      by a string of bad luck and unrelenting misfortune.
+    TimeToDisplayInSeconds: 6
+    Clip: {fileID: 0}
+  - Text: The walls of his cramped, cluttered bedroom felt like they were closing
+      in, suffocating him with memories of better days.
+    TimeToDisplayInSeconds: 5
+    Clip: {fileID: 0}
+  - Text: Amidst the silence, the relentless ticking of the clock was a harsh countdown
+      to yet another night of restless thoughts and joblessness.
+    TimeToDisplayInSeconds: 5
+    Clip: {fileID: 0}
+  _timeToTransitionToAnotherSlide: 2

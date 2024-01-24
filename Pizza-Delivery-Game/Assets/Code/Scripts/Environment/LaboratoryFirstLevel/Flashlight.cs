@@ -1,6 +1,5 @@
 using InspectableObject;
 using UnityEngine;
-using WorldScreenSpaceIcon;
 
 namespace Environment.LaboratoryFirstLevel
 {
@@ -11,10 +10,5 @@ namespace Environment.LaboratoryFirstLevel
         
         protected override InspectableObjectSO InspectableObjectSO => _inspectableObject;
         protected override string ActionDescription => "Flashlight";
-        
-        public override WorldScreenSpaceIconData GetWorldScreenSpaceIconData()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

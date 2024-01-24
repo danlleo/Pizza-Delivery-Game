@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using InspectableObject;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace UI.InspectableObject
@@ -114,7 +113,7 @@ namespace UI.InspectableObject
 
             inspectableGameObject.transform.position = _objectParentContainer.transform.position;
             inspectableGameObject.transform.localScale = inspectableObject.Scale;
-            inspectableGameObject.transform.AddComponent<RectTransform>().localScale = inspectableObject.RectScale;
+            inspectableGameObject.AddComponent<RectTransform>().localScale = inspectableObject.RectScale;
 
             SetLayersFor(inspectableGameObject);
 

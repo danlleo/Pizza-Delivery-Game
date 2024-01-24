@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Environment.Bedroom
 {
@@ -7,7 +9,8 @@ namespace Environment.Bedroom
     [DisallowMultipleComponent]
     public class Clock : MonoBehaviour
     {
-        [Header("External references")]
+        [Header("External references")] 
+        [SerializeField] private Transform _handHourTransform;
         [SerializeField] private Transform _handSecondTransform;
         [SerializeField] private AudioClip[] _tickClipsArray;
         
@@ -19,6 +22,21 @@ namespace Environment.Bedroom
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+        }
+
+        private void OnEnable()
+        {
+            PC.OnAnyStartedUsingPC.Event += OnAnyStartedUsingPC;
+        }
+
+        private void OnDisable()
+        {
+            PC.OnAnyStartedUsingPC.Event -= OnAnyStartedUsingPC;
+        }
+
+        private void OnAnyStartedUsingPC(object sender, EventArgs e)
+        {
+            _handHourTransform.transform.localRotation = Quaternion.Euler(new Vector3(-60f, -90f, 90f));
         }
 
         private void Start()

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d729baaeb3cf1134cb751744b3454177, type: 3}
+  m_Name: Slide_GlimmerOfHope
+  m_EditorClassIdentifier: 
+  _slideItemList:
+  - Text: Surrounded by the silence of his small room, Jack's eyes were drawn once
+      again to the motivational poster he'd hung up years ago, now faded and slightly
+      askew.
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+  - Text: ' ''The darkest nights produce the brightest stars'', it read, a phrase
+      that once fueled his ambitions.'
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+  - Text: "It was time for a change, time to step out of the shadows of despair and
+      take a chance, no matter how small \u2014 starting with that unusual night-time
+      pizza delivery job he'd seen advertised recently."
+    TimeToDisplayInSeconds: 5
+    Clip: {fileID: 0}
+  _timeToTransitionToAnotherSlide: 2
