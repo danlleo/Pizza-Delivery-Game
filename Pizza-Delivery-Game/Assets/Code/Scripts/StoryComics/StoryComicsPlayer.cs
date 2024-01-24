@@ -64,6 +64,7 @@ namespace StoryComics
                     if (slideItem.Clip != null)
                     {
                         _audioSource.clip = slideItem.Clip;
+                        _audioSource.volume = slideItem.ClipVolume;
                         _audioSource.Play();
                     }
                     

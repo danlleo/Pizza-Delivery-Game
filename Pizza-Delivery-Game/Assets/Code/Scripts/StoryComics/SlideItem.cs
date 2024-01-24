@@ -8,5 +8,6 @@ namespace StoryComics
         public string Text;
         [Range(0f, 10f)] public float TimeToDisplayInSeconds;
         public AudioClip Clip;
+        public float ClipVolume;
     }
 }

@@ -6,6 +6,7 @@ namespace Enums.Scenes
         BackStoryComicScene,
         LoadingScene,
         BedroomScene,
+        OutdoorComicScene,
         FirstLaboratoryLevelScene,
         SecondLaboratoryLevelScene,
     }
