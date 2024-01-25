@@ -9,7 +9,8 @@ namespace Environment.Bedroom.PC.Programs
         
         protected override void PerformAction()
         {
-            // TODO: Open canvas window describing the job
+            OnAnyJobReviewing.Call(this);
+            Destroy(this);
         }
         
         public void Initialize()
