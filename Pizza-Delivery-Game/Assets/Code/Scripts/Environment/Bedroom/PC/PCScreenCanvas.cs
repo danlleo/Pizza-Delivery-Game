@@ -9,7 +9,7 @@ namespace Environment.Bedroom.PC
 {
     [RequireComponent(typeof(RectTransform))]
     [DisallowMultipleComponent]
-    public class PCScreen : MonoBehaviour
+    public class PCScreenCanvas : MonoBehaviour
     {
         [Header("External references")]
         [SerializeField] private Transform _cursor;
@@ -57,13 +57,15 @@ namespace Environment.Bedroom.PC
             ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
             PC.OnAnyClickableRemoveRequest.Event += OnAnyClickableRemoveRequest;
             PC.OnAnyPCLoading.Event += OnAnyPCLoading;
+            PC.OnAnyClickableObjectSpawned.Event += OnAnyClickableObjectSpawned;
         }
-        
+
         private void OnDisable()
         {
             ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
             PC.OnAnyClickableRemoveRequest.Event -= OnAnyClickableRemoveRequest;
             PC.OnAnyPCLoading.Event -= OnAnyPCLoading;
+            PC.OnAnyClickableObjectSpawned.Event -= OnAnyClickableObjectSpawned;
         }
 
         private void Update()
@@ -72,7 +74,7 @@ namespace Environment.Bedroom.PC
             TryOverlapWithClickableObjects();
         }
 
-        public void RemoveClickableObject(Clickable clickable)
+        private void RemoveClickableObject(Clickable clickable)
         {
             _clickableObjects.Remove(clickable);
             _clickableObjectRectTransforms.Remove(clickable.GetComponent<RectTransform>());
@@ -137,6 +139,11 @@ namespace Environment.Bedroom.PC
             HandleCursorChange(CursorState.Default);
         }
 
+        private void AddClickableObjectRectTransform(Clickable clickable)
+        {
+            _clickableObjectRectTransforms.Add(clickable.GetComponent<RectTransform>());
+        }
+        
         private List<RectTransform> GetClickableObjectRectTransforms()
         {
             var rectTransforms = new List<RectTransform>();
@@ -211,6 +218,13 @@ namespace Environment.Bedroom.PC
         private void OnAnyClickableRemoveRequest(object sender, EventArgs e)
         {
             RemoveClickableObject((Clickable)sender);
+        }
+        
+        private void OnAnyClickableObjectSpawned(object sender, EventArgs e)
+        {
+            var clickable = (Clickable)sender;
+            _clickableObjects.Add(clickable);
+            AddClickableObjectRectTransform(clickable);
         }
         
         #endregion

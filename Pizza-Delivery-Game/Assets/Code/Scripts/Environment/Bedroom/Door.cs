@@ -54,6 +54,7 @@ namespace Environment.Bedroom
                 .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorComicScene), 1.5f);
            
             _bedroomAudio.PlayDoorOpenSound();
+            OnAnyLeftBedroom.Call(this);
             OpenedDoorStaticEvent.Call(this);
             SaveStaticEvent.Call(this);
             Destroy(this);

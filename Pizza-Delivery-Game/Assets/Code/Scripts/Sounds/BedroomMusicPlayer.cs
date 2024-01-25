@@ -39,14 +39,16 @@ namespace Sounds
             WokeUpStaticEvent.OnWokeUp += OnAnyWokeUp;
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
+            Environment.Bedroom.OnAnyLeftBedroom.Event += OnAnyLeftBedroom;
         }
-        
+
         private void OnDisable()
         {
             Environment.Bedroom.PC.OnAnyStoppedUsingPC.Event -= OnAnyStoppedUsingPC;
             WokeUpStaticEvent.OnWokeUp -= OnAnyWokeUp;
             TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
+            Environment.Bedroom.OnAnyLeftBedroom.Event -= OnAnyLeftBedroom;
         }
 
         private void FadeIn()
@@ -104,6 +106,11 @@ namespace Sounds
         private void OnAnyGameUnpaused(object sender, EventArgs e)
         {
             FadeIn(.35f);
+        }
+        
+        private void OnAnyLeftBedroom(object sender, EventArgs e)
+        {
+            FadeOut(true, .45f);
         }
     }
 }
