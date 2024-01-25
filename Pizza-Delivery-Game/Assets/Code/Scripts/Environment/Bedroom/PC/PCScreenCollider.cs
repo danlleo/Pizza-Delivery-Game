@@ -1,6 +1,8 @@
+using System;
 using Interfaces;
 using Misc;
 using UnityEngine;
+using Utilities;
 
 namespace Environment.Bedroom.PC
 {
@@ -13,11 +15,27 @@ namespace Environment.Bedroom.PC
         private void Awake()
         {
             _boxCollider = GetComponent<BoxCollider>();
+            _boxCollider.Disable();
+        }
+
+        private void OnEnable()
+        {
+            PC.OnAnyAllowedUsingPC.Event += OnAnyAllowedUsingPC;
+        }
+
+        private void OnDisable()
+        {
+            PC.OnAnyAllowedUsingPC.Event -= OnAnyAllowedUsingPC;
+        }
+
+        private void OnAnyAllowedUsingPC(object sender, EventArgs e)
+        {
+            _boxCollider.Enable();
         }
 
         public void Interact()
         {
-            _boxCollider.enabled = false;
+            _boxCollider.Disable();
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
             OnAnyStartedUsingPC.Call(this);
         }

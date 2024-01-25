@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 namespace Environment.Bedroom
 {
     [RequireComponent(typeof(AudioSource))]
+    [SelectionBase]
     [DisallowMultipleComponent]
     public class Clock : MonoBehaviour
     {
@@ -27,16 +28,15 @@ namespace Environment.Bedroom
         private void OnEnable()
         {
             PC.OnAnyStartedUsingPC.Event += OnAnyStartedUsingPC;
+            PC.OnAnyStoppedUsingPC.Event += OnAnyStoppedUsingPC;
+            WokeUpStaticEvent.OnWokeUp += OnAnyWokeUp;
         }
 
         private void OnDisable()
         {
             PC.OnAnyStartedUsingPC.Event -= OnAnyStartedUsingPC;
-        }
-
-        private void OnAnyStartedUsingPC(object sender, EventArgs e)
-        {
-            _handHourTransform.transform.localRotation = Quaternion.Euler(new Vector3(-60f, -90f, 90f));
+            PC.OnAnyStoppedUsingPC.Event -= OnAnyStoppedUsingPC;
+            WokeUpStaticEvent.OnWokeUp -= OnAnyWokeUp;
         }
 
         private void Start()
@@ -58,6 +58,21 @@ namespace Environment.Bedroom
                 
                 yield return new WaitForSeconds(1f);
             }
+        }
+        
+        private void OnAnyStartedUsingPC(object sender, EventArgs e)
+        {
+            _handHourTransform.transform.localRotation = Quaternion.Euler(new Vector3(-60f, -90f, 90f));
+        }
+        
+        private void OnAnyStoppedUsingPC(object sender, EventArgs e)
+        {
+            _audioSource.enabled = false;
+        }
+        
+        private void OnAnyWokeUp(object sender, EventArgs e)
+        {
+            _audioSource.enabled = true;
         }
     }
 }
