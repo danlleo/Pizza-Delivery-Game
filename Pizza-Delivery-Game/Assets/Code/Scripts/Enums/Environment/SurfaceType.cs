@@ -7,5 +7,6 @@
         Grass,
         Wood,
         Rock,
+        Rug,
     }
 }

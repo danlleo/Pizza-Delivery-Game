@@ -34,7 +34,6 @@ namespace Environment.LaboratoryFirstLevel
             if (!other.gameObject.TryGetComponent(out Player.Player _)) 
                 return;
 
-            GravityPulldownEnableStateStaticEvent.Call(this, new GravityPulldownEnableStateStaticEventArgs(true));
             EnteredLaboratoryEntryTriggerAreaStaticEvent.Call(this);
             
             _laboratoryEntryDoor.Close();

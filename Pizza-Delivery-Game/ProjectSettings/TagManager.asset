@@ -10,6 +10,7 @@ TagManager:
   - Grass
   - Rock
   - SF_Door
+  - Rug
   layers:
   - Default
   - TransparentFX

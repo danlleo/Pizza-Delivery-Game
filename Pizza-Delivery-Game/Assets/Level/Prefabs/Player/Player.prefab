@@ -678,6 +678,7 @@ MonoBehaviour:
     type: 2}
   _rockStepLandedClipsSO: {fileID: 11400000, guid: dc24d722dfefdb64690248b09a04bb14,
     type: 2}
+  _rugStepClipsSO: {fileID: 11400000, guid: c25a4893caebff442a426e76bd106733, type: 2}
   _flashLightOnClip: {fileID: 8300000, guid: 9223a2ec2167eef4698093c547116d58, type: 3}
   _flashLightOffClip: {fileID: 8300000, guid: 607617fdbdf14ff44a0cf22276e9bf4e, type: 3}
   _flashLightFlickClip: {fileID: 8300000, guid: e40dd6453c638724eb98d0bb0073dac2,

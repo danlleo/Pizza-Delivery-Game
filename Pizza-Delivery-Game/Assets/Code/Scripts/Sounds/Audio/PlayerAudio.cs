@@ -33,6 +33,9 @@ namespace Sounds.Audio
         [SerializeField] private SoundClipsSO _rockStepLandedClipsSO;
 
         [Space(10)] 
+        [SerializeField] private SoundClipsSO _rugStepClipsSO;
+        
+        [Space(10)] 
         [SerializeField] private AudioClip _flashLightOnClip;
         [SerializeField] private AudioClip _flashLightOffClip;
         [SerializeField] private AudioClip _flashLightFlickClip;
@@ -86,6 +89,9 @@ namespace Sounds.Audio
                     PlaySoundWithRandomPitch(_audioSource,
                         e.WasSprinting ? _rockStepRunningClipsSO.AudioClips : _rockStepClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
+                case nameof(SurfaceType.Rug):
+                    PlaySoundWithRandomPitch(_audioSource, _rugStepClipsSO.AudioClips, 0.8f, 1.5f);
+                    break;
             }
         }
         
@@ -107,6 +113,9 @@ namespace Sounds.Audio
                     break;
                 case nameof(SurfaceType.Rock):
                     PlaySoundWithRandomPitch(_audioSource, _rockStepLandedClipsSO.AudioClips, 0.8f, 1.5f);
+                    break;
+                case nameof(SurfaceType.Rug):
+                    PlaySoundWithRandomPitch(_audioSource, _rugStepClipsSO.AudioClips, 0.8f, 1.5f);
                     break;
             }
         }

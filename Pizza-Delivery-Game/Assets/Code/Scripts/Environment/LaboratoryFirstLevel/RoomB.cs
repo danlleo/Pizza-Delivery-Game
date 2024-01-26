@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
@@ -77,14 +79,20 @@ namespace Environment.LaboratoryFirstLevel
             UnlockLaboratoryEntryDoor();
             TeleportRoomToTargetPosition();
             RotateRoomToTargetRotation();
+            StartCoroutine(DelayGravityRoutine());
         }
         
         private void OnAnyEnteredLaboratoryEntryTriggerArea(object sender, EventArgs e)
         {
             TeleportRoomToDefaultPosition();
             RotateRoomToDefaultRotation();
-            
             Destroy(this);
+        }
+
+        private IEnumerator DelayGravityRoutine()
+        {
+            yield return new WaitForSeconds(1f);
+            GravityPulldownEnableStateStaticEvent.Call(this, new GravityPulldownEnableStateStaticEventArgs(true));
         }
     }
 }
