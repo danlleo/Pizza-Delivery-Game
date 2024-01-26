@@ -50,8 +50,7 @@ MonoBehaviour:
   _chairPullClip: {fileID: 8300000, guid: abaf71a858e2a154aabe7f8cc4ea86e3, type: 3}
   _clickClip: {fileID: 8300000, guid: 25ebe04625dc50e4898ca0e3ec8f5b98, type: 3}
   _doorbellClip: {fileID: 8300000, guid: 521010c8b7caccc42873f6126b833e30, type: 3}
-  _gamePauseClip: {fileID: 8300000, guid: 6fd64c2413556d545a7e28b2c883c76a, type: 3}
-  _gameUnpauseClip: {fileID: 8300000, guid: 2e7c4049b01f9e14789c7d82ddc46f40, type: 3}
+  _shirtClip: {fileID: 8300000, guid: 3cbea24ea600b4b4495192d01b1ee3d1, type: 3}
 --- !u!82 &6488278485946216346
 AudioSource:
   m_ObjectHideFlags: 0

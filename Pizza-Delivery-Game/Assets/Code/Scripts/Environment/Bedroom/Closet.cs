@@ -7,6 +7,7 @@ using Utilities;
 
 namespace Environment.Bedroom
 {
+    [SelectionBase]
     [RequireComponent(typeof(BoxCollider))]
     [DisallowMultipleComponent]
     public class Closet : MonoBehaviour, IInteractable

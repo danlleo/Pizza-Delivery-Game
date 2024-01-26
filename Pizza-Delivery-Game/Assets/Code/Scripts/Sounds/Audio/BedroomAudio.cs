@@ -16,7 +16,8 @@ namespace Sounds.Audio
         [SerializeField] private AudioClip _chairPullClip;
         [SerializeField] private AudioClip _clickClip;
         [SerializeField] private AudioClip _doorbellClip;
-
+        [SerializeField] private AudioClip _shirtClip;
+        
         private void Awake()
         {
             Instance = this;
@@ -26,12 +27,14 @@ namespace Sounds.Audio
         {
             OnAnyStartedUsingPC.Event += StartedUsingPCStaticEventEvent;
             ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
+            Environment.Bedroom.PC.OnAnyGotDressed.Event += OnAnyGotDressed;
         }
-        
+
         private void OnDisable()
         {
             OnAnyStartedUsingPC.Event -= StartedUsingPCStaticEventEvent;
             ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
+            Environment.Bedroom.PC.OnAnyGotDressed.Event -= OnAnyGotDressed;
         }
         
         private void StartedUsingPCStaticEventEvent(object sender, EventArgs e)
@@ -52,6 +55,11 @@ namespace Sounds.Audio
         public void PlayDoorBellSound()
         {
             PlaySoundAtPoint(_doorbellClip, Vector3.zero);
+        }
+        
+        private void OnAnyGotDressed(object sender, EventArgs e)
+        {
+            PlaySound(_audioSource, _shirtClip);
         }
     }
 }

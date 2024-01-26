@@ -56,7 +56,10 @@ namespace Environment.Bedroom
         public void Interact()
         {
             if (_isPlayerNaked)
+            {
+                OnAnyTriedLeaveNaked.Call(this);
                 return;
+            }
             
             _crossfade
                 .FadeIn(InputAllowance.DisableInput, () => Loader.Load(Scene.OutdoorComicScene), 1.5f);

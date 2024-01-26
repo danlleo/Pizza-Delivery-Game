@@ -13,14 +13,14 @@ namespace UI
         [Header("External references")] 
         [SerializeField] private CanvasGroup _canvasGroup;
 
-        [Header("Settings")] 
+        [Header("Settings")]
         [SerializeField] private float _timeToFade;
         [SerializeField] private float _timeToStayBeforeFadeOut;
 
         private Player.Player _player;
         private Canvas _canvas;
         
-        private readonly Vector3 _bedPosition = new(1.5f, 0.1f, 2.25f);
+        private readonly Vector3 _bedPosition = new(1.5f, 0.4f, 2.25f);
         
         private void Awake()
         {

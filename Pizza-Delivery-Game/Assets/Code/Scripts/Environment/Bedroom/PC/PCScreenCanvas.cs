@@ -36,6 +36,7 @@ namespace Environment.Bedroom.PC
 
         private bool _isHovering;
         private bool _isLoading;
+        private bool _canMoveCursor;
         
         private Clickable _selectedClickable;
 
@@ -55,14 +56,18 @@ namespace Environment.Bedroom.PC
         private void OnEnable()
         {
             ClickedStaticEvent.OnClicked += ClickedStaticEvent_OnClicked;
+            PC.OnAnyStartedUsingPC.Event += OnAnyStartedUsingPC;
+            PC.OnAnyStoppedUsingPC.Event += OnAnyStoppedUsingPC;
             PC.OnAnyClickableRemoveRequest.Event += OnAnyClickableRemoveRequest;
             PC.OnAnyPCLoading.Event += OnAnyPCLoading;
             PC.OnAnyClickableObjectSpawned.Event += OnAnyClickableObjectSpawned;
         }
-
+        
         private void OnDisable()
         {
             ClickedStaticEvent.OnClicked -= ClickedStaticEvent_OnClicked;
+            PC.OnAnyStartedUsingPC.Event -= OnAnyStartedUsingPC;
+            PC.OnAnyStoppedUsingPC.Event -= OnAnyStoppedUsingPC;
             PC.OnAnyClickableRemoveRequest.Event -= OnAnyClickableRemoveRequest;
             PC.OnAnyPCLoading.Event -= OnAnyPCLoading;
             PC.OnAnyClickableObjectSpawned.Event -= OnAnyClickableObjectSpawned;
@@ -70,6 +75,8 @@ namespace Environment.Bedroom.PC
 
         private void Update()
         {
+            if (!_canMoveCursor) return;
+            
             MoveCursor();
             TryOverlapWithClickableObjects();
         }
@@ -225,6 +232,16 @@ namespace Environment.Bedroom.PC
             var clickable = (Clickable)sender;
             _clickableObjects.Add(clickable);
             AddClickableObjectRectTransform(clickable);
+        }
+        
+        private void OnAnyStartedUsingPC(object sender, EventArgs e)
+        {
+            _canMoveCursor = true;
+        }
+
+        private void OnAnyStoppedUsingPC(object sender, EventArgs e)
+        {
+            Destroy(this);
         }
         
         #endregion

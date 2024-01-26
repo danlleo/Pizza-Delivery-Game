@@ -54,7 +54,9 @@ namespace Environment.Bedroom
                 _targetYRotation += _degreesPerSecond;
                 _handSecondTransform.localRotation = Quaternion.Euler(_targetYRotation, -90f, 90f);
                 _audioSource.clip = _tickClipsArray[Random.Range(0, _tickClipsArray.Length)];
-                _audioSource.Play();
+                
+                if (_audioSource.enabled)
+                    _audioSource.Play();
                 
                 yield return new WaitForSeconds(1f);
             }
