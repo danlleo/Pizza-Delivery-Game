@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inspectableObject: {fileID: 11400000, guid: 1ca865906b66cce47935285cbaa1bdf7, type: 2}
+  _keycardType: 0
 --- !u!1 &4156306730867536509
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +81,7 @@ GameObject:
   - component: {fileID: 559456443070653300}
   - component: {fileID: 342216407229201141}
   m_Layer: 6
-  m_Name: Keycard_B
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 4156306730867536509}
   serializedVersion: 2
   m_LocalRotation: {x: -6.211317e-15, y: 1, z: -0.00000008146034, w: -0.0000000754979}
-  m_LocalPosition: {x: -0.291, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_ConstrainProportionsScale: 1
   m_Children: []

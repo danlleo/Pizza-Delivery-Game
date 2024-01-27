@@ -2572,6 +2572,8 @@ MonoBehaviour:
     type: 3}
   _locationDetailsPrefab: {fileID: 2309298649265435810, guid: cc2d3245f7269ec4687781c367452d18,
     type: 3}
+  _modelViewCameraPrefab: {fileID: 7542580873314581350, guid: 1ed0efdfd8686654da6a25f4db2ad8a1,
+    type: 3}
 --- !u!114 &277682127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11933,6 +11935,59 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1275778583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1275778584}
+  - component: {fileID: 1275778585}
+  m_Layer: 0
+  m_Name: ScaredDialogueTriggerArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1275778584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275778583}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -48.021, y: -5.874, z: 44.504}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1275778585
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275778583}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 11.3364105, y: 5.18975, z: 6.0614433}
+  m_Center: {x: -0.118190765, y: 2.0948746, z: -0.014059067}
 --- !u!1001 &1284452157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36007,9 +36062,21 @@ PrefabInstance:
         type: 2}
     - target: {fileID: -7608100236995420106, guid: a0d11e292afc25c4c8ca8efbb4ca5ec4,
         type: 3}
+      propertyPath: _gasLeakedDialogueSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 11cb156649898534cb0a006422069e94,
+        type: 2}
+    - target: {fileID: -7608100236995420106, guid: a0d11e292afc25c4c8ca8efbb4ca5ec4,
+        type: 3}
       propertyPath: _noKeycardDialogueSO
       value: 
       objectReference: {fileID: 11400000, guid: 8e7cd0b451d81234b902e8d5ba54d16d,
+        type: 2}
+    - target: {fileID: -7608100236995420106, guid: a0d11e292afc25c4c8ca8efbb4ca5ec4,
+        type: 3}
+      propertyPath: _scaryAreaDialogueSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 8cdddb681cfb69143bea2ef05fb8c594,
         type: 2}
     - target: {fileID: -7608100236995420106, guid: a0d11e292afc25c4c8ca8efbb4ca5ec4,
         type: 3}
@@ -36034,6 +36101,12 @@ PrefabInstance:
       propertyPath: _fireExtinguisherDialogueSO
       value: 
       objectReference: {fileID: 11400000, guid: 9ef7f6e41c9f91d4fa3f6a6e94cb26c6,
+        type: 2}
+    - target: {fileID: -7608100236995420106, guid: a0d11e292afc25c4c8ca8efbb4ca5ec4,
+        type: 3}
+      propertyPath: _laboratoryFirstLevelSpawnDialogueSO
+      value: 
+      objectReference: {fileID: 11400000, guid: e26b3d245a9408b43a62f3050ba2adf6,
         type: 2}
     - target: {fileID: 652170298007201196, guid: a0d11e292afc25c4c8ca8efbb4ca5ec4,
         type: 3}
@@ -38737,3 +38810,4 @@ SceneRoots:
   - {fileID: 1882318288}
   - {fileID: 277682128}
   - {fileID: 5869460778578642851}
+  - {fileID: 1275778584}

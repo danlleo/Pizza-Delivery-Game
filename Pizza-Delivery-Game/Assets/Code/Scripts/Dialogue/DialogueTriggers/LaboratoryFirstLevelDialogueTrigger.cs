@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Environment.LaboratoryFirstLevel;
 using EventBus;
 using Keypad;
@@ -6,25 +7,36 @@ using UnityEngine;
 
 namespace Dialogue.DialogueTriggers
 {
-    public class LaboratoryFirstLevel : DialogueTrigger
+    public class LaboratoryFirstLevelDialogueTrigger : DialogueTrigger
     {
-        [Header("Dialogue items")]
+        [Header("Dialogue items")] 
+        [SerializeField] private DialogueSO _laboratoryFirstLevelSpawnDialogueSO;
         [SerializeField] private DialogueSO _noKeycardDialogueSO;
         [SerializeField] private DialogueSO _noWrenchDialogueSO;
         [SerializeField] private DialogueSO _fixedPipesDialogueSO;
         [SerializeField] private DialogueSO _passwordUnknownDialogueSO;
         [SerializeField] private DialogueSO _fireExtinguisherDialogueSO;
         [SerializeField] private DialogueSO _noFlashlightDialogueSO;
+        [SerializeField] private DialogueSO _gasLeakedDialogueSO;
+        [SerializeField] private DialogueSO _scaryAreaDialogueSO;
         
         private EventBinding<FixPipesEvent> _noWrenchEventBinding;
-        
+
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(3f);
+            InvokeDialogue(_laboratoryFirstLevelSpawnDialogueSO);
+        }
+
         private void OnEnable()
         {
             KeycardStateStaticEvent.OnKeycardStateChanged += OnAnyKeycardStateChanged;
             PasswordUnknownStaticEvent.OnAnyPasswordUnknown += OnAnyPasswordUnknown;
             InteractedWithFireExtinguisherStaticEvent.OnAnyInteractedWithFireExtinguisher += OnAnyInteractedWithFireExtinguisher;
             NoFlashlightStaticEvent.OnAnyNoFlashlight += OnAnyNoFlashlight;
-
+            GasLeakedStaticEvent.OnAnyGasLeaked += OnAnyGasLeaked;
+            OnAnyEnteredScaredDialogueTriggerArea.Event += OnAnyEnteredScaredDialogueTrigger;
+            
             _noWrenchEventBinding = new EventBinding<FixPipesEvent>(Player_OnPipeFix);
             EventBus<FixPipesEvent>.Register(_noWrenchEventBinding);
         }
@@ -35,6 +47,8 @@ namespace Dialogue.DialogueTriggers
             PasswordUnknownStaticEvent.OnAnyPasswordUnknown -= OnAnyPasswordUnknown;
             InteractedWithFireExtinguisherStaticEvent.OnAnyInteractedWithFireExtinguisher -= OnAnyInteractedWithFireExtinguisher;
             NoFlashlightStaticEvent.OnAnyNoFlashlight -= OnAnyNoFlashlight;
+            GasLeakedStaticEvent.OnAnyGasLeaked -= OnAnyGasLeaked;
+            OnAnyEnteredScaredDialogueTriggerArea.Event -= OnAnyEnteredScaredDialogueTrigger;
             
             EventBus<FixPipesEvent>.Deregister(_noWrenchEventBinding);
         }
@@ -70,6 +84,16 @@ namespace Dialogue.DialogueTriggers
         private void OnAnyPasswordUnknown(object sender, EventArgs e)
         {
             InvokeDialogue(_passwordUnknownDialogueSO);
+        }
+        
+        private void OnAnyGasLeaked(object sender, GasLeakedStaticEventArgs e)
+        {
+            InvokeDialogue(_gasLeakedDialogueSO);
+        }
+        
+        private void OnAnyEnteredScaredDialogueTrigger(object sender, EventArgs e)
+        {
+            InvokeDialogue(_scaryAreaDialogueSO);
         }
     }
 }

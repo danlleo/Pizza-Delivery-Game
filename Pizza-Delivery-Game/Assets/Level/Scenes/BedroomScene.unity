@@ -3413,6 +3413,8 @@ MonoBehaviour:
     type: 3}
   _locationDetailsPrefab: {fileID: 2309298649265435810, guid: 3cd47374da71d7e42b2e2dce89f9e09d,
     type: 3}
+  _modelViewCameraPrefab: {fileID: 7542580873314581350, guid: 1ed0efdfd8686654da6a25f4db2ad8a1,
+    type: 3}
 --- !u!1 &951125387
 GameObject:
   m_ObjectHideFlags: 0

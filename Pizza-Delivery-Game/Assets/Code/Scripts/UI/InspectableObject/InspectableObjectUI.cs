@@ -1,16 +1,16 @@
 using System;
 using System.Collections;
+using Common;
 using InspectableObject;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace UI.InspectableObject
 {
     [DisallowMultipleComponent]
     public class InspectableObjectUI : MonoBehaviour
     {
-        private const string UI_LAYER = "UI";
-
         [Header("External references")] 
         [SerializeField] private GameObject _inspectableObjectUI;
 
@@ -21,14 +21,20 @@ namespace UI.InspectableObject
 
         [Header("Settings")] 
         [SerializeField] private float _continueTextBlinkTimeInSeconds;
-        [SerializeField] private float _objectRotationSpeed = 35f;
 
         private bool _allowedToRead;
         private bool _canClose;
 
         private Action _onComplete;
         private Coroutine _rotateObjectRoutine;
-
+        private ModelViewCamera _modelViewCamera;
+        
+        [Inject]
+        private void Construct(ModelViewCamera modelViewCamera)
+        {
+            _modelViewCamera = modelViewCamera;
+        }
+        
         private void Awake()
         {
             HideUI();
@@ -104,40 +110,12 @@ namespace UI.InspectableObject
 
         private void ShowObject(InspectableObjectSO inspectableObject)
         {
-            if (_objectParentContainer.transform.childCount > 0)
-                foreach (Transform child in _objectParentContainer.transform)
-                    Destroy(child.gameObject);
-
             GameObject inspectableGameObject =
                 Instantiate(inspectableObject.Prefab, _objectParentContainer.transform, true);
 
-            inspectableGameObject.transform.position = _objectParentContainer.transform.position;
-            inspectableGameObject.transform.localScale = inspectableObject.Scale;
-            inspectableGameObject.AddComponent<RectTransform>().localScale = inspectableObject.RectScale;
-
-            SetLayersFor(inspectableGameObject);
-
-            _rotateObjectRoutine = StartCoroutine(RotateObjectRoutine(inspectableGameObject));
+            _modelViewCamera.Display(inspectableGameObject);
         }
-
-        private IEnumerator RotateObjectRoutine(GameObject targetGameObject)
-        {
-            while (true)
-            {
-                targetGameObject.transform.Rotate(Vector3.up * (_objectRotationSpeed * Time.deltaTime));
-                targetGameObject.transform.Rotate(Vector3.forward * (_objectRotationSpeed * Time.deltaTime));
-
-                yield return null;
-            }
-        }
-
-        private void SetLayersFor(GameObject target)
-        {
-            target.layer = LayerMask.NameToLayer(UI_LAYER);
-
-            foreach (Transform child in target.transform) child.gameObject.layer = LayerMask.NameToLayer(UI_LAYER);
-        }
-
+        
         private void ShowReader()
         {
             _reader.gameObject.SetActive(true);
