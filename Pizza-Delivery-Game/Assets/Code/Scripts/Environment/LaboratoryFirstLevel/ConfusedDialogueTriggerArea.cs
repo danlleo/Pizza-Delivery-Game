@@ -1,14 +1,12 @@
 using System;
-using Player;
 using UnityEngine;
 
 namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
-    public class LaboratoryEntryTriggerArea : MonoBehaviour
+    public class ConfusedDialogueTriggerArea : MonoBehaviour
     {
-        [Header("External references")] 
-        [SerializeField] private Door.Door _laboratoryEntryDoor;
+        public static event EventHandler OnAnyEnteredConfusedDialogueTriggerArea;
         
         private bool _hasPickedUpAKeycard;
         
@@ -21,7 +19,7 @@ namespace Environment.LaboratoryFirstLevel
         {
             PickedUpKeycardAStaticEvent.OnAnyPickedUpKeycardA -= OnAnyPickedUpKeycardA;
         }
-
+        
         private void OnTriggerEnter(Collider other)
         {
             if (!_hasPickedUpAKeycard)
@@ -29,10 +27,8 @@ namespace Environment.LaboratoryFirstLevel
             
             if (!other.gameObject.TryGetComponent(out Player.Player _)) 
                 return;
-
-            EnteredLaboratoryEntryTriggerAreaStaticEvent.Call(this);
             
-            _laboratoryEntryDoor.Close();
+            OnAnyEnteredConfusedDialogueTriggerArea?.Invoke(this, EventArgs.Empty);
             
             Destroy(gameObject);
         }

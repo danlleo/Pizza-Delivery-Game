@@ -19,6 +19,7 @@ namespace Dialogue.DialogueTriggers
         [SerializeField] private DialogueSO _noFlashlightDialogueSO;
         [SerializeField] private DialogueSO _gasLeakedDialogueSO;
         [SerializeField] private DialogueSO _scaryAreaDialogueSO;
+        [SerializeField] private DialogueSO _confusedAreaDialogueSO;
         
         private EventBinding<FixPipesEvent> _noWrenchEventBinding;
 
@@ -36,11 +37,12 @@ namespace Dialogue.DialogueTriggers
             NoFlashlightStaticEvent.OnAnyNoFlashlight += OnAnyNoFlashlight;
             GasLeakedStaticEvent.OnAnyGasLeaked += OnAnyGasLeaked;
             OnAnyEnteredScaredDialogueTriggerArea.Event += OnAnyEnteredScaredDialogueTrigger;
+            ConfusedDialogueTriggerArea.OnAnyEnteredConfusedDialogueTriggerArea += OnAnyEnteredConfusedDialogueTriggerArea;
             
             _noWrenchEventBinding = new EventBinding<FixPipesEvent>(Player_OnPipeFix);
             EventBus<FixPipesEvent>.Register(_noWrenchEventBinding);
         }
-
+        
         private void OnDisable()
         {
             KeycardStateStaticEvent.OnKeycardStateChanged -= OnAnyKeycardStateChanged;
@@ -49,6 +51,7 @@ namespace Dialogue.DialogueTriggers
             NoFlashlightStaticEvent.OnAnyNoFlashlight -= OnAnyNoFlashlight;
             GasLeakedStaticEvent.OnAnyGasLeaked -= OnAnyGasLeaked;
             OnAnyEnteredScaredDialogueTriggerArea.Event -= OnAnyEnteredScaredDialogueTrigger;
+            ConfusedDialogueTriggerArea.OnAnyEnteredConfusedDialogueTriggerArea -= OnAnyEnteredConfusedDialogueTriggerArea;
             
             EventBus<FixPipesEvent>.Deregister(_noWrenchEventBinding);
         }
@@ -94,6 +97,11 @@ namespace Dialogue.DialogueTriggers
         private void OnAnyEnteredScaredDialogueTrigger(object sender, EventArgs e)
         {
             InvokeDialogue(_scaryAreaDialogueSO);
+        }
+        
+        private void OnAnyEnteredConfusedDialogueTriggerArea(object sender, EventArgs e)
+        {
+            InvokeDialogue(_confusedAreaDialogueSO);
         }
     }
 }
