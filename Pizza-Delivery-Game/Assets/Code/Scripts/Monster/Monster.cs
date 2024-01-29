@@ -16,10 +16,13 @@ namespace Monster
     [RequireComponent(typeof(DetectedTargetEvent))]
     [RequireComponent(typeof(LostTargetEvent))]
     [RequireComponent(typeof(StartedPatrollingEvent))]
+    [RequireComponent(typeof(AudioSource))]
     [SelectionBase]
     [DisallowMultipleComponent]
     public sealed class Monster : MonoBehaviour
     {
+        [field:SerializeField] public AudioClip[] MonsterNoiseClipsArray { get; private set; }
+        
         [HideInInspector] public StartedChasingEvent StartedChasingEvent;
         [HideInInspector] public StoppedChasingEvent StoppedChasingEvent;
         [HideInInspector] public DetectedTargetEvent DetectedTargetEvent;
@@ -33,6 +36,7 @@ namespace Monster
         
         public NavMeshAgent NavMeshAgent { get; private set; }
         public FieldOfView FieldOfView { get; private set; }
+        public AudioSource AudioSource { get; private set; }
         public IEnumerable<Transform> PatrolPointList => new ReadOnlyCollection<Transform>(_patrolPointList);
 
         public Vector3 InvestigatePosition { get; private set; }
@@ -59,6 +63,7 @@ namespace Monster
             DetectedTargetEvent = GetComponent<DetectedTargetEvent>();
             LostTargetEvent = GetComponent<LostTargetEvent>();
             StartedPatrollingEvent = GetComponent<StartedPatrollingEvent>();
+            AudioSource = GetComponent<AudioSource>();
             
             FieldOfView.enabled = false;
             NavMeshAgent.speed = _walkingSpeed;

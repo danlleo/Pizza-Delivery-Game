@@ -2368,20 +2368,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe3a19b5ba5cc04985973600cda5291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <MonsterNoiseClipsArray>k__BackingField:
+  - {fileID: 8300000, guid: d628d8ce4bc16a44b962102a80c3da86, type: 3}
+  - {fileID: 8300000, guid: 1dd4f56ee08b3414eb73fa7e98d97e33, type: 3}
+  - {fileID: 8300000, guid: d6acc90d78d5d9c41bb3e6593f1ca2a3, type: 3}
+  - {fileID: 8300000, guid: b56bea0625c6e0a4d84b1e335b08f5f4, type: 3}
+  - {fileID: 8300000, guid: 85839b33246ea3144be8d820cf9b0cc6, type: 3}
   StartedChasingEvent: {fileID: 0}
   StoppedChasingEvent: {fileID: 0}
   DetectedTargetEvent: {fileID: 0}
   LostTargetEvent: {fileID: 0}
   StartedPatrollingEvent: {fileID: 0}
   _patrolPointList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7142523377131073461, guid: d3688ff9373f5764a9696e4618147380, type: 3}
+  - {fileID: 6628272230068541877, guid: 607cac8ba3ec99d4cab86ef3e291d0f8, type: 3}
+  - {fileID: 78595914743086361, guid: 3c599c195b9b86549871afd1201487b1, type: 3}
+  - {fileID: 8024821534647091280, guid: 192768cb68518c34697fe4050fd5ef6b, type: 3}
+  - {fileID: 7845235306634649075, guid: 0ff3aa41531742b4abc072713a5db8fd, type: 3}
+  - {fileID: 4301710377649829326, guid: 10d66737ca9424445a836e07131299ae, type: 3}
   _walkingSpeed: 0.1
   _runningSpeed: 0.225
 --- !u!114 &4374507793154143181
@@ -2398,12 +2402,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   _obstructionLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  _radius: 0
-  _angle: 0
+    m_Bits: 449
+  _radius: 10
+  _angle: 90
 --- !u!114 &8957917205037354440
 MonoBehaviour:
   m_ObjectHideFlags: 0

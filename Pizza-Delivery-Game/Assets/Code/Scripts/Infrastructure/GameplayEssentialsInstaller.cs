@@ -55,7 +55,7 @@ namespace Infrastructure
         private void BindPlayer()
         {
             Player.Player player = Container.InstantiatePrefabForComponent<Player.Player>(_playerPrefab, _startPoint.position,
-                quaternion.identity, null);
+                Quaternion.identity, null);
 
             Container
                 .BindInstance(player)
