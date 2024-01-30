@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UI;
+using UnityEngine;
 using Zenject;
 
 namespace Infrastructure
@@ -7,10 +8,22 @@ namespace Infrastructure
     {
         [SerializeField] private Transform _monsterSpawnPoint;
         [SerializeField] private Monster.Monster _monsterPrefab;
-
+        [SerializeField] private LoseItCanvas _loseItCanvasPrefab;
+        
         public override void InstallBindings()
         {
             BindMonster();
+            BindLoseItCanvas();
+        }
+
+        private void BindLoseItCanvas()
+        {
+            LoseItCanvas loseItCanvas = Container.InstantiatePrefabForComponent<LoseItCanvas>(_loseItCanvasPrefab);
+
+            Container
+                .BindInstance(loseItCanvas)
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindMonster()

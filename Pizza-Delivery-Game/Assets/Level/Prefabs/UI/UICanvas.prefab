@@ -973,7 +973,6 @@ GameObject:
   - component: {fileID: 2316893093598077723}
   - component: {fileID: 7362458988655769290}
   - component: {fileID: 3352904647456352051}
-  - component: {fileID: 3341909325088844019}
   - component: {fileID: 7590543129971957562}
   - component: {fileID: 965229083523558271}
   - component: {fileID: 6894446411172980243}
@@ -1068,23 +1067,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &3341909325088844019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837689530654671978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!82 &7590543129971957562
 AudioSource:
   m_ObjectHideFlags: 0
