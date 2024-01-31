@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d729baaeb3cf1134cb751744b3454177, type: 3}
+  m_Name: Slide_Revelation
+  m_EditorClassIdentifier: 
+  _slideItemList:
+  - Text: Dr. Eldridge revealed that the pizza contained a rare compound, unintentionally
+      created during his experiments with interdimensional travel.
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: ' ''It''s the only thing that can close the portal'', he said, his voice
+      trembling with urgency.'
+    TimeToDisplayInSeconds: 6
+    Clip: {fileID: 8300000, guid: fe04ed5c4d8a4f24789807a4a4ad619d, type: 3}
+    ClipVolume: 1
+  - Text: ' ''When I opened the portal, something from the other side came through,
+      something malevolent and hungry.'''
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: "As he spoke, Jack realized the gravity of the situation \u2013 the pizza
+      was more than an odd job"
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: It was a mission to prevent an otherworldly horror from invading our world.
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  _timeToTransitionToAnotherSlide: 2

@@ -111,8 +111,8 @@ namespace Monster.StateMachine.ConcreteStates
                 _passedTimeBeforeProducingSound = 0f;
                 return;
             }
-            
-            AudioClip noise = _monsterNoiseClipsArray.GetRandomClip();
+
+            AudioClip noise = _monsterNoiseClipsArray.GetRandomItem();
             
             _audioSource.clip = noise;
             _audioSource.Play();

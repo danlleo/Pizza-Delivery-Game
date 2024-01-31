@@ -32565,8 +32565,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b3b54458b665d4ab35d76a99be4543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _goalDialogueSO: {fileID: 11400000, guid: 75cf261848dd8164abb3c46debc214ba, type: 2}
   _noPizzaBoxDialogueSO: {fileID: 11400000, guid: 4f3b36728efdb4c4ebafef00460d4bcf,
     type: 2}
+  _notAllowedToPickPizzaDialogueSO: {fileID: 11400000, guid: bc7ae9d93d0626c439a31f866165df57,
+    type: 2}
+  _securePizzaBoxDialogueSO: {fileID: 11400000, guid: e6c6d11a8007f174a8159f719a3be610,
+    type: 2}
+  _startedChaseDialogueSOArray:
+  - {fileID: 11400000, guid: a14b278e18f5a924c88f88a866cfa40b, type: 2}
+  - {fileID: 11400000, guid: 24b6b6cd268f8e34eac056d5f6818606, type: 2}
+  - {fileID: 11400000, guid: f637739d5c3a3194a9d01510beced8ac, type: 2}
+  _stoppedChaseDialogueSOArray:
+  - {fileID: 11400000, guid: 58b85a4e0def1bf4e8d962173aba7897, type: 2}
+  - {fileID: 11400000, guid: 5f6940f0b75faca438bac796b5080807, type: 2}
+  - {fileID: 11400000, guid: 68bf88718626ba34fb66640a17da3833, type: 2}
 --- !u!1 &1960112081
 GameObject:
   m_ObjectHideFlags: 0

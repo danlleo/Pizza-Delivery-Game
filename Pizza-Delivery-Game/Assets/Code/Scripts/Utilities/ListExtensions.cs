@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Utilities
 {
@@ -47,6 +49,27 @@ namespace Utilities
         /// <param name="indexB">The index of the second element.</param>
         public static void Swap<T>(this IList<T> list, int indexA, int indexB) {
             (list[indexA], list[indexB]) = (list[indexB], list[indexA]);
+        }
+
+        /// <summary>
+        /// Retrieves a random item from the provided list.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the list.</typeparam>
+        /// <param name="list">The list from which to retrieve a random item.</param>
+        /// <returns>A randomly selected item of type <typeparamref name="T"/> from the list. 
+        /// If the list is empty, the default value for type <typeparamref name="T"/> is returned.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the list is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the list is empty.</exception>
+        public static T GetRandomItem<T>(this List<T> list)
+        {
+            if (IsNullOrEmpty(list))
+                throw new ArgumentException("List is empty or null.");
+            
+            var random = new Random();
+            int index = random.Next(list.Count); // Generates a random index within the range of the list
+            T randomItem = list[index];
+
+            return randomItem;
         }
     }
 }

@@ -1,5 +1,8 @@
+using Enums.Scenes;
 using Interfaces;
+using Misc.Loader;
 using Player.Inventory;
+using UI.Crossfade;
 using UnityEngine;
 using Zenject;
 
@@ -12,11 +15,15 @@ namespace Environment.LaboratorySecondLevel
         [SerializeField] private ItemSO _pizzaBox;
 
         private Player.Player _player;
-
+        private Monster.Monster _monster;
+        private Crossfade _crossfade;
+        
         [Inject]
-        private void Construct(Player.Player player)
+        private void Construct(Player.Player player, Monster.Monster monster, Crossfade crossfade)
         {
             _player = player;
+            _monster = monster;
+            _crossfade = crossfade;
         }
         
         public void Interact()
@@ -26,8 +33,13 @@ namespace Environment.LaboratorySecondLevel
                 NoPizzaBoxStaticEvent.Call(this);
                 return;
             }
+
+            _crossfade
+                .FadeIn(
+                    () => Destroy(_monster.gameObject),
+                    () => Loader.Load(Scene.EndingScene), 1.5f);
             
-            // TODO: implement action
+            Destroy(this);
         }
 
         public string GetActionDescription()

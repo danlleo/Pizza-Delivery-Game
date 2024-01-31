@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d729baaeb3cf1134cb751744b3454177, type: 3}
+  m_Name: Slide_Closure
+  m_EditorClassIdentifier: 
+  _slideItemList:
+  - Text: 'Under Dr. Eldridge''s guidance, Jack placed the pizza near the portal''s
+      swirling vortex. '
+    TimeToDisplayInSeconds: 3
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: The air crackled with energy as the portal reacted violently, then began
+      to shrink.
+    TimeToDisplayInSeconds: 3
+    Clip: {fileID: 8300000, guid: 7760e666cf3eaf54292a9414412839a9, type: 3}
+    ClipVolume: 1
+  - Text: With a final pulse of light and a deafening roar, the portal sealed shut,
+      the creature's howls fading into silence.
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: ' ''You''ve saved us all'', Dr. Eldridge sighed with relief.'
+    TimeToDisplayInSeconds: 2
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: As dawn broke, Jack left the lab behind, knowing he had changed the course
+      of events in ways he never could have imagined.
+    TimeToDisplayInSeconds: 5
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  _timeToTransitionToAnotherSlide: 2

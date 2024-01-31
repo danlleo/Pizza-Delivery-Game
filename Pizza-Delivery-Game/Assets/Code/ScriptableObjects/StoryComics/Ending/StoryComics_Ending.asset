@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4fbcc0c9563e35469b4ae9dc3670ed5, type: 3}
+  m_Name: StoryComics_Ending
+  m_EditorClassIdentifier: 
+  _slideList:
+  - {fileID: 11400000, guid: ab70a1d9b5f26f44a8b74794a05d6c39, type: 2}
+  - {fileID: 11400000, guid: 56af9d42f7a54f0418ad320965531495, type: 2}
+  - {fileID: 11400000, guid: 9e1efdc1285aa5b43aec344fa66d6d00, type: 2}
+  - {fileID: 11400000, guid: 598cab2f617c2fd4d8019b19189de41b, type: 2}

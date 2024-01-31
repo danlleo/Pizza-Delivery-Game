@@ -9,5 +9,6 @@ namespace Enums.Scenes
         OutdoorComicScene,
         FirstLaboratoryLevelScene,
         SecondLaboratoryLevelScene,
+        EndingScene,
     }
 }

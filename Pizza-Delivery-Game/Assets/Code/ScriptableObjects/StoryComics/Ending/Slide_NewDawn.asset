@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d729baaeb3cf1134cb751744b3454177, type: 3}
+  m_Name: Slide_NewDawn
+  m_EditorClassIdentifier: 
+  _slideItemList:
+  - Text: As the first light of dawn pierced the horizon, Jack walked away from the
+      lab, his mind reeling from the night's events.
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: He had gone from a simple delivery job to saving the world from a monster
+      beyond comprehension.
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: In his pocket, the generous payment from Dr. Eldridge felt inconsequential
+      compared to the knowledge that he had averted a disaster.
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  - Text: Jack knew his life would never be the same again, but as he watched the
+      sunrise, he felt a renewed sense of hope and purpose.
+    TimeToDisplayInSeconds: 4
+    Clip: {fileID: 0}
+    ClipVolume: 0
+  _timeToTransitionToAnotherSlide: 2
