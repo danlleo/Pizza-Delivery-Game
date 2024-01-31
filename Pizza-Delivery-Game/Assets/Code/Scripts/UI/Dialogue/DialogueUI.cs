@@ -1,17 +1,17 @@
 using System;
+using Common;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI.Dialogue
 {
     [DisallowMultipleComponent]
     public class DialogueUI : MonoBehaviour
     {
-        [Header("External references")] [SerializeField]
-        private GameObject _dialogueUI;
+        [Header("External references")] 
+        [SerializeField, ChildrenOnly] private GameObject _dialogueUI;
 
         [SerializeField] private UI _ui;
-        [FormerlySerializedAs("_reader")] [SerializeField] private DialogueReader _dialogueReader;
+        [SerializeField] private DialogueReader _dialogueReader;
 
         private void Awake()
         {

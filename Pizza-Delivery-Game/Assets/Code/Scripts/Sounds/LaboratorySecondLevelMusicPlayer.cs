@@ -1,4 +1,5 @@
 using System;
+using Common;
 using DG.Tweening;
 using Monster;
 using UnityEngine;
@@ -41,6 +42,7 @@ namespace Sounds
             MonsterStoppedInvestigatingStaticEvent.OnAnyMonsterStoppedInvestigating += Monster_OnAnyMonsterStoppedInvestigating;
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
+            Common.OnAnyGameOver.Event += OnAnyGameOver;
         }
 
         private void OnDisable()
@@ -51,6 +53,7 @@ namespace Sounds
             MonsterStoppedInvestigatingStaticEvent.OnAnyMonsterStoppedInvestigating -= Monster_OnAnyMonsterStoppedInvestigating;
             TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
+            Common.OnAnyGameOver.Event -= OnAnyGameOver;
         }
 
         private void TransitionTo(MusicClip target)
@@ -86,7 +89,7 @@ namespace Sounds
             _audioSource.DOFade(_currentVolume, durationInSeconds).SetUpdate(this);
         }
         
-        private void FadeOut(bool pause)
+        private void FadeOut(bool pause = false)
         {
             if (!_audioSource.isPlaying)
                 _audioSource.Play();
@@ -134,6 +137,11 @@ namespace Sounds
         private void OnAnyGamePaused(object sender, EventArgs e)
         {
             FadeOut(true);
+        }
+        
+        private void OnAnyGameOver(object sender, EventArgs e)
+        {
+            FadeOut();
         }
     }
 }

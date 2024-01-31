@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Common;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -51,22 +52,26 @@ namespace Monster.StateMachine.ConcreteStates
 
         public override void FrameUpdate()
         {
-            if (Vector3.Distance(_transform.position, _targetTransform.position) > _stoppingDistance)
-            {
-                _navMeshAgent.SetDestination(_targetTransform.position);
-            }
-            else
-            {
-                _navMeshAgent.ResetPath();
-                _navMeshAgent.isStopped = true;
-                _monster.StateMachine.ChangeState(_monster.StateFactory.Idle());
-            }
+            ChasePlayer();
         }
 
         public override void ExitState()
         {
             _monster.CallStoppedChaseStaticEvent();
             _monster.StoppedChasingEvent.Call(_monster);
+        }
+        
+        private void ChasePlayer()
+        {
+            if (Vector3.Distance(_transform.position, _targetTransform.position) > _stoppingDistance)
+            {
+                _navMeshAgent.SetDestination(_targetTransform.position);
+            }
+            else
+            {
+                OnAnyGameOver.Call(this);
+                _monster.DestroySelf();
+            }
         }
         
         private void ResetTimer()

@@ -83,7 +83,7 @@ namespace Monster
             StoppedChasingEvent.Event += StoppedChasing_Event;
             AttractedMonsterStaticEvent.OnAnyAttractedMonster += Monster_OnAnyAttractedMonster;
         }
-        
+
         private void OnDisable()
         {
             StartedChasingEvent.Event -= StartedChasing_Event;
@@ -94,6 +94,11 @@ namespace Monster
         private void Update()
         {
             StateMachine.CurrentState.FrameUpdate();
+        }
+
+        public void DestroySelf()
+        {
+            Destroy(gameObject);
         }
         
         private void StartedChasing_Event(object sender, EventArgs e)

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Common;
 using InspectableObject;
 using TMPro;
@@ -12,7 +11,7 @@ namespace UI.InspectableObject
     public class InspectableObjectUI : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private GameObject _inspectableObjectUI;
+        [SerializeField, ChildrenOnly] private GameObject _inspectableObjectUI;
 
         [SerializeField] private GameObject _objectParentContainer;
         [SerializeField] private UI _ui;

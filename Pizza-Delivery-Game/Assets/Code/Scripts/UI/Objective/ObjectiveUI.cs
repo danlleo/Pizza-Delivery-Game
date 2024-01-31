@@ -1,4 +1,5 @@
 using System;
+using Common;
 using DG.Tweening;
 using Objective;
 using TMPro;
@@ -10,7 +11,7 @@ namespace UI.Objective
     public class ObjectiveUI : MonoBehaviour
     {
         [Header("External references")] 
-        [SerializeField] private UI _ui;
+        [SerializeField, ChildrenOnly] private UI _ui;
 
         [SerializeField] private GameObject _objectiveUI;
         [SerializeField] private RectTransform _objectRectWindow;
