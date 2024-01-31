@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Objective
 {
-    public class ObjectiveRegistry
+    public sealed class ObjectiveRegistry
     {
         private Queue<Objective> _objectiveQueue;
 

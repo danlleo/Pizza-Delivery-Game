@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e510c6f2bfa4474a0a9943bbfcfe8f5, type: 3}
-  m_Name: Objective_UsePC
+  m_Name: Objective_BringPizzaBack
   m_EditorClassIdentifier: 
-  <ObjectiveText>k__BackingField: Check out a vacanancy using PC
-  _id: d1860a0dfbba3d149a4120d3e059210f1
+  <ObjectiveText>k__BackingField: Leave laboratory
+  _id: 40e962afb3216984887fc2b23565296b1

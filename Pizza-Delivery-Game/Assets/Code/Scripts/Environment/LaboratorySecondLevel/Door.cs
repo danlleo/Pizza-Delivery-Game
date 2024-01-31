@@ -1,3 +1,4 @@
+using System;
 using Enums.Scenes;
 using Interfaces;
 using Misc.Loader;
@@ -11,6 +12,8 @@ namespace Environment.LaboratorySecondLevel
     [DisallowMultipleComponent]
     public class Door : MonoBehaviour, IInteractable
     {
+        public static event EventHandler OnAnyLeftLaboratory;
+        
         [Header("External references")]
         [SerializeField] private ItemSO _pizzaBox;
 
@@ -34,6 +37,7 @@ namespace Environment.LaboratorySecondLevel
                 return;
             }
 
+            OnAnyLeftLaboratory?.Invoke(this, EventArgs.Empty);
             _crossfade
                 .FadeIn(
                     () => Destroy(_monster.gameObject),

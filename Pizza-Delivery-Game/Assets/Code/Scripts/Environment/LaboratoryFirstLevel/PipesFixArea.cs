@@ -10,6 +10,7 @@ namespace Environment.LaboratoryFirstLevel
     [DisallowMultipleComponent]
     public class PipesFixArea : MonoBehaviour, IInteractable, IItemReceiver
     {
+        [Header("External references")]
         [SerializeField] private ItemSO _wrench;
 
         private Player.Player _player;

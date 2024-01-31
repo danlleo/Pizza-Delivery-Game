@@ -2,7 +2,7 @@
 
 namespace Environment.LaboratoryFirstLevel
 {
-    public class PickedUpKeycardAStaticEvent
+    public static class PickedUpKeycardAStaticEvent
     {
         public static event EventHandler OnAnyPickedUpKeycardA;
 

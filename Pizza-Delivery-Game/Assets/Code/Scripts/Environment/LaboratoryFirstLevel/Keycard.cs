@@ -25,6 +25,7 @@ namespace Environment.LaboratoryFirstLevel
                     PickedUpKeycardAStaticEvent.Call(this);
                     break;
                 case KeycardType.KeycardB:
+                    PickedUpKeycardBStaticEvent.Call(this);
                     break;
                 case KeycardType.KeycardC:
                     PickedUpKeycardCStaticEvent.Call(this);

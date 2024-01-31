@@ -1,6 +1,6 @@
 ﻿namespace Objective
 {
-    public class Objective
+    public sealed class Objective
     {
         private ObjectiveSO _objective;
         private ObjectiveRegistry _objectiveRegistry;
