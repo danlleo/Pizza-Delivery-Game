@@ -14,12 +14,13 @@ namespace Environment.LaboratorySecondLevel
         
         [Header("External references")]
         [SerializeField] private ItemSO _pizzaBox;
-
+        [SerializeField] private AudioClip _audioClip;
+        
         private Player.Player _player;
         private Monster.Monster _monster;
 
         private bool _isPlayerChasedByMonster;
-        
+
         [Inject]
         private void Construct(Player.Player player, Monster.Monster monster)
         {
@@ -54,6 +55,7 @@ namespace Environment.LaboratorySecondLevel
             
             OnAnyPlayerPickedUpPizzaBox?.Invoke(this, EventArgs.Empty);
             _player.Inventory.TryAddItem(_pizzaBox, out bool _);
+            AudioSource.PlayClipAtPoint(_audioClip, transform.position);
             
             Destroy(gameObject);
         }

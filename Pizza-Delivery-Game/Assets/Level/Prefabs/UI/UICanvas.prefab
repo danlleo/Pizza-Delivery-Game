@@ -1797,7 +1797,7 @@ MonoBehaviour:
   _ui: {fileID: 965229083523558271}
   _itemObtained: {fileID: 8300000, guid: 6930841c774149644a63b8b0d3f1964d, type: 3}
   _confirm: {fileID: 8300000, guid: a3fb29ba0e11b7541b6e6ae76a06adbb, type: 3}
-  _objectiveSet: {fileID: 8300000, guid: 9470a92e2a2f823418b23dae7b15e378, type: 3}
+  _objectiveSet: {fileID: 8300000, guid: f46cd091e99d82b41a13031c673164f4, type: 3}
 --- !u!114 &3052869315457094710
 MonoBehaviour:
   m_ObjectHideFlags: 0

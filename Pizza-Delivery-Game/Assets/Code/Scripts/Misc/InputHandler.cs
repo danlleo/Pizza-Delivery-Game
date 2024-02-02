@@ -76,6 +76,7 @@ namespace Misc
             TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
             Inventory.OnAnyItemUse.Event += OnAnyItemUse;
             Player.Inventory.OnAnyItemUseDeclined.Event += OnAnyItemUseDeclined;
+            Common.OnAnyGameOver.Event += OnAnyGameOver;
             
             _interactedWithKeypadEventBinding =
                 new EventBinding<InteractedWithKeypadEvent>(HandleInteractedWithKeypadEvent);
@@ -97,6 +98,7 @@ namespace Misc
             TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
             Inventory.OnAnyItemUse.Event -= OnAnyItemUse;
             Player.Inventory.OnAnyItemUseDeclined.Event -= OnAnyItemUseDeclined;
+            Common.OnAnyGameOver.Event -= OnAnyGameOver;
             
             EventBus<InteractedWithKeypadEvent>.Deregister(_interactedWithKeypadEventBinding);
         }
@@ -452,5 +454,10 @@ namespace Misc
         }
 
         #endregion
+        
+        private void OnAnyGameOver(object sender, EventArgs e)
+        {
+            _gameInput.SetDefaultActionMap(nameof(_gameInput.UI));
+        }
     }
 }
