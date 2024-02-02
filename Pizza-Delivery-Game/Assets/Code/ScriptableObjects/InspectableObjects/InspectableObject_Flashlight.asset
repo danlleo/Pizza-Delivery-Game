@@ -13,14 +13,7 @@ MonoBehaviour:
   m_Name: InspectableObject_Flashlight
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6323229954159758949, guid: e4e609c7be03cbf4b9ee68ef2b545c97, type: 3}
-  _scale: {x: 24, y: 24, z: 24}
-  _rectScale: {x: 50000, y: 50000, z: 50000}
   _item: {fileID: 11400000, guid: c7588ff0de97fe44290238bddc3fb1f5, type: 2}
   _headerText: Flashlight
-  _descriptionText: 'Equipped with a durable aluminum alloy body, this flashlight
-    is built to withstand the rigors of game development life. Its ergonomic grip
-    ensures comfortable handling, allowing you to focus on your creativity without
-    any discomfort. The ProGlow 5000 is also water-resistant, making it the ideal
-    tool for rainy outdoor game testing or unexpected studio spills.
-
-'
+  _descriptionText: Durable and bright, this flashlight is crucial for navigating
+    dark corners. Handy for spotting hidden clues or lighting up unwelcome shadows.

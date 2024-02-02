@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d48bc0a2b2847f391f986402b6a36e9, type: 3}
-  m_Name: InspectableObject_Wrench
+  m_Name: InspectableObject_Wrench_AfterGasLeak
   m_EditorClassIdentifier: 
   _prefab: {fileID: 290823200803365329, guid: 0025216e009a9bd47a6459482a6ef9e4, type: 3}
   _item: {fileID: 11400000, guid: d28e75dee75262a41afe41676e1c3973, type: 2}
   _headerText: Wrench
-  _descriptionText: "\rA solid, heavy wrench. Useful for quick repairs or as an improvised
-    weapon in a pinch."
+  _descriptionText: Just what I needed to tackle those obstructive pipes. This should
+    get things moving.

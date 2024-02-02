@@ -52,7 +52,8 @@ namespace Objective.Locations
 
         private void Player_OnPipeFix(FixPipesEvent fixPipesEvent)
         {
-            FinishObjective(_fixPipesObjective);
+            if (fixPipesEvent.HasFixed)
+                FinishObjective(_fixPipesObjective);
         }
 
         private void HandlePasswordValidationResponseEvent(
