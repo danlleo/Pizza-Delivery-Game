@@ -3,6 +3,7 @@ using Door;
 using Environment.LaboratoryFirstLevel;
 using EventBus;
 using Keypad;
+using Monster;
 using Tablet;
 using UnityEngine;
 
@@ -48,10 +49,10 @@ namespace Sounds.Audio
         {
             DoorOpenStaticEvent.OnDoorOpened += DoorOpenStaticEvent_OnDoorOpened;
             KeycardStateStaticEvent.OnKeycardStateChanged += KeycardStateStaticEvent_OnKeycardStateChanged;
-            MonsterPeekedStaticEvent.OnAnyMonsterPeaked += OnAnyMonsterPeaked;
+            MonsterCornerPeek.OnAnyMonsterPeaked += MonsterCornerPeek_OnAnyMonsterPeaked;
             GasLeakedStaticEvent.OnAnyGasLeaked += OnAnyGasLeaked;
             PickedUpStaticEvent.OnTabletPickedUp += OnAnyTabletPickedUp;
-            PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
+            PutDownStaticEvent.OnAnyTabletPutDown += OnAnyTabletPutDown;
             TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer += OnAnyTriggeredScreamer;
 
             _digitRegisteredEventBinding = new EventBinding<DigitRegisteredEvent>(HandleButtonPressedEvent);
@@ -66,10 +67,10 @@ namespace Sounds.Audio
         {
             DoorOpenStaticEvent.OnDoorOpened -= DoorOpenStaticEvent_OnDoorOpened;
             KeycardStateStaticEvent.OnKeycardStateChanged -= KeycardStateStaticEvent_OnKeycardStateChanged;
-            MonsterPeekedStaticEvent.OnAnyMonsterPeaked -= OnAnyMonsterPeaked;
+            MonsterCornerPeek.OnAnyMonsterPeaked -= MonsterCornerPeek_OnAnyMonsterPeaked;
             GasLeakedStaticEvent.OnAnyGasLeaked -= OnAnyGasLeaked;
             PickedUpStaticEvent.OnTabletPickedUp -= OnAnyTabletPickedUp;
-            PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
+            PutDownStaticEvent.OnAnyTabletPutDown -= OnAnyTabletPutDown;
             TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer -= OnAnyTriggeredScreamer;
             
             EventBus<DigitRegisteredEvent>.Deregister(_digitRegisteredEventBinding);
@@ -92,7 +93,7 @@ namespace Sounds.Audio
             PlaySoundAtPoint(_doorOpenClip, e.DoorPosition);
         }
         
-        private void OnAnyMonsterPeaked(object sender, EventArgs e)
+        private void MonsterCornerPeek_OnAnyMonsterPeaked(object sender, EventArgs e)
         {
             PlaySound(_audioSource, _monsterPeekClip, 2f);
         }

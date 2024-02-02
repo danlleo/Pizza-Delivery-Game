@@ -3,8 +3,9 @@
 namespace Environment.LaboratoryFirstLevel
 {
     [DisallowMultipleComponent]
-    public class PipesTriggerArea : MonoBehaviour
+    public class PipesBreakTriggerArea : MonoBehaviour
     {
+        [Header("External references")]
         [SerializeField] private AudioSource _audioSource;
         
         private void OnTriggerEnter(Collider other)

@@ -1,12 +1,15 @@
+using System;
 using DG.Tweening;
-using Environment.LaboratoryFirstLevel;
 using Interfaces;
 using UnityEngine;
 
 namespace Monster
 {
+    [DisallowMultipleComponent]
     public class MonsterCornerPeek : MonoBehaviour, ISpawnable
     {
+        public static event EventHandler OnAnyMonsterPeaked;
+        
         [Header("Settings")] 
         [SerializeField] private float _peekInTimeInSeconds;
         [SerializeField] private float _stayInPeekTimeInSeconds;
@@ -22,7 +25,7 @@ namespace Monster
         
         public void OnSpawned()
         {
-            this.CallMonsterPeakedStaticEvent();
+            OnAnyMonsterPeaked?.Invoke(this, EventArgs.Empty);
             
             Sequence animationSequence = DOTween.Sequence();
             animationSequence.Append(transform.DORotate(_targetRotation, _peekInTimeInSeconds));

@@ -37,7 +37,7 @@ namespace Terminal
 
         public string GetActionDescription()
         {
-            return "Insert keycard";
+            return "Insert a keycard";
         }
 
         public void OnReceive()
@@ -52,7 +52,7 @@ namespace Terminal
 
         public void OnDecline()
         {
-            
+            KeycardStateStaticEvent.Call(this, new KeycardStateStaticEventArgs(false, transform.position));
         }
     }
 }

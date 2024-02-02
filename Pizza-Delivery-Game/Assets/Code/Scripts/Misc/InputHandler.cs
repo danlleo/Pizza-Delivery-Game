@@ -71,7 +71,7 @@ namespace Misc
             OnAnyStartedUsingPC.Event += StartedUsingPCStaticEventEvent;
             WokeUpStaticEvent.OnWokeUp += OnAnyWokeUp;
             PickedUpStaticEvent.OnTabletPickedUp += OnAnyTabletPickedUp;
-            PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
+            PutDownStaticEvent.OnAnyTabletPutDown += OnAnyTabletPutDown;
             TimeControl.OnAnyGamePaused.Event += OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event += OnAnyGameUnpaused;
             Inventory.OnAnyItemUse.Event += OnAnyItemUse;
@@ -92,7 +92,7 @@ namespace Misc
             OnAnyStartedUsingPC.Event -= StartedUsingPCStaticEventEvent;
             WokeUpStaticEvent.OnWokeUp -= OnAnyWokeUp;
             PickedUpStaticEvent.OnTabletPickedUp -= OnAnyTabletPickedUp;
-            PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
+            PutDownStaticEvent.OnAnyTabletPutDown -= OnAnyTabletPutDown;
             TimeControl.OnAnyGamePaused.Event -= OnAnyGamePaused;
             TimeControl.OnAnyGameUnpaused.Event -= OnAnyGameUnpaused;
             Inventory.OnAnyItemUse.Event -= OnAnyItemUse;

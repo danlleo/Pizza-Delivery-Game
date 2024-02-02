@@ -8,6 +8,18 @@ namespace Environment.LaboratoryFirstLevel
     [DisallowMultipleComponent]
     public class Keycard : UI.InspectableObject.InspectableObject
     {
+        public static event EventHandler<OnAnyPickedUpKeycardEventArgs> OnAnyPickedUpKeycard;
+
+        public class OnAnyPickedUpKeycardEventArgs : EventArgs
+        {
+            public readonly KeycardType KeycardType;
+
+            public OnAnyPickedUpKeycardEventArgs(KeycardType keycardType)
+            {
+                KeycardType = keycardType;
+            }
+        }
+        
         [Header("External references")]
         [SerializeField] private InspectableObjectSO _inspectableObject;
 
@@ -19,20 +31,7 @@ namespace Environment.LaboratoryFirstLevel
 
         public override void Interact()
         {
-            switch (_keycardType)
-            {
-                case KeycardType.KeycardA:
-                    PickedUpKeycardAStaticEvent.Call(this);
-                    break;
-                case KeycardType.KeycardB:
-                    PickedUpKeycardBStaticEvent.Call(this);
-                    break;
-                case KeycardType.KeycardC:
-                    PickedUpKeycardCStaticEvent.Call(this);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            OnAnyPickedUpKeycard?.Invoke(this, new OnAnyPickedUpKeycardEventArgs(_keycardType));
             
             base.Interact();
         }

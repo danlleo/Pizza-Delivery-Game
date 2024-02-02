@@ -1,4 +1,5 @@
 using System;
+using Enums.Keycards;
 using Player;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace Environment.LaboratoryFirstLevel
     [DisallowMultipleComponent]
     public class LaboratoryEntryTriggerArea : MonoBehaviour
     {
+        public static event EventHandler OnAnyEnteredLaboratoryEntryTriggerArea;
+        
         [Header("External references")] 
         [SerializeField] private Door.Door _laboratoryEntryDoor;
         
@@ -14,12 +17,12 @@ namespace Environment.LaboratoryFirstLevel
         
         private void OnEnable()
         {
-            PickedUpKeycardAStaticEvent.OnAnyPickedUpKeycardA += OnAnyPickedUpKeycardA;
+            Keycard.OnAnyPickedUpKeycard += Keycard_OnAnyPickedUpKeycard;
         }
 
         private void OnDisable()
         {
-            PickedUpKeycardAStaticEvent.OnAnyPickedUpKeycardA -= OnAnyPickedUpKeycardA;
+            Keycard.OnAnyPickedUpKeycard -= Keycard_OnAnyPickedUpKeycard;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -30,16 +33,17 @@ namespace Environment.LaboratoryFirstLevel
             if (!other.gameObject.TryGetComponent(out Player.Player _)) 
                 return;
 
-            EnteredLaboratoryEntryTriggerAreaStaticEvent.Call(this);
+            OnAnyEnteredLaboratoryEntryTriggerArea?.Invoke(this, EventArgs.Empty);
             
             _laboratoryEntryDoor.Close();
             
             Destroy(gameObject);
         }
         
-        private void OnAnyPickedUpKeycardA(object sender, EventArgs e)
+        private void Keycard_OnAnyPickedUpKeycard(object sender, Keycard.OnAnyPickedUpKeycardEventArgs e)
         {
-            _hasPickedUpAKeycard = true;
+            if (e.KeycardType == KeycardType.KeycardA)
+                _hasPickedUpAKeycard = true;
         }
     }
 }

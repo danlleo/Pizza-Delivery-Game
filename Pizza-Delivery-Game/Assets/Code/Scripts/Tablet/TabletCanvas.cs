@@ -23,13 +23,13 @@ namespace Tablet
         private void OnEnable()
         {
             PickedUpStaticEvent.OnTabletPickedUp += OnAnyTabletPickedUp;
-            PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
+            PutDownStaticEvent.OnAnyTabletPutDown += OnAnyTabletPutDown;
         }
 
         private void OnDisable()
         {
             PickedUpStaticEvent.OnTabletPickedUp -= OnAnyTabletPickedUp;
-            PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
+            PutDownStaticEvent.OnAnyTabletPutDown -= OnAnyTabletPutDown;
         }
 
         private void Update()

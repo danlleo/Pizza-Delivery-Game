@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: InspectableObject_Keycard_A
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6870385990131262074, guid: 09ed473fe681b0341bb1e4b7903cefe0, type: 3}
-  _scale: {x: 24, y: 24, z: 24}
-  _rectScale: {x: 1700, y: 1700, z: 1700}
   _item: {fileID: 11400000, guid: 1d73740cc60bf834c89d9ab8d4e9547f, type: 2}
   _headerText: Keycard Room A
-  _descriptionText: 'Looks like this will help me to get to that room in the beginning '
+  _descriptionText: This keycard grants access to Room A, leading into the heart
+    of the secure archives. What secrets could be waiting behind the locked door?

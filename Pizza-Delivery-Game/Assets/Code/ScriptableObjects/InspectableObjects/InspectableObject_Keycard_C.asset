@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: InspectableObject_Keycard_C
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1835221106261182989, guid: 65527436704a70d41917832e97100f8c, type: 3}
-  _scale: {x: 24, y: 24, z: 24}
-  _rectScale: {x: 1700, y: 1700, z: 1700}
   _item: {fileID: 11400000, guid: a4eff544931de50449ebcfe3463c3e99, type: 2}
   _headerText: Keycard Room C
-  _descriptionText: Hope it will help me
+  _descriptionText: With this keycard, I can unlock Door B, the entrance to the stockroom
+    filled with weapons, waste, and various items. Who knows what might be found
+    or used within?

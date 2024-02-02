@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Enums.Keycards;
 using Misc;
 using Monster;
 using UnityEngine;
@@ -8,18 +8,19 @@ namespace Environment.LaboratoryFirstLevel
     [RequireComponent(typeof(BoxCollider))]
     public class MonsterCornerPeekTrigger : MonoBehaviour
     {
+        [Header("External references")]
         [SerializeField] private MonsterCornerPeek _monsterCornerPeek;
 
         private bool _canPeek;
         
         private void OnEnable()
         {
-            PickedUpKeycardCStaticEvent.OnAnyPickedUpKeycardC += OnAnyPickedUpKeycardC;
+            Keycard.OnAnyPickedUpKeycard += OnAnyPickedUpKeycard;
         }
 
         private void OnDisable()
         {
-            PickedUpKeycardCStaticEvent.OnAnyPickedUpKeycardC -= OnAnyPickedUpKeycardC;
+            Keycard.OnAnyPickedUpKeycard -= OnAnyPickedUpKeycard;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -33,9 +34,10 @@ namespace Environment.LaboratoryFirstLevel
             Destroy(gameObject);
         }
 
-        private void OnAnyPickedUpKeycardC(object sender, EventArgs e)
+        private void OnAnyPickedUpKeycard(object sender, Keycard.OnAnyPickedUpKeycardEventArgs e)
         {
-            _canPeek = true;
+            if (e.KeycardType == KeycardType.KeycardC)
+                _canPeek = true;
         }
     }
 }

@@ -4,9 +4,9 @@ namespace Tablet
 {
     public static class PutDownStaticEvent
     {
-        public static event EventHandler OnTabletPutDown;
+        public static event EventHandler OnAnyTabletPutDown;
         
         public static void Call(object sender)
-            => OnTabletPutDown?.Invoke(sender, EventArgs.Empty);
+            => OnAnyTabletPutDown?.Invoke(sender, EventArgs.Empty);
     }
 }

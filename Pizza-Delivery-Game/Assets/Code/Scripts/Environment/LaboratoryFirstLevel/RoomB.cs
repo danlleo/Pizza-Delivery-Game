@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using Enums.Keycards;
 using Player;
 using UnityEngine;
 
@@ -29,14 +29,14 @@ namespace Environment.LaboratoryFirstLevel
 
         private void OnEnable()
         {
-            PickedUpKeycardAStaticEvent.OnAnyPickedUpKeycardA += AnyPickedUpKeycardA;
-            EnteredLaboratoryEntryTriggerAreaStaticEvent.OnAnyEnteredLaboratoryEntryTriggerArea += OnAnyEnteredLaboratoryEntryTriggerArea;
+            Keycard.OnAnyPickedUpKeycard += Keycard_OnAnyPickedUpKeycard;
+            LaboratoryEntryTriggerArea.OnAnyEnteredLaboratoryEntryTriggerArea += LaboratoryEntryTriggerArea_OnAnyEnteredLaboratoryEntryTriggerArea;
         }
 
         private void OnDisable()
         {
-            PickedUpKeycardAStaticEvent.OnAnyPickedUpKeycardA -= AnyPickedUpKeycardA;
-            EnteredLaboratoryEntryTriggerAreaStaticEvent.OnAnyEnteredLaboratoryEntryTriggerArea -= OnAnyEnteredLaboratoryEntryTriggerArea;
+            Keycard.OnAnyPickedUpKeycard -= Keycard_OnAnyPickedUpKeycard;
+            LaboratoryEntryTriggerArea.OnAnyEnteredLaboratoryEntryTriggerArea -= LaboratoryEntryTriggerArea_OnAnyEnteredLaboratoryEntryTriggerArea;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -74,15 +74,18 @@ namespace Environment.LaboratoryFirstLevel
             _laboratoryEntryDoor.Open();
         }
         
-        private void AnyPickedUpKeycardA(object sender, EventArgs e)
+        private void Keycard_OnAnyPickedUpKeycard(object sender, Keycard.OnAnyPickedUpKeycardEventArgs e)
         {
+            if (e.KeycardType != KeycardType.KeycardA)
+                return;
+            
             UnlockLaboratoryEntryDoor();
             TeleportRoomToTargetPosition();
             RotateRoomToTargetRotation();
             StartCoroutine(DelayGravityRoutine());
         }
         
-        private void OnAnyEnteredLaboratoryEntryTriggerArea(object sender, EventArgs e)
+        private void LaboratoryEntryTriggerArea_OnAnyEnteredLaboratoryEntryTriggerArea(object sender, EventArgs e)
         {
             TeleportRoomToDefaultPosition();
             RotateRoomToDefaultRotation();

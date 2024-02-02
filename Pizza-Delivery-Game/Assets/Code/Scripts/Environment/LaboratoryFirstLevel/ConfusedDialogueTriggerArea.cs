@@ -1,4 +1,5 @@
 using System;
+using Enums.Keycards;
 using UnityEngine;
 
 namespace Environment.LaboratoryFirstLevel
@@ -12,12 +13,12 @@ namespace Environment.LaboratoryFirstLevel
         
         private void OnEnable()
         {
-            PickedUpKeycardAStaticEvent.OnAnyPickedUpKeycardA += OnAnyPickedUpKeycardA;
+            Keycard.OnAnyPickedUpKeycard += Keycard_OnAnyPickedUpKeycard;
         }
 
         private void OnDisable()
         {
-            PickedUpKeycardAStaticEvent.OnAnyPickedUpKeycardA -= OnAnyPickedUpKeycardA;
+            Keycard.OnAnyPickedUpKeycard -= Keycard_OnAnyPickedUpKeycard;
         }
         
         private void OnTriggerEnter(Collider other)
@@ -33,9 +34,10 @@ namespace Environment.LaboratoryFirstLevel
             Destroy(gameObject);
         }
         
-        private void OnAnyPickedUpKeycardA(object sender, EventArgs e)
+        private void Keycard_OnAnyPickedUpKeycard(object sender, Keycard.OnAnyPickedUpKeycardEventArgs e)
         {
-            _hasPickedUpAKeycard = true;
+            if (e.KeycardType == KeycardType.KeycardA)
+                _hasPickedUpAKeycard = true;
         }
     }
 }

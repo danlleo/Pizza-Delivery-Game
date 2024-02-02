@@ -10,6 +10,7 @@ namespace UI.ItemUseConfirmation
     [DisallowMultipleComponent]
     public sealed class ItemUseConfirmationScreen : MonoBehaviour
     {
+        [Header("External references")]
         [SerializeField] private UIDocument _uiDocument;
 
         private void OnEnable()

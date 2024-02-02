@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: InspectableObject_Keycard_B
   m_EditorClassIdentifier: 
   _prefab: {fileID: 381147870392744323, guid: f702de85d981c4847b86d672a7a7f980, type: 3}
-  _scale: {x: 24, y: 24, z: 24}
-  _rectScale: {x: 1700, y: 1700, z: 1700}
   _item: {fileID: 11400000, guid: d5213f579702c7f469832bcc02eb4918, type: 2}
   _headerText: Keycard Room B
-  _descriptionText: Hope it will help me
+  _descriptionText: This keycard will allow me to access Door C, behind which lies
+    the scientist's cabinet. What discoveries and inventions are hidden within?

@@ -3,6 +3,8 @@ using System.Collections;
 using Environment.LaboratoryFirstLevel;
 using EventBus;
 using Keypad;
+using Monster;
+using Tablet;
 using UnityEngine;
 
 namespace Dialogue.DialogueTriggers
@@ -20,6 +22,9 @@ namespace Dialogue.DialogueTriggers
         [SerializeField] private DialogueSO _gasLeakedDialogueSO;
         [SerializeField] private DialogueSO _scaryAreaDialogueSO;
         [SerializeField] private DialogueSO _confusedAreaDialogueSO;
+        [SerializeField] private DialogueSO _gotScaredOfMonsterDialogueSO;
+        [SerializeField] private DialogueSO _cryingDialogueSO;
+        [SerializeField] private DialogueSO _discoveredPasswordDialogueSO;
         
         private EventBinding<FixPipesEvent> _noWrenchEventBinding;
 
@@ -36,13 +41,16 @@ namespace Dialogue.DialogueTriggers
             InteractedWithFireExtinguisherStaticEvent.OnAnyInteractedWithFireExtinguisher += OnAnyInteractedWithFireExtinguisher;
             NoFlashlightStaticEvent.OnAnyNoFlashlight += OnAnyNoFlashlight;
             GasLeakedStaticEvent.OnAnyGasLeaked += OnAnyGasLeaked;
-            OnAnyEnteredScaredDialogueTriggerArea.Event += OnAnyEnteredScaredDialogueTrigger;
+            ScaredDialogueTriggerArea.OnAnyEnteredScaredDialogueTriggerArea += ScaredDialogueTriggerArea_OnAnyEnteredScaredDialogueTrigger;
             ConfusedDialogueTriggerArea.OnAnyEnteredConfusedDialogueTriggerArea += OnAnyEnteredConfusedDialogueTriggerArea;
+            MonsterCornerPeek.OnAnyMonsterPeaked += MonsterCornerPeek_OnAnyMonsterPeaked;
+            LaboratoryWorkerCryStaticEvent.OnAnyLaboratoryWorkerCry += OnAnyLaboratoryWorkerCry;
+            PutDownStaticEvent.OnAnyTabletPutDown += OnAnyTabletPutDown;
             
             _noWrenchEventBinding = new EventBinding<FixPipesEvent>(Player_OnPipeFix);
             EventBus<FixPipesEvent>.Register(_noWrenchEventBinding);
         }
-        
+
         private void OnDisable()
         {
             KeycardStateStaticEvent.OnKeycardStateChanged -= OnAnyKeycardStateChanged;
@@ -50,8 +58,11 @@ namespace Dialogue.DialogueTriggers
             InteractedWithFireExtinguisherStaticEvent.OnAnyInteractedWithFireExtinguisher -= OnAnyInteractedWithFireExtinguisher;
             NoFlashlightStaticEvent.OnAnyNoFlashlight -= OnAnyNoFlashlight;
             GasLeakedStaticEvent.OnAnyGasLeaked -= OnAnyGasLeaked;
-            OnAnyEnteredScaredDialogueTriggerArea.Event -= OnAnyEnteredScaredDialogueTrigger;
+            ScaredDialogueTriggerArea.OnAnyEnteredScaredDialogueTriggerArea -= ScaredDialogueTriggerArea_OnAnyEnteredScaredDialogueTrigger;
             ConfusedDialogueTriggerArea.OnAnyEnteredConfusedDialogueTriggerArea -= OnAnyEnteredConfusedDialogueTriggerArea;
+            MonsterCornerPeek.OnAnyMonsterPeaked -= MonsterCornerPeek_OnAnyMonsterPeaked;
+            LaboratoryWorkerCryStaticEvent.OnAnyLaboratoryWorkerCry -= OnAnyLaboratoryWorkerCry;
+            PutDownStaticEvent.OnAnyTabletPutDown -= OnAnyTabletPutDown;
             
             EventBus<FixPipesEvent>.Deregister(_noWrenchEventBinding);
         }
@@ -94,7 +105,7 @@ namespace Dialogue.DialogueTriggers
             InvokeDialogue(_gasLeakedDialogueSO);
         }
         
-        private void OnAnyEnteredScaredDialogueTrigger(object sender, EventArgs e)
+        private void ScaredDialogueTriggerArea_OnAnyEnteredScaredDialogueTrigger(object sender, EventArgs e)
         {
             InvokeDialogue(_scaryAreaDialogueSO);
         }
@@ -102,6 +113,23 @@ namespace Dialogue.DialogueTriggers
         private void OnAnyEnteredConfusedDialogueTriggerArea(object sender, EventArgs e)
         {
             InvokeDialogue(_confusedAreaDialogueSO);
+        }
+        
+        private void MonsterCornerPeek_OnAnyMonsterPeaked(object sender, EventArgs e)
+        {
+            InvokeDialogue(_gotScaredOfMonsterDialogueSO);
+        }
+        
+        private void OnAnyLaboratoryWorkerCry(object sender, LaboratoryWorkerCryEventArgs e)
+        {
+            if (e.IsCrying)
+                InvokeDialogue(_cryingDialogueSO);
+        }
+        
+        private void OnAnyTabletPutDown(object sender, EventArgs e)
+        {
+            InvokeDialogue(_discoveredPasswordDialogueSO);
+            PutDownStaticEvent.OnAnyTabletPutDown -= OnAnyTabletPutDown;
         }
     }
 }

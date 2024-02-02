@@ -7,7 +7,6 @@ using Misc;
 using Misc.CursorLockState;
 using Misc.Loader;
 using Player.Inventory;
-using Tablet;
 using UI.Crossfade;
 using UnityEngine;
 using Zenject;
@@ -53,7 +52,7 @@ namespace Keypad
 
         private void OnEnable()
         {
-            InteractedWithTabletStaticEvent.OnAnyInteractedWithTablet += OnAnyInteractedWithTablet;
+            Environment.LaboratoryFirstLevel.Tablet.OnAnyInteractedWithTablet += Tablet_OnAnyInteractedWithTablet;
             InspectedForbiddenStaticEvent.OnAnyInspectedForbidden += OnAnyInspectedForbidden;
             TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer += OnAnyTriggeredScreamer;
             
@@ -67,7 +66,7 @@ namespace Keypad
 
         private void OnDisable()
         {
-            InteractedWithTabletStaticEvent.OnAnyInteractedWithTablet -= OnAnyInteractedWithTablet;
+            Environment.LaboratoryFirstLevel.Tablet.OnAnyInteractedWithTablet -= Tablet_OnAnyInteractedWithTablet;
             InspectedForbiddenStaticEvent.OnAnyInspectedForbidden -= OnAnyInspectedForbidden;
             TriggeredScreamerStaticEvent.OnAnyTriggeredScreamer -= OnAnyTriggeredScreamer;
             
@@ -121,10 +120,11 @@ namespace Keypad
             ValidatePassword(passwordValidationEvent.Password);
         }
 
-        private void HandlePasswordValidationResponseEvent(PasswordValidationResponseEvent passwordValidationResponseEvent)
+        private void HandlePasswordValidationResponseEvent(
+            PasswordValidationResponseEvent passwordValidationResponseEvent)
         {
             if (!_isAvailable) return;
-            
+
             if (!passwordValidationResponseEvent.IsCorrect)
                 return;
 
@@ -133,8 +133,8 @@ namespace Keypad
             _crossfade.FadeIn(InputAllowance.DisableInput,
                 () => Loader.Load(Scene.SecondLaboratoryLevelScene), 1.5f);
         }
-        
-        private void OnAnyInteractedWithTablet(object sender, EventArgs e)
+
+        private void Tablet_OnAnyInteractedWithTablet(object sender, EventArgs e)
         {
             SetPlayerKnowsPassword();
         }

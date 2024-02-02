@@ -7,8 +7,8 @@ namespace Environment.LaboratoryFirstLevel
     {
         public static event EventHandler<GasLeakedStaticEventArgs> OnAnyGasLeaked;
         
-        public static void Call(object sender, GasLeakedStaticEventArgs gasLeakedStaticEventArgs)
-            => OnAnyGasLeaked?.Invoke(sender, gasLeakedStaticEventArgs);
+        public static void Call(PipesBreakTriggerArea pipesBreakTriggerArea, GasLeakedStaticEventArgs gasLeakedStaticEventArgs)
+            => OnAnyGasLeaked?.Invoke(pipesBreakTriggerArea, gasLeakedStaticEventArgs);
     }
 
     public class GasLeakedStaticEventArgs : EventArgs

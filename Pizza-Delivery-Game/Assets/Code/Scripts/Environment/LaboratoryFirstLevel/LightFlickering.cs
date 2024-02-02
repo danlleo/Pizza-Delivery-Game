@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Environment.LaboratoryFirstLevel
@@ -12,7 +11,7 @@ namespace Environment.LaboratoryFirstLevel
         [Header("Settings")]
         [SerializeField] private float _minIntensity;
         [SerializeField] private float _maxIntensity = 1f;
-        [FormerlySerializedAs("_flickeringDurationInSeconds")] [SerializeField] private float _minFlickeringDurationInSeconds = 0.1f;
+        [SerializeField] private float _minFlickeringDurationInSeconds = 0.1f;
         [SerializeField] private float _maxFlickeringDurationInSeconds = 0.1f;
         
         private float _randomTime;

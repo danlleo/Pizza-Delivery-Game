@@ -13,6 +13,8 @@ namespace Environment.LaboratoryFirstLevel
     [DisallowMultipleComponent]
     public class Tablet : MonoBehaviour, IInteractable
     {
+        public static event EventHandler OnAnyInteractedWithTablet;
+        
         [Header("Settings")]
         [SerializeField] private float _rotationTimeInSeconds = .35f;
         [SerializeField] private float _moveTimeInSeconds = .35f;
@@ -42,12 +44,12 @@ namespace Environment.LaboratoryFirstLevel
 
         private void OnEnable()
         {
-            PutDownStaticEvent.OnTabletPutDown += OnAnyTabletPutDown;
+            PutDownStaticEvent.OnAnyTabletPutDown += OnAnyTabletPutDown;
         }
 
         private void OnDisable()
         {
-            PutDownStaticEvent.OnTabletPutDown -= OnAnyTabletPutDown;
+            PutDownStaticEvent.OnAnyTabletPutDown -= OnAnyTabletPutDown;
         }
 
         public void Interact()
@@ -68,7 +70,7 @@ namespace Environment.LaboratoryFirstLevel
             PickedUpStaticEvent.Call(this);
             CrosshairDisplayStateChangedStaticEvent.Call(this, new CrosshairDisplayStateChangedEventArgs(false));
             
-            this.CallInteractedWithTabletStaticEvent();
+            OnAnyInteractedWithTablet?.Invoke(this, EventArgs.Empty);
             
             if (Camera.main != null) 
                 transform.SetParent(Camera.main.transform);
